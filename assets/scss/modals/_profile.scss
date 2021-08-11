@@ -1,0 +1,910 @@
+.personalmodal{
+  position: relative;
+  overflow: hidden;
+  @media screen and (max-width: 1024px) {
+    max-width: 100%!important;
+    height: 100%;
+    border-radius: 0!important;
+  }
+  &:before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $grayLight!important;
+    transition: background 0s ease!important;
+    content: "";
+  }
+  .modalcontent{
+    display: flex;
+  }
+  aside.info{
+    position: relative;
+    max-width: 324px;
+    min-width: 324px;
+    .profile{
+      display: flex;
+      align-items: center;
+      padding: 40px 24px 0;
+      color: $dBlack;
+      transition: color 0s ease!important;
+      .userphoto{
+        position: relative;
+        max-width: 64px;
+        min-width: 64px;
+        height: 64px;
+      }
+      .data{
+        .name{
+          @include subTitle1;
+        }
+        .text{
+          @include body2;
+          color: $dGray;
+        }
+      }
+      button.edit{
+        position: absolute;
+        top: 40px;
+        left: 70px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: $dViolet;
+        svg{
+          width: 12px;
+          height: 12px;
+          fill: $dWhite;
+        }
+      }
+    }
+    .theme{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 24px 16px;
+      border-bottom: 1px solid $grayMedium;
+      .label{
+        display: flex;
+        align-items: center;
+        svg{
+          width: 19px;
+          height: 19px;
+          fill: $dGray;
+        }
+        span{
+          display: block;
+          padding: 0 0 0 18px;
+          @include subtitle2(600);
+          color: $dGray;
+        }
+      }
+      .switcher{
+        input{
+          display: none;
+        }
+        label{
+          width: 40px;
+          height: 24px;
+          border-radius: 12px;
+          background: $grayMedium;
+          &:before{
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: $dWhite;
+            transition: all .35s ease;
+            content: "";
+          }
+        }
+        input:checked + label:before{
+          left: 18px;
+        }
+      }
+    }
+    ul.menu{
+      position: relative;
+      padding: 16px 0 45px;
+      li{
+        padding: 0 8px;
+        margin: 0 0 8px;
+        &:last-child{
+          margin: 100px 0 0;
+        }
+        button{
+          justify-content: flex-start;
+          width: 100%;
+          height: auto;
+          padding: 10px 18px;
+          border-radius: 12px;
+          background: transparent;
+          @include subTitle1;
+          .ico{
+            display: flex;
+            justify-content: center;
+            max-width: 20px;
+            min-width: 20px;
+            margin: 0 18px 0 0;
+            svg{
+              width: 20px;
+              height: 20px;
+              fill: $dGray;
+            }
+          }
+          span{
+            display: block;
+            @include subtitle2(600);
+            color: $dGray;
+            text-transform: none!important;
+            transition: color 0s ease!important;
+          }
+          &.active{
+            background: $dWhite;
+            svg{
+              fill: $dViolet;
+            }
+            span{
+              color: $dBlack;
+            }
+          }
+        }
+      }
+    }
+  }
+  .tabs{
+    position: relative;
+    flex: 1 1 100%;
+    max-width: calc(100% - 324px);
+    background: $dWhite;
+    border-radius: 24px;
+    color: $dBlack;
+    transition: color 0s ease!important;
+    overflow: hidden;
+    .tab{
+      padding: 40px;
+      .title{
+        padding: 0 0 28px;
+        @include h3;
+      }
+      &.personal{
+        form{
+          position: relative;
+          .label{
+            padding: 0 0 10px;
+            @include subTitle1;
+          }
+          fieldset{
+            display: flex;
+            align-items: center;
+            padding: 0 0 40px;
+            input{
+              height: 56px;
+              padding: 20px 16px 0;
+              color: $dBlack;
+            }
+            &.text{
+              justify-content: space-between;
+              .item{
+                position: relative;
+                width: calc(50% - 16px);
+                label{
+                  position: absolute;
+                  top: 5px;
+                  left: 16px;
+                  @include caption2;
+                  color: $dGray;
+                }
+              }
+            }
+            &.date{
+              .selectbox{
+                position: relative;
+                margin: 0 16px 0 0;
+                &:nth-child(1){
+                  width: 108px;
+                }
+                &:nth-child(2){
+                  width: 204px;
+                }
+                &:nth-child(3){
+                  width: 164px;
+                  margin: 0;
+                }
+                button{
+                  position: relative;
+                  display: block;
+                  max-width: 100%;
+                  min-width: 100%;
+                  height: 56px;
+                  padding: 20px 16px 0;
+                  border-radius: 12px;
+                  background: $grayLight;
+                  @include body1;
+                  color: $dBlack;
+                  text-transform: none;
+                  &:before,
+                  &:after{
+                    position: absolute;
+                    display: block;
+                    content: "";
+                  }
+                  &:before{
+                    top: 5px;
+                    left: 16px;
+                    @include caption2;
+                    color: $dGray;
+                    content: attr(data-before)
+                  }
+                  &:after{
+                    top: 50%;
+                    right: 20px;
+                    width: 0;
+                    height: 0;
+                    margin: -2px 0 0;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid $dGray;
+                  }
+                }
+                .ps{
+                  position: absolute;
+                  top: 100%;
+                  left: 0;
+                  max-height: 200px;
+                  margin: 5px 0 0;
+                  background: $dWhite;
+                  box-shadow: 0px 10px 10px rgb(0 0 0 / 20%);
+                  visibility: hidden;
+                  opacity: 0;
+                  transition: all .35s ease;
+                  z-index: 100;
+                  &.open{
+                    visibility: visible;
+                    opacity: 1;
+                  }
+                  ul{
+                    li{
+                      button{
+                        height: auto;
+                        padding: 5px 10px;
+                        border-bottom: 1px solid $grayLight;
+                        border-radius: 0;
+                        background: transparent;
+                        &:before,
+                        &:after{
+                          display: none;
+                        }
+                      }
+                    }
+                  }
+                  .ps__rail-y{
+                    right: 0!important;
+                    width: 4px;
+                    border-radius: 0;
+                  }
+                }
+              }
+            }
+            &.radio{
+              .item{
+                padding: 0 100px 0 0;
+                &:last-child{
+                  padding: 0;
+                }
+                input{
+                  display: none;
+                }
+                label{
+                  display: flex;
+                  align-items: center;
+                  &:before,
+                  &:after{
+                    display: block;
+                    content: "";
+                  }
+                  &:before{
+                    width: 16px;
+                    height: 16px;
+                    margin: 0 18px 0 0;
+                    border: 2px solid $dGray;
+                    border-radius: 50%;
+                    transition: border-color .35s ease;
+                  }
+                  &:after{
+                    position: absolute;
+                    top: 8px;
+                    left: 4px;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background: transparent;
+                    transition: background .35s ease;
+                  }
+                }
+                input:checked + label:before{
+                  border-color: $dViolet;
+                }
+                input:checked + label:after{
+                  background: $dViolet;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.access{
+        form{
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-between;
+          .item{
+            width: calc(50% - 16px);
+            padding: 0 0 16px;
+            .desc{
+              @include subTitle1;
+            }
+            .subdesc{
+              padding: 10px 0 20px;
+              @include body2;
+              color: $dGray;
+            }
+            fieldset{
+              margin: 0 0 24px;
+              input{
+                height: 56px;
+                padding: 0 16px;
+                color: $dBlack;
+                &#currentemail{
+                  padding: 20px 16px 0;
+                }
+              }
+              label{
+                position: absolute;
+                top: 5px;
+                left: 16px;
+                @include caption2;
+                color: $dGray;
+              }
+              button{
+                position: absolute;
+                top: 50%;
+                right: 20px;
+                width: 22px;
+                height: 16px;
+                margin: -8px 0 0;
+                svg{
+                  width: 100%;
+                  height: 100%;
+                  fill: $dGray;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.notifications{
+        form{
+          .label{
+            padding: 0 0 18px;
+            @include subTitle1;
+          }
+          ul{
+            padding: 0 0 50px;
+            li{
+              padding: 0 0 12px;
+              &:last-child{
+                padding: 0;
+              }
+              input{
+                display: none;
+              }
+              label{
+                position: relative;
+                display: flex;
+                align-items: center;
+                &:before{
+                  display: block;
+                  width: 14px;
+                  height: 14px;
+                  margin: 0 20px 0 0;
+                  border: 2px solid $dGray;
+                  border-radius: 3px;
+                  overflow: hidden;
+                  content: "";
+                }
+                span {
+                  display: block;
+                }
+                svg {
+                  position: absolute;
+                  top: 5px;
+                  left: 0;
+                  width: 18px;
+                  height: 18px;
+                  fill: $dViolet;
+                  visibility: hidden;
+                  opacity: 0;
+                  transition: all 0.35s ease;
+                }
+              }
+              input:checked + label svg {
+                visibility: visible;
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+      &.blacklist{
+        form{
+          padding: 0 0 20px;
+          fieldset{
+            svg{
+              position: absolute;
+              top: 50%;
+              left: 18px;
+              width: 20px;
+              height: 20px;
+              margin: -10px 0 0;
+              fill: $dGray;
+            }
+            input{
+              padding: 0 16px 0 64px;
+            }
+          }
+        }
+        .ps{
+          max-height: 650px;
+          ul.list{
+            li{
+              position: relative;
+              display: flex;
+              align-items: center;
+              padding: 16px 30px 16px 0;
+              &:after {
+                position: absolute;
+                bottom: 0;
+                left: 80px;
+                right: 0;
+                display: block;
+                height: 1px;
+                background: $grayMedium;
+                content: "";
+              }
+              .name{
+                @include subTitle1;
+              }
+              button{
+                margin: 0 0 0 auto;
+              }
+            }
+          }
+          .ps__rail-y{
+            right: 0!important;
+          }
+        }
+      }
+      &.balance{
+        .inform{
+          padding: 32px;
+          border-radius: 16px;
+          background: radial-gradient(165.85% 2653.88% at 15.7% -4.07%, #755EC6 0%, #48ABE3 100%);
+          box-shadow: 0px 12px 20px rgba(104, 118, 207, 0.48);
+          .top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .balance{
+              @include h3;
+              color: $dWhite;
+            }
+            button{
+              height: 48px;
+              background: rgba(255, 255, 255, 0.2);
+              backdrop-filter: blur(36px);
+              svg{
+                width: 16px;
+                height: 16px;
+                fill: $dWhite;
+              }
+              span{
+                display: block;
+                padding: 0 0 0 16px;
+                color: $dWhite;
+              }
+            }
+          }
+          .desc{
+            padding: 24px 0 0;
+            @include body2;
+            color: $dWhite;
+          }
+        }
+        .label{
+          padding: 40px 0 20px;
+          @include h5(800);
+        }
+        .ps{
+          max-height: 300px;
+          ul.list{
+            li{
+              display: flex;
+              align-items: center;
+              padding: 10px 30px 10px 0;
+              border-bottom: 1px solid $grayMedium;
+              .date{
+                width: 270px;
+                @include body2;
+                color: $dGray;
+                @media screen and (max-width: 1024px) {
+                  width: 160px;
+                }
+              }
+              .desc{
+                @include body2;
+              }
+              .balance{
+                margin: 0 0 0 auto;
+                @include body1(700);
+                &.plus{
+                  color: $dGreen;
+                }
+                &.minus{
+                  color: $dGray;
+                }
+              }
+            }
+          }
+          .ps__rail-y{
+            right: 0!important;
+          }
+        }
+      }
+      &.addfunds{
+        .title{
+          display: flex;
+          align-items: center;
+          button{
+            width: 20px;
+            height: 16px;
+            svg{
+              width: 100%;
+              height: 100%;
+              fill: $dViolet;
+            }
+          }
+          span{
+            display: block;
+            padding: 0 0 0 28px;
+            @include h4;
+          }
+        }
+        ul.select{
+          display: flex;
+          align-items: center;
+          li{
+            padding: 0 8px 0 0;
+            &:last-child{
+              padding: 0;
+            }
+            button{
+              height: 36px;
+              padding: 0 16px;
+              border-radius: 10px;
+              background: $grayLight;
+              color: $dGray;
+              transition: background .35s ease, color .35s ease;
+              &.active{
+                background: $dOrange;
+                color: $dWhite;
+              }
+            }
+          }
+        }
+        form{
+          .label{
+            padding: 28px 0 20px;
+            @include subTitle1;
+          }
+          ul.radio{
+            li{
+              padding: 0 0 10px;
+              &:last-child{
+                padding: 0;
+              }
+              input{
+                display: none;
+              }
+              label{
+                display: flex;
+                align-items: center;
+                &:before,
+                &:after {
+                  display: block;
+                  content: "";
+                }
+                &:before {
+                  width: 16px;
+                  height: 16px;
+                  margin: 0 18px 0 0;
+                  border: 2px solid $dGray;
+                  border-radius: 50%;
+                  transition: border-color 0.35s ease;
+                }
+                &:after {
+                  position: absolute;
+                  top: 8px;
+                  left: 4px;
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: transparent;
+                  transition: background 0.35s ease;
+                }
+              }
+              input:checked + label:before {
+                border-color: $dViolet;
+              }
+              input:checked + label:after {
+                background: $dViolet;
+              }
+            }
+          }
+          fieldset{
+            width: 228px;
+            padding: 30px 0 24px;
+            input{
+              padding: 0 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.night{
+  .personalmodal{
+    &:before{
+      background: $dBlack!important;
+    }
+    aside.info{
+      .profile{
+        color: $nWhite;
+        .data{
+          .text{
+            color: $white56;
+          }
+        }
+        button.edit{
+          background: $nViolet;
+        }
+      }
+      .theme{
+        border-color: $white20;
+        .label{
+          svg{
+            fill: $white56;
+          }
+          span{
+            color: $white56;
+          }
+        }
+        .switcher{
+          label{
+            background: $nViolet;
+          }
+        }
+      }
+      ul.menu{
+        li{
+          button{
+            .ico{
+              svg{
+                fill: $white56;
+              }
+            }
+            span{
+              color: $white56;
+            }
+            &.active{
+              background: $violet15;
+              svg{
+                fill: $nViolet;
+              }
+              span{
+                color: $nWhite;
+              }
+            }
+          }
+        }
+      }
+    }
+    .tabs{
+      background: $whiteLight;
+      color: $nWhite;
+      .tab{
+        &.personal{
+          form{
+            fieldset{
+              input{
+                color: $nWhite;
+              }
+              &.text{
+                .item{
+                  label{
+                    color: $white56;
+                  }
+                }
+              }
+              &.date{
+                .selectbox{
+                  button{
+                    background: $white10;
+                    color: $nWhite;
+                    &:before{
+                      color: $white56;
+                    }
+                    &:after{
+                      border-top-color: $white56;
+                    }
+                  }
+                  .ps{
+                    background: #484555;
+                    ul{
+                      li{
+                        button{
+                          border-color: $white20;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              &.radio{
+                .item{
+                  label{
+                    &:before{
+                      border-color: $white56;
+                    }
+                  }
+                  input:checked + label:before{
+                    border-color: $nViolet;
+                  }
+                  input:checked + label:after{
+                    background: $nViolet;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.access{
+          form{
+            .item{
+              .subdesc{
+                color: $white56;
+              }
+              fieldset{
+                input{
+                  color: $nWhite;
+                }
+                label{
+                  color: $white56;
+                }
+                button{
+                  svg{
+                    fill: $white56;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.notifications{
+          form{
+            ul{
+              li{
+                label{
+                  &:before{
+                    border-color: $white56;
+                  }
+                  svg {
+                    fill: $nViolet;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.blacklist{
+          form{
+            fieldset{
+              svg{
+                fill: $white56;
+              }
+              input{
+                background: $blackLight;
+              }
+            }
+          }
+          .ps{
+            ul.list{
+              li{
+                &:after {
+                  background: $white20;
+                }
+              }
+            }
+          }
+        }
+        &.balance{
+          .inform{
+            box-shadow: 0px 64px 67px rgba(0, 0, 0, 0.17), 0px 14.2952px 14.9653px rgba(0, 0, 0, 0.0949616), 0px 4.25607px 4.45557px rgba(0, 0, 0, 0.0648379);
+          }
+          .ps{
+            ul.list{
+              li{
+                border-color: $white20;
+                .date{
+                  color: $white56;
+                }
+                .balance{
+                  &.plus{
+                    color: $nGreen;
+                  }
+                  &.minus{
+                    color: $white72;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.addfunds{
+          .title{
+            button{
+              svg{
+                fill: $nViolet;
+              }
+            }
+          }
+          ul.select{
+            li{
+              button{
+                background: $white05;
+                color: $white56;
+                &.active{
+                  background: $dOrange;
+                  color: $dWhite;
+                }
+              }
+            }
+          }
+          form{
+            ul.radio{
+              li{
+                label{
+                  &:before {
+                    border-color: $white56;
+                  }
+                }
+                input:checked + label:before {
+                  border-color: $nViolet;
+                }
+                input:checked + label:after {
+                  background: $nViolet;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

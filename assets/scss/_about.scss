@@ -1,0 +1,33 @@
+.aboutpagebox{
+  .info{
+    display: flex;
+    .text{
+      flex: 1 1 auto;
+      padding: 60px 0 40px 48px;
+      p{
+        padding: 0 0 20px;
+      }
+      b{
+        @include body1(700);
+      }
+      h5{
+        padding: 40px 0 20px;
+        margin: 0;
+        @include h5(800);
+      }
+    }
+    .img{
+      position: relative;
+      display: flex;
+      max-width: 490px;
+      min-width: 490px;
+      margin: 0 220px 0 200px;
+      img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: auto;
+      }
+    }
+  }
+}

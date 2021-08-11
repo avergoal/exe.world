@@ -1,0 +1,67 @@
+footer.main{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  margin: 0;
+  padding: 0 48px;
+  border-radius: 0px 0px 0px 34px;
+  background: $dWhite;
+  @media screen and (max-width: 1024px) {
+    padding: 0 24px;
+  }
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+  &:before{
+    position: absolute;
+    top: 0;
+    left: 48px;
+    right: 48px;
+    display: block;
+    height: 1px;
+    background: $grayMedium;
+    content: "";
+    @media screen and (max-width: 1024px) {
+      left: 24px;
+      right: 24px;
+    }
+  }
+  .copywrite{
+    @include body2;
+    color: $dGray;
+  }
+  ul{
+    display: flex;
+    align-items: center;
+    li{
+      padding: 0 0 0 48px;
+      &:first-child{
+        padding: 0;
+      }
+      a,
+      button{
+        display: block;
+        @include body2(500);
+        color: $dGray;
+        text-decoration: none;
+      }
+    }
+  }
+}
+.night{
+  footer.main{
+    background: $nBlack;
+    &:before{
+      background: $white20;
+    }
+    .copywrite{
+      color: $white56;
+    }
+    a,
+    button{
+      color: $white72;
+    }
+  }
+}

@@ -1,0 +1,295 @@
+header.main{
+  position: fixed;
+  top: 0;
+  left: 96px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  height: 88px;
+  padding: 0 48px;
+  z-index: 1000;
+  @media screen and (max-width: 1024px) {
+    left: 80px;
+    height: 56px;
+    padding: 0 24px;
+  }
+  @media screen and (max-width: 700px) {
+    left: 0;
+  }
+  @media screen and (max-width: 576px) {
+    padding: 0 16px;
+  }
+  &.clear{
+    left: 0;
+    &:before{
+      border-radius: 0;
+    }
+  }
+  &:before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px 0 0 0;
+    background: $dWhite;
+    content: "";
+    @media screen and (max-width: 700px) {
+      border-radius: 0;
+    }
+  }
+  &:after{
+    position: absolute;
+    bottom: 0;
+    left: 48px;
+    right: 48px;
+    display: block;
+    height: 1px;
+    background: $grayMedium;
+    content: "";
+    @media screen and (max-width: 1024px) {
+      left: 24px;
+      right: 24px;
+    }
+    @media screen and (max-width: 576px) {
+      left: 16px;
+      right: 16px;
+    }
+  }
+  a.logo{
+    position: relative;
+    display: block;
+    width: 63px;
+    height: 24px;
+    @media screen and (max-width: 1024px) {
+      display: flex;
+      align-items: center;
+      width: auto;
+      height: 16px;
+    }
+    svg{
+      width: 100%;
+      height: 100%;
+      fill: $dViolet;
+      &.small{
+        display: none;
+        @media screen and (max-width: 1024px) {
+          display: block;
+          width: 16px;
+          height: 16px;
+          margin: 0 16px 0 4px;
+        }
+      }
+      @media screen and (max-width: 1024px) {
+        &:not(.small) {
+          width: 42px;
+        }
+      }
+    }
+  }
+  nav{
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 auto;
+    .item{
+      position: relative;
+      margin: 0 0 0 32px;
+      @media screen and (max-width: 1024px) {
+        margin: 0 0 0 44px;
+      }
+      @media screen and (max-width: 576px) {
+        margin: 0 0 0 24px;
+      }
+      &.search{
+        margin: 0;
+        button.btn{
+          width: 56px;
+          padding: 0;
+          @media screen and (max-width: 1024px) {
+            width: 20px;
+            background: transparent;
+          }
+        }
+      }
+      &.wallet{
+        button.btn{
+          @media screen and (max-width: 1024px) {
+            padding: 0;
+            background: transparent;
+          }
+          span{
+            display: block;
+            padding: 0 8px 0 10px;
+            @include body2(500);
+            font-feature-settings: 'pnum' on, 'lnum' on;
+            @media screen and (max-width: 1024px) {
+              display: none;
+            }
+          }
+          .plus{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: $dViolet;
+            svg{
+              width: 12px;
+              height: 12px;
+              fill: $dWhite;
+            }
+            @media screen and (max-width: 1024px) {
+              display: none;
+            }
+          }
+        }
+      }
+      &.notifications{
+        button.btn{
+          width: 56px;
+          padding: 0;
+          @media screen and (max-width: 1024px) {
+            width: 18px;
+            background: transparent;
+          }
+          span.badge{
+            top: 8px;
+            right: 4px;
+            height: 17px;
+            border: 1px solid $dWhite;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 10px;
+            color: $dWhite;
+            @media screen and (max-width: 1024px) {
+              right: -18px;
+            }
+          }
+        }
+        .dropdown{
+          width: 460px;
+        }
+      }
+      &.account{
+        button.btn{
+          text-transform: none;
+          @media screen and (max-width: 1024px) {
+            padding: 0;
+            background: transparent;
+          }
+          .photo{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            img{
+              display: block;
+              width: 100%;
+            }
+          }
+          span{
+            display: block;
+            padding: 0 16px;
+            @include subTitle1;
+            @media screen and (max-width: 1024px) {
+              display: none;
+            }
+          }
+          @media screen and (max-width: 1024px) {
+            svg{
+              display: none;
+            }
+          }
+        }
+        .dropdown{
+          li:last-child{
+            svg{
+              fill: $dOrange;
+            }
+            span{
+              color: $dOrange;
+            }
+          }
+        }
+      }
+      &.signin{
+        button{
+          @media screen and (max-width: 1024px) {
+            width: 18px;
+            padding: 0;
+            background: transparent;
+          }
+          span{
+            display: block;
+            padding: 0 0 0 8px;
+            @media screen and (max-width: 1024px) {
+              display: none;
+            }
+          }
+        }
+      }
+      button.btn{
+        height: 56px;
+        svg{
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+  .dropdown{
+    img.illustration{
+      visibility: hidden;
+    }
+    &.open{
+      img.illustration{
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.night{
+  header.main{
+    &:before{
+      background: $nBlack;
+    }
+    &:after{
+      background: $white20;
+    }
+    a.logo svg{
+      fill: $nViolet;
+    }
+    .item{
+      &.wallet{
+        button.btn{
+          .plus{
+            background: $nViolet;
+          }
+        }
+      }
+      &.notifications{
+        button.btn{
+          span.badge{
+            border-color: $whiteLight;
+          }
+        }
+      }
+      &.account{
+        .dropdown{
+          li:last-child{
+            svg{
+              fill: $nOrange;
+            }
+            span{
+              color: $nOrange;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

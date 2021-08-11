@@ -1,0 +1,229 @@
+.gamecard{
+  position: relative;
+  padding: 0 12px 32px;
+  &.swiper-slide{
+    position: relative;
+    padding: 0;
+    z-index: 2;
+    &:hover{
+      z-index: 1;
+    }
+  }
+  .box{
+    position: relative;
+    top: 0;
+    height: 100%;
+    background: $dWhite;
+    box-shadow: 0 0 0 0 transparent;
+    transition: top 0.35s ease;
+    overflow: hidden;
+    .img{
+      position: relative;
+      overflow: hidden;
+      &:after{
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.35s ease;
+        content: "";
+      }
+      a{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 104px;
+        height: 48px;
+        margin: -74px 0 0 -52px;
+        border-radius: 12px;
+        background: $white20;
+        backdrop-filter: blur(5px);
+        text-decoration: none;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.35s ease;
+        z-index: 1;
+        svg{
+          display: block;
+          width: 13px;
+          height: 16px;
+          fill: $dWhite;
+        }
+        span{
+          display: block;
+          padding: 0 0 0 16px;
+          @include button1(800);
+          color: $dWhite;
+          text-transform: uppercase;
+        }
+      }
+    }
+    .info{
+      .desc{
+        color: $dGray;
+      }
+    }
+  }
+  &:hover{
+    .box{
+      .img{
+        &:after{
+          visibility: visible;
+          opacity: 1;
+        }
+        a{
+          margin-top: -24px;
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  // Big size
+  &.b{
+    max-width: 414px;
+    min-width: 414px;
+    @media screen and (max-width: 1300px) {
+      max-width: calc((100Vw / 100) * 33.85);
+      min-width: calc((100Vw / 100) * 33.85);
+    }
+    @media screen and (max-width: 1024px) {
+      max-width: 260px;
+      min-width: 260px;
+    }
+    @media screen and (max-width: 576px) {
+      max-width: 172px;
+      min-width: 172px;
+    }
+  }
+  &.b,
+  &.f{
+    .box{
+      border-radius: 16px;
+      @media screen and (max-width: 576px) {
+        border-radius: 8px;
+      }
+      .img{
+        border-radius: 16px;
+        @media screen and (max-width: 576px) {
+          border-radius: 8px;
+        }
+      }
+      .info{
+        padding: 0 16px 16px;
+        @media screen and (max-width: 1024px) {
+          padding: 0 8px 16px;
+        }
+        @media screen and (max-width: 576px) {
+          padding: 0 8px;
+        }
+        .title{
+          padding: 16px 0 0;
+          @include h5;
+          @media screen and (max-width: 1024px) {
+            padding: 12px 0 0;
+            @include h6;
+          }
+          @media screen and (max-width: 576px) {
+            padding: 6px 0 0;
+            @include subtitle2(700);
+          }
+        }
+        .desc{
+          padding: 8px 0 0;
+          @include subTitle1;
+          @media screen and (max-width: 1024px) {
+            padding: 4px 0 0;
+            @include subtitle2;
+          }
+          @media screen and (max-width: 576px) {
+            padding: 2px 0 0;
+            @include caption2(500);
+          }
+        }
+      }
+    }
+    &:hover{
+      .box{
+        top: -20px;
+        box-shadow: 0px 54px 67px 0px rgba(0, 0, 0, .17);
+        @media screen and (max-width: 1024px) {
+          top: 0;
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+        }
+      }
+    }
+  }
+  // Middle || Small || Float size
+  &.m{
+    max-width: 256px;
+    min-width: 256px;
+    @media screen and (max-width: 480px) {
+      max-width: 172px;
+      min-width: 172px;
+    }
+  }
+  //  size
+  &.s{
+    max-width: 246px;
+    min-width: 246px;
+    @media screen and (max-width: 480px) {
+      max-width: 172px;
+      min-width: 172px;
+    }
+  }
+  &.m,
+  &.s{
+    .box{
+      border-radius: 12px;
+      @media screen and (max-width: 576px) {
+        border-radius: 8px;
+      }
+      .img{
+        border-radius: 12px;
+        @media screen and (max-width: 576px) {
+          border-radius: 8px;
+        }
+      }
+      .info{
+        padding: 0 8px 8px;
+        .title{
+          padding: 8px 0 0;
+          @include subTitle1;
+        }
+        .desc {
+          @include subtitle2(6)
+        }
+      }
+    }
+    &:hover{
+      .box{
+        top: -10px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, .17);
+      }
+    }
+  }
+}
+.night{
+  .gamecard{
+    .box{
+      background: $whiteLight;
+      .info{
+        .title{
+          color: $nWhite;
+        }
+        .desc{
+          color: $white56;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,283 @@
+.authmodal{
+  padding: 40px;
+  .modalcontent{
+    .top{
+      position: relative;
+      a.logo{
+        display: block;
+        width: 72px;
+        height: 28px;
+        svg{
+          width: 100%;
+          height: 100%;
+          fill: $dViolet;
+        }
+      }
+      &.flex{
+        display: flex;
+        align-items: center;
+        button{
+          width: 20px;
+          height: 16px;
+          svg{
+            width: 100%;
+            height: 100%;
+            fill: $dViolet;
+          }
+        }
+        span{
+          display: block;
+          padding: 0 0 0 20px;
+          @include h5;
+        }
+      }
+    }
+    form{
+      padding: 40px 0 0;
+      &.st1{
+        padding: 40px 0 0 40px;
+        @media screen and (max-width: 576px) {
+          padding: 40px 0 0;
+        }
+        .btns{
+          padding: 0;
+        }
+      }
+      .desc{
+        padding: 0 0 34px;
+        @include body1;
+      }
+      fieldset{
+        padding: 0 0 24px;
+        input{
+          display: block;
+          height: 56px;
+          padding: 0 16px;
+        }
+        button{
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          width: 22px;
+          height: 16px;
+          margin: -20px 0 0;
+          svg{
+            width: 100%;
+            height: 100%;
+            fill: $dGray;
+          }
+        }
+      }
+      .btns{
+        display: flex;
+        align-items: center;
+        padding: 0 0 24px;
+        button{
+          padding: 0 16px;
+          margin: 0 24px 0 0;
+          border-radius: 12px;
+          &.link{
+            width: auto;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            border-radius: 0;
+            background: transparent;
+            color: $dViolet;
+          }
+        }
+      }
+      .signup{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 0;
+        border: 1px solid $grayMedium;
+        border-width: 1px 0;
+        .text{
+          @include body1(500);
+          color: $dGray;
+        }
+        button{
+          display: block;
+          @include button1(800);
+          color: $dViolet;
+          text-transform: uppercase;
+        }
+      }
+      .social{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 0 0;
+        @media screen and (max-width: 576px) {
+          display: block;
+        }
+        .text{
+          @include body1(500);
+          color: $dGray;
+          @media screen and (max-width: 576px) {
+            padding: 0 0 12px;
+          }
+        }
+        ul{
+          display: flex;
+          align-items: center;
+          li{
+            padding: 0 12px 0 0;
+            &:last-child{
+              padding: 0;
+            }
+            a{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 48px;
+              height: 48px;
+              border: 2px solid transparent;
+              border-radius: 12px;
+              svg{
+                fill: $dWhite;
+              }
+              img{
+                width: 20px;
+              }
+            }
+            &:nth-child(1) a{
+              border-color: $dFacebook;
+              background: $dFacebook;
+              svg{
+                width: 8px;
+                height: 16px;
+              }
+            }
+            &:nth-child(2) a{
+              border-color: $dTwitter;
+              background: $dTwitter;
+              svg{
+                width: 16px;
+                height: 14px;
+              }
+            }
+            &:nth-child(3) a{
+              border-color: $grayLight;
+              background: $dWhite;
+              svg{
+                width: 18px;
+                height: 18px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.textbox{
+    padding: 24px;
+    .modalcontent{
+      .top{
+        @include h5(800);
+      }
+      .text{
+        padding: 24px 0 0;
+        color: $dGray;
+      }
+      button{
+        height: 36px;
+        margin: 32px 0 0;
+      }
+    }
+  }
+  &.logoutbox{
+    padding: 24px;
+    .modalcontent{
+      .top{
+        @include h5(800);
+      }
+      .text{
+        padding: 24px 0 0;
+        color: $dGray;
+      }
+      .btns{
+        display: flex;
+        align-items: center;
+        padding: 32px 0 0;
+        button{
+          height: 36px;
+          margin: 0 8px 0 0;
+          &:last-child{
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+.night{
+  .authmodal{
+    .modalcontent{
+      .top{
+        a.logo{
+          svg{
+            fill: $nViolet;
+          }
+        }
+        &.flex{
+          button{
+            svg{
+              fill: $nViolet;
+            }
+          }
+        }
+      }
+      form{
+        .desc{
+          color: $white72;
+        }
+        fieldset{
+          button{
+            svg{
+              fill: $white56;
+            }
+          }
+        }
+        .btns{
+          button{
+            &.link{
+              color: $nViolet;
+            }
+          }
+        }
+        .signup{
+          border-color: $white20;
+          .text{
+            color: $white56;
+          }
+          button{
+            color: $nViolet;
+          }
+        }
+        .social{
+          .text{
+            color: $white56;
+          }
+        }
+      }
+    }
+    &.textbox{
+      .modalcontent{
+        .text{
+          padding: 24px 0 0;
+          color: $white72;
+        }
+      }
+    }
+    &.logoutbox{
+      .modalcontent{
+        .text{
+          color: $white72;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,183 @@
+.gamemodal{
+  padding: 24px;
+  .modalcontent{
+    .title{
+      @include h5(800);
+    }
+    .desc{
+      padding: 24px 0 0;
+      color: $dGray;
+      strong{
+        font-weight: 700;
+        color: $dBlack;
+      }
+    }
+    .btns{
+      display: flex;
+      align-items: center;
+      padding: 30px 0 0;
+      button{
+        margin: 0 8px 0 0;
+        &:last-child{
+          margin: 0;
+        }
+      }
+    }
+  }
+  &.info{
+    padding: 40px 0 0;
+    overflow: hidden;
+    .top{
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0 40px 40px;
+      &:after{
+        position: absolute;
+        top: 100%;
+        left: 40px;
+        right: 40px;
+        height: 1px;
+        background: $grayMedium;
+        content: "";
+      }
+      .img{
+        max-width: 124px;
+        min-width: 124px;
+        height: 124px;
+        margin: 0 32px 0 0;
+        border-radius: 16px;
+        overflow: hidden;
+        img{
+          height: 100%;
+        }
+      }
+      .info{
+        .title{
+          @include h4;
+        }
+        .btns{
+          display: flex;
+          align-items: center;
+          padding: 16px 0 0;
+          .item{
+            position: relative;
+            padding: 0 8px 0 0;
+            &:last-child{
+              padding: 0;
+            }
+            .dropdown{
+              ul{
+                li{
+                  &:nth-child(1){
+                    a{
+                      color: $dFacebook;
+                      svg{
+                        fill: $dFacebook;
+                      }
+                    }
+                  }
+                  &:nth-child(2){
+                    a{
+                      color: $dTwitter;
+                      svg{
+                        fill: $dTwitter;
+                      }
+                    }
+                  }
+                  &:nth-child(3){
+                    a{
+                      color: $dVk;
+                      svg{
+                        fill: $dVk;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .screens{
+      .boxtitle{
+        padding: 40px 40px 24px;
+        @include h4;
+      }
+      .swiperbox{
+        padding: 0 0 0 40px;
+        .swiper-container{
+          overflow: visible;
+        }
+        .swiper-slide{
+          max-width: 414px;
+          min-width: 414px;
+          margin-bottom: 24px;
+          border-radius: 16px;
+          box-shadow:  0px 64px 67px rgba(0, 0, 0, 0);
+          transition: all .35s ease;
+          cursor: pointer;
+          .img{
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            span{
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 48px;
+              height: 48px;
+              margin: -12px 0 0 -12px;
+              border-radius: 50%;
+              background: $dViolet;
+              visibility: hidden;
+              opacity: 0;
+              transition: all .35s ease;
+              svg{
+                width: 24px;
+                height: 24px;
+                fill: $dWhite;
+              }
+            }
+            &:before{
+              position: absolute;
+              top: 0;
+              left: 0;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background: rgba(0, 0, 0, 0.6);
+              visibility: hidden;
+              opacity: 0;
+              transition: all .35s ease;
+              content: "";
+            }
+          }
+          &:hover{
+            box-shadow:  0px 64px 67px rgba(0, 0, 0, 0.2);
+            .img{
+              &:before{
+                visibility: visible;
+                opacity: 1;
+              }
+              span{
+                visibility: visible;
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+    .desc{
+      padding: 0 40px 40px;
+    }
+  }
+}
+.cool-lightbox.cool-lightbox--can-zoom .cool-lightbox__slide img{
+  width: auto!important;
+}

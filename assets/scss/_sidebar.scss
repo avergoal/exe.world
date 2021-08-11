@@ -1,0 +1,179 @@
+aside.sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 96px;
+  height: 100Vh;
+  @media screen and (max-width: 1024px) {
+    width: 80px;
+  }
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+  &.mobile{
+    display: none;
+    &:after{
+      display: none;
+    }
+    @media screen and (max-width: 700px) {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 78px;
+      background: $grayLight;
+      ul.menu{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        li{
+          a,
+          button{
+            @media screen and (max-width: 576px) {
+              @include caption2(500);
+            }
+            i{
+              @media screen and (max-width: 576px) {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &:after{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(230,239,249,1) 100%);
+    content: "";
+  }
+  ul{
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    &.menu{
+      padding: 20px 0 0;
+      @media screen and (max-width: 1024px) {
+        padding: 28px 0 0;
+      }
+      li{
+        display: block;
+        width: 100%;
+        a,
+        button{
+          display: block;
+          width: 100%;
+          padding: 20px 0;
+          color: $dGray;
+          text-decoration: none;
+          @media screen and (max-width: 1024px) {
+            padding: 12px 0;
+          }
+          .ico{
+            display: flex;
+            justify-content: center;
+            svg{
+              display: block;
+              width: 24px;
+              height: 24px;
+              fill: $dGray;
+            }
+          }
+          span{
+            display: block;
+            padding: 10px 0 0;
+            @include caption1(500, uppercase);
+            text-align: center;
+            @media screen and (max-width: 1024px) {
+              text-transform: none;
+            }
+          }
+          i{
+            font-style: normal;
+          }
+        }
+        &:first-child a{
+          color: $dBlack;
+          .ico svg{
+            fill: $dViolet;
+          }
+        }
+      }
+    }
+    &.games{
+      padding: 40px 0;
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
+      li{
+        display: flex;
+        justify-content: center;
+        padding: 0 0 8px;
+        &:last-child{
+          padding: 0;
+        }
+        a{
+          display: block;
+          width: 44px;
+          height: 44px;
+          border-radius: 8px;
+          overflow: hidden;
+          img{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+.night{
+  aside.sidebar{
+    &:after{
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(39,38,45,1) 100%);
+    }
+    &.mobile{
+      @media screen and (max-width: 700px) {
+        background: $dBlack;
+        ul.menu{
+          li{
+            a,
+            button{
+              color: $white56;
+              svg{
+                fill: $white56;
+              }
+            }
+          }
+        }
+      }
+    }
+    ul.menu{
+      li{
+        a,
+        button{
+          color: $white56;
+          svg{
+            fill: $white56;
+          }
+        }
+        &:first-child a{
+          color: $nWhite;
+          .ico svg{
+            fill: $nViolet;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+.newsmodal{
+  padding: 40px 0 0;
+  .modalcontent{
+    .top{
+      padding: 0 40px 40px;
+      @include h3;
+      @media screen and (max-width: 700px) {
+        padding: 0 0 20px;
+      }
+    }
+    .filters{
+      margin: 0 40px!important;
+      @media screen and (max-width: 700px) {
+        margin: 0!important;
+      }
+      @media screen and (max-width: 576px) {
+        padding: 0;
+      }
+    }
+    .ps{
+      max-height: 650px;
+      margin: 0 0 10px;
+      ul.news{
+        li{
+          position: relative;
+          display: flex;
+          align-items: flex-start;
+          padding: 16px 35px 16px 40px;
+          @media screen and (max-width: 700px) {
+            padding: 16px 35px 16px 0;
+          }
+          @media screen and (max-width: 576px) {
+            padding: 16px 15px 16px 0;
+          }
+          &:after{
+            position: absolute;
+            bottom: 0;
+            left: 120px;
+            right: 0;
+            display: block;
+            height: 1px;
+            background: $grayMedium;
+            content: "";
+            @media screen and (max-width: 700px) {
+              left: 80px;
+            }
+            @media screen and (max-width: 576px) {
+              left: 58px;
+            }
+          }
+          .img{
+            max-width: 56px;
+            min-width: 56px;
+            height: 56px;
+            margin: 0 24px 0 0;
+            border-radius: 8px;
+            overflow: hidden;
+            @media screen and (max-width: 576px) {
+              max-width: 40px;
+              min-width: 40px;
+              height: 40px;
+              margin: 0 16px 0 0;
+            }
+            img{
+              height: 100%;
+            }
+          }
+          .info{
+            flex: 1 1 auto;
+            .name{
+              display: flex;
+              align-items: center;
+              strong{
+                display: block;
+                @include subTitle1;
+              }
+              span{
+                display: block;
+                padding: 0 0 0 8px;
+                @include caption1;
+                color: $dGray;
+              }
+            }
+            .text{
+              padding: 10px 0 0;
+            }
+            .btns{
+              display: flex;
+              align-items: center;
+              @media screen and (max-width: 576px) {
+                display: block;
+                padding: 10px 0 0;
+              }
+              button{
+                height: 36px;
+                margin: 16px 8px 0 0;
+                border-radius: 8px;
+                &:last-child{
+                  margin: 16px 0 0;
+                }
+                @media screen and (max-width: 576px) {
+                  margin: 0 0 8px;
+                  &:last-child{
+                    margin: 0;
+                  }
+                }
+              }
+            }
+          }
+          .extended{
+            margin: 0 0 0 auto;
+          }
+          &.empty{
+            display: block;
+            padding: 100px 0;
+            &:after{
+              display: none;
+            }
+            .img{
+              position: relative;
+              width: 300px;
+              height: 186px;
+              margin: 0 auto;
+            }
+            .text{
+              padding: 80px 0 0;
+              b{
+                display: block;
+                @include h6;
+                color: $dGray;
+                text-align: center;
+              }
+              p{
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 4px 0 0;
+                color: $dGray;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.night{
+  .newsmodal{
+    .modalcontent{
+      .ps{
+        ul.news{
+          li{
+            &:after{
+              background: $white20;
+            }
+            .info{
+              .name{
+                span{
+                  color: $white56;
+                }
+              }
+            }
+            &.empty{
+              .text{
+                b,
+                p{
+                  color: $white72;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

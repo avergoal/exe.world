@@ -1,0 +1,911 @@
+body{
+  width: 100%;
+  min-height: 100Vh;
+  height: 100Vh;
+  background: $dBlack;
+  font: 16px/28px 'Raleway', sans-serif;
+  font-weight: 400;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  overflow: hidden;
+}
+*{
+  box-sizing: border-box;
+  text-align: left;
+}
+ul{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+img{
+  display: block;
+  width: 100%;
+}
+button{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  @include button1(800);
+  text-transform: uppercase;
+  cursor: pointer;
+  &.btn{
+    height: 48px;
+    padding: 0 16px;
+    border-radius: 12px;
+    white-space: nowrap;
+    &.st1{
+      background: $grayLight;
+      svg{
+        fill: $dGray;
+      }
+      span{
+        color: $dGray;
+      }
+    }
+    &.st2{
+      background: $dViolet;
+      color: $dWhite;
+    }
+    &.st3{
+      background: $violet15;
+      color: $dViolet;
+    }
+  }
+}
+.night{
+  button.btn{
+    &.st1{
+      background: $whiteLight;
+      svg{
+        fill: $white72;
+      }
+      span{
+        color: $nWhite;
+      }
+    }
+  }
+}
+input,
+textarea{
+  display: block;
+  max-width: 100%;
+  min-width: 100%;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: $grayLight;
+  outline: 0;
+  @include body1;
+  color: $dGray;
+  &::placeholder{
+    color: $dGray;
+  }
+}
+textarea{
+  min-height: 96px;
+  height: auto;
+}
+.night{
+  input,
+  textarea{
+    background: $white10;
+    color: $white56;
+    &::placeholder{
+      color: $white56;
+    }
+  }
+}
+label{
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+fieldset{
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+// App
+#__nuxt,
+#__layout{
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  .app{
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    padding: 88px 0 0;
+    overflow-x: hidden;
+    @media screen and (max-width: 1024px) {
+      padding: 56px 0 0;
+    }
+    &.day{
+      background: $grayLight;
+    }
+    &.night{
+      background: $dBlack;
+    }
+  }
+}
+// Dropdown
+.dropdown{
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 228px;
+  margin: 10px 0 0;
+  border-radius: 12px;
+  background: $dWhite;
+  box-shadow: 0px 40px 67px rgba(0, 0, 0, .2);
+  visibility: hidden;
+  opacity: 0;
+  transition: all .35s ease;
+  z-index: -100;
+  @media screen and (max-width: 576px) {
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%!important;
+    margin: 0;
+    border-radius: 0;
+    overflow: scroll;
+  }
+  &.open{
+    visibility: visible;
+    opacity: 1;
+    z-index: 100;
+  }
+  .subtitle{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    span{
+      @include h6;
+      color: $dBlack;
+    }
+    svg{
+      display: block;
+      width: 20px;
+      height: 12px;
+      fill: $dGray;
+    }
+  }
+  ul.notify{
+    padding: 0 0 8px;
+    li{
+      position: relative;
+      &:after{
+        position: absolute;
+        bottom: 0;
+        left: 70px;
+        right: 0;
+        display: block;
+        height: 1px;
+        background: $grayMedium;
+        content: "";
+      }
+      button{
+        justify-content: flex-start;
+        width: 100%;
+        margin: 0 0 18px;
+        padding: 8px 14px;
+        margin: 0;
+        border-left: 2px solid transparent;
+        background: $dWhite;
+        @include subtitle2;
+        text-transform: none;
+        &.active{
+          border-color: $dOrange;
+          background: $grayLight;
+        }
+        .img{
+          max-width: 40px;
+          min-width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          overflow: hidden;
+          img{
+            height: 100%;
+          }
+        }
+        .info{
+          flex: 1 1 auto;
+          padding: 0 0 0 16px;
+          span{
+            position: relative;
+            top: 0;
+            right: 0;
+            display: block;
+            height: auto;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            @include body2;
+            color: $dBlack;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+  .notifyempty{
+    padding: 16px 0 32px;
+    .img{
+      position: relative;
+      width: 200px;
+      height: 188px;
+      margin: 32px auto 0;
+      img{
+        height: 100%;
+      }
+    }
+    .text{
+      padding: 28px 0 0;
+      @include h6;
+      color: $dGray;
+      text-align: center;
+    }
+  }
+  ul.menu{
+    padding: 16px 0;
+    li{
+      a,
+      button{
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        height: auto;
+        padding: 10px 18px;
+        text-decoration: none;
+        .ico{
+          display: flex;
+          justify-content: center;
+          max-width: 20px;
+          min-width: 20px;
+          margin: 0 18px 0 0;
+          svg{
+            width: 20px;
+            height: 20px;
+            fill: $dGray;
+          }
+        }
+        span{
+          display: block;
+          @include subtitle2(600);
+          color: $dGray;
+          text-transform: none!important;
+        }
+      }
+    }
+  }
+}
+.night{
+  .dropdown{
+    background: $blackLight;
+    .subtitle{
+      span{
+        color: $nWhite;
+      }
+      svg{
+        fill: $white56;
+      }
+    }
+    ul.notify{
+      li{
+        &:after{
+          background: $white20;
+        }
+        button{
+          background: $blackLight;
+          &.active{
+            border-color: $nOrange;
+            background: $white05;
+          }
+          .info{
+            span{
+              color: $white72;
+            }
+          }
+        }
+      }
+    }
+    ul.menu{
+      li{
+        a,
+        button{
+          .ico{
+            svg{
+              fill: $white72;
+            }
+          }
+          span{
+            color: $nWhite;
+          }
+        }
+      }
+    }
+    .notifyempty{
+      .text{
+        color: $white72;
+      }
+    }
+  }
+}
+// Badge
+span.badge{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1px 8px 0;
+  border-radius: 4px;
+  background: $dOrange;
+  color: $dWhite;
+}
+// Main page scroll
+.ps{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  overflow-anchor: none;
+  -ms-overflow-style: none;
+  touch-action: auto;
+  -ms-touch-action: auto;
+  &.appscroll{
+    position: relative;
+    width: calc(100% - 96px);
+    height: 100%;
+    margin: 0 0 0 96px;
+    border-radius: 0 0 0 24px;
+    background: $dWhite;
+    @media screen and (max-width: 1024px) {
+      width: calc(100% - 80px);
+      margin: 0 0 0 80px;
+    }
+    @media screen and (max-width: 700px) {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+    }
+    &.clear{
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+    }
+  }
+  .ps__rail{
+    &-y{
+      position: absolute;
+      left: auto!important;
+      right: 10px;
+      width: 12px;
+      border-radius: 6px;
+      background: $black32;
+      opacity: 1;
+      z-index: 100;
+      @media screen and (max-width: 1024px) {
+        right: 5px!important;
+        width: 6px;
+        border-radius: 3px;
+      }
+      .ps__thumb-y{
+        position: absolute;
+        width: 100%;
+        border-radius: 6px;
+        background: $dBlack;
+        @media screen and (max-width: 1024px) {
+          border-radius: 3px;
+        }
+      }
+    }
+    &-x{
+      display: none;
+    }
+  }
+}
+.night{
+  .ps{
+    &.appscroll{
+      background: $nBlack;
+    }
+    .ps__rail{
+      &-y{
+        background: $white20;
+        .ps__thumb-y{
+          background: $white56;
+        }
+      }
+    }
+  }
+}
+// Main content
+main.content{
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+}
+// Pagetitle
+.pagetitle{
+  padding: 40px 48px 60px;
+  margin: 0;
+  @include h1;
+  @media screen and (max-width: 1024px) {
+    padding: 24px 24px 40px;
+    @include h2;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 24px 24px 30px;
+    @include h3;
+  }
+  @media screen and (max-width: 576px) {
+    padding: 16px 16px 24px;
+    @include h4;
+  }
+}
+.night{
+  color: $nWhite;
+}
+// Boxtitle
+.boxtitle{
+  display: flex;
+  align-items: center;
+  padding: 0 0 24px;
+  @include h3;
+  @media screen and (max-width: 1024px) {
+    @include h4;
+  }
+  @media screen and (max-width: 576px) {
+    justify-content: space-between;
+    padding: 0 0 16px;
+    @include h5;
+  }
+  span{
+    display: block;
+    padding: 0 24px 0 0;
+    i{
+      font-style: normal;
+      @media screen and (max-width: 576px) {
+        display: none;
+      }
+    }
+  }
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 32px;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: $dViolet;
+    @media screen and (max-width: 576px) {
+      max-width: 24px;
+      min-width: 24px;
+      height: 24px;
+    }
+    svg {
+      display: block;
+      width: 7px;
+      height: 12px;
+      margin: 0 0 0 2px;
+      fill: $dWhite;
+    }
+  }
+}
+.night{
+  .boxtitle{
+    span{
+      color: $nWhite;
+    }
+  }
+}
+// Img illustration
+img.illustration{
+  position: absolute;
+  top: 0;
+  left: 0;
+  &.day{
+    opacity: 1;
+    visibility: visible;
+  }
+  &.night{
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.night{
+  img.illustration{
+    &.day{
+      opacity: 0;
+      visibility: hidden;
+    }
+    &.night{
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+// Svg ico
+svg.icon{
+  display: block;
+}
+// User photo
+.userphoto{
+  max-width: 56px;
+  min-width: 56px;
+  height: 56px;
+  margin: 0 24px 0 0;
+  border-radius: 50%;
+  overflow: hidden;
+  @media screen and (max-width: 576px) {
+    max-width: 40px;
+    min-width: 40px;
+    height: 40px;
+    margin: 0 16px 0 0;
+  }
+  img{
+    height: 100%;
+  }
+}
+// Swiper navigation
+.swipernav{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  z-index: 100;
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+  button{
+    position: absolute;
+    top: 0;
+    width: 64px;
+    height: 88px;
+    margin: -74px 0 0;
+    border-radius: 12px;
+    background: $black90;
+    transition: all .35s ease;
+    &.swiper-button-disabled{
+      display: none;
+    }
+    svg{
+      display: block;
+      width: 14px;
+      height: 24px;
+      fill: $dWhite;
+    }
+  }
+}
+// Filters
+.filters{
+  max-width: 100%;
+  overflow: hidden;
+  @media screen and (max-width: 576px) {
+    max-width: calc(100% + 32px);
+    min-width: calc(100% + 32px);
+    margin: 0 0 0 -16px;
+    padding: 0 0 0 16px;
+  }
+  ul{
+    display: flex;
+    align-items: center;
+    padding: 0 0 24px;
+    margin: 0;
+    list-style: none;
+    @media screen and (max-width: 576px) {
+      padding: 0 0 16px;
+    }
+    li{
+      padding: 0 8px 0 0;
+      &:last-child{
+        padding: 0;
+      }
+      button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 48px;
+        padding: 0 16px;
+        margin: 0;
+        border: 0;
+        border-radius: 12px;
+        background: $grayLight;
+        transition: background .35s ease;
+        white-space: nowrap;
+        @media screen and (max-width: 576px) {
+          height: 32px;
+          padding: 0 12px;
+          border-radius: 8px;
+        }
+        span{
+          display: block;
+          @include button1(800);
+          color: $dGray;
+          text-transform: uppercase;
+          @media screen and (max-width: 576px) {
+            @include button2(800);
+          }
+          &.badge{
+            position: relative;
+            height: 20px;
+            margin: 0 0 0 10px;
+            padding: 0 8px 2px;
+            @include caption2;
+            color: $dWhite;
+          }
+        }
+        &.active{
+          background: $dOrange;
+          span{
+            color: $dWhite;
+            &.badge{
+              background: $grayLight;
+              color: $dGray;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.night{
+  .filters{
+    ul{
+      li{
+        button{
+          background: $white05;
+          span{
+            color: $white56;
+            &.badge{
+              color: $dWhite;
+            }
+          }
+          &.active{
+            background: $dOrange;
+            span{
+              color: $dWhite;
+              &.badge{
+                color: $dWhite;
+                background: $blackLight;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// Page route animate
+.page{
+  &-enter{
+    opacity: 0;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    &-active{
+      transition: all .5s ease;
+    }
+  }
+  &-leave{
+    &-active{
+      opacity: 0;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      transition: all 0s ease!important;
+    }
+  }
+}
+// Modals
+.modalbox{
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100Vh;
+  background: rgba(0, 0, 0, 0.6);
+  visibility: hidden;
+  opacity: 0;
+  z-index: 2000;
+  transition: all .5s ease;
+  &.open{
+    visibility: visible;
+    opacity: 1;
+  }
+  .modalinfo{
+    position: relative;
+    top: -100px;
+    border-radius: 24px;
+    background: $dWhite;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .35s ease;
+    overflow: hidden;
+    &.bigger{
+      width: 1112px;
+      max-width: calc(100% - 48px);
+      @media screen and (max-width: 700px) {
+        max-width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 24px!important;
+      }
+      @media screen and (max-width: 576px) {
+        padding: 16px!important;
+      }
+    }
+    &.big{
+      width: 1048px;
+      max-width: calc(100% - 48px);
+      @media screen and (max-width: 700px) {
+        max-width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 24px!important;
+      }
+      @media screen and (max-width: 576px) {
+        padding: 16px!important;
+      }
+    }
+    &.middle{
+      width: 700px;
+      max-width: calc(100% - 48px);
+      @media screen and (max-width: 700px) {
+        max-width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 24px!important;
+      }
+      @media screen and (max-width: 576px) {
+        padding: 16px!important;
+      }
+    }
+    &.small{
+      width: 560px;
+      @media screen and (max-width: 576px) {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 24px!important;
+        overflow: scroll;
+      }
+      @media screen and (max-width: 480px) {
+        padding: 16px!important;
+      }
+    }
+    button.close{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: $grayLight;
+      z-index: 1;
+      svg{
+        width: 9px;
+        height: 9px;
+        fill: $dGray;
+      }
+    }
+  }
+  &.active .modalinfo{
+    top: 0;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+.night{
+  .modalbox{
+    .modalinfo{
+      background: $nBlack;
+      button.close{
+        background: $white10;
+        svg{
+          fill: $white72;
+        }
+      }
+    }
+  }
+}
+// User modal top
+.usermodaltop{
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 0 16px;
+  &:before{
+    position: absolute;
+    bottom: 0;
+    left: -40px;
+    right: -40px;
+    height: 1px;
+    background: $grayMedium;
+    content: "";
+  }
+  button{
+    width: 20px;
+    height: 16px;
+    margin: 0 28px 0 40px;
+    @media screen and (max-width: 700px) {
+      margin: 0 20px 0 0;
+    }
+    svg{
+      width: 100%;
+      height: 100%;
+      fill: $dViolet;
+    }
+  }
+  .userphoto{
+    margin: 0 16px 0 0;
+  }
+  .info{
+    .name{
+      @include subTitle1;
+    }
+    .online{
+      display: flex;
+      align-items: center;
+      padding: 4px 0 0;
+      @include caption1;
+      color: $dGray;
+      span{
+        display: block;
+        max-width: 8px;
+        min-width: 8px;
+        height: 8px;
+        margin: 0 6px 0 0;
+        border-radius: 50%;
+        background: $grayMedium;
+      }
+      &.active span{
+        background: $dGreen;
+      }
+    }
+  }
+}
+.night{
+  .usermodaltop{
+    &:before{
+      background: $white20;
+    }
+    button{
+      svg{
+        fill: $nViolet;
+      }
+    }
+    .info{
+      .online{
+        color: $white56;
+        span{
+          background: $white20;
+        }
+        &.active span{
+          background: $nGreen;
+        }
+      }
+    }
+  }
+}

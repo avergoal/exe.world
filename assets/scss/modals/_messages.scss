@@ -1,0 +1,644 @@
+.messagesmodal{
+  padding: 40px 0 0;
+  &.chat{
+    padding: 16px 0;
+    button.close{
+      @media screen and (max-width: 576px) {
+        display: none;
+      }
+    }
+  }
+  .modalcontent{
+    .top{
+      position: relative;
+      padding: 0 40px;
+      @include h3;
+      @media screen and (max-width: 700px) {
+        padding: 0;
+        @include h4;
+      }
+      &.flex{
+        display: flex;
+        align-items: center;
+        button{
+          width: 20px;
+          height: 16px;
+          svg{
+            width: 100%;
+            height: 100%;
+            fill: $dViolet;
+          }
+        }
+        span{
+          display: block;
+          padding: 0 0 0 28px;
+          @include h4;
+        }
+      }
+    }
+    .usermodaltop{
+      .nav{
+        display: flex;
+        align-items: center;
+        margin: 0 65px 0 auto;
+        @media screen and (max-width: 700px) {
+          margin: 0 30px 0 auto;
+        }
+        @media screen and (max-width: 576px) {
+          margin: 0 0 0 auto;
+        }
+        .item{
+          position: relative;
+          max-width: 20px;
+          min-width: 20px;
+          height: 20px;
+          margin: 0 28px 0 0;
+          button{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            svg{
+              fill: $dGray;
+            }
+          }
+          &:first-child button{
+            svg{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          &:last-child{
+            margin: 0;
+            button{
+              svg{
+                width: 6px;
+                height: 100%;
+              }
+            }
+          }
+          .dropdown{
+            li{
+              svg{
+                width: 20px;
+                height: 20px;
+              }
+              &:last-child{
+                span{
+                  color: $dOrange;
+                }
+                svg{
+                  fill: $dOrange;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .searchchat{
+      position: relative;
+      height: 100%;
+      max-height: 0;
+      padding: 0 40px;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+      @media screen and (max-width: 700px) {
+        padding: 0;
+      }
+      &.open{
+        max-height: 64px;
+      }
+      &:before{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: $grayMedium;
+        content: "";
+        @media screen and (max-width: 700px) {
+          left: -24px;
+          right: -24px;
+          width: auto;
+        }
+      }
+      form{
+        padding: 8px 0;
+        button{
+          display: block;
+          width: 14px;
+          height: 14px;
+          margin: 0 5px 0 45px;
+          svg{
+            width: 100%;
+            height: 100%;
+            fill: $dGray;
+          }
+          span{
+            @media screen and (max-width: 576px) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    form{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 40px 40px 32px;
+      @media screen and (max-width: 700px) {
+        padding: 20px 0;
+      }
+      &.st1{
+        padding: 32px 40px;
+        @media screen and (max-width: 700px) {
+          padding: 20px 0;
+        }
+      }
+      fieldset{
+        svg{
+          position: absolute;
+          top: 50%;
+          left: 18px;
+          width: 20px;
+          height: 20px;
+          margin: -10px 0 0;
+          fill: $dGray;
+        }
+        input{
+          padding: 0 16px 0 64px;
+        }
+      }
+      button{
+        margin: 0 0 0 16px;
+        svg{
+          width: 16px;
+          height: 16px;
+          margin: 0 16px 0 0;
+          fill: $dWhite;
+          @media screen and (max-width: 576px) {
+            margin: 0;
+          }
+        }
+        span{
+          @media screen and (max-width: 576px) {
+            display: none;
+          }
+        }
+      }
+      &.send{
+        position: relative;
+        height: 48px;
+        padding: 0 16px;
+        margin: 30px 0 0;
+        button{
+          position: absolute;
+          top: 50%;
+          border-radius: 50%;
+          svg{
+            margin: 0;
+          }
+          &.smile{
+            display: block;
+            left: 34px;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0;
+            svg{
+              width: 100%;
+              height: 100%;
+              fill: $dGray;
+            }
+          }
+          &.submit{
+            right: 24px;
+            width: 32px;
+            height: 32px;
+            margin: -16px 0 0;
+            background: $dViolet;
+            svg{
+              width: 18px;
+              height: 18px;
+              fill: $dWhite;
+            }
+          }
+        }
+        input{
+          padding: 0 56px;
+          border-radius: 24px;
+        }
+      }
+    }
+    .ps{
+      max-height: 600px;
+      margin: 0 0 10px;
+      @media screen and (max-width: 700px) {
+        max-height: calc(100Vh - 152px);
+      }
+      @media screen and (max-width: 576px) {
+        width: calc(100% + 32px);
+        max-height: calc(100Vh - 144px);
+        margin: 0 0 0 -16px;
+      }
+      &.chatscroll{
+        @media screen and (max-width: 700px) {
+          max-height: calc(100Vh - 194px);
+        }
+        @media screen and (max-width: 576px) {
+          max-height: calc(100Vh - 186px);
+        }
+      }
+      ul.list{
+        li{
+          position: relative;
+          &:after{
+            position: absolute;
+            bottom: 0;
+            left: 120px;
+            right: 0;
+            display: block;
+            height: 1px;
+            background: $grayMedium;
+            content: "";
+            @media screen and (max-width: 700px) {
+              left: 80px;
+            }
+            @media screen and (max-width: 576px) {
+              left: 58px;
+            }
+          }
+        }
+      }
+      ul.messages{
+        li{
+          button{
+            position: relative;
+            align-items: flex-start;
+            width: 100%;
+            padding: 16px 40px 16px 36px;
+            border: 0 solid transparent;
+            border-width: 0 0 0 4px;
+            @media screen and (max-width: 700px) {
+              padding: 10px 20px;
+            }
+            @media screen and (max-width: 576px) {
+              padding: 10px 20px 10px 14px;
+              border-width: 0 0 0 2px;
+            }
+            &.active{
+              padding-right: 120px;
+              border-color: $dOrange;
+              background: $grayLight;
+              @media screen and (max-width: 700px) {
+                padding-right: 60px;
+              }
+            }
+            .info{
+              flex: 1 1 auto;
+              text-transform: none;
+              .name{
+                display: flex;
+                align-items: flex-start;
+                strong{
+                  display: block;
+                  padding: 0 8px 0 0;
+                  @include subTitle1;
+                }
+                .date{
+                  @include caption1;
+                  color: $dGray;
+                }
+              }
+              .text{
+                padding: 8px 0 0;
+                @include body1;
+              }
+              .badge{
+                top: 50%;
+                right: 56px;
+                height: 24px;
+                border-radius: 6px;
+                @include body1(500);
+                @media screen and (max-width: 700px) {
+                  right: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+      ul.writes{
+        @media screen and (max-width: 576px) {
+          padding: 0 16px;
+        }
+        li{
+          display: flex;
+          align-items: center;
+          padding: 16px 40px;
+          @media screen and (max-width: 700px) {
+            padding: 16px 20px 16px 0;
+          }
+          @media screen and (max-width: 576px) {
+            padding: 10px 10px 10px 0;
+          }
+          .name{
+            padding: 0 20px 0 0;
+            @include subTitle1;
+          }
+          button{
+            height: 36px;
+            margin: 0 0 0 auto;
+            border-radius: 8px;
+            @media screen and (max-width: 480px) {
+              padding: 0;
+              background: transparent;
+            }
+            svg{
+              display: none;
+              @media screen and (max-width: 480px) {
+                display: block;
+                width: 20px;
+                height: 20px;
+                fill: $dViolet;
+              }
+            }
+            span{
+              @media screen and (max-width: 480px) {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+      .chatbox{
+        padding: 24px 40px 0 40px;
+        @media screen and (max-width: 576px) {
+          padding: 24px 16px 0;
+        }
+        .day{
+          .date{
+            padding: 0 0 18px;
+            @include subtitle2(600);
+            text-align: center;
+          }
+          .item{
+            display: flex;
+            padding: 0 0 20px;
+            &.in{
+              align-items: flex-end;
+              .userphoto{
+                max-width: 32px;
+                min-width: 32px;
+                height: 32px;
+                margin: 0 8px 16px 0;
+              }
+              .info{
+                .message{
+                  padding: 12px 12px 10px;
+                  border-radius: 12px 12px 12px 0px;
+                  background: $grayLight;
+                  .name{
+                    @include subTitle1;
+                  }
+                  .text{
+                    padding: 6px 0 0;
+                  }
+                }
+                .time{
+                  padding: 6px 0 0;
+                  font-size: 10px;
+                  line-height: 10px;
+                  color: $dGray;
+                }
+              }
+            }
+            &.out{
+              justify-content: flex-end;
+              flex-flow: row wrap;
+              .message{
+                max-width: 420px;
+                padding: 12px 12px 10px;
+                border-radius: 12px 12px 0px 12px;
+                background: $dViolet;
+                color: $dWhite;
+              }
+              .info{
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                width: 100%;
+                padding: 6px 0 0;
+                .check{
+                  display: flex;
+                  justify-content: flex-end;
+                  align-items: center;
+                  width: 16px;
+                  height: 10px;
+                  margin: 0 8px 0 0;
+                  svg{
+                    height: 100%;
+                    fill: $dEmerald;
+                  }
+                }
+                .time{
+                  padding: 2px 0 0;
+                  font-size: 10px;
+                  line-height: 10px;
+                  color: $dGray;
+                }
+              }
+            }
+          }
+        }
+        .empty{
+          padding: 100px 0;
+          .img{
+            position: relative;
+            width: 300px;
+            height: 238px;
+            margin: 0 auto;
+          }
+          .text{
+            padding: 30px 0 0;
+            b{
+              display: block;
+              @include h6;
+              color: $dGray;
+              text-align: center;
+            }
+            p{
+              padding: 4px 0 0;
+              margin: 0;
+              color: $dGray;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.night{
+  .messagesmodal{
+    .modalcontent{
+      .top{
+        &.flex{
+          button{
+            svg{
+              fill: $nViolet;
+            }
+          }
+        }
+      }
+      .usermodaltop{
+        .nav{
+          .item{
+            button{
+              svg{
+                fill: $white56;
+              }
+            }
+            .dropdown{
+              li{
+                &:last-child{
+                  span{
+                    color: $nOrange;
+                  }
+                  svg{
+                    fill: $nOrange;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .searchchat{
+        &:before{
+          background: $white20;
+        }
+        form{
+          button{
+            svg{
+              fill: $white56;
+            }
+          }
+        }
+      }
+      form{
+        fieldset{
+          svg{
+            fill: $white56;
+          }
+          input{
+            background: $blackLight;
+          }
+        }
+        button{
+          svg{
+            fill: $white56;
+          }
+        }
+        &.send{
+          button{
+            &.smile{
+              svg{
+                fill: $white56;
+              }
+            }
+            &.submit{
+              background: $nViolet;
+            }
+          }
+          input{
+            background: $blackLight;
+          }
+        }
+      }
+      .ps{
+        ul.list{
+          li{
+            &:after{
+              background: $white20;
+            }
+          }
+        }
+        ul.messages{
+          li{
+            button{
+              &.active{
+                border-color: $nOrange;
+                background: $white05;
+              }
+              .info{
+                .name{
+                  strong{
+                    color: $nWhite;
+                  }
+                  .date{
+                    color: $white56;
+                  }
+                }
+                .text{
+                  color: $white72;
+                }
+              }
+            }
+          }
+        }
+        .chatbox{
+          .day{
+            .date{
+              color: $nWhite;
+            }
+            .item{
+              &.in{
+                .info{
+                  .message{
+                    background: $white10;
+                    .name{
+                      color: $nWhite;
+                    }
+                    .text{
+                      color: $white72;
+                    }
+                  }
+                  .time{
+                    color: $white56;
+                  }
+                }
+              }
+              &.out{
+                .message{
+                  color: $nWhite;
+                }
+                .info{
+                  .check{
+                    svg{
+                      fill: $nEmerald;
+                    }
+                  }
+                  .time{
+                    color: $white56;
+                  }
+                }
+              }
+            }
+          }
+          .empty{
+            .text{
+              b,
+              p{
+                color: $white72;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

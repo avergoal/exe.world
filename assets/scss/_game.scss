@@ -1,0 +1,155 @@
+.gamepagebox{
+  .pagetitle{
+    padding: 24px 48px;
+    @include h3;
+    @media screen and (max-width: 1024px) {
+      padding: 24px;
+      @include h4;
+    }
+    @media screen and (max-width: 576px) {
+      padding: 16px;
+      @include h5;
+    }
+  }
+  .framebox{
+    position: relative;
+    width: 100%;
+    min-height: calc(100Vh - 184px);
+    iframe{
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      min-height: 100%;
+    }
+    .overlay{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+    }
+  }
+  .info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 48px 60px;
+    @media screen and (max-width: 1024px) {
+      padding: 40px 24px 60px;
+    }
+    @media screen and (max-width: 920px) {
+      display: block;
+    }
+    @media screen and (max-width: 576px) {
+      padding: 20px 16px 30px;
+    }
+    ul{
+      display: flex;
+      align-items: center;
+      @media screen and (max-width: 920px) {
+        padding: 0 0 20px;
+      }
+      li{
+        position: relative;
+        padding: 0 12px 0 0;
+        margin: 0 12px 0 0;
+        &:after{
+          position: absolute;
+          top: 0;
+          right: 0;
+          display: block;
+          width: 1px;
+          height: 100%;
+          background: $grayMedium;
+          content: "";
+        }
+        &:last-child{
+          padding: 0;
+          margin: 0;
+          &:after{
+            display: none;
+          }
+        }
+        a,
+        button{
+          display: block;
+          @include subTitle1;
+          color: $dViolet;
+          text-decoration: none;
+          text-transform: none;
+        }
+      }
+    }
+    .checkbox{
+      input{
+        display: none;
+      }
+      label{
+        position: relative;
+        display: flex;
+        align-items: center;
+        &:before{
+          display: block;
+          width: 16px;
+          height: 16px;
+          margin: 0 20px 0 0;
+          border: 1px solid $dViolet;
+          border-radius: 3px;
+          overflow: hidden;
+          content: "";
+        }
+        span{
+          display: block;
+          @include body1;
+        }
+        svg{
+          position: absolute;
+          top: 3px;
+          left: 1px;
+          width: 18px;
+          height: 18px;
+          fill: $dViolet;
+          visibility: hidden;
+          opacity: 0;
+          transition: all .35s ease;
+        }
+      }
+      input:checked + label svg{
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.night{
+  .info{
+    ul{
+      li{
+        &:after{
+          background: $white20;
+        }
+        a,
+        button{
+          color: $nViolet;
+        }
+      }
+    }
+    .checkbox{
+      label{
+        &:before{
+          border-color: $nViolet;
+        }
+        span{
+          color: $nWhite;
+        }
+        svg{
+          fill: $nViolet;
+        }
+      }
+    }
+  }
+}
