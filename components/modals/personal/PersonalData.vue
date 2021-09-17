@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     setTab(target) {
-      this.$store.dispatch('modals/setModalTab', target)
+      this.$store.dispatch('modals/setTab', target)
     }
   },
   watch: {

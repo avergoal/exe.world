@@ -1,53 +1,59 @@
 export const state = () => ({
-  modalOpen: false,
-  modalActive: false,
-  modalTarget: null,
-  modalTab: 'personal'
+  open: false,
+  active: false,
+  target: null,
+  message: null,
+  tab: 'personal'
 })
 
 export const mutations = {
-  setModalOpen(state, open) {
-    state.modalOpen = open
+  setOpen(state, open) {
+    state.open = open
   },
-  setModalActive(state, active) {
-    state.modalActive = active
+  setActive(state, active) {
+    state.active = active
   },
-  setModalTarget(state, target) {
-    state.modalTarget = target
+  setTarget(state, target) {
+    state.target = target
   },
-  setModalTab(state, tab) {
-    state.modalTab = tab
+  setMessage(state, message) {
+    state.message = message
+  },
+  setTab(state, tab) {
+    state.tab = tab
   }
 }
 
 export const actions = {
-  setModalOpen({commit}, params) {
+  setOpen({commit}, params) {
+    commit('setMessage', params.message)
     if(params.open) {
-      commit('setModalTarget', params.target)
-      commit('setModalOpen', params.open)
+      commit('setTarget', params.target)
+      commit('setOpen', params.open)
       setTimeout(() => {
-        commit('setModalActive', params.open)
+        commit('setActive', params.open)
       }, 300)
       if(typeof params.tab != 'undefined') {
-        commit('setModalTab', params.tab)
+        commit('setTab', params.tab)
       }
     } else {
-      commit('setModalActive', params.open)
-      commit('setModalTab', 'personal')
+      commit('setActive', params.open)
+      commit('setTab', 'personal')
       setTimeout(() => {
-        commit('setModalOpen', params.open)
-        commit('setModalTarget', params.target)
+        commit('setOpen', params.open)
+        commit('setTarget', params.target)
       }, 300)
     }
   },
-  setModalTab({commit}, params) {
-    commit('setModalTab', params)
+  setTab({commit}, params) {
+    commit('setTab', params)
   }
 }
 
 export const getters = {
-  modalOpen: state => state.modalOpen,
-  modalActive: state => state.modalActive,
-  modalTarget: state => state.modalTarget,
-  modalTab: state => state.modalTab
+  open: state => state.open,
+  active: state => state.active,
+  target: state => state.target,
+  message: state => state.message,
+  tab: state => state.tab
 }

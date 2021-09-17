@@ -78,7 +78,7 @@ textarea{
   height: 48px;
   margin: 0;
   padding: 0;
-  border: 0;
+  border: 1px solid $grayLight;
   border-radius: 12px;
   background: $grayLight;
   outline: 0;
@@ -86,6 +86,9 @@ textarea{
   color: $dGray;
   &::placeholder{
     color: $dGray;
+  }
+  &.error{
+    border-color: $dOrange
   }
 }
 textarea{
@@ -128,12 +131,10 @@ fieldset{
     max-height: 100%;
     min-height: 100%;
     padding: 88px 0 0;
+    background: $grayLight;
     overflow-x: hidden;
     @media screen and (max-width: 1024px) {
       padding: 56px 0 0;
-    }
-    &.day{
-      background: $grayLight;
     }
     &.night{
       background: $dBlack;

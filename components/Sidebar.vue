@@ -13,8 +13,10 @@
     </li>
   </ul>
   <ul class="games">
-    <li v-for="(e, i) in myGames" :key="i">
-      <nuxt-link :to="e.link"><img :src="e.img" :alt="e.alt"></nuxt-link>
+    <li v-for="(e, i) in user.recent_games" :key="i">
+      <nuxt-link :to="'/g/' + e.gid">
+        <img :src="e.icon.default" :alt="e.title">
+      </nuxt-link>
     </li>
   </ul>
 </aside>
@@ -22,79 +24,35 @@
 <script>
 export default {
 	name: 'SidebarComponent',
-  data() {
-    return {
-      menu: [{
-        link: '/',
-        target: '/',
-        ico: 'sidebar/all_games',
-        title: '<i>All</i> Games',
-        type: 'link'
-      }, {
-        link: '/',
-        target: '/mygames',
-        ico: 'sidebar/my_games',
-        title: 'My Games',
-        type: 'link'
-      }, {
-        target: 'messages',
-        ico: 'sidebar/messages',
-        title: 'Messages',
-        type: 'button'
-      }, {
-        target: 'friends',
-        ico: 'sidebar/friends',
-        title: 'Friends',
-        type: 'button'
-      }, {
-        target: 'news',
-        ico: 'sidebar/news',
-        title: 'News',
-        type: 'button'
-      }],
-      myGames: [{
-        link: '/g/1',
-        img: require('../assets/img/sidebar/1.jpg?webp'),
-        alt: ''
-      }, {
-        link: '/g/1',
-        img: require('../assets/img/sidebar/2.jpg?webp'),
-        alt: ''
-      }, {
-        link: '/g/1',
-        img: require('../assets/img/sidebar/3.jpg?webp'),
-        alt: ''
-      }, {
-        link: '/g/1',
-        img: require('../assets/img/sidebar/4.jpg?webp'),
-        alt: ''
-      }, {
-        link: '/g/1',
-        img: require('../assets/img/sidebar/5.jpg?webp'),
-        alt: ''
-      }, {
-        link: '/g/1',
-        img: require('../assets/img/sidebar/6.jpg?webp'),
-        alt: ''
-      }]
-    }
-  },
+  data: () => ({
+    menu: [
+      {title: '<i>All</i> Games', target: 'index', link: '/', ico: 'sidebar/all_games', type: 'link'},
+      {title: 'My Games', target: 'myGames', link: '/', ico: 'sidebar/my_games', type: 'link'},
+      {title: 'Messages', target: 'messages', ico: 'sidebar/messages', type: 'button'}, 
+      {title: 'Friends', target: 'friends', ico: 'sidebar/friends', type: 'button'}, 
+      {title: 'News', target: 'news', ico: 'sidebar/news', type: 'button'}
+    ]
+  }),
   methods: {
     setRoute(target) {
-      if(target == '/mygames') {
-        this.$store.dispatch('mainPage/setPageConfigs', 'mygames')
-      } else {
-        this.$store.dispatch('mainPage/setPageConfigs', 'main')
-      }
+      this.$store.dispatch('app/setPage', target)
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
     },
-    openModal(target) {
-      this.$store.dispatch('modals/setModalOpen', {
+    openModal(e) {
+      this.$root.$emit('modalOpen', {
         open: true,
-        target: target
+        target: e,
+        message: null,
+        status: false,
+        tab: null
       })
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters['user/user']
     }
   }
 }

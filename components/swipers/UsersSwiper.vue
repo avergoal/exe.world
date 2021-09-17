@@ -6,10 +6,10 @@
   </div>
   <div v-if="config" class="swiperbox">
     <swiper :options="config" ref="newSwiper">
-      <swiper-slide v-for="(e, i) in slides" :key="i">
-        <button type="button">
-          <div class="userphoto"><img :src="e.img" :alt="e.name"></div>
-          <div class="name" v-html="e.name"></div>
+      <swiper-slide v-for="(e, i) in data" :key="i">
+        <button @click="openUser(e.uid)" type="button">
+          <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
+          <div class="name" v-html="e.user_name"></div>
         </button>
       </swiper-slide>
     </swiper>
@@ -25,12 +25,12 @@
 export default {
   name: 'UsersSwiperTemplate',
   props: ['slides', 'between', 'title', 'target'],
-  data() {
-    return{
-      config: null
-    }
-  },
+  data: () => ({
+    config: null,
+    data: []
+  }),
   mounted() {
+    this.data = this[this.slides]
     this.config = {
       slidesPerView: 'auto',
       spaceBetween: Number(this.between),
@@ -41,9 +41,30 @@ export default {
     }
   },
   methods: {
+    openUser(e) {
+      this.$store.dispatch('search/setOpen', false)
+      this.$root.$emit('modalOpen', {
+        open: true,
+        target: 'userProfile',
+        message: null,
+        status: false,
+        tab: e
+      })
+    },
     setRoute(target) {
-      this.$root.$emit('changeMainPageTemplate', target)
-      this.$root.$emit('changeProfileModals', target)
+      this.$store.dispatch('search/setOpen', false)
+      this.$store.dispatch('app/setPage', target)
+    }
+  },
+  computed: {
+    search_peoples() {
+      return this.$store.getters['search/peoples']
+    },
+    user_profile_friends() {
+      return this.$store.getters['users/profile'].friends.users
+    },
+    user_profile_mutual_friends() {
+      return this.$store.getters['users/profile'].mutual_friends.users
     }
   }
 }

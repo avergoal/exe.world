@@ -4,16 +4,16 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">Email Sent</div>
-    <div class="text">Email with a link to reset your password has been sent. <br>If there is no message for a long time, check the Spam folder</div>
-    <button @click="closeModal()" type="button" class="btn st2">continue</button>
+    <div class="top">Response</div>
+    <div v-html="message" class="text"></div>
+    <button @click="closeModal()" type="button" class="btn st2">close</button>
   </div>
 </div>
 </template>
 
 <script>
 export default {
-	name: 'EmailSendModal',
+  name: 'RequestModal',
   methods: {
     closeModal() {
       this.$root.$emit('modalOpen', {
@@ -23,6 +23,11 @@ export default {
         status: false,
         tab: null
       })
+    }
+  },
+  computed: {
+    message() {
+      return this.$store.getters['modals/message']
     }
   }
 }

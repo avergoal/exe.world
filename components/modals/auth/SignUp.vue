@@ -1,27 +1,30 @@
 <template>
 <div class="modalinfo authmodal small">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="closeModal()" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">
-      <a @click.prevent="goHome()" href="/" class="logo"><svg-icon name="logo" /></a>
-    </div>
-    <form action="">
-      <fieldset><input type="text" name="" value="" placeholder="Your name"></fieldset>
-      <fieldset><input type="text" name="" value="" placeholder="E-mail or Phone"></fieldset>
+    <div class="top"><a @click.prevent="goHome()" href="/" class="logo"><svg-icon name="logo" /></a></div>
+    <form @submit.prevent="signUp()" action="">
+      <fieldset><input v-model="model.name" type="text" placeholder="Your name"></fieldset>
       <fieldset>
-        <input :type="passwordType" name="" value="" placeholder="Password">
-        <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
+        <input v-model="model.emailorphone" :class="{error: errors.email_exists.show || errors.email_not_valid.show}" type="text" placeholder="E-mail or Phone">
+        <span v-if="errors.email_exists.show || errors.email_not_valid.show" v-html="(errors.email_exists.show) ? errors.email_exists.text : errors.email_not_valid.text" class="error"></span>
       </fieldset>
       <fieldset>
-        <input :type="passwordType" name="" value="" placeholder="Repeat password">
+        <input v-model="model.pass" :class="{error: errors.pass_too_short.show}" :type="passwordType" placeholder="Password">
         <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
+        <span v-if="errors.pass_too_short.show" v-html="errors.pass_too_short.text" class="error"></span>
+      </fieldset>
+      <fieldset>
+        <input v-model="model.pass_check" :class="{error: errors.passwords_does_not_match.show}" :type="passwordType" placeholder="Repeat password">
+        <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
+        <span v-if="errors.passwords_does_not_match.show" v-html="errors.passwords_does_not_match.text" class="error"></span>
       </fieldset>
       <div class="btns"><button type="submit" class="btn st2">sign up</button></div>
       <div class="signup">
         <div class="text">Already have an account?</div>
-        <button @click="$parent.openModal('signIn')" type="button">log in</button>
+        <button @click="openModal('signIn')" type="button">log in</button>
       </div>
       <div class="social">
         <div class="text">Login via services</div>
@@ -39,16 +42,24 @@
 <script>
 export default {
 	name: 'SignUpModal',
-  data() {
-    return{
-      passwordType: 'password'
+  data: () => ({
+    model: {},
+    passwordType: 'password',
+    errors: {
+      email_exists: {text: 'Email уже зарегистрирован', show: false},
+      email_not_valid: {text: 'Не верный формат email', show: false},
+      pass_too_short: {text: 'Пароль слишком короткий', show: false},
+      passwords_does_not_match: {text: 'Пароли не совпадают', show: false}
     }
-  },
+  }),
   methods: {
     goHome() {
-      this.$store.dispatch('modals/setModalOpen', {
+      this.$root.$emit('modalOpen', {
         open: false,
-        target: null
+        target: null,
+        message: null,
+        status: false,
+        tab: null
       })
       if(this.$route.path != '/') {
         this.$router.push('/')
@@ -56,6 +67,43 @@ export default {
     },
     togglePasswordType() {
       this.passwordType = (this.passwordType == 'password') ? 'text' : 'password'
+    },
+    async signUp() {
+      let formData = new FormData()
+      formData.append('name', this.model.name)
+      formData.append('emailorphone', this.model.emailorphone)
+      formData.append('pass', this.model.pass)
+      formData.append('pass_check', this.model.pass_check)
+      const { data } = await this.$store.dispatch('user/signUp', formData)
+      if(typeof data.error != 'undefined' && typeof data.error == 'object') {
+        for(let e in this.errors) {
+          this.errors[e].show = (data.error.indexOf(e) >= 0)
+        }
+      } else {
+        formData = new FormData()
+        formData.append('api_token', data.response.api_token)
+        this.$store.dispatch('user/auth', formData)
+        localStorage.setItem('token', data.response.api_token)
+        this.closeModal()
+      }
+    },
+    openModal(e) {
+      this.$root.$emit('modalOpen', {
+        open: true,
+        target: e,
+        message: null,
+        status: false,
+        tab: null
+      })
+    },
+    closeModal() {
+      this.$root.$emit('modalOpen', {
+        open: false,
+        target: null,
+        message: null,
+        status: false,
+        tab: null
+      })
     }
   }
 }

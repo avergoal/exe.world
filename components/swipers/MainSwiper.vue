@@ -3,13 +3,13 @@
   <swiper :options="config" ref="swiper">
     <swiper-slide v-for="(e, i) in slides" :key="i" class="gamecard">
       <div class="box">
-        <div class="img"><img :src="e.img" :alt="e.title"></div>
+        <div class="img"><img :src="e.poster.default" :alt="e.title"></div>
         <div class="info">
           <div class="text">
             <div v-html="e.title" class="title"></div>
-            <div v-html="e.desc" class="desc"></div>
+            <div v-html="e.description" class="desc"></div>
           </div>
-          <nuxt-link :to="e.link"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+          <nuxt-link :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
         </div>
       </div>
     </swiper-slide>
@@ -24,49 +24,41 @@
 
 <script>
 export default {
-  name: 'MainSwiperTemplate',
+  name: 'MainSwiperComponent',
   props: ['slides'],
-  data() {
-    return{
-      swiper: null,
-      config: {
-        slidesPerView: 'auto',
-        centeredSlides: true,
-        loop: true,
-        navigation: {
-          prevEl: '.main_prev',
-          nextEl: '.main_next'
-        },
-        pagination: {
-          el: '.swiperpager',
-          clickable: true
-        },
-        on: {
-          init(e) {
-            if(typeof e.slides[e.activeIndex] != 'undefined') {
-              e.slides[e.activeIndex].firstChild.classList.add('current_slide')
-            }
-          },
-          update(e) {
-            if(typeof e.slides[e.activeIndex] != 'undefined') {
-              e.slides[e.activeIndex].firstChild.classList.add('current_slide')
-            }
+  data: () => ({
+    swiper: null,
+    config: {
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      loop: true,
+      navigation: {
+        prevEl: '.main_prev',
+        nextEl: '.main_next'
+      },
+      pagination: {
+        el: '.swiperpager',
+        clickable: true
+      },
+      on: {
+        init(e) {
+          if(typeof e.slides[e.activeIndex] != 'undefined') {
+            e.slides[e.activeIndex].firstChild.classList.add('current_slide')
           }
         },
-        breakpoints: {
-          0: {
-            spaceBetween: 8
-          },
-          577: {
-            spaceBetween: 16
-          },
-          1025: {
-            spaceBetween: 104
+        update(e) {
+          if(typeof e.slides[e.activeIndex] != 'undefined') {
+            e.slides[e.activeIndex].firstChild.classList.add('current_slide')
           }
         }
+      },
+      breakpoints: {
+        0: {spaceBetween: 8},
+        577: {spaceBetween: 16},
+        1025: {spaceBetween: 104}
       }
     }
-  },
+  }),
   mounted() {
     this.swiper = this.$refs.swiper.$swiper
     this.swiper.on('slideChangeTransitionStart', (e) => {

@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo gamemodal info big">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="$root.$emit('closeModal')" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -65,22 +65,25 @@
 import CoolLightBox from 'vue-cool-lightbox'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 export default {
-	name: 'GameInfoModal',
-  components: {
-    CoolLightBox
-  },
-  data() {
-    return{
-      config: {
-        slidesPerView: 'auto',
-        spaceBetween: 24,
-        navigation: {
-          prevEl: '.prev_screen',
-          nextEl: '.next_screen'
-        }
-      },
-      shareOpen: false,
-      index: null
+	name: 'GameInfoModalComponent',
+  props: ['game'],
+  components: {CoolLightBox},
+  data: () => ({
+    game: null,
+    config: {
+      slidesPerView: 'auto',
+      spaceBetween: 24,
+      navigation: {
+        prevEl: '.prev_screen',
+        nextEl: '.next_screen'
+      }
+    },
+    shareOpen: false,
+    index: null
+  }),
+  created() {
+    if(typeof this.games[this.game] == 'undefined') {
+      this.loadGame(this.game)
     }
   },
   mounted() {
@@ -90,9 +93,15 @@ export default {
       }
     })
   },
+  methods: {
+    async loadGame(e) {
+      await this.$store.dispatch('games/setCategories', formData)
+      this.game = this[this.slides][this.filter].list
+    }
+  },
   computed: {
-    game() {
-      return this.$store.getters['app/game']
+    games() {
+      return this.$store.getters['app/games']
     }
   }
 }

@@ -33,7 +33,8 @@
         transition: all 0.35s ease;
         content: "";
       }
-      a{
+      a,
+      button{
         position: absolute;
         top: 50%;
         left: 50%;
@@ -79,7 +80,8 @@
           visibility: visible;
           opacity: 1;
         }
-        a{
+        a,
+        button{
           margin-top: -24px;
           visibility: visible;
           opacity: 1;

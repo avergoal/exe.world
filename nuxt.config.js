@@ -24,9 +24,11 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/PerfectScrollbar',
-    '@/plugins/Swiper',
-    '@/plugins/TemplateComponents'
+    { src: '~/plugins/LoadAppData', mode: 'server' },
+    { src: '~/plugins/TemplateComponents' },
+    { src: '~/plugins/Lazyload', mode: 'client' },
+    { src: '~/plugins/PerfectScrollbar' },
+    { src: '~/plugins/Swiper' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -63,11 +65,22 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/pwa
+    //'nuxt-socket-io',
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/pwa'
   ],
-
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/appApi': {
+      target: 'https://api.exe.world/',
+      pathRewrite: {
+        '^/appApi': ''
+      }
+    }
+  },
   pwa: {
     manifest: {
       lang: 'ru',
