@@ -1,5 +1,3 @@
-import CloneDeep from 'lodash/clonedeep';
-
 export const state = () => ({
   carousel: [],
   newgames: [],
@@ -32,7 +30,7 @@ export const actions = {
   setCategories({commit, getters}, params) {
     return new Promise((resolve) => {
       this.$axios.post('/appApi/games', params).then(response => {
-        let categories = CloneDeep(getters.categories)
+        let categories = Object.assign({}, getters.categories)
         categories[params.get('type')].list = categories[params.get('type')].list.concat(response.data.response.games)
         categories[params.get('type')].offset += (response.data.response.games.length) ? response.data.response.games.length : 0
         categories[params.get('type')].loaded = (response.data.response.games.length) ? false : true
@@ -44,7 +42,7 @@ export const actions = {
   setGames({commit, getters}, params) {
     return new Promise((resolve) => {
       this.$axios.post('/appApi/games', params).then(response => {
-        let games = CloneDeep(getters.games)
+        let games = Object.assign({}, getters.games)
         games[params.get('type')].list = response.data.response.games
         categories[params.get('type')].offset = response.data.response.offset
         commit('setGames', categories)
