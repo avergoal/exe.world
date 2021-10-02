@@ -138,6 +138,12 @@
         align-items: center;
         height: 48px;
         margin: 24px 24px 0;
+        .btnbox{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+        }
         @media screen and (max-width: 768px) {
           position: absolute;
           top: 32px;

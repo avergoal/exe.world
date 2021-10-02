@@ -19,11 +19,8 @@ export default {
 	name: 'LogOutModal',
   methods: {
     logOut() {
-      this.$store.dispatch('app/setUserAuth', false)
-      this.$store.dispatch('modals/setModalOpen', {
-        open: false,
-        target: null
-      })
+      localStorage.removeItem('token')
+      window.location.reload()
     },
     closeModal() {
       this.$root.$emit('modalOpen', {

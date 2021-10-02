@@ -42,10 +42,8 @@
 <script>
 export default {
   name: 'BalanceTabAddFunds',
-  data() {
-    return{
-      paysystem: 0
-    }
-  }
+  data: () => ({
+    paysystem: 0
+  })
 }
 </script>

@@ -62,6 +62,11 @@ export default {
     loaded: false,
     timeOut: null
   }),
+  created() {
+    this.$root.$on('modalOpen', () => {
+      this.resetSearch()
+    })
+  },
   methods: {
     setRoute() {
       this.closeSearch()

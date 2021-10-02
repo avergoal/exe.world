@@ -1,15 +1,15 @@
 <template>
 <div class="modalinfo gamemodal info big">
-  <button @click="$root.$emit('closeModal')" class="close" area-label="close">
+  <button @click="closeModal()" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
-  <div class="modalcontent">
+  <div v-if="loaded" class="modalcontent">
     <div class="top">
-      <div class="img"><img :src="game.photo" alt=""></div>
+      <div class="img"><img :src="game.poster.default" alt=""></div>
       <div class="info">
-        <div v-html="game.name" class="title">Knight Wars</div>
+        <div v-html="game.title" class="title">Knight Wars</div>
         <div class="btns">
-          <div class="item"><button type="button" class="btn st2">launch game</button></div>
+          <div class="item"><button @click="goGame()" type="button" class="btn st2">launch game</button></div>
           <div class="item">
             <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">share</button>
             <div :class="{open: shareOpen}" class="dropdown">
@@ -40,7 +40,7 @@
     </div>
     <div class="screens">
       <div class="boxtitle">Screenshots</div>
-      <div class="swiperbox">
+      <div v-if="game.media.length" class="swiperbox">
         <swiper :options="config" ref="newSwiper">
           <swiper-slide v-for="(e, i) in game.screenList" :key="i">
             <div @click="index = i" class="img">
@@ -55,9 +55,9 @@
         </div-->
       </div>
     </div>
-    <div class="desc">From the height of the castle hill, Count Henrik surveyed his Hochburg. Everything seems to be going as it should. The workers are carrying materials from the warehouse, actively pounding with hammers, expanding the forge and renovating the walls - the order given in the evening is being carried out. Archers have fun at the shooting range, filling targets with arrows.</div>
+    <div v-html="game.description" class="desc"></div>
   </div>
-  <CoolLightBox :items="game.screenList" :index="index" :effect="'fade'" @close="index = null" />
+  <!--CoolLightBox :items="game.screenList" :index="index" :effect="'fade'" @close="index = null" /-->
 </div>
 </template>
 
@@ -66,10 +66,10 @@ import CoolLightBox from 'vue-cool-lightbox'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 export default {
 	name: 'GameInfoModalComponent',
-  props: ['game'],
   components: {CoolLightBox},
   data: () => ({
-    game: null,
+    loaded: false,
+    game: {},
     config: {
       slidesPerView: 'auto',
       spaceBetween: 24,
@@ -82,9 +82,13 @@ export default {
     index: null
   }),
   created() {
-    if(typeof this.games[this.game] == 'undefined') {
-      this.loadGame(this.game)
+    if(this.gamesData[this.gameId]) {
+      this.game = this.gamesData[this.gameId]
+      this.loaded = true
+    } else {
+      this.loadGame(this.gameId)
     }
+    console.log(this.token)
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -94,14 +98,39 @@ export default {
     })
   },
   methods: {
-    async loadGame(e) {
-      await this.$store.dispatch('games/setCategories', formData)
-      this.game = this[this.slides][this.filter].list
+    async loadGame() {
+      let formData = new FormData()
+      formData.append('api_token', this.token)
+      formData.append('id', this.gameId)
+      await this.$store.dispatch('games/setGamesData', formData)
+      if(this.gamesData[this.gameId]) {
+        this.game = this.gamesData[this.gameId]
+        this.loaded = true
+      }
+    },
+    goGame() {
+      this.$router.push('/g/' + this.game.gid)
+      this.closeModal()
+    },
+    closeModal() {
+      this.$root.$emit('modalOpen', {
+        open: false,
+        target: null,
+        message: null,
+        status: null,
+        tab: null
+      })
     }
   },
   computed: {
-    games() {
-      return this.$store.getters['app/games']
+    gameId() {
+      return this.$store.getters['modals/tab']
+    },
+    gamesData() {
+      return this.$store.getters['games/gamesData']
+    },
+    token() {
+      return this.$store.getters['user/token']
     }
   }
 }

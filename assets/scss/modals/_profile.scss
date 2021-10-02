@@ -334,6 +334,97 @@
                 }
               }
             }
+            &.location{
+              justify-content: space-between;
+              .selectbox{
+                position: relative;
+                width: calc(50% - 16px);
+                button{
+                  position: relative;
+                  display: block;
+                  max-width: 100%;
+                  min-width: 100%;
+                  height: 56px;
+                  padding: 20px 16px 0;
+                  border-radius: 12px;
+                  background: $grayLight;
+                  @include body1;
+                  color: $dBlack;
+                  text-transform: none;
+                  &:before,
+                  &:after{
+                    position: absolute;
+                    display: block;
+                    content: "";
+                  }
+                  &:before{
+                    top: 5px;
+                    left: 16px;
+                    @include caption2;
+                    color: $dGray;
+                    content: attr(data-before)
+                  }
+                  &:after{
+                    top: 50%;
+                    right: 20px;
+                    width: 0;
+                    height: 0;
+                    margin: -2px 0 0;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid $dGray;
+                  }
+                }
+                .ps{
+                  position: absolute;
+                  top: 100%;
+                  left: 0;
+                  max-height: 110px;
+                  margin: 5px 0 0;
+                  background: $dWhite;
+                  box-shadow: 0px 10px 10px rgb(0 0 0 / 20%);
+                  visibility: hidden;
+                  opacity: 0;
+                  transition: all .35s ease;
+                  z-index: 100;
+                  &.open{
+                    visibility: visible;
+                    opacity: 1;
+                  }
+                  ul{
+                    li{
+                      button{
+                        height: auto;
+                        padding: 5px 10px;
+                        border-bottom: 1px solid $grayLight;
+                        border-radius: 0;
+                        background: transparent;
+                        &:before,
+                        &:after{
+                          display: none;
+                        }
+                      }
+                    }
+                  }
+                  .ps__rail-y{
+                    right: 0!important;
+                    width: 4px;
+                    border-radius: 0;
+                  }
+                }
+              }
+            }
+            span.error{
+              position: absolute;
+              top: 100%;
+              left: 0;
+              display: block;
+              padding: 5px 0 0 10px;
+              font-size: 10px;
+              font-weight: 700;
+              line-height: 10px;
+              color: #e74c3c;
+            }
           }
         }
       }

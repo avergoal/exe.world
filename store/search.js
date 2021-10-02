@@ -28,7 +28,6 @@ export const actions = {
   goSearch({commit}, params) {
     return new Promise((resolve) => {
       this.$axios.post('/appApi/search', params).then(response => {
-        console.log(response)
         let result = {
           games: [],
           peoples: []

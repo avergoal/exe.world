@@ -7,7 +7,7 @@
   <nav>
     <div class="item search"><button @click="openSearch" class="opensearch btn st1" type="button"><svg-icon name="ui/search" /></button></div>
     <div v-if="user" class="item wallet">
-      <button type="button" class="btn st1">
+      <button @click="openModal('personalData', 'wallet')" type="button" class="btn st1">
         <svg-icon name="ui/wallet" />
         <span v-html="user.balance"></span>
         <div class="plus"><svg-icon name="ui/plus" /></div>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div v-if="user" class="item account">
-      <button @click="toggleMenu('account')" type="button" class="togglemenu btn st1">
+      <button @click="toggleMenu('profile')" type="button" class="togglemenu btn st1">
         <div class="photo"><img :src="user.profile.avatar_urls.x100" :alt="user.profile.user_name"></div>
         <span v-html="user.profile.username"></span>
         <svg-icon name="ui/user_settings" />

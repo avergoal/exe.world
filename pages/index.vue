@@ -21,7 +21,6 @@ export default {
   name: 'IndexPage',
   computed: {
     page() {
-      console.log(this.$store.getters['app/page'])
       if(typeof document != 'undefined') {
         document.getElementById('scroll').dispatchEvent(new Event('scroll'))
       }

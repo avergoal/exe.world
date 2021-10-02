@@ -3,7 +3,8 @@ export const state = () => ({
   newgames: [],
   recommended: [],
   categories: {},
-  games: {}
+  games: {},
+  gamesData: {}
 })
 
 export const mutations = {
@@ -20,6 +21,9 @@ export const mutations = {
   },
   setGames(state, games) {
     state.games = games
+  },
+  setGamesData(state, gamesData) {
+    state.gamesData = gamesData
   }
 }
 
@@ -49,7 +53,17 @@ export const actions = {
         resolve(true)
       }).catch(err => {resolve(err.response)})
     })
-  }
+  },
+  async setGamesData({commit, getters}, params) {
+    return new Promise((resolve) => {
+      let gamesData = Object.assign({}, getters.gamesData)
+      this.$axios.post('/appApi/games.info', params).then(response => {
+        gamesData[response.data.response.game.gid] = response.data.response.game
+        commit('setGamesData', gamesData)
+        resolve(true)
+      })
+    })
+  },
 }
 
 export const getters = {
@@ -57,5 +71,6 @@ export const getters = {
   newgames: state => state.newgames,
   recommended: state => state.recommended,
   categories: state => state.categories,
-  games: state => state.games
+  games: state => state.games,
+  gamesData: state => state.gamesData
 }

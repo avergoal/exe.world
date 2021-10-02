@@ -1,17 +1,17 @@
 <template>
 <div class="modalinfo personalmodal bigger">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="closeModal()" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
     <aside class="info">
       <div class="profile">
-        <div class="userphoto"><img :src="profile.photo" alt=""></div>
+        <div class="userphoto"><img :src="user.profile.avatar_urls.x100" alt=""></div>
         <div class="data">
-          <div v-html="profile.name" class="name"></div>
+          <div v-html="user.profile.user_name" class="name"></div>
           <div class="text">My profile</div>
         </div>
-        <button @click="$parent.openModal('myPhoto')" type="button" class="edit"><svg-icon name="ui/pencil" /></button>
+        <button @click="openModal('myPhoto')" type="button" class="edit"><svg-icon name="ui/pencil" /></button>
       </div>
       <div class="theme">
         <div class="label">
@@ -19,7 +19,7 @@
           <span>Dark Theme</span>
         </div>
         <div class="switcher">
-          <input v-model="theme" type="checkbox" name="" value="" id="switcher">
+          <input v-model="theme" type="checkbox" name="" value="" id="switcher" :checked="darkTheme">
           <label for="switcher"></label>
         </div>
       </div>
@@ -55,7 +55,7 @@
           </button>
         </li>
         <li>
-          <button @click="$parent.openModal('logOut')" type="button">
+          <button @click="openModal('logOut')" type="button">
             <div class="ico"><svg-icon name="ui/logout" /></div>
             <span>Log Out</span>
           </button>
@@ -91,30 +91,58 @@ export default {
     BalanceTab,
     AddFunds
   },
-  data() {
-    return {
-      theme: this.appTheme
-    }
+  data: () => ({
+    theme: null
+  }),
+  mounted() {
+    this.theme = this.darkTheme
   },
   methods: {
     setTab(target) {
       this.$store.dispatch('modals/setTab', target)
+    },
+    openModal(target) {
+      this.$root.$emit('modalOpen', {
+        open: true,
+        target: target,
+        message: null,
+        status: null,
+        tab: null
+      })
+    },
+    closeModal() {
+      this.$root.$emit('modalOpen', {
+        open: false,
+        target: null,
+        message: null,
+        status: null,
+        tab: null
+      })
     }
   },
   watch: {
     theme(e) {
-      this.$store.dispatch('app/setAppTheme', ((e) ? 'night' : 'day'))
+      let formData = new FormData()
+      formData.append('api_token', this.token)
+      formData.append('theme', ((e) ? 1 : 0))
+      this.$store.dispatch('user/setTheme', {
+        data: formData,
+        theme: ((e) ? true : false)
+      })
     }
   },
   computed: {
-    appTheme() {
-      return this.$store.getters['app/appTheme']
+    darkTheme() {
+      return this.$store.getters['user/darkTheme']
     },
-    profile() {
-      return this.$store.getters['app/profile']
+    user() {
+      return this.$store.getters['user/user']
     },
     modalTab() {
-      return this.$store.getters['modals/modalTab']
+      return this.$store.getters['modals/tab']
+    },
+    token() {
+      return this.$store.getters['user/token']
     }
   }
 }

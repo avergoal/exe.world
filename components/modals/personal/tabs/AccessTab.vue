@@ -6,29 +6,29 @@
       <div class="desc">Change E-mail</div>
       <div class="subdesc">After changing the e-mail, a confirmation link will be sent to the new address</div>
       <fieldset>
-        <input type="text" name="" value="" id="currentemail">
+        <input v-model="model.email" type="email" name="" value="" id="currentemail" :placeholder="model.emailPlaceholder">
         <label for="currentemail">Current e-mail</label>
       </fieldset>
-      <fieldset><input type="text" name="" value="" placeholder="New e-mail"></fieldset>
-      <fieldset><input type="text" name="" value="" placeholder="Repeat new e-mail"></fieldset>
+      <fieldset><input v-model="model.newEmail" type="email" name="" value="" placeholder="New e-mail"></fieldset>
+      <fieldset><input v-model="model.repeatMewEmail" type="email" name="" value="" placeholder="Repeat new e-mail"></fieldset>
     </div>
     <div class="item">
       <div class="desc">Change Password</div>
       <div class="subdesc">To change your password, you need to enter your current password to confirm</div>
       <fieldset>
-        <input :type="passwordType" name="" value="" placeholder="Current password">
+        <input v-model="model.currentPassword" :type="passwordType" name="" value="" placeholder="Current password">
         <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
       </fieldset>
       <fieldset>
-        <input :type="passwordType" name="" value="" placeholder="New password">
+        <input v-model="model.newPassword" :type="passwordType" name="" value="" placeholder="New password">
         <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
       </fieldset>
       <fieldset>
-        <input :type="passwordType" name="" value="" placeholder="Repeat new password">
+        <input v-model="model.repeatMewPassword" :type="passwordType" name="" value="" placeholder="Repeat new password">
         <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
       </fieldset>
     </div>
-    <button type="button" class="btn st2">Save changes</button>
+    <button @click="saveData()" type="button" class="btn st2">Save changes</button>
   </form>
 </div>
 </template>
@@ -38,12 +38,69 @@ export default {
   name: 'AccessTab',
   data() {
     return{
-      passwordType: 'password'
+      passwordType: 'password',
+      model: {
+        email: '',
+        emailPlaceholder: '',
+        newEmail: '',
+        repeatMewEmail: '',
+        currentPassword: '',
+        newPassword: '',
+        repeatMewPassword: ''
+      },
+      errors: {
+        email_mismatch: {
+          open: false,
+          text: 'Email mismatch'
+        },
+        email_same: {
+          open: false,
+          text: 'Email same'
+        },
+        pass_missmatch: {
+          open: false,
+          text: 'Pass missmatch'
+        }
+      }
     }
   },
+  created() {
+    this.loadUserData()
+  },
   methods: {
+    async saveData() {
+      let formData = new FormData()
+      formData.append('api_token', this.token)
+      formData.append('email', this.model.email)
+      formData.append('new_email', this.model.newEmail)
+      formData.append('new_email_check', this.model.repeatMewEmail)
+      formData.append('pass', this.model.currentPassword)
+      formData.append('new_passs', this.model.newPassword)
+      formData.append('new_pass_check', this.model.repeatMewPassword)
+      const { data } = await this.$store.dispatch('user/updateAccess', {
+        token: this.token,
+        formData: formData
+      })
+      for(let e in this.errors) {
+        this.errors[e].open = false
+      }
+      if(data.error && this.errors[data.error]) {
+        this.errors[data.error].open = true
+      }
+    },
+    loadUserData() {
+      this.model.emailPlaceholder = this.user.settings.access.email
+    },
     togglePasswordType() {
       this.passwordType = (this.passwordType == 'password') ? 'text' : 'password'
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters['user/user']
+    },
+    token() {
+      return this.$store.getters['user/token']
     }
   }
 }

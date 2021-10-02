@@ -9,7 +9,8 @@
             <div v-html="e.title" class="title"></div>
             <div v-html="e.description" class="desc"></div>
           </div>
-          <nuxt-link :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+          <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+          <button v-else @click="openGameInfo(e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
         </div>
       </div>
     </swiper-slide>
@@ -73,6 +74,17 @@ export default {
         e.slides[e.activeIndex].firstChild.classList.add('current_slide')
       }, 1)
     })
+  },
+  methods: {
+    openGameInfo(e) {
+      this.$root.$emit('modalOpen', {
+        open: true,
+        target: 'gameInfo',
+        message: null,
+        status: false,
+        tab: e
+      })
+    }
   }
 }
 </script>

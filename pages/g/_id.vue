@@ -1,8 +1,8 @@
 <template>
 <div class="gamepagebox">
-  <div v-html="pageTitle" class="pagetitle"></div>
+  <div v-html="''" class="pagetitle"></div>
   <div class="framebox">
-    <iframe :src="pageData" frameborder="0"></iframe>
+    <iframe :src="''" frameborder="0"></iframe>
     <div class="overlay" area-label="overlay"></div>
   </div>
   <div class="info">
@@ -35,7 +35,26 @@ export default {
       }]
     }
   },
+  data: () => ({
+    game: null
+  }),
+  created() {
+    if(!this.gamesData[this.$route.params.id]) {
+      this.loadGame()
+    } else {
+      this.game = this.gamesData[this.$route.params.id]
+    }
+  },
   methods: {
+    async loadGame() {
+      let formData = new FormData()
+      formData.append('api_token', this.token)
+      formData.append('id', this.$route.params.id)
+      await this.$store.dispatch('games/setGamesData', formData)
+      if(this.gamesData[this.$route.params.id]) {
+        this.game = this.gamesData[this.$route.params.id]
+      }
+    },
     openModal(target) {
       this.$store.dispatch('modals/setModalOpen', {
         open: true,
@@ -50,13 +69,12 @@ export default {
     }
   },
   computed: {
-    pageTitle() {
-      return this.$store.getters['gamePage/pageTitle']
+    gamesData() {
+      return this.$store.getters['games/gamesData']
     },
-    pageData() {
-      return this.$store.getters['gamePage/pageData']
+    token() {
+      return this.$store.getters['user/token']
     }
   }
 }
-// @click="openModal('gameSignIn')"
 </script>

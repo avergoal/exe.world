@@ -9,7 +9,7 @@
   </form>
   <perfect-scrollbar ref="scroll">
     <ul class="list">
-      <li v-for="(e, i) in profile.blackList" :key="i">
+      <li v-for="(e, i) in list" :key="i">
         <div class="userphoto"><img :src="e.img" :alt="e.name"></div>
         <div v-html="e.name" class="name"></div>
         <button type="button" class="btn st3">Remove from blacklist</button>
@@ -22,9 +22,26 @@
 <script>
 export default {
   name: 'BlacklistTab',
+  data: () => ({
+    query: '',
+    list: []
+  }),
+  created() {
+    this.loadUsers()
+  },
+  methods: {
+    loadUsers() {
+      let formData = new FormData()
+      formData.append('api_token', this.token)
+      this.$store.dispatch('user/setBlackList', formData)
+    }
+  },
   computed: {
-    profile() {
-      return this.$store.getters['app/profile']
+    users() {
+      return this.$store.getters['user/blackList']
+    },
+    token() {
+      return this.$store.getters['user/token']
     }
   }
 }

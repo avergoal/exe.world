@@ -137,8 +137,17 @@ export default {
       return this.$store.getters['modals/tab']
     },
     profile() {
-      console.log(this.$store.getters['users/profile'])
-      return this.$store.getters['users/profile']
+      let profile = this.$store.getters['users/profile']
+      if(profile) {
+        profile = Object.assign({}, profile)
+        let age = profile.user.birth_date.match(/(\d{4})(\d{2})(\d{2})/)
+        profile.user.age = {
+          year: age[1],
+          month: age[2],
+          day: age[3]
+        }
+      }
+      return profile
     },
     token() {
       return this.$store.getters['user/token']

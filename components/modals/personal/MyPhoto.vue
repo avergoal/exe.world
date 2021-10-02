@@ -1,13 +1,13 @@
 <template>
 <div class="modalinfo myphotomodal editor small">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="closeModal()" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
     <div class="title">My Photo</div>
     <div class="btns">
-      <button type="button" class="btn st3">delete photo</button>
-      <button @click="openEditor()" type="button" class="btn st2">add new photo</button>
+      <button @click="removePhoto()" type="button" class="btn st3">delete photo</button>
+      <button @click="openModal()" type="button" class="btn st2">add new photo</button>
     </div>
   </div>
 </div>
@@ -17,11 +17,36 @@
 export default {
 	name: 'MyPhotoModal',
   methods: {
-    openEditor() {
-      this.$store.dispatch('modals/setModalOpen', {
-        open: true,
-        target: 'myPhotoEditor'
+    async removePhoto() {
+      let formData = new FormData()
+          formData.append('api_token', this.token)
+      const { data } = await this.$store.dispatch('user/removePhoto', {
+        token: this.token,
+        formData: formData
       })
+    },
+    openModal() {
+      this.$root.$emit('modalOpen', {
+        open: true,
+        target: 'myPhotoEditor',
+        message: null,
+        status: null,
+        tab: null
+      })
+    },
+    closeModal() {
+      this.$root.$emit('modalOpen', {
+        open: false,
+        target: null,
+        message: null,
+        status: null,
+        tab: null
+      })
+    }
+  },
+  computed: {
+    token() {
+      return this.$store.getters['user/token']
     }
   }
 }

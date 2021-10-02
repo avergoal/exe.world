@@ -3,7 +3,7 @@
   <div class="title">Balance</div>
   <div class="inform">
     <div class="top">
-      <div v-html="profile.balance" class="balance"></div>
+      <div v-html="(balance.balance) ? balance.balance : '0'" class="balance"></div>
       <button @click="$parent.setTab('addfunds')" type="button" class="btn">
         <svg-icon name="ui/plus" />
         <span>Add funds</span>
@@ -14,7 +14,7 @@
   <div class="label">History</div>
   <perfect-scrollbar ref="scroll">
     <ul class="list">
-      <li v-for="(e, i) in profile.balanceHistory" :key="i">
+      <li v-for="(e, i) in balance.history" :key="i">
         <div v-html="e.date" class="date"></div>
         <div v-html="e.desc" class="desc"></div>
         <div v-html="e.balance" :class="e.type" class="balance">+ $50</div>
@@ -27,22 +27,25 @@
 <script>
 export default {
   name: 'BalanceTab',
-  data() {
-    return{
-      addFunds: false
-    }
+  data: () => ({
+    addFunds: false
+  }),
+  created() {
+    this.loadBalance()
   },
   methods: {
-    openAddFunds() {
-      this.$store.dispatch('modals/setModalOpen', {
-        open: true,
-        target: 'addFunds'
-      })
+    loadBalance() {
+      let formData = new FormData()
+      formData.append('api_token', this.token)
+      this.$store.dispatch('user/setBalanceHistory', formData)
     }
   },
   computed: {
-    profile() {
-      return this.$store.getters['app/profile']
+    balance() {
+      return this.$store.getters['user/balanceHistory']
+    },
+    token() {
+      return this.$store.getters['user/token']
     }
   }
 }

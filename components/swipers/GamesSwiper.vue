@@ -69,11 +69,13 @@ export default {
       this.data = this[this.slides][this.filter].list
     },
     openGame(e) {
-      this.$store.dispatch('modals/setOpen', {
+      this.$root.$emit('modalOpen', {
         open: true,
-        target: 'gameInfo'
+        target: 'gameInfo',
+        message: null,
+        status: false,
+        tab: e
       })
-      console.log(e)
     }
   },
   computed: {
