@@ -11,7 +11,7 @@ export const mutations = {
 export const actions = {
   getProfile({commit}, params) {
     this.$axios.post('/appApi/user.info', params).then(response => {
-      console.log(response)
+      console.log(response.data)
       commit('setProfile', (response.data) ? response.data.response : null)
     }).catch(err => {console.log(err)})
   },

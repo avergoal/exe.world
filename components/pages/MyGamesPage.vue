@@ -41,6 +41,7 @@ export default {
     setTimeout(() => {
       document.getElementById('scroll').dispatchEvent(new Event('scroll'))
     }, 100)
+    console.log(this.user)
   },
   methods: {
     setPage(e) {

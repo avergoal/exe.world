@@ -53,6 +53,7 @@ export default {
   }),
   mounted() {
     this.model = Object.assign({}, this.user.settings.notifications)
+    console.log(this.model)
   },
   methods: {
     async saveData() {
@@ -61,11 +62,11 @@ export default {
       for(let e in this.model) {
         formData.append(e, this.model[e])
       }
-      const { data } = await this.$store.dispatch('user/updateAccess', {
+      console.log(this.model)
+      const { data } = await this.$store.dispatch('user/updateNotifications', {
         token: this.token,
         formData: formData
       })
-      console.log(data)
     }
   },
   computed: {

@@ -39,7 +39,6 @@ export default {
         let formData = new FormData()
         formData.append('api_token', token)
         const { data } = await this.$store.dispatch('user/auth', formData)
-        console.log(data)
         if(typeof data.error != 'undefined') {
           localStorage.removeItem('token')
         }

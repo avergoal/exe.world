@@ -74,6 +74,7 @@ export default {
         e.slides[e.activeIndex].firstChild.classList.add('current_slide')
       }, 1)
     })
+    console.log(this.slides)
   },
   methods: {
     openGameInfo(e) {

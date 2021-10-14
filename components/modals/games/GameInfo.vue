@@ -88,7 +88,7 @@ export default {
     } else {
       this.loadGame(this.gameId)
     }
-    console.log(this.token)
+    console.log(this.game)
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -107,6 +107,7 @@ export default {
         this.game = this.gamesData[this.gameId]
         this.loaded = true
       }
+      console.log(this.game)
     },
     goGame() {
       this.$router.push('/g/' + this.game.gid)

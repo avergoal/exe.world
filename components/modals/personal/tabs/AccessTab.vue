@@ -75,12 +75,13 @@ export default {
       formData.append('new_email', this.model.newEmail)
       formData.append('new_email_check', this.model.repeatMewEmail)
       formData.append('pass', this.model.currentPassword)
-      formData.append('new_passs', this.model.newPassword)
+      formData.append('new_pass', this.model.newPassword)
       formData.append('new_pass_check', this.model.repeatMewPassword)
       const { data } = await this.$store.dispatch('user/updateAccess', {
         token: this.token,
         formData: formData
       })
+      console.log(data)
       for(let e in this.errors) {
         this.errors[e].open = false
       }

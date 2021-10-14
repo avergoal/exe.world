@@ -44,6 +44,7 @@ export default {
     } else {
       this.game = this.gamesData[this.$route.params.id]
     }
+    console.log(this.token, this.gamesData)
   },
   methods: {
     async loadGame() {
