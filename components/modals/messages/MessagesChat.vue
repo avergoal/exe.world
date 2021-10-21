@@ -1,15 +1,15 @@
 <template>
 <div class="modalinfo messagesmodal chat middle">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="toggleModal(null)" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
     <div class="usermodaltop">
-      <button @click="$parent.openModal('messages')" type="button"><svg-icon name="ui/back" /></button>
-      <div class="userphoto"><img :src="userMessagesChat.photo" alt=""></div>
+      <button @click="toggleModal('messages')" type="button"><svg-icon name="ui/back" /></button>
+      <div class="userphoto"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></div>
       <div class="info">
-        <div v-html="userMessagesChat.name" class="name"></div>
-        <div :class="{active: userMessagesChat.online}" class="online"><span></span> Online</div>
+        <div v-html="profile.user.user_name" class="name"></div>
+        <div :class="{active: profile.user.online}" class="online"><span></span> Online</div>
       </div>
       <div class="nav">
         <div class="item"><button @click="toggleSearch()" type="button" class="togglesearch"><svg-icon name="ui/search" /></button></div>
@@ -109,6 +109,17 @@ export default {
     })
   },
   methods: {
+    toggleModal(target) {
+      this.$root.$emit('toggleModal', (target) ? {
+        open: true,
+        target: target
+      } : {})
+    },
+
+
+
+
+
     toggleSearch() {
       this.openSearch = !this.openSearch
     },
@@ -117,6 +128,24 @@ export default {
     }
   },
   computed: {
+    profile() {
+      let profile = this.$store.getters['users/profile']
+      if(profile) {
+        profile = Object.assign({}, profile)
+        let age = profile.user.birth_date.match(/(\d{4})(\d{2})(\d{2})/)
+        profile.user.age = {
+          year: age[1],
+          month: age[2],
+          day: age[3]
+        }
+      }
+      console.log(profile)
+      return profile
+    },
+
+
+
+
     userMessagesChat() {
       return this.$store.getters['app/userMessagesChat']
     }

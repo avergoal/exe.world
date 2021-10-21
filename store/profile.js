@@ -10,7 +10,19 @@ export const state = () => ({
   notifications: {
     total: 0,
     list: []
-  }
+  },
+  friends: {
+    total: 0,
+    list: []
+  },
+  friendsRequestIn: {
+    total: 0,
+    list: []
+  },
+  friendsRequestOut: {
+    total: 0,
+    list: []
+  },
 })
 
 export const mutations = {
@@ -171,11 +183,70 @@ export const actions = {
       value: data.response
     })
   },
-  // Black list
-  async setBlackList({}) {
+  // Friends
+  async setFriends({commit}, params) {
+    const { data } = await this.$axios.post('/appApi/friends.get', params)
+    commit('setState', {
+      key: 'friends',
+      value: {
+        total: data.response.users.length,
+        list: data.response.users
+      }
+    })
+  },
+  async setFriendsRequest({commit}, params) {
+    let key = params.key
+    delete params.key
+    const { data } = await this.$axios.post('/appApi/friends.requests', params)
+    commit('setState', {
+      key: key,
+      value: {
+        total: data.response.users.length,
+        list: data.response.users
+      }
+    })
+  },
+  async acceptRequest({}, params) {
+    await this.$axios.post('/appApi/friends.add', params)
+    this.dispatch('profile/setFriends', {
+      offset: 0
+    })
+    this.dispatch('profile/setFriendsRequest', {
+      key: 'friendsRequestIn',
+      type: 0,
+      offset: 0
+    })
+  },
+  async rejectRequest({}, params) {
+    await this.$axios.post('/appApi/friends.del', params)
+    this.dispatch('profile/setFriends', {
+      offset: 0
+    })
+    this.dispatch('profile/setFriendsRequest', {
+      key: 'friendsRequestIn',
+      type: 0,
+      offset: 0
+    })
+    this.dispatch('profile/setFriendsRequest', {
+      key: 'friendsRequestOut',
+      type: 1,
+      offset: 0
+    })
+  },
+  // Blacklist
+  async setBlackList({commit}) {
     const { data } = await this.$axios.post('/appApi/blacklist.get', {})
-    console.log(data)
-    return
+    commit('setState', {
+      key: 'blacklist',
+      value: data.response.blacklist
+    })
+  },
+  async blackListAdd({}, params) {
+    await this.$axios.post('/appApi/blacklist.add', params)
+  },
+  async blackListRemove({}, params) {
+    await this.$axios.post('/appApi/blacklist.remove', params)
+    this.dispatch('profile/setBlackList', {})
   },
 }
 
@@ -216,4 +287,7 @@ export const getters = {
   blacklist: state => state.blacklist,
   balance: state => state.balance,
   notifications: state => state.notifications,
+  friends: state => state.friends,
+  friendsRequestIn: state => state.friendsRequestIn,
+  friendsRequestOut: state => state.friendsRequestOut,
 }

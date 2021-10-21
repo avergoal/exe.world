@@ -1,7 +1,7 @@
 <template>
 <div class="nav">
   <div class="item">
-    <button @click="openModal('userProfile')" type="button" class="btn st3 mobile">
+    <button @click="toggleModal('userProfile', user.id)" type="button" class="btn st3 mobile">
       <span>write</span>
       <svg-icon name="ui/pencil" class="mobile"/>
     </button>
@@ -11,19 +11,19 @@
     <div :class="{open: openParams}" class="dropdown">
       <ul class="menu">
         <li>
-          <button @click="openModal('friendsRemove')" type="button">
+          <button @click="toggleModal('friendsRemove', user)" type="button">
             <div class="ico"><svg-icon name="ui/user_remove" /></div>
             <span>Remove From Friends</span>
           </button>
         </li>
         <li>
-          <button @click="openModal('friendsBlock')" type="button">
+          <button @click="toggleModal('friendsBlock', user)" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
             <span>Block User</span>
           </button>
         </li>
         <li>
-          <button @click="openModal('friendsReport')" type="button">
+          <button @click="toggleModal('friendsReport', user)" type="button">
             <div class="ico"><svg-icon name="ui/report" /></div>
             <span>Report</span>
           </button>
@@ -37,24 +37,24 @@
 <script>
 export default{
   name: 'FriendsActions',
-  data() {
-    return{
-      openParams: false
-    }
-  },
+  props: ['user'],
+  data: () => ({
+    openParams: false
+  }),
   mounted() {
     document.addEventListener('click', (e) => {
       if(!e.target.closest('.params') && !e.target.closest('.toggleparams')) {
         this.openParams = false
       }
     })
-    this.$root.$on('closeParams', () => {
-      this.openParams = false
-    })
   },
   methods: {
-    openModal(target) {
-      this.$root.$emit('openFriendsModal', target)
+    toggleModal(target, user) {
+      this.$root.$emit('toggleModal', {
+        open: true,
+        target: target,
+        user: user
+      })
     },
     toggleParams() {
       let list = document.querySelectorAll('.params.open')
@@ -64,7 +64,7 @@ export default{
         }
       }
       if(!this.openParams) {
-        this.$root.$emit('closeParams')
+        this.openParams = false
       }
       this.openParams = !this.openParams
     }

@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo usersmodal bigger">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="toggleModal(null)" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div v-if="profile" class="modalcontent">
@@ -24,8 +24,8 @@
       </div>
       <div v-if="profile" class="btns">
         <div v-if="profile.friendship_status" class="btnbox">
-          <button class="toggleparams2 btn st3" @click="toggleParams('openParams2')" type="button">your friend</button>
-          <button class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
+          <button @click="toggleParams('openParams2')" class="toggleparams2 btn st3" type="button">your friend</button>
+          <button @click="toggleModal('messagesChat')" class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
         </div>        
         <button v-else @click="addFriends(profile.user.uid)" class="toggleparams2 btn st2" type="button">add to friends</button>
         <div :class="{open: openParams2}" class="dropdown params2">
@@ -102,9 +102,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('users/getProfile', {
-      uid: this.modal.user
-    })
+    this.loadProfile()
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -117,6 +115,11 @@ export default {
     })
   },
   methods: {
+    async loadProfile() {
+      this.$store.dispatch('users/setProfile', {
+        uid: this.modal.user
+      })
+    },
     async addFriends(e) {
       await this.$store.dispatch('users/addFriends', {
         uid: this.modal.user
@@ -124,6 +127,12 @@ export default {
     },
     toggleParams(target) {
       this[target] = !this[target]
+    },
+    toggleModal(target) {
+      this.$root.$emit('toggleModal', (target) ? {
+        open: true,
+        target: target
+      } : {})
     }
   },
   computed: {

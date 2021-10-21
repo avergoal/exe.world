@@ -1,28 +1,36 @@
 export const state = () => ({
-  profile: null
+  profile: null,
+  friends: [],
+  mutualFriends: []
 })
 
 export const mutations = {  
-  setProfile(state, profile) {
-    state.profile = profile
-  }  
-}
-
-export const actions = {
-  getProfile({commit}, params) {
-    this.$axios.post('/appApi/user.info', params).then(response => {
-      commit('setProfile', (response.data) ? response.data.response : null)
-    }).catch(err => {console.log(err)})
-  },
-  async addFriends({}, params) {
-    return new Promise((resolve) => {
-      this.$axios.post('/appApi/friends.add', params).then(response => {
-        resolve(true)
-      }).catch(err => {console.log(err.response)})
-    })
+  setState(state, data) {
+    state[data.key] = data.value
   }
 }
 
+export const actions = {
+  async setProfile({commit}, params) {
+    commit('setState', {key: 'profile', value: null})
+    commit('setState', {key: 'friends', value: []})
+    commit('setState', {key: 'mutualFriends', value: []})
+    const { data } = await this.$axios.post('/appApi/user.info', params)
+    commit('setState', {key: 'profile', value: data.response})
+    commit('setState', {key: 'friends', value: data.response.friends.users})
+    commit('setState', {key: 'mutualFriends', value: data.response.mutual_friends.users})
+  },
+  async addFriends({}, params) {
+    return new Promise(async (resolve) => {
+      await this.$axios.post('/appApi/friends.add', params)
+      resolve(true)
+    })
+  },
+  
+}
+
 export const getters = {
-  profile: state => state.profile
+  profile: state => state.profile,
+  friends: state => state.friends,
+  mutualFriends: state => state.mutualFriends,
 }

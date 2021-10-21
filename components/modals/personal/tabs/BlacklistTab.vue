@@ -4,15 +4,15 @@
   <form action="">
     <fieldset>
       <svg-icon name="ui/search" />
-      <input type="text" name="" value="" placeholder="Search friends">
+      <input v-model="search" type="text" name="" value="" placeholder="Search friends">
     </fieldset>
   </form>
   <perfect-scrollbar ref="scroll">
     <ul class="list">
-      <li v-for="(e, i) in list" :key="i">
-        <div class="userphoto"><img :src="e.img" :alt="e.name"></div>
-        <div v-html="e.name" class="name"></div>
-        <button type="button" class="btn st3">Remove from blacklist</button>
+      <li v-for="(e, i) in blacklist" :key="i" :class="{hidden: searchValues(e.user_name)}">
+        <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
+        <div v-html="e.user_name" class="name"></div>
+        <button @click="removeUserFromBlacklist(e.uid)" type="button" class="btn st3">Remove from blacklist</button>
       </li>
     </ul>
   </perfect-scrollbar>
@@ -23,20 +23,34 @@
 export default {
   name: 'BlacklistTab',
   data: () => ({
-    query: '',
-    list: []
+    search: null
   }),
-  created() {
+  mounted() {
     this.loadUsers()
   },
   methods: {
+    searchValues(e) {
+      if(e && this.search) {
+        let str = e.toString().toLowerCase(),
+            val = this.search.toString().toLowerCase()
+        return !(str.indexOf(val) === 0)
+      } else {
+        return false
+      }
+    },
     async loadUsers() {
       await this.$store.dispatch('profile/setBlackList')
+    },
+    async removeUserFromBlacklist(e) {
+      await this.$store.dispatch('profile/blackListRemove', {
+        uid: e
+      })
     }
   },
   computed: {
-    users() {
-      return this.$store.getters['profile/blackList']
+    blacklist() {
+      console.log(this.$store.getters['profile/blacklist'])
+      return this.$store.getters['profile/blacklist']
     }
   }
 }

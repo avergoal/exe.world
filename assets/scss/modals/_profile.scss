@@ -567,6 +567,9 @@
                 background: $grayMedium;
                 content: "";
               }
+              &.hidden{
+                display: none;
+              }
               .name{
                 @include subTitle1;
               }

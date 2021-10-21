@@ -60,7 +60,13 @@ export default {
   computed: {
     search_peoples() {
       return this.$store.getters['search/results'].peoples
-    }
+    },
+    user_profile_friends() {
+      return this.$store.getters['users/friends']
+    },
+    user_profile_mutual_friends() {
+      return this.$store.getters['users/mutualFriends']
+    },
   }
 }
 </script>

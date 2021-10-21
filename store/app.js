@@ -2,7 +2,8 @@ export const state = () => ({
   page: 'index',
   modal: {},
   countries: [],
-  cities: []
+  cities: [],
+  news: []
 })
 
 export const mutations = {
@@ -149,12 +150,24 @@ export const actions = {
       const response = this.$axios.post('/appApi/request', params)
       resolve(response)
     })
-  }
+  },
+  // News
+  async setNews({commit}, params) {
+    return new Promise(async (resolve) => {
+      const { data } = await this.$axios.post('/appApi/news.my', params)
+      commit('setState', {
+        key: 'news',
+        value: data.response.news
+      })
+      resolve(true)
+    })
+  },
 }
 
 export const getters = {
   page: state => state.page,
   modal: state => state.modal,
   countries: state => state.countries,
-  cities: state => state.cities
+  cities: state => state.cities,
+  news: state => state.news,
 }

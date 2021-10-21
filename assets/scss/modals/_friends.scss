@@ -97,6 +97,9 @@
               left: 58px;
             }
           }
+          &.hidden{
+            display: none;
+          }
           .name{
             @include subTitle1;
           }
