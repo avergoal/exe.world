@@ -28,6 +28,11 @@
 <script>
 export default {
   name: 'GamePage',
+  async asyncData({store}) {
+    const data = await store.dispatch('app/setAbout')
+    console.log(data, 'about')
+    return {data}
+  },
   head() {
 		return {
       title: 'About EXE',
@@ -36,14 +41,6 @@ export default {
         name: 'description',
         content: 'description category'
       }]
-    }
-  },
-  computed: {
-    pageTitle() {
-      return this.$store.getters['gamePage/pageTitle']
-    },
-    pageData() {
-      return this.$store.getters['gamePage/pageData']
     }
   }
 }

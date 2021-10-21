@@ -8,49 +8,51 @@
     <form action="">
       <fieldset>
         <svg-icon class="search" name="ui/search" />
-        <input v-model="query" @input="goSearch" type="text" name="" value="" placeholder="Search games and users">
+        <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games and users">
         <button @click="resetSearch()" type="button"><svg-icon class="close" name="ui/close" /></button>
       </fieldset>
       <button @click="closeSearch()" type="button" class="btn st1"><svg-icon name="ui/close" /></button>
     </form>
   </div>
-  <perfect-scrollbar class="searchscroll" ref="scrollSearch">
-    <div class="results">
-      <GamesSwiper v-if="popular.length" slides="search_popular" between="24" title="Popular Searches"/>
-      <GamesSwiper v-if="loaded && games.length" slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s" navClass="s"/>
-      <div v-else-if="loaded && peoples.length" class="empty">
-        <div class="img">
-          <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-          <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+  <client-only>
+    <perfect-scrollbar class="searchscroll" ref="scrollSearch">
+      <div class="results">
+        <GamesSwiper v-if="popular.length" slides="search_popular" between="24" title="Popular Searches"/>
+        <GamesSwiper v-if="loaded && results.games.length" :key="JSON.stringify(results.games)" slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s" navClass="s"/>
+        <div v-else-if="loaded && results.peoples.length" class="empty">
+          <div class="img">
+            <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
+            <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+          </div>
+          <div class="text">
+            <b>We did not find any games for your request</b>
+            <p>Try changing your search text</p>
+          </div>
         </div>
-        <div class="text">
-          <b>We did not find any games for your request</b>
-          <p>Try changing your search text</p>
+        <UsersSwiper v-if="loaded && results.peoples.length" :key="JSON.stringify(results.peoples)" slides="search_peoples" between="8" title="People" target="searchPeoples"/>
+        <div v-else-if="loaded && results.games.length" class="empty">
+          <div class="img">
+            <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
+            <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+          </div>
+          <div class="text">
+            <b>We did not find people for your request</b>
+            <p>Try changing your search text</p>
+          </div>
+        </div>
+        <div v-if="loaded && !results.peoples.length && !results.games.length" class="empty noresults">
+          <div class="img">
+            <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
+            <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+          </div>
+          <div class="text">
+            <b>We did not find anything for your request</b>
+            <p>Try changing your search text</p>
+          </div>
         </div>
       </div>
-      <UsersSwiper v-if="loaded && peoples.length" :key="JSON.stringify(peoples)" slides="search_peoples" between="8" title="People" target="searchPeoples"/>
-      <div v-else-if="loaded && games.length" class="empty">
-        <div class="img">
-          <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-          <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
-        </div>
-        <div class="text">
-          <b>We did not find people for your request</b>
-          <p>Try changing your search text</p>
-        </div>
-      </div>
-      <div v-if="loaded && !peoples.length && !games.length" class="empty noresults">
-        <div class="img">
-          <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-          <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
-        </div>
-        <div class="text">
-          <b>We did not find anything for your request</b>
-          <p>Try changing your search text</p>
-        </div>
-      </div>
-    </div>
-  </perfect-scrollbar>
+    </perfect-scrollbar>
+  </client-only>
 </div>
 </template>
 
@@ -63,31 +65,33 @@ export default {
     timeOut: null
   }),
   created() {
-    this.$root.$on('modalOpen', () => {
-      this.resetSearch()
+    this.$root.$on('toggleModal', () => {
+      this.closeSearch()
+    })
+    this.$root.$on('closeSearch', () => {
+      this.closeSearch()
     })
   },
   methods: {
-    setRoute() {
-      this.closeSearch()
-      this.$parent.setRoute()
-    },
     goSearch() {
       if(this.query.length >= 3) {
         clearTimeout(this.timeOut)
         this.timeOut = setTimeout(async () => {
-          let formData = new FormData()
-          formData.append('query', this.query)
-          formData.append('offset', 0)
-          formData.append('limit', 24)
-          formData.append('api_token', this.token)
-          await this.$store.dispatch('search/goSearch', formData)
+          await this.$store.dispatch('search/goSearch', {
+            query: this.query,
+            offset: 0,
+            limit: 24
+          })
           this.loaded = true
         }, 350)
       }
     },
+    setRoute() {
+      this.$parent.setRoute()
+      this.closeSearch()
+    },
     closeSearch() {
-      this.$store.dispatch('search/setOpen', false)
+      this.$store.dispatch('search/toggleSearch', false)
       this.resetSearch()
     },
     resetSearch() {
@@ -99,14 +103,8 @@ export default {
     popular() {
       return this.$store.getters['search/popular']
     },
-    games() {
-      return this.$store.getters['search/games']
-    },
-    peoples() {
-      return this.$store.getters['search/peoples']
-    },
-    token() {
-      return this.$store.getters['user/token']
+    results() {
+      return this.$store.getters['search/results']
     }
   }
 }

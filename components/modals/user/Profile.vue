@@ -3,7 +3,7 @@
   <button @click="$parent.closeModal()" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
-  <div class="modalcontent">
+  <div v-if="profile" class="modalcontent">
     <aside class="info">
       <div v-if="profile" class="topinfo">
         <div class="userphoto"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></div>
@@ -46,7 +46,7 @@
         </div>
       </div>
       <ul v-if="profile" class="more">
-        <li>
+        <!--<li>
           <div class="label">Age</div>
           <div v-html="friendProfile.age" class="desc"></div>
         </li>
@@ -57,7 +57,7 @@
         <li>
           <div class="label">Location</div>
           <div v-html="friendProfile.location" class="desc"></div>
-        </li>
+        </li>-->
       </ul>
       <div v-if="profile" class="floatparams">
         <button @click="toggleParams('openParams1')" type="button" class="toggleparams1"><svg-icon name="ui/dotted" /></button>
@@ -98,15 +98,13 @@ export default {
   data() {
     return{
       openParams1: false,
-      openParams2: false,
-      friendProfile: {}
+      openParams2: false
     }
   },
   created() {
-    let formData = new FormData()
-    formData.append('api_token', this.token)
-    formData.append('uid', this.userId)
-    this.$store.dispatch('users/getProfile', formData)
+    this.$store.dispatch('users/getProfile', {
+      uid: this.modal.user
+    })
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -117,24 +115,20 @@ export default {
         this.openParams2 = false
       }
     })
-    this.$root.$on('changeProfileModals', (target) => {
-      this.$parent.openModal(target)
-    })
   },
   methods: {
     async addFriends(e) {
-      let formData = new FormData()
-      formData.append('api_token', this.token)
-      formData.append('uid', this.userId)
-      await this.$store.dispatch('users/addFriends', formData)
+      await this.$store.dispatch('users/addFriends', {
+        uid: this.modal.user
+      })
     },
     toggleParams(target) {
       this[target] = !this[target]
     }
   },
   computed: {
-    userId() {
-      return this.$store.getters['modals/tab']
+    modal() {
+      return this.$store.getters['app/modal']
     },
     profile() {
       let profile = this.$store.getters['users/profile']
@@ -148,9 +142,6 @@ export default {
         }
       }
       return profile
-    },
-    token() {
-      return this.$store.getters['user/token']
     }
   }
 }

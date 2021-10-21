@@ -42,29 +42,24 @@ export default {
   },
   methods: {
     openUser(e) {
-      this.$store.dispatch('search/setOpen', false)
-      this.$root.$emit('modalOpen', {
+      this.$root.$emit('toggleModal', {
         open: true,
         target: 'userProfile',
-        message: null,
-        status: false,
-        tab: e
+        user: e
       })
+      this.closeSearch()
     },
     setRoute(target) {
-      this.$store.dispatch('search/setOpen', false)
-      this.$store.dispatch('app/setPage', target)
+      this.$root.$emit('changeTemplate', target)
+      this.closeSearch()
+    },
+    closeSearch() {
+      this.$root.$emit('closeSearch')
     }
   },
   computed: {
     search_peoples() {
-      return this.$store.getters['search/peoples']
-    },
-    user_profile_friends() {
-      return this.$store.getters['users/profile'].friends.users
-    },
-    user_profile_mutual_friends() {
-      return this.$store.getters['users/profile'].mutual_friends.users
+      return this.$store.getters['search/results'].peoples
     }
   }
 }

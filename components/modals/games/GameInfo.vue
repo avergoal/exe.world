@@ -14,50 +14,45 @@
             <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">share</button>
             <div :class="{open: shareOpen}" class="dropdown">
               <ul class="menu">
-                <li>
-                  <a href="">
-                    <div class="ico"><svg-icon name="ui/facebook" /></div>
-                    <span>Facebook</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="">
-                    <div class="ico"><svg-icon name="ui/twitter" /></div>
-                    <span>Twitter</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="">
-                    <div class="ico"><svg-icon name="ui/vk" /></div>
-                    <span>VK</span>
-                  </a>
-                </li>
+                <li><a href=""><div class="ico"><svg-icon name="ui/facebook" /></div><span>Facebook</span></a></li>
+                <li><a href=""><div class="ico"><svg-icon name="ui/twitter" /></div><span>Twitter</span></a></li>
+                <li><a href=""><div class="ico"><svg-icon name="ui/vk" /></div><span>VK</span></a></li>
               </ul>
             </div>
+          </div>
+          <div v-if="game.friends" class="friends">
+            <div class="label">Friends playing: <span v-html="game.friends.length"></span></div>
+            <ul>
+              <li v-for="(e, i) in game.friends" :key="i">
+                <button @click="openUser(e.uid)" type="button">
+                  <img :src="e.avatar_urls.x100" alt="">
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-    <div class="screens">
+    <div v-if="game.media.length" class="screens">
       <div class="boxtitle">Screenshots</div>
-      <div v-if="game.media.length" class="swiperbox">
+      <div class="swiperbox">
         <swiper :options="config" ref="newSwiper">
-          <swiper-slide v-for="(e, i) in game.screenList" :key="i">
+          <swiper-slide v-for="(e, i) in game.media" :key="i">
             <div @click="index = i" class="img">
-              <img :src="e">
+              <img :src="e.image">
               <span><svg-icon name="ui/plus" /></span>
             </div>
           </swiper-slide>
         </swiper>
-        <!--div class="swipernav">
+        <div class="swipernav">
           <button class="prev_screen b" type="button"><svg-icon name="ui/swiper_prev"/></button>
           <button class="next_screen b" type="button"><svg-icon name="ui/swiper_next"/></button>
-        </div-->
+        </div>
       </div>
     </div>
     <div v-html="game.description" class="desc"></div>
   </div>
-  <!--CoolLightBox :items="game.screenList" :index="index" :effect="'fade'" @close="index = null" /-->
+  <CoolLightBox :items="gallery" :index="index" :effect="'fade'" @close="index = null" />
 </div>
 </template>
 
@@ -79,16 +74,19 @@ export default {
       }
     },
     shareOpen: false,
+    gallery: [],
     index: null
   }),
   created() {
-    if(this.gamesData[this.gameId]) {
-      this.game = this.gamesData[this.gameId]
+    if(this.gamesData[this.modal.game]) {
+      this.game = this.gamesData[this.modal.game]
+      for(let i = 0; i < this.game.media.length; i++) {
+        this.gallery.push(this.game.media[i].image)
+      }
       this.loaded = true
     } else {
-      this.loadGame(this.gameId)
+      this.loadGame(this.modal.game)
     }
-    console.log(this.game)
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -99,39 +97,32 @@ export default {
   },
   methods: {
     async loadGame() {
-      let formData = new FormData()
-      formData.append('api_token', this.token)
-      formData.append('id', this.gameId)
-      await this.$store.dispatch('games/setGamesData', formData)
-      if(this.gamesData[this.gameId]) {
-        this.game = this.gamesData[this.gameId]
+      await this.$store.dispatch('games/setGamesData', {
+        id: this.modal.game
+      })
+      if(this.gamesData[this.modal.game]) {
+        this.game = this.gamesData[this.modal.game]
+        for(let i = 0; i < this.game.media.length; i++) {
+          this.gallery.push(this.game.media[i].image)
+        }
         this.loaded = true
+        console.log(this.gamesData[this.modal.game])
       }
-      console.log(this.game)
     },
     goGame() {
       this.$router.push('/g/' + this.game.gid)
       this.closeModal()
     },
     closeModal() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: null,
-        tab: null
-      })
+      this.$root.$emit('toggleModal', {})
     }
   },
   computed: {
-    gameId() {
-      return this.$store.getters['modals/tab']
+    modal() {
+      return this.$store.getters['app/modal']
     },
     gamesData() {
       return this.$store.getters['games/gamesData']
-    },
-    token() {
-      return this.$store.getters['user/token']
     }
   }
 }

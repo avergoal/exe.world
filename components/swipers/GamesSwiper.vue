@@ -2,17 +2,18 @@
 <div class="category_slider">
   <div class="boxtitle">
     <span v-html="title"></span>
-    <button v-if="target" @click="$root.$emit('changeTemplate', target)" type="button"><svg-icon name="ui/more"/></button>
+    <button v-if="target" @click="setRoute(target)" type="button"><svg-icon name="ui/more"/></button>
   </div>
-  <Filters v-if="filters" type="categories"/>
+  <Filters v-if="filters" :type="filters"/>
   <div v-if="config" class="swiperbox">
     <swiper :options="config">
       <swiper-slide v-for="(e, i) in data" :key="i" :class="(slideClass ? slideClass : 'b')" class="gamecard">
         <div class="box">
           <div class="img">
             <img v-lazy="e.poster.default" :alt="e.title">
-            <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-            <button v-else @click="openGame(e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-if="!user" @click="toggleModal('gameSignIn', e.poster.default)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+            <button v-else @click="toggleModal('gameInfo', e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           </div>
           <div class="info">
             <div v-html="e.title" class="title"></div>
@@ -39,7 +40,7 @@ export default {
   }),
   mounted() {
     if(this.slides == 'categories') {
-      this.data = this[this.slides][this.filter].list
+      this.data = this[this.slides][this.filter.current].list
       this.$root.$on('changeCategory', (e) => {
         this.changeCategory(e)
       })
@@ -60,27 +61,40 @@ export default {
     }
   },
   methods: {
-    async changeCategory(e) {
-      let formData = new FormData()
-      formData.append('type', e)
-      formData.append('offset', 0)
-      formData.append('api_token', this.token)
-      await this.$store.dispatch('games/setCategories', formData)
-      this.data = this[this.slides][this.filter].list
+    setRoute(target) {
+      this.$root.$emit('changeTemplate', target) 
     },
-    openGame(e) {
-      this.$root.$emit('modalOpen', {
+    async changeCategory(e) {
+      if(!this[this.slides][e].length) {
+        await this.$store.dispatch('games/setCategories', {
+          type: e,
+          offset: 0
+        })
+        this.data = this[this.slides][e].list
+      } else {
+        this.data = this[this.slides][e].list
+      }
+    },
+    toggleModal(target, e) {
+      this.$root.$emit('toggleModal', {
         open: true,
-        target: 'gameInfo',
-        message: null,
-        status: false,
-        tab: e
+        target: target,
+        game: e
       })
     }
   },
   computed: {
+    filter() {
+      return this.$store.getters['filters/allCategories']
+    },
+    search_popular() {
+      return this.$store.getters['search/popular']
+    },
+    search_games() {
+      return this.$store.getters['search/results'].games
+    },
     recent_games() {
-      return this.$store.getters['user/user'].recent_games
+      return this.$store.getters['profile/user'].recent_games
     },
     newgames() {
       return this.$store.getters['games/newgames']
@@ -94,20 +108,11 @@ export default {
     categories() {
       return this.$store.getters['games/categories']
     },
-    filter() {
-      return this.$store.getters['filters/category']
-    },
-    search_popular() {
-      return this.$store.getters['search/popular']
-    },
-    search_games() {
-      return this.$store.getters['search/games']
-    },
-    token() {
-      return this.$store.getters['user/token']
-    },
     user_profile_games() {
       return this.$store.getters['users/profile'].games.games
+    },
+    user() {
+      return this.$store.getters['profile/user']
     }
   }
 }

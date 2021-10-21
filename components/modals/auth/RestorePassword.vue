@@ -1,11 +1,11 @@
 <template>
 <div class="modalinfo authmodal small">
-  <button @click="closeModal()" class="close" area-label="close">
+  <button @click="toggleModal(null)" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
     <div class="top flex">
-      <button @click="openModal('signIn')" type="button"><svg-icon name="ui/back" /></button>
+      <button @click="toggleModal('signIn')" type="button"><svg-icon name="ui/back" /></button>
       <span>Restore password</span>
     </div>
     <form @submit.prevent="restorePassword()" action="" class="st1">
@@ -25,57 +25,31 @@ export default {
 	name: 'RestorePasswordModal',
   data: () => ({
     emailorphone: null,
-    error: {
-      show: false,
-      text: 'Пользователь не найден'
+    error: {text: 'Пользователь не найден',       show: false,
+      
     }
   }),
   methods: {
-    goHome() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: false,
-        tab: null
+    async restorePassword() {
+      this.error.show = false
+      const error = await this.$store.dispatch('profile/restorePassword', {
+        emailorphone: this.emailorphone
       })
+      if(error) {
+        this.error.show = true
+      }
+    },
+    goHome() {
+      this.toggleModal(null)
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
     },
-    async restorePassword() {
-      let formData = new FormData()
-      formData.append('emailorphone', this.emailorphone)
-      formData.append('api_token', this.token)
-      const { data } = await this.$store.dispatch('user/restorePassword', formData)
-      if(typeof data.error != 'undefined') {
-        this.error.show = true
-      } else {
-        this.openModal('emailSend')
-      }
-    },
-    openModal(e) {
-      this.$root.$emit('modalOpen', {
+    toggleModal(e) {
+      this.$root.$emit('toggleModal', (!e) ? {} : {
         open: true,
-        target: e,
-        message: null,
-        status: false,
-        tab: null
+        target: e
       })
-    },
-    closeModal() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: false,
-        tab: null
-      })
-    }
-  },
-  computed: {
-    token() {
-      return this.$store.getters['user/token']
     }
   }
 }

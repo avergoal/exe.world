@@ -1,46 +1,42 @@
 export const state = () => ({
   open: false,
   popular: [],
-  games: [],
-  peoples: []
+  results: {
+    games: [],
+    peoples: []
+  }
 })
 
 export const mutations = {
-  setPopular(state, popular) {
-    state.popular = popular
-  },
-  setOpen(state, open) {
-    state.open = open
-  },
-  goSearch(state, data) {
-    state.games = data.games
-    state.peoples = data.peoples
+  setState(state, data) {
+    state[data.key] = data.value
   }
 }
 
 export const actions = {
-  setPopular({commit}, params) {
-    commit('setPopular', params)
+  toggleSearch({commit}, params) {
+    commit('setState', {
+      key: 'open',
+      value: params
+    })
   },
-  setOpen({commit}, params) {
-    commit('setOpen', params)
+  setPopular({commit}, params) {
+    commit('setState', {
+      key: 'popular',
+      value: params
+    })
   },
   goSearch({commit}, params) {
-    return new Promise((resolve) => {
-      this.$axios.post('/appApi/search', params).then(response => {
-        let result = {
-          games: [],
-          peoples: []
+    return new Promise(async (resolve) => {
+      const { data } = await this.$axios.post('/appApi/search', params)
+      commit('setState', {
+        key: 'results',
+        value: {
+          games: data.response.games,
+          peoples: data.response.users
         }
-        if(response.data.response.users.length) {
-          result.peoples = response.data.response.users
-        }
-        if(response.data.response.games.length) {
-          result.games = response.data.response.games
-        }
-        commit('goSearch', result)
-        resolve(true)
-      }).catch(err => {resolve(err.response)})
+      })
+      resolve(true)
     })
   }
 }
@@ -48,6 +44,5 @@ export const actions = {
 export const getters = {
   open: state => state.open,
   popular: state => state.popular,
-  games: state => state.games,
-  peoples: state => state.peoples
+  results: state => state.results
 }

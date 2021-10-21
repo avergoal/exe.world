@@ -2,14 +2,15 @@
 <div class="index_page">
   <div class="categoriesbox">
     <div v-html="title" class="pagetitle"></div>
-    <Filters v-if="page == 'categories'" type="categories"/>
+    <!--Filters v-if="page == 'categories'" type="categories"/-->
     <ul class="category">
       <li v-for="(e, i) in games" :key="i" class="gamecard f">
         <div class="box">
           <div class="img">
             <img v-lazy="e.poster.default" :alt="e.title">
+            <button v-if="!user" @click="toggleModal('gameSignIn', e.poster.default)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
             <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-            <button v-else @click="openGame(e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-else @click="toggleModal('gameInfo', e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           </div>
           <div class="info">
             <div v-html="e.title" class="title"></div>
@@ -65,10 +66,20 @@ export default {
   },
   methods: {
     loadPage() {
-      if(!this.categories[this.filter].list.length) {
-        this.loadGames(this.filter, 0)
-      } else {
-        this.games = this.categories[this.filter].list
+      switch(this.page) {
+        case 'new':
+          this.games = this.newgames
+          break
+        case 'reccomends':
+          this.games = this.recommended
+          break
+        case 'categories':
+          if(!this.categories[this.filter].list.length) {
+            this.loadGames(this.filter, 0)
+          } else {
+            this.games = this.categories[this.filter].list
+          }
+          break
       }
     },
     changeCategory(e) {
@@ -79,31 +90,44 @@ export default {
       }
     },
     async loadGames(t, o) {
-      let formData = new FormData()
-      formData.append('type', t)
-      formData.append('offset', o)
-      formData.append('api_token', this.token)
-      await this.$store.dispatch('games/setCategories', formData)
+      await this.$store.dispatch('games/setCategories', {
+        type: t,
+        offset: o
+      })
       this.games = this.categories[this.filter].list
     },
     async intersected() {
+      return
       if(!this.categories[this.filter].loaded) {
         this.loadGames(this.filter, this.categories[this.filter].offset)
       }
+    },
+    toggleModal(target, e) {
+      this.$root.$emit('toggleModal', {
+        open: true,
+        target: target,
+        game: e
+      })
     }
   },
   computed: {
     page() {
       return this.$store.getters['app/page']
     },
+    newgames() {
+      return this.$store.getters['games/newgames']
+    },
     categories() {
       return this.$store.getters['games/categories']
+    },
+    recommended() {
+      return this.$store.getters['games/recommended']
     },
     filter() {
       return this.$store.getters['filters/category']
     },
-    token() {
-      return this.$store.getters['user/token']
+    user() {
+      return this.$store.getters['profile/user']
     }
   }
 }

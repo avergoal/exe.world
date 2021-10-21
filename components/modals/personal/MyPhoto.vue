@@ -43,11 +43,6 @@ export default {
         tab: null
       })
     }
-  },
-  computed: {
-    token() {
-      return this.$store.getters['user/token']
-    }
   }
 }
 </script>

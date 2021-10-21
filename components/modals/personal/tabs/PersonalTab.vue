@@ -90,7 +90,7 @@ export default {
   name: 'PersonalTab',
   data() {
     return{
-      days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, , 24, 25, 26, 27, 28, 29, 30, 31],
+      days: [],
       months: {
         byName: {
           January: '01', 
@@ -151,6 +151,9 @@ export default {
     for(let i = (year - 100); i <= year; ++i) {
       this.years.push(i)
     }
+    for(let i = 1; i <= 31; ++i) {
+      this.days.push(i)
+    }
     this.years.sort((a, b) => {
       return (b - a)
     })
@@ -165,26 +168,22 @@ export default {
   },
   methods: {
     async saveData() {
-      let formData = new FormData()
-      formData.append('api_token', this.token)
-      formData.append('first_name', this.model.firstname)
-      formData.append('last_name', this.model.lastname)
       let birthDate = ((this.model.birthdate.y) ? this.model.birthdate.y : '0000')
       birthDate += '' + ((this.model.birthdate.m) ? this.model.birthdate.m : '00')
       birthDate += '' + ((Number(this.model.birthdate.d) < 10) ? '0' + Number(this.model.birthdate.d) : this.model.birthdate.d)
-      formData.append('birth_date', birthDate)
-      formData.append('sex', this.model.sex)
-      formData.append('country', this.model.countryId)
-      formData.append('city', this.model.cityId)
-      const { data } = await this.$store.dispatch('user/updateData', {
-        token: this.token,
-        formData: formData
+      const error = await this.$store.dispatch('profile/updateData', {
+        first_name: this.model.firstname,
+        last_name: this.model.lastname,
+        birth_date: birthDate,
+        sex: this.model.sex,
+        country: this.model.countryId,
+        city: this.model.cityId
       })
       for(let e in this.errors) {
         this.errors[e].open = false
       }
-      if(data.error && this.errors[data.error]) {
-        this.errors[data.error].open = true
+      if(error && this.errors[error]) {
+        this.errors[error].open = true
       }
     },
     setBirthday(k, e) {
@@ -194,14 +193,14 @@ export default {
     async setLocation(k, e, n) {
       if(k == 'start') {
         if(this.user.settings.main.country) {
-          await this.$store.dispatch('user/setCountries', {})
+          await this.$store.dispatch('app/setCountries')
         }
         this.loadUserData()
       } else if(k == 'country') {
         if(this.model.countryId != e) {
-          let formData = new FormData()
-          formData.append('country_id', e)
-          this.$store.dispatch('user/setCities', formData)
+          this.$store.dispatch('app/setCities', {
+            country_id: e
+          })
           this.model.country = n
           this.model.countryId = e
           this.model.city = ''
@@ -226,9 +225,9 @@ export default {
         this.model.country = this.countries[this.user.settings.main.country]
         this.model.countryId = this.user.settings.main.country
         if(this.user.settings.main.city) {
-          let formData = new FormData()
-          formData.append('country_id', this.model.countryId)
-          await this.$store.dispatch('user/setCities', formData)
+          await this.$store.dispatch('app/setCities', {
+            country_id: this.model.countryId
+          })
           this.model.city = this.cities[this.user.settings.main.city]
           this.model.cityId = this.user.settings.main.city
         }
@@ -246,16 +245,13 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters['user/user']
+      return this.$store.getters['profile/user']
     },
     countries() {
-      return this.$store.getters['user/countries']
+      return this.$store.getters['app/countries']
     },
     cities() {
-      return this.$store.getters['user/cities']
-    },
-    token() {
-      return this.$store.getters['user/token']
+      return this.$store.getters['app/cities']
     }
   }
 }

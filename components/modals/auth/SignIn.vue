@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo authmodal small">
-  <button @click="closeModal()" class="close" area-label="close">
+  <button @click="toggleModal(null)" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -20,11 +20,11 @@
       </fieldset>
       <div class="btns">
         <button type="submit" class="btn st2">Log in</button>
-        <button @click="openModal('restorePassword')" type="button" class="link">forgot password?</button>
+        <button @click="toggleModal('restorePassword')" type="button" class="link">forgot password?</button>
       </div>
       <div class="signup">
         <div class="text">Don't have an account yet?</div>
-        <button @click="openModal('signUp')" type="button">sign up</button>
+        <button @click="toggleModal('signUp')" type="button">sign up</button>
       </div>
       <div class="social">
         <div class="text">Login via services</div>
@@ -51,14 +51,22 @@ export default {
     passwordType: 'password'
   }),
   methods: {
-    goHome() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: false,
-        tab: null
+    async signIn() {
+      for(let el in this.errors) {
+        this.errors[el].show = false
+      }
+      const error = await this.$store.dispatch('profile/signIn', {
+        emailorphone: this.model.emailorphone,
+        pass: this.model.pass
       })
+      if(error) {
+        this.errors[error].show = true
+      } else {
+        this.toggleModal(null)
+      }
+    },
+    goHome() {
+      this.toggleModal(null)
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
@@ -66,37 +74,10 @@ export default {
     togglePasswordType() {
       this.passwordType = (this.passwordType == 'password') ? 'text' : 'password'
     },
-    async signIn() {
-      let formData = new FormData()
-      formData.append('emailorphone', this.model.emailorphone)
-      formData.append('pass', this.model.pass)
-      const { data } = await this.$store.dispatch('user/signIn', formData)
-      if(typeof data.error != 'undefined') {
-        this.errors[data.error].show = true
-      } else {
-        formData = new FormData()
-        formData.append('api_token', data.response.api_token)
-        this.$store.dispatch('user/auth', formData)
-        localStorage.setItem('token', data.response.api_token)
-        this.closeModal()
-      }
-    },
-    openModal(e) {
-      this.$root.$emit('modalOpen', {
+    toggleModal(e) {
+      this.$root.$emit('toggleModal', (!e) ? {} : {
         open: true,
-        target: e,
-        message: null,
-        status: false,
-        tab: null
-      })
-    },
-    closeModal() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: false,
-        tab: null
+        target: e
       })
     }
   }

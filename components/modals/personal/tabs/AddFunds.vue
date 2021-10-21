@@ -1,7 +1,7 @@
 <template>
 <div class="tab addfunds">
   <div class="title">
-    <button @click="$parent.setTab('wallet')" type="button"><svg-icon name="ui/back" /></button>
+    <button @click="setTab('wallet')" type="button"><svg-icon name="ui/back" /></button>
     <span>Add Funds</span>
   </div>
   <ul class="select">
@@ -44,6 +44,11 @@ export default {
   name: 'BalanceTabAddFunds',
   data: () => ({
     paysystem: 0
-  })
+  }),
+  methods: {
+    setTab(target) {
+      this.$store.dispatch('app/toggleModalTab', target)
+    }
+  }
 }
 </script>

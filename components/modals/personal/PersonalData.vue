@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo personalmodal bigger">
-  <button @click="closeModal()" class="close" area-label="close">
+  <button @click="toggleModal(null)" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -19,37 +19,37 @@
           <span>Dark Theme</span>
         </div>
         <div class="switcher">
-          <input v-model="theme" type="checkbox" name="" value="" id="switcher" :checked="darkTheme">
+          <input v-model="darkTheme" @change="switchTheme()" type="checkbox" name="" value="" id="switcher" :checked="theme">
           <label for="switcher"></label>
         </div>
       </div>
       <ul class="menu">
         <li>
-          <button @click="setTab('personal')" :class="{active: modalTab == 'personal'}" type="button">
+          <button @click="setTab('personal')" :class="{active: modal.tab == 'personal'}" type="button">
             <div class="ico"><svg-icon name="ui/personal_data" /></div>
             <span>Personal Data</span>
           </button>
         </li>
         <li>
-          <button @click="setTab('access')" :class="{active: modalTab == 'access'}" type="button">
+          <button @click="setTab('access')" :class="{active: modal.tab == 'access'}" type="button">
             <div class="ico"><svg-icon name="ui/access" /></div>
             <span>Access Settings</span>
           </button>
         </li>
         <li>
-          <button @click="setTab('notifications')" :class="{active: modalTab == 'notifications'}" type="button">
+          <button @click="setTab('notifications')" :class="{active: modal.tab == 'notifications'}" type="button">
             <div class="ico"><svg-icon name="ui/bell" /></div>
             <span>Notifications</span>
           </button>
         </li>
         <li>
-          <button @click="setTab('blacklist')" :class="{active: modalTab == 'blacklist'}" type="button">
+          <button @click="setTab('blacklist')" :class="{active: modal.tab == 'blacklist'}" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
             <span>Blacklist</span>
           </button>
         </li>
         <li>
-          <button @click="setTab('wallet')" :class="{active: modalTab == 'wallet' || modalTab == 'addfunds'}" type="button">
+          <button @click="setTab('wallet')" :class="{active: modal.tab == 'wallet' || modal.tab == 'addfunds'}" type="button">
             <div class="ico"><svg-icon name="ui/wallet" /></div>
             <span>Balance</span>
           </button>
@@ -63,12 +63,12 @@
       </ul>
     </aside>
     <div class="tabs">
-      <PersonalTab v-if="modalTab == 'personal'"/>
-      <AccessTab v-if="modalTab == 'access'"/>
-      <NotificationsTab v-if="modalTab == 'notifications'"/>
-      <BlacklistTab v-if="modalTab == 'blacklist'"/>
-      <BalanceTab v-if="modalTab == 'wallet'"/>
-      <AddFunds v-if="modalTab == 'addfunds'"/>
+      <PersonalTab v-if="modal.tab == 'personal'"/>
+      <AccessTab v-if="modal.tab == 'access'"/>
+      <NotificationsTab v-if="modal.tab == 'notifications'"/>
+      <BlacklistTab v-if="modal.tab == 'blacklist'"/>
+      <BalanceTab v-if="modal.tab == 'wallet'"/>
+      <AddFunds v-if="modal.tab == 'addfunds'"/>
     </div>
   </div>
 </div>
@@ -92,57 +92,34 @@ export default {
     AddFunds
   },
   data: () => ({
-    theme: null
+    darkTheme: null
   }),
   mounted() {
-    this.theme = this.darkTheme
+    this.darkTheme = this.theme
   },
   methods: {
+    switchTheme() {
+      this.$store.dispatch('profile/setTheme', (this.darkTheme ? 1 : 0))
+    },
     setTab(target) {
-      this.$store.dispatch('modals/setTab', target)
+      this.$store.dispatch('app/toggleModalTab', target)
     },
-    openModal(target) {
-      this.$root.$emit('modalOpen', {
+    toggleModal(target) {
+      this.$root.$emit('toggleModal', (target) ? {
         open: true,
-        target: target,
-        message: null,
-        status: null,
-        tab: null
-      })
-    },
-    closeModal() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: null,
-        tab: null
-      })
-    }
-  },
-  watch: {
-    theme(e) {
-      let formData = new FormData()
-      formData.append('api_token', this.token)
-      formData.append('theme', ((e) ? 1 : 0))
-      this.$store.dispatch('user/setTheme', {
-        data: formData,
-        theme: ((e) ? true : false)
-      })
+        target: target
+      } : {})
     }
   },
   computed: {
-    darkTheme() {
-      return this.$store.getters['user/darkTheme']
+    theme() {
+      return this.$store.getters['profile/theme']
     },
     user() {
-      return this.$store.getters['user/user']
+      return this.$store.getters['profile/user']
     },
-    modalTab() {
-      return this.$store.getters['modals/tab']
-    },
-    token() {
-      return this.$store.getters['user/token']
+    modal() {
+      return this.$store.getters['app/modal']
     }
   }
 }

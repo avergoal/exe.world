@@ -21,13 +21,8 @@ export default {
   name: 'IndexPage',
   computed: {
     page() {
-      if(typeof document != 'undefined') {
-        document.getElementById('scroll').dispatchEvent(new Event('scroll'))
-      }
+      this.$root.$emit('resize')
       return this.$store.getters['app/page']
-    },
-    token() {
-      return this.$store.getters['user/token']
     }
   }
 }

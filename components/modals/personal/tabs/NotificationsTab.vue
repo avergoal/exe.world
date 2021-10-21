@@ -53,28 +53,15 @@ export default {
   }),
   mounted() {
     this.model = Object.assign({}, this.user.settings.notifications)
-    console.log(this.model)
   },
   methods: {
     async saveData() {
-      let formData = new FormData()
-      formData.append('api_token', this.token)
-      for(let e in this.model) {
-        formData.append(e, this.model[e])
-      }
-      console.log(this.model)
-      const { data } = await this.$store.dispatch('user/updateNotifications', {
-        token: this.token,
-        formData: formData
-      })
+      await this.$store.dispatch('profile/updateNotifications', this.model)
     }
   },
   computed: {
     user() {
-      return this.$store.getters['user/user']
-    },
-    token() {
-      return this.$store.getters['user/token']
+      return this.$store.getters['profile/user']
     }
   }
 }

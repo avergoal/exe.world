@@ -30,18 +30,13 @@ export default {
     this.loadUsers()
   },
   methods: {
-    loadUsers() {
-      let formData = new FormData()
-      formData.append('api_token', this.token)
-      this.$store.dispatch('user/setBlackList', formData)
+    async loadUsers() {
+      await this.$store.dispatch('profile/setBlackList')
     }
   },
   computed: {
     users() {
-      return this.$store.getters['user/blackList']
-    },
-    token() {
-      return this.$store.getters['user/token']
+      return this.$store.getters['profile/blackList']
     }
   }
 }

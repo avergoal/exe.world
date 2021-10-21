@@ -1,19 +1,36 @@
 export const state = () => ({
-  category: 0
+  allCategories: {
+    current: 0,
+    list: []
+  },
+  userCategories: {
+    current: 0,
+    list: []
+  }
 })
 
 export const mutations = {
-  setCategory(state, filter) {
-    state.category = filter
+  setState(state, data) {
+    state[data.key] = data.value
   }
 }
 
 export const actions = {
-  setCategory({commit}, params) {
-    commit('setCategory', params)
-  }
+  setAllCategories({commit}, params) {
+    commit('setState', {
+      key: 'allCategories',
+      value: params
+    })
+  },
+  setUserCategories({commit}, params) {
+    commit('setState', {
+      key: 'userCategories',
+      value: params
+    })
+  },
 }
 
 export const getters = {
-  category: state => state.category
+  allCategories: state => state.allCategories,
+  userCategories: state => state.userCategories
 }

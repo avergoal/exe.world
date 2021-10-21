@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo authmodal small">
-  <button @click="closeModal()" class="close" area-label="close">
+  <button @click="toggleModal(null)" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -24,7 +24,7 @@
       <div class="btns"><button type="submit" class="btn st2">sign up</button></div>
       <div class="signup">
         <div class="text">Already have an account?</div>
-        <button @click="openModal('signIn')" type="button">log in</button>
+        <button @click="toggleModal('signIn')" type="button">log in</button>
       </div>
       <div class="social">
         <div class="text">Login via services</div>
@@ -44,23 +44,31 @@ export default {
 	name: 'SignUpModal',
   data: () => ({
     model: {},
-    passwordType: 'password',
     errors: {
       email_exists: {text: 'Email уже зарегистрирован', show: false},
       email_not_valid: {text: 'Не верный формат email', show: false},
       pass_too_short: {text: 'Пароль слишком короткий', show: false},
       passwords_does_not_match: {text: 'Пароли не совпадают', show: false}
-    }
+    },
+    passwordType: 'password'
   }),
   methods: {
-    goHome() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: false,
-        tab: null
+    async signUp() {
+      for(let el in this.errors) {
+        this.errors[el].show = false
+      }
+      const error = await this.$store.dispatch('profile/signUp', {
+        name: this.model.name,
+        emailorphone: this.model.emailorphone,
+        pass: this.model.pass,
+        pass_check: this.model.pass_check
       })
+      if(error) {
+        this.errors[error].show = true
+      }
+    },
+    goHome() {
+      this.toggleModal(null)
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
@@ -68,41 +76,10 @@ export default {
     togglePasswordType() {
       this.passwordType = (this.passwordType == 'password') ? 'text' : 'password'
     },
-    async signUp() {
-      let formData = new FormData()
-      formData.append('name', this.model.name)
-      formData.append('emailorphone', this.model.emailorphone)
-      formData.append('pass', this.model.pass)
-      formData.append('pass_check', this.model.pass_check)
-      const { data } = await this.$store.dispatch('user/signUp', formData)
-      if(typeof data.error != 'undefined' && typeof data.error == 'object') {
-        for(let e in this.errors) {
-          this.errors[e].show = (data.error.indexOf(e) >= 0)
-        }
-      } else {
-        formData = new FormData()
-        formData.append('api_token', data.response.api_token)
-        this.$store.dispatch('user/auth', formData)
-        localStorage.setItem('token', data.response.api_token)
-        this.closeModal()
-      }
-    },
-    openModal(e) {
-      this.$root.$emit('modalOpen', {
+    toggleModal(e) {
+      this.$root.$emit('toggleModal', (!e) ? {} : {
         open: true,
-        target: e,
-        message: null,
-        status: false,
-        tab: null
-      })
-    },
-    closeModal() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: false,
-        tab: null
+        target: e
       })
     }
   }

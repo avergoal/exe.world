@@ -7,7 +7,7 @@
   <nav>
     <div class="item search"><button @click="openSearch" class="opensearch btn st1" type="button"><svg-icon name="ui/search" /></button></div>
     <div v-if="user" class="item wallet">
-      <button @click="openModal('personalData', 'wallet')" type="button" class="btn st1">
+      <button @click="openModal('personalData', 'addfunds')" type="button" class="btn st1">
         <svg-icon name="ui/wallet" />
         <span v-html="user.balance"></span>
         <div class="plus"><svg-icon name="ui/plus" /></div>
@@ -16,20 +16,20 @@
     <div v-if="user" class="item notifications">
       <button @click="toggleMenu('notify')" type="button" class="togglemenu btn st1">
         <div class="ico"><svg-icon name="ui/bell" /></div>
-        <span v-if="user.notifications.news" v-html="user.notifications.news" class="badge">5</span>
+        <span v-if="notifications.total" v-html="notifications.total" class="badge"></span>
       </button>
       <div :class="{open: dropdown.notify}" class="dropdown">
         <div class="subtitle">
           <span>Notifications</span>
-          <svg-icon v-if="user.notifications.news" name="ui/list" />
+          <button v-if="notifications.total" @click="clearNotifications()" type="button"><svg-icon name="ui/list" /></button>
         </div>
-        <ul v-if="user.notifications.news" class="notify">
-          <li v-for="(e, i) in notify" :key="i">
-            <button :class="{active: i === 0}" type="button">
-              <div class="img"><img :src="e.img" :alt="e.title"></div>
+        <ul v-if="notifications.total" class="notify">
+          <li v-for="(e, i) in notifications.list" :key="i">
+            <button :class="{active: !e.unread}" type="button">
+              <div class="img"><img :src="e.icon.default" alt=""></div>
               <div class="info">
-                <span v-html="e.title"></span>
-                <span v-html="e.type"></span>
+                <span v-html="e.text"></span>
+                <!--span v-html="e.type"></span-->
               </div>
             </button>
           </li>
@@ -46,7 +46,7 @@
     <div v-if="user" class="item account">
       <button @click="toggleMenu('profile')" type="button" class="togglemenu btn st1">
         <div class="photo"><img :src="user.profile.avatar_urls.x100" :alt="user.profile.user_name"></div>
-        <span v-html="user.profile.username"></span>
+        <span v-html="user.profile.user_name"></span>
         <svg-icon name="ui/user_settings" />
       </button>
       <div :class="{open: dropdown.profile}" class="dropdown">
@@ -67,7 +67,7 @@
       </button>
     </div>
   </nav>
-  <Search :class="{open: sOpen}"/>
+  <Search :class="{open: search}"/>
 </header>
 </template>
 <script>
@@ -95,17 +95,11 @@ export default {
           profile: false
         }
       }
-      if(this.sOpen && !e.target.closest('.searchbox') && !e.target.closest('.opensearch')) {
-        this.$store.dispatch('search/setOpen', false)
-      }
     })
   },
   methods: {
     toggleMenu(e) {
-      this.dropdown = {
-        notify: false,
-        profile: false
-      }
+      this.closeDropDown()
       this.dropdown[e] = true
     },
     setRoute() {
@@ -113,40 +107,38 @@ export default {
       this.$route.path == '/' || this.$router.push('/')
     },
     openSearch() {
-      this.$store.dispatch('search/setOpen', true)
+      this.$store.dispatch('search/toggleSearch', true)
     },
     openModal(target, tab) {
-      this.dropdown.profile = false
-      let data = {}
-      if(tab == 'logOut') {
-        data = {
-          open: true,
-          target: tab,
-          message: null,
-          status: false,
-          tab: null
-        }
-      } else {
-        data = {
-          open: true,
-          target: target,
-          message: null,
-          status: false,
-          tab: tab
-        }
+      this.closeDropDown()
+      this.$root.$emit('toggleModal', (tab == 'logOut') ? {
+        open: true,
+        target: tab
+      } : {
+        open: true,
+        target: target,
+        tab: tab
+      })
+    },
+    clearNotifications() {
+      this.$store.dispatch('profile/clearNotifications')
+    },
+    closeDropDown() {
+      this.dropdown = {
+        notify: false,
+        profile: false
       }
-      this.$root.$emit('modalOpen', data)
     }
   },
   computed: {
-    sOpen() {
+    search() {
       return this.$store.getters['search/open']
     },
     user() {
-      return this.$store.getters['user/user']
+      return this.$store.getters['profile/user']
     },
-    notify() {
-      return this.$store.getters['user/notify']
+    notifications() {
+      return this.$store.getters['profile/notifications']
     }
   }
 }

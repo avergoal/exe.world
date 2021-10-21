@@ -69,24 +69,19 @@ export default {
   },
   methods: {
     async saveData() {
-      let formData = new FormData()
-      formData.append('api_token', this.token)
-      formData.append('email', this.model.email)
-      formData.append('new_email', this.model.newEmail)
-      formData.append('new_email_check', this.model.repeatMewEmail)
-      formData.append('pass', this.model.currentPassword)
-      formData.append('new_pass', this.model.newPassword)
-      formData.append('new_pass_check', this.model.repeatMewPassword)
-      const { data } = await this.$store.dispatch('user/updateAccess', {
-        token: this.token,
-        formData: formData
+      const error = await this.$store.dispatch('profile/updateAccess', {
+        email: this.model.email,
+        new_email: this.model.newEmail,
+        new_email_check: this.model.repeatMewEmail,
+        pass: this.model.currentPassword,
+        new_pass: this.model.newPassword,
+        new_pass_check: this.model.repeatMewPassword
       })
-      console.log(data)
       for(let e in this.errors) {
         this.errors[e].open = false
       }
-      if(data.error && this.errors[data.error]) {
-        this.errors[data.error].open = true
+      if(error && this.errors[error]) {
+        this.errors[error].open = true
       }
     },
     loadUserData() {
@@ -98,10 +93,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters['user/user']
-    },
-    token() {
-      return this.$store.getters['user/token']
+      return this.$store.getters['profile/user']
     }
   }
 }

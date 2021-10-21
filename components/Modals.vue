@@ -1,30 +1,30 @@
 <template>
-<div :class="{open: open, active: active}" class="modalbox">
-  <SignIn v-if="target == 'signIn'"/>
-  <SignUp v-if="target == 'signUp'"/>
-  <LogOut v-if="target == 'logOut'"/>
-  <RestorePassword v-if="target == 'restorePassword'"/>
-  <EmailSend v-if="target == 'emailSend'"/>
-  <Messages v-if="target == 'messages'"/>
-  <MessagesChat v-if="target == 'messagesChat'"/>
-  <MessagesWrite v-if="target == 'messagesWrite'"/>
-  <Friends v-if="target == 'friends'"/>
-  <FriendsBlock v-if="target == 'friendsBlock'"/>
-  <FriendsRemove v-if="target == 'friendsRemove'"/>
-  <FriendsRemoved v-if="target == 'friendsRemoved'"/>
-  <FriendsReport v-if="target == 'friendsReport'"/>
-  <UserProfile v-if="target == 'userProfile'"/>
-  <UserProfileGames v-if="target == 'userProfileGames'"/>
-  <UserProfileFriends v-if="target == 'userProfileFriends'"/>
-  <News v-if="target == 'news'"/>
-  <NewsAdd v-if="target == 'newsAdd'"/>
-  <PersonalData v-if="target == 'personalData'"/>
-  <MyPhoto v-if="target == 'myPhoto'"/>
-  <MyPhotoEditor v-if="target == 'myPhotoEditor'"/>
-  <GameRemove v-if="target == 'gameRemove'"/>
-  <GameInfo v-if="target == 'gameInfo'" :game="data"/>
-  <GameSignIn v-if="target == 'gameSignIn'"/>
-  <Request v-if="target == 'request'"/>
+<div :class="{open: modal.open, active: modal.active}" class="modalbox">
+  <SignIn v-if="modal.target == 'signIn'"/>
+  <SignUp v-if="modal.target == 'signUp'"/>
+  <LogOut v-if="modal.target == 'logOut'"/>
+  <RestorePassword v-if="modal.target == 'restorePassword'"/>
+  <EmailSend v-if="modal.target == 'emailSend'"/>
+  <Messages v-if="modal.target == 'messages'"/>
+  <MessagesChat v-if="modal.target == 'messagesChat'"/>
+  <MessagesWrite v-if="modal.target == 'messagesWrite'"/>
+  <Friends v-if="modal.target == 'friends'"/>
+  <FriendsBlock v-if="modal.target == 'friendsBlock'"/>
+  <FriendsRemove v-if="modal.target == 'friendsRemove'"/>
+  <FriendsRemoved v-if="modal.target == 'friendsRemoved'"/>
+  <FriendsReport v-if="modal.target == 'friendsReport'"/>
+  <UserProfile v-if="modal.target == 'userProfile'"/>
+  <UserProfileGames v-if="modal.target == 'userProfileGames'"/>
+  <UserProfileFriends v-if="modal.target == 'userProfileFriends'"/>
+  <News v-if="modal.target == 'news'"/>
+  <NewsAdd v-if="modal.target == 'newsAdd'"/>
+  <PersonalData v-if="modal.target == 'personalData'"/>
+  <MyPhoto v-if="modal.target == 'myPhoto'"/>
+  <MyPhotoEditor v-if="modal.target == 'myPhotoEditor'"/>
+  <GameRemove v-if="modal.target == 'gameRemove'"/>
+  <GameInfo v-if="modal.target == 'gameInfo'"/>
+  <GameSignIn v-if="modal.target == 'gameSignIn'"/>
+  <Request v-if="modal.target == 'request'"/>
 </div>
 </template>
 
@@ -100,34 +100,21 @@ export default {
     Thanks
   },
   mounted() {
-    this.$root.$on('modalOpen', (e) => {
-      this.$store.dispatch('modals/setOpen', e)
+    this.$root.$on('toggleModal', (e) => {
+      this.$store.dispatch('app/toggleModal', e)
     })
-    this.$root.$on('modalTab', (e) => {
-      this.$store.dispatch('modals/setTab', e)
+    this.$root.$on('toggleModalTab', (e) => {
+      this.$store.dispatch('app/toggleModalTab', e)
     })
     document.addEventListener('click', (e) => {
       if(e.target.closest('.modalbox') && !e.target.closest('.modalinfo')) {
-        this.$store.dispatch('modals/setOpen', {
-          open: false,
-          target: null,
-          tab: null
-        })
+        this.$store.dispatch('app/toggleModal', {})
       }
     })
   },
   computed: {
-    open() {
-      return this.$store.getters['modals/open']
-    },
-    active() {
-      return this.$store.getters['modals/active']
-    },
-    target() {
-      return this.$store.getters['modals/target']
-    },
-    data() {
-      return this.$store.getters['modals/data']
+    modal() {
+      return this.$store.getters['app/modal']
     }
   }
 }

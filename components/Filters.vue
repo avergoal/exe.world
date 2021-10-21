@@ -1,10 +1,10 @@
 <template>
-<perfect-scrollbar ref="scroll" class="filters">
+<perfect-scrollbar ref="scroll" :class="page" class="filters">
 <ul>
-  <li v-for="(e, i) in filters" :key="i">
-    <button @click="setFilter(e.cid)" :class="{active: filter == e.cid, hidden: !e.total_games}" type="button">
+  <li v-for="(e, i) in filters.list" :key="i">
+    <button @click="setFilter(e.cid)" :class="{active: current == e.cid, hidden: !e.total}" type="button">
       <span v-html="e.title"></span>
-      <span v-if="e.total_games" v-html="e.total_games" class="badge">2</span>
+      <span v-if="e.total" v-html="e.total" class="badge"></span>
     </button>
   </li>
 </ul>
@@ -16,25 +16,36 @@ export default {
   name: 'FiltersComponents',
   props: ['type'],
   data: () => ({
-    filters: []
+    filters: [],
+    current: 0
   }),
-  created() {
+  mounted() {
     this.filters = this[this.type]
+    this.current = this.filters.current
   },
   methods: {
     async setFilter(e) {
-      if(this.type == 'categories' && this.filter != e) {
-        this.$store.dispatch('filters/setCategory', e)
-        this.$root.$emit('changeCategory', e)
+      if(this.filters.current != e) {
+        let temp,
+            action = (this.type == 'allCategoriesFilters') ? 'filters/setAllCategories' : 'filters/setUserCategories'
+        temp = Object.assign({}, this.filters)
+        temp.current = e
+        await this.$store.dispatch(action, temp)
+        this.filters = this[this.type]
+        this.$parent.changeCategory(e)
+        this.current = e
       }
     }
   },
   computed: {
-    categories() {
-      return this.$store.getters['games/categories']
+    allCategoriesFilters() {
+      return this.$store.getters['filters/allCategories']
     },
-    filter() {
-      return this.$store.getters['filters/category']
+    userCategoriesFilters() {
+      return this.$store.getters['filters/userCategories']
+    },
+    page() {
+      return this.$store.getters['app/page'].toLowerCase()
     }
   }
 }

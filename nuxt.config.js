@@ -2,9 +2,19 @@ const cleanupIDs = require('svgo/plugins/cleanupIDs')
 const removeAttrs = require('svgo/plugins/removeAttrs')
 const removeDimensions = require('svgo/plugins/removeDimensions')
 const removeViewBox = require('svgo/plugins/removeViewBox')
-
+function defaultPlugins () {
+  removeAttrs.active = true
+  removeAttrs.params.attrs = '*:(fill|stroke|id)'
+  removeViewBox.active = false
+  removeDimensions.active = true
+  return [
+    removeDimensions,
+    cleanupIDs,
+    removeAttrs,
+    removeViewBox
+  ]
+}
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'exeWorld',
     meta: [
@@ -16,25 +26,16 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/scss/main',
   ],
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/axios' },
     { src: '~/plugins/LoadAppData', mode: 'server' },
-    { src: '~/plugins/TemplateComponents' },
-    { src: '~/plugins/Lazyload', mode: 'client' },
-    { src: '~/plugins/PerfectScrollbar' },
-    { src: '~/plugins/Swiper' }
+    { src: '~/plugins/LoadJsPlugins' },
+    { src: '~/plugins/LoadTemplates' }
   ],
-
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@aceforth/nuxt-optimized-images',
     '@nuxtjs/svg-sprite',
@@ -62,10 +63,7 @@ export default {
     prefetch: true,
     preconnect: true
   },
-
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    //'nuxt-socket-io',
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/pwa'
@@ -83,27 +81,11 @@ export default {
   },
   pwa: {
     manifest: {
-      lang: 'ru',
+      lang: 'ru'
     }
   },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extractCSS: true
   },
-
   telemetry: false
-}
-
-function defaultPlugins () {
-  removeAttrs.active = true
-  removeAttrs.params.attrs = '*:(fill|stroke|id)'
-  removeViewBox.active = false
-  removeDimensions.active = true
-  return [
-    removeDimensions,
-    cleanupIDs,
-    removeAttrs,
-    removeViewBox
-  ]
 }

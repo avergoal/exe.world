@@ -9,8 +9,9 @@
             <div v-html="e.title" class="title"></div>
             <div v-html="e.description" class="desc"></div>
           </div>
-          <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-          <button v-else @click="openGameInfo(e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+          <button v-if="!user" @click="toggleModal('gameSignIn', e.poster.default)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+          <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+          <button v-else @click="toggleModal('gameInfo', e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
         </div>
       </div>
     </swiper-slide>
@@ -74,17 +75,19 @@ export default {
         e.slides[e.activeIndex].firstChild.classList.add('current_slide')
       }, 1)
     })
-    console.log(this.slides)
   },
   methods: {
-    openGameInfo(e) {
-      this.$root.$emit('modalOpen', {
+    toggleModal(target, e) {
+      this.$root.$emit('toggleModal', {
         open: true,
-        target: 'gameInfo',
-        message: null,
-        status: false,
-        tab: e
+        target: target,
+        game: e
       })
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters['profile/user']
     }
   }
 }

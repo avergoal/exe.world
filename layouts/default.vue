@@ -1,5 +1,5 @@
 <template>
-<div :class="{night: darkTheme}" class="app" :page="page">
+<div :class="{night: theme}" class="app" :page="page">
   <Header />
   <perfect-scrollbar ref="scroll" :class="{clear: !user}" class="appscroll" id="scroll">
     <main class="content">
@@ -16,82 +16,61 @@
 <script>
 export default {
 	name: 'DefaultLayout',
+  created() {
+    (typeof window == 'undefined') || this.loadUser()
+  },
   mounted() {
-    this.loadUser()
-    //this.loadSocket()
-    this.$root.$on('closeModal', () => {
-      this.closeModal()
-    }),
-    this.$root.$on('openModal', (e) => {
-      this.closeModal(e)
-    }),
     this.$root.$on('changeTemplate', (e) => {
       this.changeTemplate(e)
-    }),
-    window.addEventListener('resize', (e) => {
-      this.$refs.scroll.update()
+    })
+    this.$root.$on('resize', () => {
+      this.scrollUpdate()
+    })
+    window.addEventListener('resize', () => {
+      this.scrollUpdate()
     }, true)
+    this.$Lazyload.$on('loaded', (listener) => {
+      this.$refs.scroll.update()
+    })
   },
   methods: {
     async loadUser() {
-      let token = localStorage.getItem('token')
-      if(token) {
-        let formData = new FormData()
-        formData.append('api_token', token)
-        const { data } = await this.$store.dispatch('user/auth', formData)
-        if(typeof data.error != 'undefined') {
-          localStorage.removeItem('token')
-        }
-      }
-    },
-    loadSocket() {
-      var socket = new WebSocket("wss://ws.exe.world/")
-      socket.onopen = function() {
-        console.log("Socket - cоединение установлено.");
-      }
-    },
-    closeModal() {
-      this.$store.dispatch('modals/setModalOpen', {
-        open: false,
-        target: null,
-        null: null
-      })
-    },
-    openModal(e) {
-      this.$store.dispatch('modals/setModalOpen', {
-        open: true,
-        target: e.target,
-        data: e.data
-      })
+      (!localStorage.token) || await this.$store.dispatch('profile/auth', {api_token: localStorage.token})
     },
     changeTemplate(e) {
       this.$store.dispatch('app/setPage', e)
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
+    },
+    scrollUpdate() {
+      if(this.$refs.scroll) {
+        this.$refs.scroll.$el.scrollTop = 0
+        setTimeout(() => {
+          this.$refs.scroll.update()
+        }, 100)
+      }
     }
   },
   computed: {
-    darkTheme() {
-      return this.$store.getters['user/darkTheme']
+    theme() {
+      return Number(this.$store.getters['profile/theme'])
     },
     page() {
-      if(typeof this.$refs.scroll != 'undefined') {
+      if(this.$refs.scroll) {
         this.$refs.scroll.$el.scrollTop = 0
       }
       return this.$store.getters['app/page']
     },
     user() {
-      return this.$store.getters['user/user']
+      return this.$store.getters['profile/user']
     }
   },
   watch: {
     $route() {
-      this.$refs.scroll.$el.scrollTop = 0
-      setTimeout(() => {
-        this.$refs.scroll.update()
-      }, 100)
-      this.$store.dispatch('search/setOpen', false)
+      this.scrollUpdate()
+      this.$store.dispatch('search/toggleSearch', false)
+      this.$store.dispatch('app/toggleModal', {})
     }
   }
 }

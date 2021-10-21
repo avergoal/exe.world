@@ -3,65 +3,89 @@ export const state = () => ({
   newgames: [],
   recommended: [],
   categories: {},
-  games: {},
   gamesData: {}
 })
 
 export const mutations = {
-  setInitData(state, data) {
-    state.carousel = data.games_carousel
-    state.newgames = data.games_new
-    state.recommended = data.games_recommended
-    data.categories[0].list = data.games_all
-    data.categories[0].offset = data.games_all.length
-    state.categories = data.categories
-  },
-  setCategories(state, categories) {
-    state.categories = categories
-  },
-  setGames(state, games) {
-    state.games = games
-  },
-  setGamesData(state, gamesData) {
-    state.gamesData = gamesData
+  setState(state, data) {
+    state[data.key] = data.value
   }
 }
 
 export const actions = {
   setInitData({commit}, params) {
-    commit('setInitData', params)
-  },
-  setCategories({commit, getters}, params) {
-    return new Promise((resolve) => {
-      this.$axios.post('/appApi/games', params).then(response => {
-        let categories = Object.assign({}, getters.categories)
-        categories[params.get('type')].list = categories[params.get('type')].list.concat(response.data.response.games)
-        categories[params.get('type')].offset += (response.data.response.games.length) ? response.data.response.games.length : 0
-        categories[params.get('type')].loaded = (response.data.response.games.length) ? false : true
-        commit('setCategories', categories)
-        resolve(true)
-      }).catch(err => {resolve(err.response)})
+    commit('setState', {key: 'carousel', value: []})
+    commit('setState', {key: 'carousel', value: params.games_carousel})
+    commit('setState', {key: 'newgames', value: []})
+    commit('setState', {key: 'newgames', value: params.games_new})
+    commit('setState', {key: 'recommended', value: []})
+    commit('setState', {key: 'recommended', value: params.games_recommended})
+    params.categories[0].list = params.games_all
+    params.categories[0].offset = params.games_all.length
+    commit('setState', {key: 'categories', value: []})
+    commit('setState', {key: 'categories', value: params.categories})
+    let filters = {}
+    for(let e in params.categories) {
+      filters[params.categories[e].cid] = {
+        cid: params.categories[e].cid,
+        title: params.categories[e].title,
+        total: params.categories[e].total_games
+      }
+    }
+    this.dispatch('filters/setAllCategories', {
+      current: 0,
+      list: filters
     })
   },
-  setGames({commit, getters}, params) {
-    return new Promise((resolve) => {
-      this.$axios.post('/appApi/games', params).then(response => {
-        let games = Object.assign({}, getters.games)
-        games[params.get('type')].list = response.data.response.games
-        categories[params.get('type')].offset = response.data.response.offset
-        commit('setGames', categories)
-        resolve(true)
-      }).catch(err => {resolve(err.response)})
+  async setCategories({commit, getters}, params) {
+    return new Promise(async (resolve) => {
+      const { data } = await this.$axios.post('/appApi/games', params)
+      let categories = Object.assign({}, getters.categories)
+      categories[params.type] = Object.assign({}, categories[params.type])
+      if(!params.offset) {
+        categories[params.type].list = data.response.games
+      } else {
+        categories[params.type].list = categories[params.type].list.concat(data.response.games)
+      }
+      categories[params.type].offset += (data.response.games.length) ? data.response.games.length : 0
+      categories[params.type].loaded = (data.response.games.length) ? false : true
+      commit('setState', {
+        key: 'categories',
+        value: categories
+      })
+      resolve(true)
     })
   },
   async setGamesData({commit, getters}, params) {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
       let gamesData = Object.assign({}, getters.gamesData)
-      this.$axios.post('/appApi/games.info', params).then(response => {
-        gamesData[response.data.response.game.gid] = response.data.response.game
-        commit('setGamesData', gamesData)
-        resolve(true)
-      })
+      const { data } = await this.$axios.post('/appApi/games.info', params)
+      if(data.response) {
+        gamesData[data.response.game.gid] = data.response.game
+        commit('setState', {
+          key: 'gamesData',
+          value: gamesData
+        })
+      }
+      resolve(true)
+    })
+  },
+  async installGame({}, params) {
+    return new Promise(async (resolve) => {
+      const { data } = await this.$axios.post('/appApi/games.add', params)
+      resolve(data)
+    })
+  },
+  async removeGame({}, params) {
+    return new Promise(async (resolve) => {
+      const { data } = await this.$axios.post('/appApi/games.remove', params)
+      resolve(data)
+    })
+  },
+  async runGame({}, params) {
+    return new Promise(async (resolve) => {
+      const { data } = await this.$axios.post('/appApi/games.run', params)
+      resolve(data)
     })
   },
 }
@@ -71,6 +95,6 @@ export const getters = {
   newgames: state => state.newgames,
   recommended: state => state.recommended,
   categories: state => state.categories,
-  games: state => state.games,
-  gamesData: state => state.gamesData
+  gamesData: state => state.gamesData,
+  filters: state => state.filters,
 }

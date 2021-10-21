@@ -16,13 +16,7 @@ export default {
 	name: 'EmailSendModal',
   methods: {
     closeModal() {
-      this.$root.$emit('modalOpen', {
-        open: false,
-        target: null,
-        message: null,
-        status: false,
-        tab: null
-      })
+      this.$root.$emit('toggleModal', {})
     }
   }
 }

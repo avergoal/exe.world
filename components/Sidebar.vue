@@ -6,7 +6,7 @@
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
       </a>
-      <button v-else type="button" @click="openModal(e.target)" class="togglemodal">
+      <button v-else type="button" @click="toggleModal(e.target)" class="togglemodal">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
       </button>
@@ -35,24 +35,18 @@ export default {
   }),
   methods: {
     setRoute(target) {
-      this.$store.dispatch('app/setPage', target)
-      if(this.$route.path != '/') {
-        this.$router.push('/')
-      }
+      this.$root.$emit('changeTemplate', target) 
     },
-    openModal(e) {
-      this.$root.$emit('modalOpen', {
+    toggleModal(e) {
+      this.$root.$emit('toggleModal', {
         open: true,
-        target: e,
-        message: null,
-        status: false,
-        tab: null
+        target: e
       })
     }
   },
   computed: {
     user() {
-      return this.$store.getters['user/user']
+      return this.$store.getters['profile/user']
     }
   }
 }
