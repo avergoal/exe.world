@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     async saveData() {
-      const error = await this.$store.dispatch('profile/updateAccess', {
+      const error = await this.$store.dispatch('settings/access', {
         email: this.model.email,
         new_email: this.model.newEmail,
         new_email_check: this.model.repeatMewEmail,

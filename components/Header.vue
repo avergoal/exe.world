@@ -7,7 +7,7 @@
   <nav>
     <div class="item search"><button @click="openSearch" class="opensearch btn st1" type="button"><svg-icon name="ui/search" /></button></div>
     <div v-if="user" class="item wallet">
-      <button @click="openModal('personalData', 'addfunds')" type="button" class="btn st1">
+      <button @click="toggleModal('personalData', 'addfunds')" type="button" class="btn st1">
         <svg-icon name="ui/wallet" />
         <span v-html="user.balance"></span>
         <div class="plus"><svg-icon name="ui/plus" /></div>
@@ -52,7 +52,7 @@
       <div :class="{open: dropdown.profile}" class="dropdown">
         <ul class="menu">
           <li v-for="(e, i) in userMenu" :key="i">
-            <button @click="openModal('personalData', e.tab)" type="button">
+            <button @click="toggleModal('personalData', e.tab)" type="button">
               <div class="ico"><svg-icon :name="e.ico" /></div>
               <span v-html="e.title"></span>
             </button>
@@ -61,7 +61,7 @@
       </div>
     </div>
     <div v-if="!user" class="item signin">
-      <button @click="openModal('signIn', null)" type="button" class="btn st1">
+      <button @click="toggleModal('signIn', null)" type="button" class="btn st1">
         <svg-icon name="ui/personal_data" />
         <span>Sign in</span>
       </button>
@@ -109,13 +109,11 @@ export default {
     openSearch() {
       this.$store.dispatch('search/toggleSearch', true)
     },
-    openModal(target, tab) {
+    toggleModal(target, tab) {
       this.closeDropDown()
       this.$root.$emit('toggleModal', (tab == 'logOut') ? {
-        open: true,
         target: tab
       } : {
-        open: true,
         target: target,
         tab: tab
       })

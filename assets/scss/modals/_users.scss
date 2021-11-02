@@ -328,11 +328,15 @@
           }
           .users_slider{
             padding-top: 60px;
+            &:first-child{
+              padding-top: 0;
+            }
             .swiper-slide{
               max-width: 164px;
               min-width: 164px;
               button{
                 display: block;
+                width: 100%;
                 text-transform: none;
                 .userphoto{
                   max-width: 112px;

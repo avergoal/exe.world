@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     async saveData() {
-      await this.$store.dispatch('profile/updateNotifications', this.model)
+      await this.$store.dispatch('settings/notifications', this.model)
     }
   },
   computed: {

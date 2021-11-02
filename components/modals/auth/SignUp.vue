@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo authmodal small">
-  <button @click="toggleModal(null)" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -24,7 +24,7 @@
       <div class="btns"><button type="submit" class="btn st2">sign up</button></div>
       <div class="signup">
         <div class="text">Already have an account?</div>
-        <button @click="toggleModal('signIn')" type="button">log in</button>
+        <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button">log in</button>
       </div>
       <div class="social">
         <div class="text">Login via services</div>
@@ -57,7 +57,7 @@ export default {
       for(let el in this.errors) {
         this.errors[el].show = false
       }
-      const error = await this.$store.dispatch('profile/signUp', {
+      const error = await this.$store.dispatch('auth/signUp', {
         name: this.model.name,
         emailorphone: this.model.emailorphone,
         pass: this.model.pass,
@@ -68,19 +68,13 @@ export default {
       }
     },
     goHome() {
-      this.toggleModal(null)
+      this.$root.$emit('toggleModal', {})
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
     },
     togglePasswordType() {
       this.passwordType = (this.passwordType == 'password') ? 'text' : 'password'
-    },
-    toggleModal(e) {
-      this.$root.$emit('toggleModal', (!e) ? {} : {
-        open: true,
-        target: e
-      })
     }
   }
 }

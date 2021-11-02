@@ -10,12 +10,16 @@
   </perfect-scrollbar>
   <Sidebar v-if="user"/>
   <Modals />
+  <div :class="{loaded: loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div>
 </div>
 </template>
 
 <script>
 export default {
 	name: 'DefaultLayout',
+  data: () => ({
+    loaded: false
+  }),
   created() {
     (typeof window == 'undefined') || this.loadUser()
   },
@@ -29,13 +33,16 @@ export default {
     window.addEventListener('resize', () => {
       this.scrollUpdate()
     }, true)
-    this.$Lazyload.$on('loaded', (listener) => {
+    this.$Lazyload.$on('loaded', () => {
       this.$refs.scroll.update()
     })
   },
   methods: {
     async loadUser() {
-      (!localStorage.token) || await this.$store.dispatch('profile/auth', {api_token: localStorage.token})
+      if(localStorage.token) {
+        await this.$store.dispatch('auth/auth', {api_token: localStorage.token})
+      }
+      this.loaded = true
     },
     changeTemplate(e) {
       this.$store.dispatch('app/setPage', e)
@@ -54,7 +61,7 @@ export default {
   },
   computed: {
     theme() {
-      return Number(this.$store.getters['profile/theme'])
+      return Number(this.$store.getters['app/theme'])
     },
     page() {
       if(this.$refs.scroll) {
@@ -70,7 +77,6 @@ export default {
     $route() {
       this.scrollUpdate()
       this.$store.dispatch('search/toggleSearch', false)
-      this.$store.dispatch('app/toggleModal', {})
     }
   }
 }

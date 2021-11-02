@@ -1,7 +1,5 @@
 export const state = () => ({
-  profile: null,
-  friends: [],
-  mutualFriends: []
+  profile: null
 })
 
 export const mutations = {  
@@ -11,26 +9,19 @@ export const mutations = {
 }
 
 export const actions = {
-  async setProfile({commit}, params) {
+  async load({commit}, params) {
     commit('setState', {key: 'profile', value: null})
-    commit('setState', {key: 'friends', value: []})
-    commit('setState', {key: 'mutualFriends', value: []})
     const { data } = await this.$axios.post('/appApi/user.info', params)
     commit('setState', {key: 'profile', value: data.response})
-    commit('setState', {key: 'friends', value: data.response.friends.users})
-    commit('setState', {key: 'mutualFriends', value: data.response.mutual_friends.users})
   },
-  async addFriends({}, params) {
+  async report({}, params) {
     return new Promise(async (resolve) => {
-      await this.$axios.post('/appApi/friends.add', params)
+      await this.$axios.post('/appApi/user.report', params)
       resolve(true)
     })
-  },
-  
+  }
 }
 
 export const getters = {
-  profile: state => state.profile,
-  friends: state => state.friends,
-  mutualFriends: state => state.mutualFriends,
+  profile: state => state.profile
 }

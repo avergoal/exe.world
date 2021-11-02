@@ -79,7 +79,6 @@ export default {
     },
     toggleModal(target) {
       this.$root.$emit('toggleModal', (target) ? {
-        open: true,
         target: target,
         game: this.game.gid,
         name: this.game.title

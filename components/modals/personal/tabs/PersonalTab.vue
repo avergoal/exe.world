@@ -171,7 +171,7 @@ export default {
       let birthDate = ((this.model.birthdate.y) ? this.model.birthdate.y : '0000')
       birthDate += '' + ((this.model.birthdate.m) ? this.model.birthdate.m : '00')
       birthDate += '' + ((Number(this.model.birthdate.d) < 10) ? '0' + Number(this.model.birthdate.d) : this.model.birthdate.d)
-      const error = await this.$store.dispatch('profile/updateData', {
+      const error = await this.$store.dispatch('settings/main', {
         first_name: this.model.firstname,
         last_name: this.model.lastname,
         birth_date: birthDate,

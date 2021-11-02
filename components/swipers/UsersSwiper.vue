@@ -3,6 +3,7 @@
   <div class="boxtitle">
     <span v-html="title"></span>
     <button v-if="target" @click="setRoute(target)" type="button"><svg-icon name="ui/more"/></button>
+    <button v-if="tab" @click="setTab(tab)" type="button"><svg-icon name="ui/more"/></button>
   </div>
   <div v-if="config" class="swiperbox">
     <swiper :options="config" ref="newSwiper">
@@ -24,7 +25,7 @@
 <script>
 export default {
   name: 'UsersSwiperTemplate',
-  props: ['slides', 'between', 'title', 'target'],
+  props: ['slides', 'between', 'title', 'target', 'tab'],
   data: () => ({
     config: null,
     data: []
@@ -42,16 +43,20 @@ export default {
   },
   methods: {
     openUser(e) {
-      this.$root.$emit('toggleModal', {
-        open: true,
-        target: 'userProfile',
-        user: e
-      })
-      this.closeSearch()
+      if(this.user.profile.uid === e) {
+        this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
+      } else {
+        this.$root.$emit('toggleModal', {target: 'userProfile', user: e})
+        this.$root.$emit('updateUserProfile')
+        this.closeSearch()
+      }
     },
     setRoute(target) {
       this.$root.$emit('changeTemplate', target)
       this.closeSearch()
+    },
+    setTab(target) {
+      this.$root.$emit('toggleModal', {target: target})
     },
     closeSearch() {
       this.$root.$emit('closeSearch')
@@ -62,11 +67,16 @@ export default {
       return this.$store.getters['search/results'].peoples
     },
     user_profile_friends() {
-      return this.$store.getters['users/friends']
+      let friends = this.$store.getters['users/profile'].friends
+      return (friends) ? friends.users : []
     },
     user_profile_mutual_friends() {
-      return this.$store.getters['users/mutualFriends']
+      let friends = this.$store.getters['users/profile'].mutual_friends
+      return (friends) ? friends.users : []
     },
+    user() {
+      return this.$store.getters['profile/user']
+    }
   }
 }
 </script>

@@ -53,11 +53,13 @@
         top: 0;
         left: 0;
         display: block;
-        height: auto;
+        height: 0;
         visibility: hidden;
         opacity: 0;
+        overflow: hidden;
         &.active{
           position: relative;
+          height: auto;
           visibility: visible;
           opacity: 1;
         }
@@ -153,6 +155,8 @@
                 }
               }
               .dropdown{
+                position: fixed;
+                transform: translateX(-100%) translateY(-40px);
                 li{
                   padding: 0;
                   &:after{

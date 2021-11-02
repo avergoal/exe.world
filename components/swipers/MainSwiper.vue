@@ -79,7 +79,6 @@ export default {
   methods: {
     toggleModal(target, e) {
       this.$root.$emit('toggleModal', {
-        open: true,
         target: target,
         game: e
       })

@@ -60,6 +60,18 @@
         }
       }
     }
+    .errors{
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 10px;
+      color: #e74c3c;
+      p{
+        padding: 0 0 10px;
+        &:last-child{
+          padding: 0;
+        }
+      }
+    }
     .btns{
       display: flex;
       align-items: center;

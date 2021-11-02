@@ -22,6 +22,7 @@ import getAwesomeSwiper from 'vue-awesome-swiper/dist/exporter'
 SwiperClass.use([Navigation, Pagination])
 Vue.use(getAwesomeSwiper(SwiperClass))
 
+// Deep clone
 export const deepClone = (obj) => {
   const clObj = {}
   for(const i in obj) {
@@ -33,7 +34,6 @@ export const deepClone = (obj) => {
   }
   return clObj
 }
-
 export default ({}, inject) => {
   inject('deepClone', deepClone)
 }

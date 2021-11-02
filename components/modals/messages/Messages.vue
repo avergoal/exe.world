@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo messagesmodal big">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -10,23 +10,23 @@
         <svg-icon name="ui/search" />
         <input type="text" name="" value="" placeholder="Search contacts">
       </fieldset>
-      <button @click="$parent.openModal('messagesWrite')" type="button" class="btn st2">
+      <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">
         <svg-icon name="ui/plus" />
         <span>write</span>
       </button>
     </form>
     <perfect-scrollbar ref="scroll">
       <ul class="list messages">
-        <li v-for="(e, i) in userMessages" :key="i">
-          <button @click="$parent.openModal('messagesChat')" :class="{active: e.badges}" type="button">
-            <div class="userphoto"><img :src="e.photo" :alt="e.name"></div>
+        <li v-for="(e, i) in chats" :key="i">
+          <button @click="toggleModal('messagesChat', e.cid)" :class="{active: e.title}" type="button">
+            <div class="userphoto"><img :src="e.cover" :alt="e.name"></div>
             <div class="info">
               <div class="name">
-                <strong v-html="e.name"></strong>
-                <div v-html="'// ' + e.date" class="date"></div>
+                <strong v-html="e.title"></strong>
+                <div v-html="'// ' + $moment.unix(e.timestamp).format('DD.MMMM.YYYY')" class="date"></div>
               </div>
-              <div v-html="e.text" class="text"></div>
-              <span v-if="e.badges" v-html="e.badges" class="badge">5</span>
+              <div v-html="e.message.text" class="text"></div>
+              <span v-if="e.new_messages" v-html="e.new_messages" class="badge">5</span>
             </div>
           </button>
         </li>
@@ -39,9 +39,20 @@
 <script>
 export default {
 	name: 'MessagesModal',
+  created() {
+    this.$store.dispatch('messages/chats')
+  },
+  methods: {
+    toggleModal(target, cid) {
+      this.$root.$emit('toggleModal', (target) ? {
+        target: target,
+        cid: cid
+      } : {})
+    }
+  },
   computed: {
-    userMessages() {
-      return this.$store.getters['app/userMessages']
+    chats() {
+      return this.$store.getters['messages/chats']
     }
   }
 }

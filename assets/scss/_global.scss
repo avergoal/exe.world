@@ -21,6 +21,7 @@ img{
   display: block;
   width: 100%;
 }
+a,
 button{
   position: relative;
   display: flex;
@@ -30,6 +31,7 @@ button{
   margin: 0;
   border: 0;
   background: transparent;
+  text-decoration: none;
   @include button1(800);
   text-transform: uppercase;
   cursor: pointer;
@@ -139,6 +141,30 @@ fieldset{
     &.night{
       background: $dBlack;
     }
+    .loader{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      visibility: visible;
+      opacity: 1;
+      transition: all .35s ease;
+      z-index: 10000;
+      &.loaded{
+        opacity: 0;
+        visibility: hidden;
+      }
+      img{
+        display: block;
+        width: 100px;
+        height: 100px;
+      }
+    }
   }
 }
 // Dropdown
@@ -153,7 +179,7 @@ fieldset{
   box-shadow: 0px 40px 67px rgba(0, 0, 0, .2);
   visibility: hidden;
   opacity: 0;
-  transition: all .35s ease;
+  transition: opacity .35s ease;
   z-index: -100;
   @media screen and (max-width: 576px) {
     position: fixed;
@@ -713,6 +739,57 @@ svg.icon{
     }
   }
 }
+// Search
+.searchform{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 48px 0;
+  fieldset{
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    .icon{
+      position: absolute;
+      top: 50%;
+      left: 18px;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0;
+      fill: $dGray;
+    }
+    input{
+      padding: 0 20px 0 60px;
+    }
+  }
+  .btns{
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 16px;
+    button{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 48px;
+      padding: 0 16px;
+      margin: 0 0 0 8px;
+      border: 0;
+      border-radius: 12px;
+      background: $grayLight;
+      transition: background 0.35s ease;
+      white-space: nowrap;
+      color: $dGray;
+      &.active{
+        background: $dOrange;
+        color: $dWhite;
+      }
+    }
+  }
+}
 // Modals
 .modalbox{
   position: fixed;
@@ -735,6 +812,7 @@ svg.icon{
   .modalinfo{
     position: relative;
     top: -100px;
+    max-height: 100Vh;
     border-radius: 24px;
     background: $dWhite;
     visibility: hidden;

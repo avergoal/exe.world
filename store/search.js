@@ -2,6 +2,7 @@ export const state = () => ({
   open: false,
   popular: [],
   results: {
+    query: null,
     games: [],
     peoples: []
   }
@@ -32,6 +33,7 @@ export const actions = {
       commit('setState', {
         key: 'results',
         value: {
+          query: params.query,
           games: data.response.games,
           peoples: data.response.users
         }

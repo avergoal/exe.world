@@ -1,11 +1,11 @@
 <template>
 <div class="modalinfo authmodal small">
-  <button @click="toggleModal(null)" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
     <div class="top flex">
-      <button @click="toggleModal('signIn')" type="button"><svg-icon name="ui/back" /></button>
+      <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/back" /></button>
       <span>Restore password</span>
     </div>
     <form @submit.prevent="restorePassword()" action="" class="st1">
@@ -25,14 +25,12 @@ export default {
 	name: 'RestorePasswordModal',
   data: () => ({
     emailorphone: null,
-    error: {text: 'Пользователь не найден',       show: false,
-      
-    }
+    error: {text: 'Пользователь не найден', show: false}
   }),
   methods: {
     async restorePassword() {
       this.error.show = false
-      const error = await this.$store.dispatch('profile/restorePassword', {
+      const error = await this.$store.dispatch('auth/restorePassword', {
         emailorphone: this.emailorphone
       })
       if(error) {
@@ -40,16 +38,10 @@ export default {
       }
     },
     goHome() {
-      this.toggleModal(null)
+      this.$root.$emit('toggleModal', {})
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
-    },
-    toggleModal(e) {
-      this.$root.$emit('toggleModal', (!e) ? {} : {
-        open: true,
-        target: e
-      })
     }
   }
 }

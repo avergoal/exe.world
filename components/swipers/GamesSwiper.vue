@@ -3,6 +3,7 @@
   <div class="boxtitle">
     <span v-html="title"></span>
     <button v-if="target" @click="setRoute(target)" type="button"><svg-icon name="ui/more"/></button>
+    <button v-if="tab" @click="setTab(tab)" type="button"><svg-icon name="ui/more"/></button>
   </div>
   <Filters v-if="filters" :type="filters"/>
   <div v-if="config" class="swiperbox">
@@ -33,7 +34,7 @@
 <script>
 export default {
   name: 'GamesSwiperTemplate',
-  props: ['slides', 'between', 'filters', 'title', 'target', 'slideClass', 'navClass'],
+  props: ['slides', 'between', 'filters', 'title', 'target', 'tab', 'slideClass', 'navClass'],
   data: () => ({
     config: null,
     data: []
@@ -63,6 +64,13 @@ export default {
   methods: {
     setRoute(target) {
       this.$root.$emit('changeTemplate', target) 
+      this.closeSearch()
+    },
+    setTab(target) {
+      this.$root.$emit('toggleModal', {target: target})
+    },
+    closeSearch() {
+      this.$root.$emit('closeSearch')
     },
     async changeCategory(e) {
       if(!this[this.slides][e].length) {
@@ -77,7 +85,6 @@ export default {
     },
     toggleModal(target, e) {
       this.$root.$emit('toggleModal', {
-        open: true,
         target: target,
         game: e
       })

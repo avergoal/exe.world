@@ -8,7 +8,7 @@
     <div class="desc">Are you sure you want to remove <strong v-html="modal.user.name"></strong> as a friend?</div>
     <div class="btns">
       <button @click="toggleModal('friends')" type="button" class="btn st2">cancel</button>
-      <button @click="rejectRequest('friendsRemoved')" type="button" class="btn st3">Yes, remove</button>
+      <button @click="remove()" type="button" class="btn st3">Yes, remove</button>
     </div>
   </div>
 </div>
@@ -18,16 +18,15 @@
 export default {
 	name: 'FriendsRemoveModalComponent',
   methods: {
+    async remove() {
+      await this.$store.dispatch('friends/remove', {uid: this.modal.user.id})
+      this.toggleModal('friendsRemoved')
+    },
     toggleModal(target) {
       this.$root.$emit('toggleModal', (target) ? {
-        open: true,
         target: target,
         user: this.modal.user
       } : {})
-    },
-    rejectRequest() {
-      this.$root.$emit('rejectRequest', this.modal.user.id)
-      this.toggleModal('friendsRemoved')
     }
   },
   computed: {

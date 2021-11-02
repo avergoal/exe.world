@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo friendsmodal big">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -13,26 +13,25 @@
     </form>
     <perfect-scrollbar ref="scroll" class="filters">
       <ul>
-        <li v-for="(e, i) in filters.list" :key="i">
-          <button @click="setFilter(i)" :class="{active: filters.current == i}" type="button">
+        <li v-for="(e, i) in filters" :key="i">
+          <button @click="setFilter(i)" :class="{active: currentFilter == i}" type="button">
             <span v-html="e"></span>
-            <span v-if="i == 0 && friends.total" v-html="friends.total" class="badge"></span>
-            <span v-if="i == 1 && friendsRequestIn.total" v-html="friendsRequestIn.total" class="badge"></span>
-            <span v-if="i == 2 && friendsRequestOut.total" v-html="friendsRequestOut.total" class="badge"></span>
+            <span v-if="i == 1 && requests.total.subscribers" v-html="requests.total.subscribers" class="badge"></span>
+            <span v-if="i == 2 && requests.total.subscriptions" v-html="requests.total.subscriptions" class="badge"></span>
           </button>
         </li>
       </ul>
     </perfect-scrollbar>
     <perfect-scrollbar ref="scroll" class="friendsscroll">
       <div class="tabs">
-        <ul v-if="friends.total" :class="{active: filters.current == 0}" class="tab">
-          <li v-for="(e, i) in friends.list" :key="i" :class="{hidden: searchValues(e.user_name)}">
+        <ul v-if="friends.length" :class="{active: currentFilter == 0}" class="tab">
+          <li v-for="(e, i) in friends" :key="i" :class="{hidden: searchValues(e.user_name)}">
             <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
             <div v-html="e.user_name" class="name"></div>
             <FriendsActions :user="{id: e.uid, name: e.user_name}" />
           </li>
         </ul>
-        <ul v-else :class="{active: filters.current == 0}" class="tab">
+        <ul v-else :class="{active: currentFilter == 0}" class="tab">
           <li class="empty">
             <div class="img">
               <img src="~/assets/illustration/friends.svg" alt="empty" class="illustration day">
@@ -44,17 +43,17 @@
             </div>
           </li>
         </ul>
-        <ul v-if="friendsRequestIn.total" :class="{active: filters.current == 1}" class="tab st2">
-          <li v-for="(e, i) in friendsRequestIn.list" :key="i" :class="{hidden: searchValues(e.user_name)}">
+        <ul v-if="requests.total.subscribers" :class="{active: currentFilter == 1}" class="tab st2">
+          <li v-for="(e, i) in requests.list.subscribers" :key="i" :class="{hidden: searchValues(e.user_name)}">
             <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
             <div v-html="e.user_name" class="name"></div>
             <div class="nav">
-              <div class="item btn"><button @click="acceptRequest(e.uid)" type="button" class="btn st2">accept</button></div>
-              <div class="item btn"><button @click="rejectRequest(e.uid)" type="button" class="btn st3">Reject</button></div>
+              <div class="item btn"><button @click="add(e.uid)" type="button" class="btn st2">accept</button></div>
+              <div class="item btn"><button @click="remove(e.uid)" type="button" class="btn st3">Reject</button></div>
             </div>
           </li>
         </ul>
-        <ul v-else :class="{active: filters.current == 1}" class="tab">
+        <ul v-else :class="{active: currentFilter == 1}" class="tab">
           <li class="empty">
             <div class="img">
               <img src="~/assets/illustration/friends.svg" alt="empty" class="illustration day">
@@ -66,16 +65,16 @@
             </div>
           </li>
         </ul>
-        <ul v-if="friendsRequestOut.total" :class="{active: filters.current == 2}" class="tab st2">
-          <li v-for="(e, i) in friendsRequestOut.list" :key="i" :class="{hidden: searchValues(e.user_name)}">
+        <ul v-if="requests.total.subscriptions" :class="{active: currentFilter == 2}" class="tab st2">
+          <li v-for="(e, i) in requests.list.subscriptions" :key="i" :class="{hidden: searchValues(e.user_name)}">
             <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
             <div v-html="e.user_name" class="name"></div>
             <div class="nav">
-              <div class="item"><button @click="rejectRequest(e.uid)" type="button" class="btn st3">cancel request</button></div>
+              <div class="item"><button @click="remove(e.uid)" type="button" class="btn st3">cancel request</button></div>
             </div>
           </li>
         </ul>
-        <ul v-else :class="{active: filters.current == 2}" class="tab">
+        <ul v-else :class="{active: currentFilter == 2}" class="tab">
           <li class="empty">
             <div class="img">
               <img src="~/assets/illustration/friends.svg" alt="empty" class="illustration day">
@@ -97,27 +96,25 @@
 import FriendsActions from './actions/FriendsActions'
 export default {
 	name: 'FriendsModalComponent',
-  components: {
-    FriendsActions
-  },
+  components: {FriendsActions},
   data: () => ({
-    filters: {
-      current: 0,
-      list: ['All Friends', 'Friend Requests', 'My Requests']
-    },
+    currentFilter: 0,
+    loaded: {0: false, 1: false},
     search: null
   }),
-  mounted() {
-    this.loadFriends()
-    this.loadFriendsRequestIn()
-    this.loadFriendsRequestOut()
-    this.$root.$on('rejectRequest', (e) => {
-      this.rejectRequest(e)
-    })
+  created() {
+    this.$store.dispatch('friends/load', {offset: 0})
   },
   methods: {
-    setFilter(e) {
-      this.filters.current = e
+    async setFilter(e) {
+      this.currentFilter = e
+      if(this.currentFilter && !this.loaded[this.currentFilter - 1]) {
+        await this.$store.dispatch('friends/requests', {
+          type: this.currentFilter - 1,
+          offset: 0
+        })
+        this.loaded[this.currentFilter - 1] = true
+      }
       this.$refs.scroll.update()
     },
     searchValues(e) {
@@ -129,47 +126,26 @@ export default {
         return false
       }
     },
-    async loadFriends() {
-      this.$store.dispatch('profile/setFriends', {
-        offset: 0
-      })
-    },
-    async loadFriendsRequestIn() {
-      this.$store.dispatch('profile/setFriendsRequest', {
-        key: 'friendsRequestIn',
-        type: 0,
-        offset: 0
-      })
-    },
-    async loadFriendsRequestOut() {
-      this.$store.dispatch('profile/setFriendsRequest', {
-        key: 'friendsRequestOut',
-        type: 1,
-        offset: 0
-      })
-    },
-    async acceptRequest(e) {
-      await this.$store.dispatch('profile/acceptRequest', {
-        uid: e
-      })
+    async add(e) {
+      await this.$store.dispatch('friends/add', {uid: e})
+      await this.$store.dispatch('friends/update', {uid: e})
       this.$refs.scroll.update()
     },
-    async rejectRequest(e) {
-      await this.$store.dispatch('profile/rejectRequest', {
-        uid: e
-      })
-      this.$refs.scroll.update()
+    async remove(e) {
+      await this.$store.dispatch('friends/remove', {uid: e})
+      await this.$store.dispatch('friends/update', {uid: e})
+      if(this.$refs.scroll) this.$refs.scroll.update()
     }
   },
   computed: {
     friends() {
-      return this.$store.getters['profile/friends']
+      return this.$store.getters['friends/list']
     },
-    friendsRequestIn() {
-      return this.$store.getters['profile/friendsRequestIn']
+    filters() {
+      return this.$store.getters['friends/filters']
     },
-    friendsRequestOut() {
-      return this.$store.getters['profile/friendsRequestOut']
+    requests() {
+      return this.$store.getters['friends/requests']
     }
   }
 }

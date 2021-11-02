@@ -23,15 +23,16 @@
         </div>
       </div>
       <div v-if="profile" class="btns">
-        <div v-if="profile.friendship_status" class="btnbox">
-          <button @click="toggleParams('openParams2')" class="toggleparams2 btn st3" type="button">your friend</button>
-          <button @click="toggleModal('messagesChat')" class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
-        </div>        
-        <button v-else @click="addFriends(profile.user.uid)" class="toggleparams2 btn st2" type="button">add to friends</button>
+        <div class="btnbox">
+          <button v-if="profile.friendship_status === 0 && !request" @click="addFriends(profile.user.uid)" class="toggleparams2 btn st2" type="button">add to friends</button>
+          <button v-else-if="request || profile.friendship_status === 1 || profile.friendship_status === 2" class="toggleparams2 btn st3" type="button">request...</button>
+          <button v-else @click="toggleParams('openParams2')" class="toggleparams2 btn st3" type="button">your friend</button>
+          <button @click="toggleModal('messagesChat', profile.user)" class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
+        </div>
         <div :class="{open: openParams2}" class="dropdown params2">
           <ul class="menu">
             <li>
-              <button type="button">
+              <button @click="toggleModal('friendsRemove', {id: profile.user.uid, name: profile.user.user_name})" type="button">
                 <div class="ico"><svg-icon name="ui/user_remove" /></div>
                 <span>Remove from friends</span>
               </button>
@@ -46,31 +47,31 @@
         </div>
       </div>
       <ul v-if="profile" class="more">
-        <!--<li>
+        <li>
           <div class="label">Age</div>
-          <div v-html="friendProfile.age" class="desc"></div>
+          <div class="desc"></div>
         </li>
         <li>
           <div class="label">Date of Birth</div>
-          <div v-html="friendProfile.birth" class="desc"></div>
+          <div class="desc"></div>
         </li>
         <li>
           <div class="label">Location</div>
-          <div v-html="friendProfile.location" class="desc"></div>
-        </li>-->
+          <div class="desc"></div>
+        </li>
       </ul>
       <div v-if="profile" class="floatparams">
         <button @click="toggleParams('openParams1')" type="button" class="toggleparams1"><svg-icon name="ui/dotted" /></button>
         <div :class="{open: openParams1}" class="dropdown params1">
           <ul class="menu">
             <li>
-              <button @click="$parent.openModal('friendsBlock')" type="button">
+              <button @click="toggleModal('userBlock', {id: profile.user.uid, name: profile.user.user_name})" type="button">
                 <div class="ico"><svg-icon name="ui/blacklist" /></div>
                 <span>Block User</span>
               </button>
             </li>
             <li>
-              <button @click="$parent.openModal('friendsReport')" type="button">
+              <button @click="toggleModal('userReport', {id: profile.user.uid})" type="button">
                 <div class="ico"><svg-icon name="ui/report" /></div>
                 <span>Report</span>
               </button>
@@ -82,9 +83,9 @@
     <div class="interest">
       <perfect-scrollbar ref="scroll" :options="{suppressScrollX: true}">
         <div class="swipers">
-          <GamesSwiper v-if="profile && profile.games.games.length" slides="user_profile_games" between="16" title="Games" target="userProfileGames" slideClass="m"/>
-          <UsersSwiper v-if="profile && profile.friends.users.length" slides="user_profile_friends" between="8" title="Friends" target="userProfileFriends"/>
-          <UsersSwiper v-if="profile && profile.mutual_friends.users.length" slides="user_profile_mutual_friends" between="8" title="Mutual friends" target="userProfileFriends"/>
+          <GamesSwiper v-if="profile && profile.games.games.length" slides="user_profile_games" between="16" title="Games" tab="userProfileGames" slideClass="m"/>
+          <UsersSwiper v-if="profile && profile.friends.users.length" slides="user_profile_friends" between="8" title="Friends" tab="userProfileFriends"/>
+          <UsersSwiper v-if="profile && profile.mutual_friends.users.length" slides="user_profile_mutual_friends" between="8" title="Mutual friends" tab="userProfileFriends"/>
         </div>
       </perfect-scrollbar>
     </div>
@@ -95,14 +96,16 @@
 <script>
 export default {
   name: 'ProfileModal',
-  data() {
-    return{
-      openParams1: false,
-      openParams2: false
-    }
-  },
+  data: () => ({
+    openParams1: false,
+    openParams2: false,
+    request: false
+  }),
   created() {
     this.loadProfile()
+    this.$root.$on('updateUserProfile', () => {
+      this.loadProfile()
+    })
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -116,22 +119,19 @@ export default {
   },
   methods: {
     async loadProfile() {
-      this.$store.dispatch('users/setProfile', {
-        uid: this.modal.user
-      })
+      this.$store.dispatch('users/load', {uid: this.modal.user})
     },
     async addFriends(e) {
-      await this.$store.dispatch('users/addFriends', {
-        uid: this.modal.user
-      })
+      await this.$store.dispatch('friends/add', {uid: this.modal.user})
+      this.request = true
     },
     toggleParams(target) {
       this[target] = !this[target]
     },
-    toggleModal(target) {
+    toggleModal(target, user) {
       this.$root.$emit('toggleModal', (target) ? {
-        open: true,
-        target: target
+        target: target,
+        user: user
       } : {})
     }
   },
@@ -149,6 +149,7 @@ export default {
           month: age[2],
           day: age[3]
         }
+        profile.user.id = profile.user.uid
       }
       return profile
     }

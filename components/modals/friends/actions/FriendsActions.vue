@@ -7,8 +7,8 @@
     </button>
   </div>
   <div class="item">
-    <button @click="toggleParams()" type="button" class="ico toggleparams"><svg-icon name="ui/dotted" /></button>
-    <div :class="{open: openParams}" class="dropdown">
+    <button @click="toggleParams" type="button" class="ico toggleparams"><svg-icon name="ui/dotted" /></button>
+    <div :class="{open: openParams}" :style="'top:' + top + 'px;left:' + left + 'px'" class="dropdown">
       <ul class="menu">
         <li>
           <button @click="toggleModal('friendsRemove', user)" type="button">
@@ -17,13 +17,13 @@
           </button>
         </li>
         <li>
-          <button @click="toggleModal('friendsBlock', user)" type="button">
+          <button @click="toggleModal('userBlock', user)" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
             <span>Block User</span>
           </button>
         </li>
         <li>
-          <button @click="toggleModal('friendsReport', user)" type="button">
+          <button @click="toggleModal('userReport', user)" type="button">
             <div class="ico"><svg-icon name="ui/report" /></div>
             <span>Report</span>
           </button>
@@ -39,11 +39,18 @@ export default{
   name: 'FriendsActions',
   props: ['user'],
   data: () => ({
-    openParams: false
+    openParams: false,
+    top: 0,
+    left: 0
   }),
-  mounted() {
+  created() {
     document.addEventListener('click', (e) => {
       if(!e.target.closest('.params') && !e.target.closest('.toggleparams')) {
+        this.openParams = false
+      }
+    })
+    this.$root.$on('closeDropdown', (_uid) => {
+      if(_uid != this._uid) {
         this.openParams = false
       }
     })
@@ -51,22 +58,23 @@ export default{
   methods: {
     toggleModal(target, user) {
       this.$root.$emit('toggleModal', {
-        open: true,
         target: target,
         user: user
       })
     },
-    toggleParams() {
-      let list = document.querySelectorAll('.params.open')
-      for(let e in list) {
-        if(typeof list[e] == 'object') {
-          list[e].classList.remove('open')
-        }
+    toggleParams(e) {
+      e = e.target
+      if(!e.classList.contains('toggleparams')) {
+        e = e.parentElement
+        if(!e.classList.contains('toggleparams')) e = e.parentElement
       }
-      if(!this.openParams) {
-        this.openParams = false
-      }
+      let coords = e.getBoundingClientRect()
+      this.top = coords.top
+      this.left = coords.left
       this.openParams = !this.openParams
+      if(this.openParams) {
+        this.$root.$emit('closeDropdown', this._uid)
+      }
     }
   }
 }

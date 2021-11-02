@@ -21,6 +21,18 @@
       max-height: 650px;
       margin: 0 0 10px;
       ul.news{
+        &.filtered{
+          &[data-filter="games"] {
+            li.friends{
+              display: none;
+            }
+          }
+          &[data-filter="friends"] {
+            li.games{
+              display: none;
+            }
+          }
+        }
         li{
           position: relative;
           display: flex;
@@ -91,6 +103,7 @@
                 display: block;
                 padding: 10px 0 0;
               }
+              a,
               button{
                 height: 36px;
                 margin: 16px 8px 0 0;

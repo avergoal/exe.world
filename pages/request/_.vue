@@ -10,19 +10,16 @@ export default {
   },
   methods: {
     async loadData() {
-      let code = this.$route.params.pathMatch.replace('/', ''),
-          formData = new FormData()
-      formData.append('code', code)
-      const { data } = await this.$store.dispatch('app/sendRequest', formData)
-      let message = (typeof data.error != 'undefined') ? data.error[0] : data.response.message
-      this.$root.$emit('modalOpen', {
-        open: true,
-        target: 'request',
-        message: message,
-        status: false,
-        tab: null
+      const data = await this.$store.dispatch('app/sendRequest', {
+        code: this.$route.params.pathMatch.replace('/', '')
       })
       this.$router.push('/')
+      let message = (typeof data.error != 'undefined') ? data.error[0] : data.response.message
+      this.$root.$emit('toggleModal', {
+        target: 'request',
+        message: message,
+        status: (typeof data.error != 'undefined')
+      })
     }
   }
 }

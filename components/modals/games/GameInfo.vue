@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo gamemodal info big">
-  <button @click="closeModal()" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div v-if="loaded" class="modalcontent">
@@ -111,9 +111,6 @@ export default {
     },
     goGame() {
       this.$router.push('/g/' + this.game.gid)
-      this.closeModal()
-    },
-    closeModal() {
       this.$root.$emit('toggleModal', {})
     }
   },

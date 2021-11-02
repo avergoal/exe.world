@@ -1,15 +1,15 @@
 <template>
 <div class="modalinfo messagesmodal chat middle">
-  <button @click="toggleModal(null)" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
     <div class="usermodaltop">
-      <button @click="toggleModal('messages')" type="button"><svg-icon name="ui/back" /></button>
+      <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
       <div class="userphoto"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></div>
       <div class="info">
         <div v-html="profile.user.user_name" class="name"></div>
-        <div :class="{active: profile.user.online}" class="online"><span></span> Online</div>
+        <div :class="{active: profile.user.online}" class="online"><span></span> {{ (profile.user.online ? 'Online' : 'Offline') }}</div>
       </div>
       <div class="nav">
         <div class="item"><button @click="toggleSearch()" type="button" class="togglesearch"><svg-icon name="ui/search" /></button></div>
@@ -18,7 +18,7 @@
           <div :class="{open: openParams}" class="dropdown">
             <ul class="menu">
               <li>
-                <button type="button">
+                <button @click="toggleModal('userBlock', {id: profile.user.uid, name: profile.user.user_name})" type="button">
                   <div class="ico"><svg-icon name="ui/blacklist" /></div>
                   <span>Block User</span>
                 </button>
@@ -44,30 +44,32 @@
       </form>
     </div>
     <perfect-scrollbar ref="scroll" class="chatscroll">
-      <div class="chatbox">
-        <div v-for="(e, i) in userMessagesChat.list" :key="i" class="day">
-          <div v-html="e.date" class="date"></div>
-          <div v-for="(e2, i2) in e.items" :key="i2" :class="e2.type" class="item">
+      <div v-if="messages" class="chatbox">
+        <div v-for="(e, i) in messages" :key="i" class="day">
+          <div v-html="i.split('.').join(' ')" class="date"></div>
+          <div v-for="(e2, i2) in e" :key="i2" :class="(e2.user.uid == user.profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
-            <div v-if="e2.type == 'in'" class="userphoto"><img :src="userMessagesChat.photo" alt=""></div>
-            <div v-if="e2.type == 'in'" class="info">
+            <div v-if="e2.user.uid != user.profile.uid" class="userphoto"><img :src="e2.user.avatar_urls.x100" alt=""></div>
+            <div v-if="e2.user.uid != user.profile.uid" class="info">
               <div class="message">
-                <div v-html="userMessagesChat.name" class="name"></div>
+                <div v-html="e2.user.user_name" class="name"></div>
                 <div v-html="e2.text" class="text"></div>
               </div>
               <div v-html="e2.time" class="time"></div>
             </div>
             <!-- Out -->
-            <div v-if="e2.type == 'out'" v-html="e2.text" class="message"></div>
-            <div v-if="e2.type == 'out'" class="info">
+            <div v-if="e2.user.uid == user.profile.uid" v-html="e2.text" class="message"></div>
+            <div v-if="e2.user.uid == user.profile.uid" class="info">
               <div class="check">
-                <svg-icon v-if="e2.check" name="ui/received" />
-                <svg-icon v-else name="ui/unreceived" />
+                <svg-icon v-if="e2.unread" name="ui/unreceived" />
+                <svg-icon v-else name="ui/received" />
               </div>
               <div v-html="e2.time" class="time"></div>
             </div>
           </div>
         </div>
+      </div>
+      <div v-else class="chatbox">
         <div class="empty">
           <div class="img">
             <img src="~/assets/illustration/messages.svg" alt="" class="illustration day">
@@ -79,11 +81,25 @@
           </div>
         </div>
       </div>
+<!--
+delete: "42f4cee8b299b66209bfdedcf9efd324"
+mid: 19
+text: "asdfasdf"
+timestamp: 1635345004
+unread: true
+user: Object
+avatar_urls: (...)
+first_name: (...)
+last_name: (...)
+online: (...)
+uid: (...)
+user_name: (...)
+-->
     </perfect-scrollbar>
     <form class="send" action="">
       <button type="button" class="smile"><svg-icon name="ui/smile" /></button>
-      <input type="text" name="" value="" placeholder="Write message">
-      <button type="submit" class="submit"><svg-icon name="ui/send" /></button>
+      <input v-model="message" type="text" name="" value="" placeholder="Write message">
+      <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
   </div>
 </div>
@@ -92,34 +108,45 @@
 <script>
 export default {
 	name: 'MessagesChatModal',
-  data() {
-    return{
-      openSearch: false,
-      openParams: false
-    }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.$refs.scroll.$el.scrollTop = this.$refs.scroll.$el.firstChild.offsetHeight
-    }, 50)
+  data: () => ({
+    message: null,
+    date: '',
+    openSearch: false,
+    openParams: false
+  }),
+  created() {
     document.addEventListener('click', (e) => {
       if(!e.target.closest('.paramsbox') && !e.target.closest('.toggleparams')) {
         this.openParams = false
       }
     })
+    this.loadMessages()
+  },
+  mounted() {
+    setTimeout(() => {
+      this.$refs.scroll.$el.scrollTop = this.$refs.scroll.$el.firstChild.offsetHeight
+    }, 50)
   },
   methods: {
-    toggleModal(target) {
+    async loadMessages() {
+      if(this.profile) {
+        await this.$store.dispatch('messages/load', {uid: this.modal.user.id})
+      }
+    },
+    async sendMessage() {
+      if(this.message) {
+        this.$store.dispatch('messages/send', {
+          uid: this.modal.user.id,
+          text: this.message
+        })
+      }
+    },
+    toggleModal(target, user) {
       this.$root.$emit('toggleModal', (target) ? {
-        open: true,
-        target: target
+        target: target,
+        user: user
       } : {})
     },
-
-
-
-
-
     toggleSearch() {
       this.openSearch = !this.openSearch
     },
@@ -129,25 +156,17 @@ export default {
   },
   computed: {
     profile() {
-      let profile = this.$store.getters['users/profile']
-      if(profile) {
-        profile = Object.assign({}, profile)
-        let age = profile.user.birth_date.match(/(\d{4})(\d{2})(\d{2})/)
-        profile.user.age = {
-          year: age[1],
-          month: age[2],
-          day: age[3]
-        }
-      }
-      console.log(profile)
-      return profile
+      return this.$store.getters['users/profile']
     },
-
-
-
-
-    userMessagesChat() {
-      return this.$store.getters['app/userMessagesChat']
+    user() {
+      return this.$store.getters['profile/user']
+    },
+    modal() {
+      console.log(this.$store.getters['app/modal'])
+      return this.$store.getters['app/modal']
+    },
+    messages() {
+      return this.$store.getters['messages/messages']
     }
   }
 }

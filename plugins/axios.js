@@ -3,12 +3,12 @@ export default function ({ $axios, store }) {
     if(config.data) {
       let FormData = require('form-data'),
           formData = new FormData(),
-          token = store.getters['profile/token']
+          token = store.getters['auth/token']
       if(config.data.api_token || token) {
         formData.append('api_token', (config.data.api_token) ? config.data.api_token : token)
-        if(config.data.api_token) {
-          delete config.data.api_token
-        }
+      }
+      if(config.data.api_token) {
+        delete config.data.api_token
       }
       for(let e in config.data) {
         formData.append(e, config.data[e])

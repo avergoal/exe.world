@@ -4,7 +4,7 @@
   <div class="inform">
     <div class="top">
       <div v-html="(balance.balance) ? balance.balance : '0'" class="balance"></div>
-      <button @click="setTab('addfunds')" type="button" class="btn">
+      <button @click="$root.$emit('toggleModalTab', 'addfunds')" type="button" class="btn">
         <svg-icon name="ui/plus" />
         <span>Add funds</span>
       </button>
@@ -36,9 +36,6 @@ export default {
   methods: {
     async loadBalance() {
       await this.$store.dispatch('profile/setBalance')
-    },
-    setTab(target) {
-      this.$store.dispatch('app/toggleModalTab', target)
     }
   },
   computed: {

@@ -6,7 +6,7 @@
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
       </a>
-      <button v-else type="button" @click="toggleModal(e.target)" class="togglemodal">
+      <button v-else type="button" @click="$root.$emit('toggleModal', {target: e.target})" class="togglemodal">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
       </button>
@@ -36,12 +36,6 @@ export default {
   methods: {
     setRoute(target) {
       this.$root.$emit('changeTemplate', target) 
-    },
-    toggleModal(e) {
-      this.$root.$emit('toggleModal', {
-        open: true,
-        target: e
-      })
     }
   },
   computed: {

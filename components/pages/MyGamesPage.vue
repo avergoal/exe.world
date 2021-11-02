@@ -59,7 +59,6 @@ export default {
     },
     openGame(e) {
       this.$root.$emit('toggleModal', {
-        open: true,
         target: 'gameInfo',
         game: e
       })

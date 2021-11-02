@@ -1,103 +1,99 @@
 <template>
 <div :class="{open: modal.open, active: modal.active}" class="modalbox">
+  <!-- Auth -->
   <SignIn v-if="modal.target == 'signIn'"/>
   <SignUp v-if="modal.target == 'signUp'"/>
   <LogOut v-if="modal.target == 'logOut'"/>
   <RestorePassword v-if="modal.target == 'restorePassword'"/>
   <EmailSend v-if="modal.target == 'emailSend'"/>
+  <!-- Messages -->
   <Messages v-if="modal.target == 'messages'"/>
   <MessagesChat v-if="modal.target == 'messagesChat'"/>
   <MessagesWrite v-if="modal.target == 'messagesWrite'"/>
+  <!-- Friends -->
   <Friends v-if="modal.target == 'friends'"/>
-  <FriendsBlock v-if="modal.target == 'friendsBlock'"/>
   <FriendsRemove v-if="modal.target == 'friendsRemove'"/>
   <FriendsRemoved v-if="modal.target == 'friendsRemoved'"/>
-  <FriendsReport v-if="modal.target == 'friendsReport'"/>
+  <!-- Users -->
   <UserProfile v-if="modal.target == 'userProfile'"/>
   <UserProfileGames v-if="modal.target == 'userProfileGames'"/>
   <UserProfileFriends v-if="modal.target == 'userProfileFriends'"/>
-  <News v-if="modal.target == 'news'"/>
-  <NewsAdd v-if="modal.target == 'newsAdd'"/>
+  <UserBlock v-if="modal.target == 'userBlock'"/>
+  <UserBlocked v-if="modal.target == 'userBlocked'"/>
+  <UserReport v-if="modal.target == 'userReport'"/>
+  <UserReported v-if="modal.target == 'userReported'"/>
+  <!-- Personal -->
   <PersonalData v-if="modal.target == 'personalData'"/>
   <MyPhoto v-if="modal.target == 'myPhoto'"/>
   <MyPhotoEditor v-if="modal.target == 'myPhotoEditor'"/>
-  <GameRemove v-if="modal.target == 'gameRemove'"/>
+  <!-- Games -->
   <GameInfo v-if="modal.target == 'gameInfo'"/>
   <GameSignIn v-if="modal.target == 'gameSignIn'"/>
+  <GameRemove v-if="modal.target == 'gameRemove'"/>
+  <!-- News -->
+  <News v-if="modal.target == 'news'"/>
+  <!-- Request -->
   <Request v-if="modal.target == 'request'"/>
 </div>
 </template>
 
 <script>
+// Auth
 import SignIn from './modals/auth/SignIn'
 import SignUp from './modals/auth/SignUp'
 import LogOut from './modals/auth/LogOut'
 import RestorePassword from './modals/auth/RestorePassword'
 import EmailSend from './modals/auth/EmailSend'
+// Messages
 import Messages from './modals/messages/Messages'
 import MessagesChat from './modals/messages/MessagesChat'
 import MessagesWrite from './modals/messages/MessagesWrite'
+// Friends
 import Friends from './modals/friends/Friends'
-import FriendsBlock from './modals/friends/FriendsBlock'
-import FriendsRemove from './modals/friends/FriendsRemove'
-import FriendsRemoved from './modals/friends/FriendsRemoved'
-import FriendsReport from './modals/friends/FriendsReport'
-import UserProfile from './modals/user/Profile'
-import UserProfileGames from './modals/user/ProfileGames'
-import UserProfileFriends from './modals/user/ProfileFriends'
-import News from './modals/news/News'
-import NewsAdd from './modals/news/NewsAdd'
+import FriendsRemove from './modals/friends/Remove'
+import FriendsRemoved from './modals/friends/Removed'
+// Users
+import UserProfile from './modals/users/Profile'
+import UserProfileGames from './modals/users/Games'
+import UserProfileFriends from './modals/users/Friends'
+import UserBlock from './modals/users/Block'
+import UserBlocked from './modals/users/Blocked'
+import UserReport from './modals/users/Report'
+import UserReported from './modals/users/Reported'
+// Personal
 import PersonalData from './modals/personal/PersonalData'
 import MyPhoto from './modals/personal/MyPhoto'
 import MyPhotoEditor from './modals/personal/MyPhotoEditor'
-import GameRemove from './modals/games/GameRemove'
+// Games
 import GameInfo from './modals/games/GameInfo'
 import GameSignIn from './modals/games/GameSignIn'
+import GameRemove from './modals/games/GameRemove'
+// News
+import News from './modals/news/News'
+// Request
 import Request from './modals/Request'
-
-
-
-import GameBuy from './modals/games/GameBuy'
-import GameBuySuccess from './modals/games/GameBuySuccess'
-import Help from './modals/Help'
-import Thanks from './modals/Thanks'
 
 export default {
 	name: 'ModalsComponent',
   components: {
-    SignIn,
-    SignUp,
-    LogOut,
-    RestorePassword,
-    EmailSend,
-    Messages,
-    MessagesChat,
-    MessagesWrite,
-    Friends,
-    FriendsBlock,
-    FriendsRemove,
-    FriendsRemoved,
-    FriendsReport,
-    UserProfile,
-    UserProfileGames,
-    UserProfileFriends,
-    PersonalData,
-    MyPhoto,
-    MyPhotoEditor,
-    GameRemove,
+    // Auth
+    SignIn, SignUp, LogOut, RestorePassword, EmailSend,
+    // Messages
+    Messages, MessagesChat, MessagesWrite,
+    // Friends
+    Friends, FriendsRemove, FriendsRemoved,
+    // Users
+    UserProfile, UserProfileGames, UserProfileFriends, UserBlock, UserBlocked, UserReport, UserReported,
+    // Personal
+    PersonalData, MyPhoto, MyPhotoEditor,
+    // Games
     GameInfo,
     GameSignIn,
-    Request,
-
-
-
-
-    GameBuy,
-    GameBuySuccess,
+    GameRemove,
+    // News
     News,
-    NewsAdd,
-    Help,
-    Thanks
+    // Request
+    Request
   },
   mounted() {
     this.$root.$on('toggleModal', (e) => {

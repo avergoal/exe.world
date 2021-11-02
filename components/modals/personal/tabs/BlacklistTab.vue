@@ -12,7 +12,7 @@
       <li v-for="(e, i) in blacklist" :key="i" :class="{hidden: searchValues(e.user_name)}">
         <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
         <div v-html="e.user_name" class="name"></div>
-        <button @click="removeUserFromBlacklist(e.uid)" type="button" class="btn st3">Remove from blacklist</button>
+        <button @click="removeUser(e.uid)" type="button" class="btn st3">Remove from blacklist</button>
       </li>
     </ul>
   </perfect-scrollbar>
@@ -39,18 +39,17 @@ export default {
       }
     },
     async loadUsers() {
-      await this.$store.dispatch('profile/setBlackList')
+      await this.$store.dispatch('blacklist/load')
     },
-    async removeUserFromBlacklist(e) {
-      await this.$store.dispatch('profile/blackListRemove', {
+    async removeUser(e) {
+      await this.$store.dispatch('blacklist/remove', {
         uid: e
       })
     }
   },
   computed: {
     blacklist() {
-      console.log(this.$store.getters['profile/blacklist'])
-      return this.$store.getters['profile/blacklist']
+      return this.$store.getters['blacklist/list']
     }
   }
 }

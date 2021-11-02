@@ -39,6 +39,7 @@ export default {
   buildModules: [
     '@aceforth/nuxt-optimized-images',
     '@nuxtjs/svg-sprite',
+    '@nuxtjs/moment',
     'nuxt-font-loader'
   ],
   optimizedImages: {

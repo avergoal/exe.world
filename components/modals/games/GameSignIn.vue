@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo gamemodalsignin big">
-  <button @click="toggleModal()" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -20,11 +20,11 @@
       </fieldset>
       <div class="btns">
         <button type="submit" class="btn st2">Log in</button>
-        <button @click="toggleModal('restorePassword')" type="button" class="link">forgot password?</button>
+        <button @click="$root.$emit('toggleModal', {target: 'restorePassword'})" type="button" class="link">forgot password?</button>
       </div>
       <div class="signup">
         <div class="text">Don't have an account yet?</div>
-        <button @click="toggleModal('signUp')" type="button">sign up</button>
+        <button @click="$root.$emit('toggleModal', {target: 'signUp'})" type="button">sign up</button>
       </div>
       <div class="social">
         <div class="text">Login via services</div>
@@ -65,24 +65,16 @@ export default {
       })
       if(error) {
         this.errors[error].show = true
-      } else {
-        this.toggleModal(null)
-      }
+      } else this.$root.$emit('toggleModal', {})
     },
     goHome() {
-      this.toggleModal(null)
+      this.$root.$emit('toggleModal', {})
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
     },
     togglePasswordType() {
       this.passwordType = (this.passwordType == 'password') ? 'text' : 'password'
-    },
-    toggleModal(e) {
-      this.$root.$emit('toggleModal', (!e) ? {} : {
-        open: true,
-        target: e
-      })
     }
   },
   computed: {

@@ -5,28 +5,46 @@
   </button>
   <div class="modalcontent">
     <div class="top">News</div>
-    <!--<Filters v-if="filters" :filters="filters"/>-->
+    <perfect-scrollbar ref="scroll" class="filters">
+      <ul>
+        <li v-for="(e, i) in filters.list" :key="i">
+          <button @click="setFilter(i)" :class="{active: filters.current == i}" type="button">
+            <span v-html="e"></span>
+          </button>
+        </li>
+      </ul>
+    </perfect-scrollbar>
     <perfect-scrollbar ref="scroll">
-      <ul class="news">
-        <li v-for="(e, i) in news" :key="i">
-          <div v-if="e.photo" class="userphoto"><img :src="e.photo" :alt="e.name"></div>
-          <div v-else-if="e.img" class="img"><img :src="e.img" :alt="e.name"></div>
+      <ul v-if="news.length" :class="{filtered: filters.current != 0}" :data-filter="(filters.current == 1) ? 'games' : 'friends'" class="news">
+        <li v-for="(e, i) in news" :key="i" :class="(e.type == 1 || e.type == 2 || e.type == 3) ? 'friends' : 'games'">
+          <!-- Photos -->
+          <div v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" class="userphoto">
+            <img :src="e.users[0].avatar_urls.x100" :alt="e.users[0].user_name">
+          </div>
+          <div v-if="e.type == 4 && e.games[0]" class="img">
+            <img :src="e.games[0].icon.default" :alt="e.games[0].title">
+          </div>
+          <!-- Info -->
           <div class="info">
             <div class="name">
               <strong v-html="e.name"></strong>
-              <span v-html="'// '+e.date"></span>
+              <span v-html="'// '+$moment.unix(e.timestamp).format('DD.MM.YYYY')"></span>
             </div>
             <div v-html="e.text" class="text"></div>
             <div class="btns">
-              <button v-if="e.button && false" type="button" class="btn st2">play</button>
-              <button v-if="e.button && false" type="button" class="btn st2">Pick up the reward</button>
-              <button v-if="e.button && false" type="button" class="btn st3">maybe later</button>
-              <button v-if="e.button && false" type="button" class="btn st3">Start fight</button>
+              <nuxt-link v-if="(e.type == 3 || e.type == 4) && e.button && e.games[0]" v-html="e.button" :to="'/g/' + e.games[0].gid" class="btn st2"></nuxt-link>
             </div>
           </div>
-          <div v-if="e.extPhoto" class="userphoto extended"><img :src="e.extPhoto" :alt="e.name"></div>
-          <div v-else-if="e.extImg" class="img extended"><img :src="e.extImg" :alt="e.name"></div>
+          <!-- Ext Photos -->
+          <div v-if="(e.type == 1 || e.type == 3) && e.games[0]" class="img extended">
+            <img :src="e.games[0].icon.default" :alt="e.games[0].title">
+          </div>
+          <div v-if="e.type == 2 && e.users[1]" class="userphoto extended">
+            <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
+          </div>
         </li>
+      </ul>
+      <ul v-else class="news">
         <li class="empty">
           <div class="img">
             <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
@@ -47,20 +65,10 @@
 export default {
 	name: 'NewsModal',
   data: () => ({
-    filters: [{
-      text: 'All News',
-      value: null,
-      badge: null
-    }, {
-      text: 'Games',
-      value: null,
-      badge: null
-    }, {
-      text: 'Friends',
-      value: null,
-      badge: null
-    }],
-    filter: 0
+    filters: {
+      current: 0,
+      list: ['All News', 'Games', 'Friends']
+    }
   }),
   mounted() {
     this.loadNews()
@@ -70,6 +78,9 @@ export default {
       await this.$store.dispatch('app/setNews', {
         offset: 0
       })
+    },
+    setFilter(e) {
+      this.filters.current = e
     }
   },
   computed: {
