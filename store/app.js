@@ -148,6 +148,7 @@ export const actions = {
   async setNews({commit}, params) {
     return new Promise(async (resolve) => {
       const { data } = await this.$axios.post('/appApi/news.my', params)
+      console.log(data)
       commit('setState', {key: 'news', value: data.response.news})
       resolve(true)
     })

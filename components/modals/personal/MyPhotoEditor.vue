@@ -29,7 +29,6 @@
     <div class="btns">
       <button @click="toggleModal('personalData')" type="button" class="btn st3">cancel</button>
       <button @click="submit()" type="button" class="btn st2">save changes</button>
-      <!--  @click.stop.prevent="submit" -->
     </div>
   </div>
 </div>
@@ -73,6 +72,7 @@ export default{
   }),
   mounted() {
     this.$emit('triggered', false)
+    console.log(this)
   },
   methods: {
     async submit() {
@@ -80,10 +80,11 @@ export default{
       if(this.cropper) {
         this.$emit('submit')
         this.cropper.getCroppedCanvas(this.outputOptions).toBlob(async (blob) => {
-          await this.$store.dispatch('settings/addPhoto', {
-            file: blob
+          this.$axios.post('https://api.exe.world/settings.avatar.upload', {file: blob}).then(response => {
+            console.log(response)
+            this.$store.dispatch('profile/setProfile')
+            this.toggleModal('personalData')
           })
-          this.toggleModal('personalData')
         }, this.outputMime, this.outputQuality)
       } else {
         this.errors.active = true

@@ -827,6 +827,7 @@
           form{
             fieldset{
               input{
+                border-color: $blackMedium;
                 color: $nWhite;
               }
               &.text{
@@ -875,6 +876,30 @@
                   }
                 }
               }
+              &.location{
+                .selectbox{
+                  button{
+                    background: $white10;
+                    color: $nWhite;
+                    &:before{
+                      color: $white56;
+                    }
+                    &:after{
+                      border-top-color: $white56;
+                    }
+                  }
+                  .ps{
+                    background: #484555;
+                    ul{
+                      li{
+                        button{
+                          border-color: $white20;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -886,6 +911,7 @@
               }
               fieldset{
                 input{
+                  border-color: $blackMedium;
                   color: $nWhite;
                 }
                 label{
@@ -923,6 +949,7 @@
                 fill: $white56;
               }
               input{
+                border-color: $blackLight;
                 background: $blackLight;
               }
             }
@@ -981,6 +1008,9 @@
             }
           }
           form{
+            input{
+              border-color: $blackMedium;
+            }
             ul.radio{
               li{
                 label{

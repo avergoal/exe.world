@@ -52,6 +52,7 @@ export default {
   },
   computed: {
     chats() {
+      console.log(this.$store.getters['messages/chats'])
       return this.$store.getters['messages/chats']
     }
   }
