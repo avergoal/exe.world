@@ -17,7 +17,7 @@
   <client-only>
     <perfect-scrollbar class="searchscroll" ref="scrollSearch">
       <div class="results">
-        <GamesSwiper v-if="popular.length" slides="search_popular" between="24" title="Popular Searches"/>
+        <GamesSwiper slides="search_popular" between="24" title="Popular Searches"/>
         <GamesSwiper v-if="loaded && results.games.length" :key="JSON.stringify(results.games)" slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s" navClass="s"/>
         <div v-else-if="loaded && results.peoples.length" class="empty">
           <div class="img">

@@ -128,10 +128,11 @@ export default {
     toggleParams(target) {
       this[target] = !this[target]
     },
-    toggleModal(target, user) {
+    toggleModal(target, user, code) {
       this.$root.$emit('toggleModal', (target) ? {
         target: target,
-        user: user
+        user: user,
+        code: code
       } : {})
     }
   },

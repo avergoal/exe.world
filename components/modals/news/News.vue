@@ -15,8 +15,8 @@
       </ul>
     </perfect-scrollbar>
     <perfect-scrollbar ref="scroll">
-      <ul v-if="news.length" :class="{filtered: filters.current != 0}" :data-filter="(filters.current == 1) ? 'games' : 'friends'" class="news">
-        <li v-for="(e, i) in news" :key="i" :class="(e.type == 1 || e.type == 2 || e.type == 3) ? 'friends' : 'games'">
+      <ul v-if="news.length" class="news">
+        <li v-for="(e, i) in news" :key="i">
           <!-- Photos -->
           <div v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" class="userphoto">
             <img :src="e.users[0].avatar_urls.x100" :alt="e.users[0].user_name">
@@ -43,6 +43,7 @@
             <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
           </div>
         </li>
+        <Observer @intersect="intersected"/>
       </ul>
       <ul v-else class="news">
         <li class="empty">
@@ -68,19 +69,36 @@ export default {
     filters: {
       current: 0,
       list: ['All News', 'Games', 'Friends']
-    }
+    },
+    offset: 0
   }),
   mounted() {
-    this.loadNews()
+    this.loadNews({offset: this.offset})
   },
   methods: {
-    async loadNews() {
-      await this.$store.dispatch('app/setNews', {
-        offset: 0
-      })
+    async loadNews(params) {
+      await this.$store.dispatch('app/setNews', params)
     },
-    setFilter(e) {
+    async setFilter(e) {
+      let params = {
+        offset: 0
+      }
+      if(e > 0) {
+        params.type = e
+      }
+      this.loadNews(params)
       this.filters.current = e
+    },
+    async intersected() {
+      this.offset += 20
+      let params = {
+        offset: this.offset,
+        intersect: true
+      }
+      if(this.filters.current) {
+        params.type = this.filters.current
+      }
+      await this.$store.dispatch('app/setNews', params)
     }
   },
   computed: {

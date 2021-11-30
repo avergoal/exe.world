@@ -4,7 +4,7 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="usermodaltop">
+    <div v-if="profile" class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
       <div class="userphoto"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></div>
       <div class="info">
@@ -24,7 +24,7 @@
                 </button>
               </li>
               <li>
-                <button type="button">
+                <button @click="clearChat()" type="button">
                   <div class="ico"><svg-icon name="ui/remove" /></div>
                   <span>Delete History</span>
                 </button>
@@ -81,20 +81,6 @@
           </div>
         </div>
       </div>
-<!--
-delete: "42f4cee8b299b66209bfdedcf9efd324"
-mid: 19
-text: "asdfasdf"
-timestamp: 1635345004
-unread: true
-user: Object
-avatar_urls: (...)
-first_name: (...)
-last_name: (...)
-online: (...)
-uid: (...)
-user_name: (...)
--->
     </perfect-scrollbar>
     <form class="send" action="">
       <button type="button" class="smile"><svg-icon name="ui/smile" /></button>
@@ -129,9 +115,10 @@ export default {
   },
   methods: {
     async loadMessages() {
-      if(this.profile) {
-        await this.$store.dispatch('messages/load', {uid: this.modal.user.id})
+      if(!this.profile) {
+        await this.$store.dispatch('users/load', {uid: this.modal.user.id})
       }
+      await this.$store.dispatch('messages/load', {uid: this.modal.user.id})
     },
     async sendMessage() {
       if(this.message) {
@@ -140,6 +127,12 @@ export default {
           text: this.message
         })
       }
+    },
+    async clearChat() {
+      await this.$store.dispatch('messages/clear', {
+        code: '',
+        uid: this.modal.user.id
+      })
     },
     toggleModal(target, user) {
       this.$root.$emit('toggleModal', (target) ? {
@@ -162,7 +155,6 @@ export default {
       return this.$store.getters['profile/user']
     },
     modal() {
-      console.log(this.$store.getters['app/modal'])
       return this.$store.getters['app/modal']
     },
     messages() {

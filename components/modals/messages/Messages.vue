@@ -18,7 +18,7 @@
     <perfect-scrollbar ref="scroll">
       <ul class="list messages">
         <li v-for="(e, i) in chats" :key="i">
-          <button @click="toggleModal('messagesChat', e.cid)" :class="{active: e.title}" type="button">
+          <button @click="toggleModal('messagesChat', {id: e.uid})" :class="{active: e.title}" type="button">
             <div class="userphoto"><img :src="e.cover" :alt="e.name"></div>
             <div class="info">
               <div class="name">
@@ -43,10 +43,10 @@ export default {
     this.$store.dispatch('messages/chats')
   },
   methods: {
-    toggleModal(target, cid) {
+    toggleModal(target, user) {
       this.$root.$emit('toggleModal', (target) ? {
         target: target,
-        cid: cid
+        user: user
       } : {})
     }
   },

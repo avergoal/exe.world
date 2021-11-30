@@ -21,18 +21,6 @@
       max-height: 650px;
       margin: 0 0 10px;
       ul.news{
-        &.filtered{
-          &[data-filter="games"] {
-            li.friends{
-              display: none;
-            }
-          }
-          &[data-filter="friends"] {
-            li.games{
-              display: none;
-            }
-          }
-        }
         li{
           position: relative;
           display: flex;

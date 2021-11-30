@@ -1,7 +1,6 @@
 export const state = () => ({
   user: null,
   filters: {
-    news: {current: 0, list: ['All News', 'Games', 'Friends']},
     friends: {current: 0, list: ['All Friends', 'Friend Requests', 'My Requests']},
     games: {current: 0, list: {}}
   },
