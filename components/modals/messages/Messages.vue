@@ -5,6 +5,7 @@
   </button>
   <div class="modalcontent">
     <div class="top">Messages</div>
+    <!--
     <form action="">
       <fieldset>
         <svg-icon name="ui/search" />
@@ -15,6 +16,7 @@
         <span>write</span>
       </button>
     </form>
+    -->
     <perfect-scrollbar ref="scroll">
       <ul class="list messages">
         <li v-for="(e, i) in chats" :key="i">
@@ -52,7 +54,6 @@ export default {
   },
   computed: {
     chats() {
-      console.log(this.$store.getters['messages/chats'])
       return this.$store.getters['messages/chats']
     }
   }

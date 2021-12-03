@@ -1,6 +1,6 @@
 <template>
 <div class="index_page">
-  <MainSwiper :slides="carousel"/>
+  <MainSwiper :slides="carousel.list"/>
   <GamesSwiper slides="newgames" between="24" title="New Games" target="new"/>
   <GamesSwiper slides="recommended" between="24" title="Recommended <i>games</i>" target="reccomends"/>
   <GamesSwiper slides="categories" filters="allCategoriesFilters" between="24" title="Categories" target="categories"/>

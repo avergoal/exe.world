@@ -30,6 +30,7 @@
             <div v-html="e.user_name" class="name"></div>
             <FriendsActions :user="{id: e.uid, name: e.user_name}" />
           </li>
+          <Observer @intersect="intersected"/>
         </ul>
         <ul v-else :class="{active: currentFilter == 0}" class="tab">
           <li class="empty">
@@ -52,6 +53,7 @@
               <div class="item btn"><button @click="remove(e.uid)" type="button" class="btn st3">Reject</button></div>
             </div>
           </li>
+          <Observer @intersect="intersected"/>
         </ul>
         <ul v-else :class="{active: currentFilter == 1}" class="tab">
           <li class="empty">
@@ -73,6 +75,7 @@
               <div class="item"><button @click="remove(e.uid)" type="button" class="btn st3">cancel request</button></div>
             </div>
           </li>
+          <Observer @intersect="intersected"/>
         </ul>
         <ul v-else :class="{active: currentFilter == 2}" class="tab">
           <li class="empty">
@@ -135,6 +138,9 @@ export default {
       await this.$store.dispatch('friends/remove', {uid: e})
       await this.$store.dispatch('friends/update', {uid: e})
       if(this.$refs.scroll) this.$refs.scroll.update()
+    },
+    async intersected() {
+      console.log(this.filters)
     }
   },
   computed: {

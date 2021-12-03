@@ -104,10 +104,10 @@ export default {
       return this.$store.getters['profile/user'].recent_games
     },
     newgames() {
-      return this.$store.getters['games/newgames']
+      return this.$store.getters['games/newgames'].list
     },
     recommended() {
-      return this.$store.getters['games/recommended']
+      return this.$store.getters['games/recommended'].list
     },
     categoriescarousel() {
       return this.$store.getters['games/categoriescarousel']

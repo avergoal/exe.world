@@ -14,15 +14,11 @@ export const mutations = {
 
 export const actions = {
   setInitData({commit}, params) {
-    commit('setState', {key: 'carousel', value: []})
     commit('setState', {key: 'carousel', value: params.games_carousel})
-    commit('setState', {key: 'newgames', value: []})
     commit('setState', {key: 'newgames', value: params.games_new})
-    commit('setState', {key: 'recommended', value: []})
     commit('setState', {key: 'recommended', value: params.games_recommended})
     params.categories[0].list = params.games_all
     params.categories[0].offset = params.games_all.length
-    commit('setState', {key: 'categories', value: []})
     commit('setState', {key: 'categories', value: params.categories})
     let filters = {}
     for(let e in params.categories) {
@@ -45,6 +41,7 @@ export const actions = {
       if(!params.offset) {
         categories[params.type].list = data.response.games
       } else {
+        console.log(categories[params.type], params.type)
         categories[params.type].list = categories[params.type].list.concat(data.response.games)
       }
       categories[params.type].offset += (data.response.games.length) ? data.response.games.length : 0

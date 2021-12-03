@@ -32,6 +32,12 @@ export const actions = {
             case 'games_carousel':
             case 'games_new':
             case 'games_recommended':
+              games[e] = {
+                list: response[i][e],
+                loaded: false,
+                offset: 0
+              }
+              break
             case 'games_all':
               games[e] = response[i][e]
               break
@@ -145,20 +151,16 @@ export const actions = {
     })
   },
   // News
-  async setNews({state, commit}, params) {
-    commit('setState', {key: 'news', value: []})
+  async setNews({getters, commit}, params) {
     return new Promise(async (resolve) => {
       let intersect = params.intersect
       delete params.intersect
       const { data } = await this.$axios.post('/appApi/news.my', params)
       let results = data.response.news
       if(intersect) {
-        //results = state.news.concat(results)
-        //console.log(state.news, results)
-      } else {
-        commit('setState', {key: 'news', value: results})
+        results = getters.news.concat(results)
       }
-      console.log(state.news)      
+      commit('setState', {key: 'news', value: results})   
       resolve(true)
     })
   },

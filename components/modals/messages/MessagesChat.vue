@@ -45,7 +45,7 @@
     </div>
     <perfect-scrollbar ref="scroll" class="chatscroll">
       <div v-if="messages" class="chatbox">
-        <div v-for="(e, i) in messages" :key="i" class="day">
+        <div v-for="(e, i) in messages.list" :key="i" class="day">
           <div v-html="i.split('.').join(' ')" class="date"></div>
           <div v-for="(e2, i2) in e" :key="i2" :class="(e2.user.uid == user.profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
@@ -130,9 +130,10 @@ export default {
     },
     async clearChat() {
       await this.$store.dispatch('messages/clear', {
-        code: '',
+        code: this.messages.code,
         uid: this.modal.user.id
       })
+      this.$root.$emit('toggleModal', {target: 'messages'})
     },
     toggleModal(target, user) {
       this.$root.$emit('toggleModal', (target) ? {
