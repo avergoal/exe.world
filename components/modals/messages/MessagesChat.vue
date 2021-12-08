@@ -126,11 +126,11 @@ export default {
     },
     async sendMessage() {
       if(this.message) {
-        this.message = null
         this.$store.dispatch('messages/send', {
           uid: this.modal.user.id,
           text: this.message
         })
+        this.message = null
       }
     },
     async clearChat() {
