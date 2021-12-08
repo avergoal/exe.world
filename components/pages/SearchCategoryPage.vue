@@ -11,7 +11,7 @@
         <button @click="$root.$emit('changeTemplate', 'searchPeoples')" type="button">people</button>
       </div>
     </div>
-    <div v-html="pagetitle" class="pagetitle"></div>
+    <div v-html="pagetitle" class="pagetitle small"></div>
     <ul v-if="results.games.length" class="category">
       <li v-for="(e, i) in results.games" :key="i" class="gamecard f">
         <div class="box">

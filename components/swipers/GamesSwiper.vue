@@ -11,6 +11,7 @@
       <swiper-slide v-for="(e, i) in data" :key="i" :class="(slideClass ? slideClass : 'b')" class="gamecard">
         <div class="box">
           <div class="img">
+            <img src="/theme/img/loader.gif" alt="" class="lazyloader">
             <img v-lazy="e.poster.default" :alt="e.title">
             <button v-if="!user" @click="toggleModal('gameSignIn', e.poster.default)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
             <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>

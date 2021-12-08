@@ -5,7 +5,7 @@
       <svg-icon name="logo_small" class="small"/>
       <svg-icon name="logo" />
     </a>
-    <form action="">
+    <form @submit.prevent action="">
       <fieldset>
         <svg-icon class="search" name="ui/search" />
         <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games and users">

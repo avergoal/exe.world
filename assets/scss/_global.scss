@@ -463,9 +463,11 @@ span.badge{
 }
 // Main content
 main.content{
+  position: relative;
   width: 100%;
   min-height: 100%;
   height: auto;
+  z-index: 100;
 }
 // Pagetitle
 .pagetitle{

@@ -2,11 +2,11 @@
 <aside class="sidebar">
   <ul class="menu">
     <li v-for="(e, i) in menu" :key="i">
-      <a v-if="e.type == 'link'" @click.prevent="setRoute(e.target)" :href="e.link">
+      <a v-if="e.type == 'link'" @click.prevent="setRoute(e.target)" :href="e.link" :class="{active: e.target == page}">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
       </a>
-      <button v-else type="button" @click="$root.$emit('toggleModal', {target: e.target})" class="togglemodal">
+      <button v-else type="button" @click="$root.$emit('toggleModal', {target: e.target})" :class="{active: e.target == page}" class="togglemodal">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
       </button>
@@ -41,6 +41,9 @@ export default {
   computed: {
     user() {
       return this.$store.getters['profile/user']
+    },
+    page() {
+      return this.$store.getters['app/page']
     }
   }
 }

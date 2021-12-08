@@ -12,7 +12,13 @@
         <div :class="{active: profile.user.online}" class="online"><span></span> {{ (profile.user.online ? 'Online' : 'Offline') }}</div>
       </div>
       <div class="nav">
-        <div class="item"><button @click="toggleSearch()" type="button" class="togglesearch"><svg-icon name="ui/search" /></button></div>
+        <!--
+        <div class="item">
+          <button @click="toggleSearch()" type="button" class="togglesearch">
+            <svg-icon name="ui/search" />
+          </button>
+        </div>
+        -->
         <div class="item">
           <button @click="toggleParams()" class="toggleparams"><svg-icon name="ui/dotted" /></button>
           <div :class="{open: openParams}" class="dropdown">
@@ -35,7 +41,7 @@
       </div>
     </div>
     <div :class="{open: openSearch}" class="searchchat">
-      <form action="">
+      <form @submit.prevent action="">
         <fieldset>
           <svg-icon name="ui/search" />
           <input type="text" name="" value="" placeholder="Search messages">
@@ -82,7 +88,7 @@
         </div>
       </div>
     </perfect-scrollbar>
-    <form class="send" action="">
+    <form @submit.prevent class="send" action="">
       <button type="button" class="smile"><svg-icon name="ui/smile" /></button>
       <input v-model="message" type="text" name="" value="" placeholder="Write message">
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
@@ -115,13 +121,12 @@ export default {
   },
   methods: {
     async loadMessages() {
-      if(!this.profile) {
-        await this.$store.dispatch('users/load', {uid: this.modal.user.id})
-      }
+      await this.$store.dispatch('users/load', {uid: this.modal.user.id})
       await this.$store.dispatch('messages/load', {uid: this.modal.user.id})
     },
     async sendMessage() {
       if(this.message) {
+        this.message = null
         this.$store.dispatch('messages/send', {
           uid: this.modal.user.id,
           text: this.message

@@ -106,7 +106,6 @@ export default {
           this.gallery.push(this.game.media[i].image)
         }
         this.loaded = true
-        console.log(this.gamesData[this.modal.game])
       }
     },
     goGame() {

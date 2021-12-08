@@ -9,7 +9,7 @@
     <li><button @click="paysystem = 1" :class="{active: paysystem === 1}" type="button">PayPal</button></li>
     <li><button @click="paysystem = 2" :class="{active: paysystem === 2}" type="button">Xsolla</button></li>
   </ul>
-  <form action="">
+  <form @submit.prevent action="">
     <div class="label">Balance Quantity</div>
     <ul class="radio">
       <li>

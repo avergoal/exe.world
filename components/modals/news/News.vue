@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo newsmodal big">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -18,12 +18,15 @@
       <ul v-if="news.length" class="news">
         <li v-for="(e, i) in news" :key="i">
           <!-- Photos -->
-          <div v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" class="userphoto">
+          <button v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" @click="toggleModal('userProfile', e.users[0].uid)" type="button" class="userphoto">
             <img :src="e.users[0].avatar_urls.x100" :alt="e.users[0].user_name">
-          </div>
-          <div v-if="e.type == 4 && e.games[0]" class="img">
+          </button>
+          <nuxt-link v-if="e.type == 4 && e.games[0] && e.games[0].installed" :to="'/g/' + e.games[0].gid" class="img">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
-          </div>
+          </nuxt-link>
+          <button v-else-if="e.type == 4 && e.games[0]" @click="toggleModal('gameInfo', e.games[0].gid)" type="button" class="img">
+            <img :src="e.games[0].icon.default" :alt="e.games[0].title">
+          </button>
           <!-- Info -->
           <div class="info">
             <div class="name">
@@ -36,12 +39,15 @@
             </div>
           </div>
           <!-- Ext Photos -->
-          <div v-if="(e.type == 1 || e.type == 3) && e.games[0]" class="img extended">
+          <nuxt-link v-if="(e.type == 1 || e.type == 3) && e.games[0] && e.games[0].installed" :to="'/g/' + e.games[0].gid" class="img extended">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
-          </div>
-          <div v-if="e.type == 2 && e.users[1]" class="userphoto extended">
+          </nuxt-link>
+          <button v-else-if="(e.type == 1 || e.type == 3) && e.games[0]" @click="toggleModal('gameInfo', e.games[0].gid)" type="button" class="img extended">
+            <img :src="e.games[0].icon.default" :alt="e.games[0].title">
+          </button>
+          <button v-if="e.type == 2 && e.users[1]" @click="toggleModal('userProfile', e.users[1].uid)" type="button" class="userphoto extended">
             <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
-          </div>
+          </button>
         </li>
         <Observer @intersect="intersected"/>
       </ul>
@@ -68,7 +74,7 @@ export default {
   data: () => ({
     filters: {
       current: 0,
-      list: ['All News', 'Games', 'Friends']
+      list: ['All News', 'Friends', 'Games']
     },
     offset: 0
   }),
@@ -99,11 +105,22 @@ export default {
         params.type = this.filters.current
       }
       await this.$store.dispatch('app/setNews', params)
+    },
+    toggleModal(target, user) {
+      this.$root.$emit('toggleModal', {
+        target: target,
+        user: user
+      })
     }
   },
   computed: {
     news() {
       return this.$store.getters['app/news']
+    }
+  },
+  watch: {
+    $route() {
+      this.$root.$emit('toggleModal', {})
     }
   }
 }

@@ -2,14 +2,13 @@
 <div v-if="user && game" class="gamepagebox">
   <div v-html="pageTitle" class="pagetitle"></div>
   <div class="framebox">
-    <div v-if="!frame.url" @click="runGame()" class="imgbox"><img :src="game.poster.hires" alt=""></div>
-    <iframe v-else :src="frame.url" frameborder="0"></iframe>
+    <iframe :src="frame.url" frameborder="0"></iframe>
   </div>
   <div class="info">
     <ul>
       <li><button @click="toggleModal('gameInfo')" type="button">Terms of use</button></li>
       <li><button type="button">About the developer</button></li>
-      <li v-if="game.installed"><button @click="toggleModal('gameRemove')" type="button">Delete from my games</button></li>
+      <li><button @click="toggleModal('gameRemove')" type="button">Delete from my games</button></li>
     </ul>
     <div class="checkbox">
       <input type="checkbox" name="" value="1" id="notifications">
@@ -53,6 +52,7 @@ export default {
       if(this.gamesData[this.$route.params.id]) {
         this.game = this.gamesData[this.$route.params.id]
         this.pageTitle = this.game.title
+        this.runGame()
       }
     },
     async runGame() {

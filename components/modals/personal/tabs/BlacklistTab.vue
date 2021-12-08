@@ -1,7 +1,7 @@
 <template>
 <div class="tab blacklist">
   <div class="title">Blacklist</div>
-  <form action="">
+  <form @submit.prevent action="">
     <fieldset>
       <svg-icon name="ui/search" />
       <input v-model="search" type="text" name="" value="" placeholder="Search friends">

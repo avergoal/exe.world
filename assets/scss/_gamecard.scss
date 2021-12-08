@@ -66,6 +66,28 @@
           text-transform: uppercase;
         }
       }
+      // Lazy loader
+      img{
+        position: relative;
+        transition: all .35s ease;
+        &[lazy=loading] {
+          opacity: 0;
+          visibility: hidden;
+        }
+        &[lazy=loaded] {
+          opacity: 1;
+          visibility: visible;
+        }
+        &.lazyloader{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          display: block;
+          width: 100px;
+          height: 100px;
+          margin: -50px 0 0 -50px;
+        }
+      }
     }
     .info{
       .desc{
@@ -114,6 +136,7 @@
         border-radius: 8px;
       }
       .img{
+        max-height: 254px;
         border-radius: 16px;
         @media screen and (max-width: 576px) {
           border-radius: 8px;
@@ -171,6 +194,9 @@
     @media screen and (max-width: 480px) {
       max-width: 172px;
       min-width: 172px;
+    }
+    .img{
+      max-height: 158px;
     }
   }
   //  size

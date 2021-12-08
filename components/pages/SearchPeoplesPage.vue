@@ -11,7 +11,7 @@
         <button class="active" type="button">people</button>
       </div>
     </div>
-    <div v-html="pagetitle" class="pagetitle"></div>
+    <div v-html="pagetitle" class="pagetitle small"></div>
     <ul v-if="results.peoples.length" class="peoples_list">
       <li v-for="(e, i) in results.peoples" :key="i">
         <button @click="openUser(e.uid)" type="button">

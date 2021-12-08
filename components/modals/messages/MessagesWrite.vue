@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo messagesmodal big">
-  <button @click="$parent.closeModal()" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -8,7 +8,7 @@
       <button @click="$parent.openModal('messages')" type="button"><svg-icon name="ui/back" /></button>
       <span>Write Message</span>
     </div>
-    <form action="" class="st1">
+    <form @submit.prevent action="" class="st1">
       <fieldset>
         <svg-icon name="ui/search" />
         <input type="text" name="" value="" placeholder="Search contacts">

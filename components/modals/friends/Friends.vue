@@ -5,7 +5,7 @@
   </button>
   <div class="modalcontent">
     <div class="top">Friends</div>
-    <form class="search" action="">
+    <form @submit.prevent class="search" action="">
       <fieldset>
         <svg-icon name="ui/search" />
         <input v-model="search" type="text" name="" value="" placeholder="Search friends">
@@ -26,7 +26,9 @@
       <div class="tabs">
         <ul v-if="friends.length" :class="{active: currentFilter == 0}" class="tab">
           <li v-for="(e, i) in friends" :key="i" :class="{hidden: searchValues(e.user_name)}">
-            <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
+            <button @click="toggleModal('userProfile', e.uid)" type="button" class="userphoto">
+              <img :src="e.avatar_urls.x100" :alt="e.user_name">
+            </button>
             <div v-html="e.user_name" class="name"></div>
             <FriendsActions :user="{id: e.uid, name: e.user_name}" />
           </li>
@@ -140,7 +142,14 @@ export default {
       if(this.$refs.scroll) this.$refs.scroll.update()
     },
     async intersected() {
-      console.log(this.filters)
+      console.log('Friends intersected')
+    },
+    toggleModal(target, e) {
+      this.$root.$emit('toggleModal', {
+        target: target,
+        game: e,
+        user: e
+      })
     }
   },
   computed: {

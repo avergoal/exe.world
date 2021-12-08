@@ -31,7 +31,7 @@ export const actions = {
       ++filters.games[0].total
     }
     commit('setState', {key: 'user', value: params})
-    commit('setState', {key: 'theme', value: Number(params.theme)})
+    this.dispatch('app/setTheme', Number(params.theme))
     commit('setState', {key: 'filters', value: filters})
   },
   async setProfile({commit}) {

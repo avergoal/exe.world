@@ -6,7 +6,7 @@
   <div class="modalcontent reportbox">
     <div class="title">Report</div>
     <div class="desc">State the reason for the report:</div>
-    <form action="">
+    <form @submit.prevent action="">
       <ul v-if="subjects" class="radio">
         <li v-for="(e, i) in subjects" :key="i">
           <input v-model="model.subject" :value="e.id" type="radio" name="radio" :id="'subject_' + e.id">

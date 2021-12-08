@@ -16,7 +16,10 @@ export const actions = {
   },
   async load({commit}, params) {
     const { data } = await this.$axios.post('/appApi/messages', params)
-    let messages = {}
+    let messages = {
+      code: '',
+      list: {}
+    }
     if(data.response) {
       data.response.messages.sort((a, b) => {
         if(a.mid > b.mid) {
@@ -28,10 +31,11 @@ export const actions = {
       })
       for(let i = 0; i < data.response.messages.length; i++) {
         let date = this.$moment.unix(data.response.messages[i].timestamp).format('DD.MMMM.YYYY')
-        messages[date] = (messages[date]) ? messages[date] : []
+        messages.list[date] = (messages.list[date]) ? messages.list[date] : []
         data.response.messages[i].time = this.$moment.unix(data.response.messages[i].timestamp).format('hh:mm')
-        messages[date].push(data.response.messages[i])
+        messages.list[date].push(data.response.messages[i])
       }
+      messages.code = data.response.chat.clear_code
     }
     commit('setState', {key: 'messages', value: messages})
   },
@@ -39,24 +43,14 @@ export const actions = {
     const { data } = await this.$axios.post('/appApi/message.send', params)
     let messages = this.$deepClone(state.messages),
         date = this.$moment.unix(data.response.result.message.timestamp).format('DD.MMMM.YYYY')
-    messages[date] = (messages[date]) ? messages[date] : {}
-    messages[date] = Object.values(messages[date])
+    messages.list[date] = (messages.list[date]) ? messages.list[date] : {}
+    messages.list[date] = Object.values(messages.list[date])
     data.response.result.message.time = this.$moment.unix(data.response.result.message.timestamp).format('hh:mm')
-    messages[date].push(data.response.result.message)
+    messages.list[date].push(data.response.result.message)
     commit('setState', {key: 'messages', value: messages})
   },
-  async clear({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/chat.clear', params)
-    console.log(data)
-    /*
-    let messages = this.$deepClone(state.messages),
-        date = this.$moment.unix(data.response.result.message.timestamp).format('DD.MMMM.YYYY')
-    messages[date] = (messages[date]) ? messages[date] : {}
-    messages[date] = Object.values(messages[date])
-    data.response.result.message.time = this.$moment.unix(data.response.result.message.timestamp).format('hh:mm')
-    messages[date].push(data.response.result.message)
-    commit('setState', {key: 'messages', value: messages})
-    */
+  async clear({}, params) {
+    await this.$axios.post('/appApi/chat.clear', params)
   },
 }
 

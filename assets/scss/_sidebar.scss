@@ -100,11 +100,11 @@ aside.sidebar{
           i{
             font-style: normal;
           }
-        }
-        &:first-child a{
-          color: $dBlack;
-          .ico svg{
-            fill: $dViolet;
+          &.active{
+            color: $dBlack;
+            .ico svg{
+              fill: $dViolet;
+            }
           }
         }
       }
@@ -166,11 +166,11 @@ aside.sidebar{
           svg{
             fill: $white56;
           }
-        }
-        &:first-child a{
-          color: $nWhite;
-          .ico svg{
-            fill: $nViolet;
+          &.active{
+            color: $nWhite;
+            .ico svg{
+              fill: $nViolet;
+            }
           }
         }
       }

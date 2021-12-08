@@ -1,7 +1,7 @@
 <template>
 <div class="tab notifications">
   <div class="title">Notifications</div>
-  <form action="">
+  <form @submit.prevent action="">
     <div class="label">Newsletter by e-mail</div>
     <ul>
       <li>

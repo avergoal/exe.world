@@ -1,7 +1,7 @@
 <template>
 <div class="tab access">
   <div class="title">Access Settings</div>
-  <form action="">
+  <form @submit.prevent action="">
     <div class="item">
       <div class="desc">Change E-mail</div>
       <div class="subdesc">After changing the e-mail, a confirmation link will be sent to the new address</div>
