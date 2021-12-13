@@ -75,11 +75,17 @@
       position: absolute;
       top: 0;
       display: block;
-      width: calc((100% - 208px) / 3);
+      width: calc((100% - 208px) / 4);
       height: 100%;
       z-index: 10;
       content: "";
-      @media screen and (max-width: 1300px) {
+      @media screen and (max-width: 1700px) {
+        width: calc((100% - 208px) / 5);
+      }
+      @media screen and (max-width: 1500px) {
+        width: calc((100% - 208px) / 6);
+      }
+      @media screen and (max-width: 1350px) {
         width: 60px;
       }
       @media screen and (max-width: 1024px) {
@@ -430,7 +436,7 @@
   ul.peoples_list{
     display: flex;
     flex-flow: row wrap;
-    padding: 60px 24px 0;
+    padding: 0 24px;
     @media screen and (max-width: 920px) {
       padding: 0;
     }
@@ -468,11 +474,6 @@
           margin: 0 auto;
           img{
             height: 100%;
-          }
-        }
-        &:hover{
-          .userphoto{
-            box-shadow: 0px 54px 67px 0px rgba(0, 0, 0, .17);
           }
         }
         .name{

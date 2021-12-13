@@ -215,7 +215,13 @@ header.main{
         }
       }
       &.signin{
+        display: flex;
+        align-items: center;
         button{
+          margin: 0 8px 0 0;
+          &:last-child{
+            margin: 0;
+          }
           @media screen and (max-width: 1024px) {
             width: 18px;
             padding: 0;

@@ -185,6 +185,15 @@ export default {
       if(error && this.errors[error]) {
         this.errors[error].open = true
       }
+      if(!error) {
+        this.$root.$emit('toggleModal', {
+          target: 'notification',
+          data: {
+            title: 'Updated',
+            text: 'Все обновилось'
+          }
+        })
+      }
     },
     setBirthday(k, e) {
       this.model.birthdate[k] = e

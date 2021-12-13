@@ -152,17 +152,14 @@ export const actions = {
   },
   // News
   async setNews({getters, commit}, params) {
-    return new Promise(async (resolve) => {
-      let intersect = params.intersect
-      delete params.intersect
-      const { data } = await this.$axios.post('/appApi/news.my', params)
-      let results = data.response.news
-      if(intersect) {
-        results = getters.news.concat(results)
-      }
-      commit('setState', {key: 'news', value: results})   
-      resolve(true)
-    })
+    let intersect = params.intersect
+    delete params.intersect
+    const { data } = await this.$axios.post('/appApi/news.my', params)
+    let results = data.response.news
+    if(intersect) {
+      results = getters.news.concat(results)
+    }
+    commit('setState', {key: 'news', value: results})
   },
   // Subjects
   async setSupportSubjects({commit}) {

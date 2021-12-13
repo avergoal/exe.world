@@ -59,7 +59,7 @@ export default {
       for(let el in this.errors) {
         this.errors[el].show = false
       }
-      const error = await this.$store.dispatch('profile/signIn', {
+      const error = await this.$store.dispatch('auth/signIn', {
         emailorphone: this.model.emailorphone,
         pass: this.model.pass
       })

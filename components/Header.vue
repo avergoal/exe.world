@@ -61,9 +61,11 @@
       </div>
     </div>
     <div v-if="!user" class="item signin">
-      <button @click="toggleModal('signIn', null)" type="button" class="btn st1">
-        <svg-icon name="ui/personal_data" />
+      <button @click="toggleModal('signIn', null)" type="button" class="btn st3">
         <span>Sign in</span>
+      </button>
+      <button @click="toggleModal('signUp', null)" type="button" class="btn st2">
+        <span>registration</span>
       </button>
     </div>
   </nav>

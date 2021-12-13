@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     openUser(e) {
-      if(this.user.profile.uid === e) {
+      if(this.user && this.user.profile.uid === e) {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
         this.$root.$emit('toggleModal', {target: 'userProfile', user: e})

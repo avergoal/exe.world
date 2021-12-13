@@ -7,7 +7,7 @@
     <div class="top">
       <div class="img"><img :src="game.poster.default" alt=""></div>
       <div class="info">
-        <div v-html="game.title" class="title">Knight Wars</div>
+        <div v-html="game.title" class="title"></div>
         <div class="btns">
           <div class="item"><button @click="goGame()" type="button" class="btn st2">launch game</button></div>
           <div class="item">
@@ -24,7 +24,7 @@
             <div class="label">Friends playing: <span v-html="game.friends.length"></span></div>
             <ul>
               <li v-for="(e, i) in game.friends" :key="i">
-                <button @click="openUser(e.uid)" type="button">
+                <button @click="toggleModal('userProfile', e.uid)" type="button">
                   <img :src="e.avatar_urls.x100" alt="">
                 </button>
               </li>
@@ -87,6 +87,8 @@ export default {
     } else {
       this.loadGame(this.modal.game)
     }
+    console.log(this.gamesData[this.modal.game])
+     //
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -111,6 +113,12 @@ export default {
     goGame() {
       this.$router.push('/g/' + this.game.gid)
       this.$root.$emit('toggleModal', {})
+    },
+    toggleModal(target, user) {
+      this.$root.$emit('toggleModal', {
+        target: target,
+        user: user
+      })
     }
   },
   computed: {
@@ -118,6 +126,7 @@ export default {
       return this.$store.getters['app/modal']
     },
     gamesData() {
+      console.log(this.$store.getters['games/gamesData'])
       return this.$store.getters['games/gamesData']
     }
   }

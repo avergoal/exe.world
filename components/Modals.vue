@@ -34,6 +34,8 @@
   <News v-if="modal.target == 'news'"/>
   <!-- Request -->
   <Request v-if="modal.target == 'request'"/>
+  <!-- Notification -->
+  <Notification v-if="modal.target == 'notification'"/>
 </div>
 </template>
 
@@ -72,6 +74,8 @@ import GameRemove from './modals/games/GameRemove'
 import News from './modals/news/News'
 // Request
 import Request from './modals/Request'
+// Notification
+import Notification from './modals/Notification'
 
 export default {
 	name: 'ModalsComponent',
@@ -93,7 +97,9 @@ export default {
     // News
     News,
     // Request
-    Request
+    Request,
+    // Notification
+    Notification
   },
   mounted() {
     this.$root.$on('toggleModal', (e) => {

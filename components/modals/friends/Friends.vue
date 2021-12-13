@@ -22,7 +22,7 @@
         </li>
       </ul>
     </perfect-scrollbar>
-    <perfect-scrollbar ref="scroll" class="friendsscroll">
+    <perfect-scrollbar ref="scroll_list" class="friendsscroll">
       <div class="tabs">
         <ul v-if="friends.length" :class="{active: currentFilter == 0}" class="tab">
           <li v-for="(e, i) in friends" :key="i" :class="{hidden: searchValues(e.user_name)}">
@@ -120,7 +120,7 @@ export default {
         })
         this.loaded[this.currentFilter - 1] = true
       }
-      this.$refs.scroll.update()
+      this.$refs.scroll_list.$el.scrollTop = 0
     },
     searchValues(e) {
       if(e && this.search) {
@@ -134,12 +134,12 @@ export default {
     async add(e) {
       await this.$store.dispatch('friends/add', {uid: e})
       await this.$store.dispatch('friends/update', {uid: e})
-      this.$refs.scroll.update()
+      this.$refs.scroll_list.$el.scrollTop = 0
     },
     async remove(e) {
       await this.$store.dispatch('friends/remove', {uid: e})
       await this.$store.dispatch('friends/update', {uid: e})
-      if(this.$refs.scroll) this.$refs.scroll.update()
+      this.$refs.scroll_list.$el.scrollTop = 0
     },
     async intersected() {
       console.log('Friends intersected')

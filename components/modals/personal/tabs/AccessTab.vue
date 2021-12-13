@@ -83,6 +83,15 @@ export default {
       if(error && this.errors[error]) {
         this.errors[error].open = true
       }
+      if(!error) {
+        this.$root.$emit('toggleModal', {
+          target: 'notification',
+          data: {
+            title: 'Updated',
+            text: 'Все обновилось'
+          }
+        })
+      }
     },
     loadUserData() {
       this.model.emailPlaceholder = this.user.settings.access.email

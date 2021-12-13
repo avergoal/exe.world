@@ -40,8 +40,10 @@
       }
     }
     .ps{
-      max-height: 650px;
       margin: 0 0 10px;
+      &.friendsscroll{
+        height: 330px;
+      }
       @media screen and (max-width: 700px) {
         max-height: calc(100Vh - 250px);
       }
@@ -100,6 +102,9 @@
             }
           }
           &.hidden{
+            display: none;
+          }
+          &.observer{
             display: none;
           }
           .name{

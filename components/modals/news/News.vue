@@ -14,7 +14,7 @@
         </li>
       </ul>
     </perfect-scrollbar>
-    <perfect-scrollbar ref="scroll">
+    <perfect-scrollbar ref="scroll_list" class="list">
       <ul v-if="news.length" class="news">
         <li v-for="(e, i) in news" :key="i">
           <!-- Photos -->
@@ -84,6 +84,7 @@ export default {
   methods: {
     async loadNews(params) {
       await this.$store.dispatch('app/setNews', params)
+      this.$refs.scroll_list.$el.scrollTop = 0
     },
     async setFilter(e) {
       let params = {

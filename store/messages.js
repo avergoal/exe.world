@@ -52,6 +52,10 @@ export const actions = {
   async clear({}, params) {
     await this.$axios.post('/appApi/chat.clear', params)
   },
+  async search({commit}, params) {
+    const { data } = await this.$axios.post('/appApi/chat.search', params)
+    console.log(data)
+  }
 }
 
 export const getters = {

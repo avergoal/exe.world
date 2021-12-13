@@ -57,6 +57,13 @@ export default {
   methods: {
     async saveData() {
       await this.$store.dispatch('settings/notifications', this.model)
+      this.$root.$emit('toggleModal', {
+        target: 'notification',
+        data: {
+          title: 'Updated',
+          text: 'Все обновилось'
+        }
+      })
     }
   },
   computed: {

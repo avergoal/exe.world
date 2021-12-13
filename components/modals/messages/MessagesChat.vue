@@ -90,7 +90,7 @@
     </perfect-scrollbar>
     <form @submit.prevent class="send" action="">
       <button type="button" class="smile"><svg-icon name="ui/smile" /></button>
-      <input v-model="message" type="text" name="" value="" placeholder="Write message">
+      <input v-model="message" v-on:keyup.enter="sendMessage()" type="text" name="" value="" placeholder="Write message">
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
   </div>
@@ -116,7 +116,8 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.$refs.scroll.$el.scrollTop = this.$refs.scroll.$el.firstChild.offsetHeight
+      this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
+      this.$refs.scroll.update()
     }, 50)
   },
   methods: {
@@ -126,11 +127,13 @@ export default {
     },
     async sendMessage() {
       if(this.message) {
-        this.$store.dispatch('messages/send', {
+        await this.$store.dispatch('messages/send', {
           uid: this.modal.user.id,
           text: this.message
         })
         this.message = null
+        this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
+        this.$refs.scroll.update()
       }
     },
     async clearChat() {

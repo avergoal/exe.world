@@ -1,0 +1,26 @@
+.notifymodal{
+  padding: 24px;
+  .modalcontent{
+    .top{
+      @include h5(800);
+    }
+    .text{
+      padding: 24px 0 0;
+      color: $dGray;
+    }
+    button{
+      height: 36px;
+      margin: 32px 0 0;
+    }
+  }
+}
+.night{
+  .notifymodal{
+    .modalcontent{
+      .text{
+        padding: 24px 0 0;
+        color: $white72;
+      }
+    }
+  }
+}

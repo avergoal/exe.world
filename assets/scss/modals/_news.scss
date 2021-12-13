@@ -18,8 +18,10 @@
       }
     }
     .ps{
-      max-height: 650px;
       margin: 0 0 10px;
+      &.list{
+        height: 410px;
+      }
       ul.news{
         li{
           position: relative;
@@ -31,6 +33,9 @@
           }
           @media screen and (max-width: 576px) {
             padding: 16px 15px 16px 0;
+          }
+          &.observer{
+            display: none;
           }
           &:after{
             position: absolute;
