@@ -8,17 +8,13 @@
     <form action="">
       <fieldset>
         <svg-icon name="ui/search" />
-        <input v-model="search" type="text" name="" value="" placeholder="Search contacts">
+        <input v-model="search" @input="setSearchResults()" type="text" name="" value="" placeholder="Search contacts">
       </fieldset>
-      <button @click="setSearchResults()" type="button" class="btn st2">
-        <svg-icon name="ui/plus" />
-        <span>write</span>
-      </button>
     </form>
     <perfect-scrollbar ref="scroll">
       <ul class="list messages">
         <li v-for="(e, i) in chats" :key="i">
-          <button @click="toggleModal('messagesChat', {id: e.uid})" :class="{active: e.new_messages}" type="button">
+          <button @click="$root.$emit('toggleModal', {target: 'messagesChat', user: e.uid})" :class="{active: e.new_messages}" type="button">
             <div class="userphoto"><img :src="e.cover" :alt="e.name"></div>
             <div class="info">
               <div class="name">
@@ -58,17 +54,10 @@ export default {
   methods: {
     async setSearchResults() {
       await this.$store.dispatch('messages/search', {query: this.search})
-    },
-    toggleModal(target, user) {
-      this.$root.$emit('toggleModal', (target) ? {
-        target: target,
-        user: user
-      } : {})
     }
   },
   computed: {
     chats() {
-      console.log(this.$store.getters['messages/chats'])
       return this.$store.getters['messages/chats']
     }
   }

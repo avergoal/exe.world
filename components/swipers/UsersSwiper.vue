@@ -3,7 +3,7 @@
   <div class="boxtitle">
     <span v-html="title"></span>
     <button v-if="target" @click="setRoute(target)" type="button"><svg-icon name="ui/more"/></button>
-    <button v-if="tab" @click="setTab(tab)" type="button"><svg-icon name="ui/more"/></button>
+    <button v-if="tab" @click="$root.$emit('toggleModal', {target: tab})" type="button"><svg-icon name="ui/more"/></button>
   </div>
   <div v-if="config" class="swiperbox">
     <swiper :options="config" ref="newSwiper">
@@ -54,9 +54,6 @@ export default {
     setRoute(target) {
       this.$root.$emit('changeTemplate', target)
       this.closeSearch()
-    },
-    setTab(target) {
-      this.$root.$emit('toggleModal', {target: target})
     },
     closeSearch() {
       this.$root.$emit('closeSearch')

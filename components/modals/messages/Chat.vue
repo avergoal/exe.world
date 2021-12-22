@@ -3,34 +3,27 @@
   <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
-  <div class="modalcontent">
+  <div v-if="show" class="modalcontent">
     <div v-if="profile" class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
-      <div class="userphoto"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></div>
+      <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: profile.user.uid})" class="userphoto" type="button"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></button>
       <div class="info">
         <div v-html="profile.user.user_name" class="name"></div>
         <div :class="{active: profile.user.online}" class="online"><span></span> {{ (profile.user.online ? 'Online' : 'Offline') }}</div>
       </div>
       <div class="nav">
-        <!--
-        <div class="item">
-          <button @click="toggleSearch()" type="button" class="togglesearch">
-            <svg-icon name="ui/search" />
-          </button>
-        </div>
-        -->
         <div class="item">
           <button @click="toggleParams()" class="toggleparams"><svg-icon name="ui/dotted" /></button>
           <div :class="{open: openParams}" class="dropdown">
             <ul class="menu">
               <li>
-                <button @click="toggleModal('userBlock', {id: profile.user.uid, name: profile.user.user_name})" type="button">
+                <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: profile.user})" type="button">
                   <div class="ico"><svg-icon name="ui/blacklist" /></div>
                   <span>Block User</span>
                 </button>
               </li>
               <li>
-                <button @click="clearChat()" type="button">
+                <button @click="$root.$emit('toggleModal', {target: 'messagesRemove', code: messages.code, uid: profile.user.uid})" type="button">
                   <div class="ico"><svg-icon name="ui/remove" /></div>
                   <span>Delete History</span>
                 </button>
@@ -40,6 +33,7 @@
         </div>
       </div>
     </div>
+    <!--
     <div :class="{open: openSearch}" class="searchchat">
       <form @submit.prevent action="">
         <fieldset>
@@ -49,6 +43,7 @@
         <button type="button"><svg-icon name="ui/close" /></button>
       </form>
     </div>
+    -->
     <perfect-scrollbar ref="scroll" class="chatscroll">
       <div v-if="messages" class="chatbox">
         <div v-for="(e, i) in messages.list" :key="i" class="day">
@@ -94,6 +89,7 @@
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
   </div>
+  <div :class="{loaded: show}" class="loader"><img src="/theme/img/loader.gif" alt=""></div>
 </div>
 </template>
 
@@ -103,8 +99,8 @@ export default {
   data: () => ({
     message: null,
     date: '',
-    openSearch: false,
-    openParams: false
+    openParams: false,
+    show: false
   }),
   created() {
     document.addEventListener('click', (e) => {
@@ -114,43 +110,30 @@ export default {
     })
     this.loadMessages()
   },
-  mounted() {
-    setTimeout(() => {
-      this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
-      this.$refs.scroll.update()
-    }, 50)
-  },
   methods: {
     async loadMessages() {
-      await this.$store.dispatch('users/load', {uid: this.modal.user.id})
-      await this.$store.dispatch('messages/load', {uid: this.modal.user.id})
+      this.show = false
+      await this.$store.dispatch('users/load', {uid: this.modal.user})
+      await this.$store.dispatch('messages/load', {uid: this.modal.user})
+      this.show = true
+      let interval = setInterval(() => {
+        if(this.$refs.scroll) {
+          clearInterval(interval)
+          this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
+          this.$refs.scroll.update()
+        }
+      }, 100)
     },
     async sendMessage() {
       if(this.message) {
         await this.$store.dispatch('messages/send', {
-          uid: this.modal.user.id,
+          uid: this.modal.user,
           text: this.message
         })
         this.message = null
         this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
         this.$refs.scroll.update()
       }
-    },
-    async clearChat() {
-      await this.$store.dispatch('messages/clear', {
-        code: this.messages.code,
-        uid: this.modal.user.id
-      })
-      this.$root.$emit('toggleModal', {target: 'messages'})
-    },
-    toggleModal(target, user) {
-      this.$root.$emit('toggleModal', (target) ? {
-        target: target,
-        user: user
-      } : {})
-    },
-    toggleSearch() {
-      this.openSearch = !this.openSearch
     },
     toggleParams() {
       this.openParams = !this.openParams

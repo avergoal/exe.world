@@ -4,10 +4,10 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent removebox">
-    <div class="title">Remove From Friends</div>
-    <div class="desc">Are you sure you want to remove <strong v-html="modal.user.name"></strong> as a friend?</div>
+    <div class="title">Remove chat</div>
+    <div class="desc">Are you sure you want to remove this chat?</div>
     <div class="btns">
-      <button @click="$root.$emit('toggleModal', {target: 'friends', user: modal.user})" type="button" class="btn st2">cancel</button>
+      <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button" class="btn st2">cancel</button>
       <button @click="remove()" type="button" class="btn st3">Yes, remove</button>
     </div>
   </div>
@@ -16,11 +16,14 @@
 
 <script>
 export default {
-	name: 'FriendsRemoveModalComponent',
+	name: 'MessagesRemoveModalComponent',
   methods: {
     async remove() {
-      await this.$store.dispatch('friends/remove', {uid: this.modal.user.uid})
-      this.$root.$emit('toggleModal', {target: 'friendsRemoved'})
+      await this.$store.dispatch('messages/clear', {
+        code: this.modal.code,
+        uid: this.modal.uid
+      })
+      this.$root.$emit('toggleModal', {target: 'messages'})
     }
   },
   computed: {

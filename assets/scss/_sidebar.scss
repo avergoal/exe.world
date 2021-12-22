@@ -70,6 +70,7 @@ aside.sidebar{
         width: 100%;
         a,
         button{
+          position: relative;
           display: block;
           width: 100%;
           padding: 20px 0;
@@ -95,6 +96,23 @@ aside.sidebar{
             text-align: center;
             @media screen and (max-width: 1024px) {
               text-transform: none;
+            }
+            &.label{
+              position: absolute;
+              top: 10px;
+              left: 50px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 18px;
+              padding: 1px 5px 0;
+              border: 1px solid $grayLightest;
+              border-radius: 4px;
+              background: $dOrange;
+              font-size: 10px;
+              line-height: 12px;
+              color: $dWhite;
+              font-feature-settings: 'pnum' on, 'lnum' on;
             }
           }
           i{
@@ -165,6 +183,9 @@ aside.sidebar{
           color: $white56;
           svg{
             fill: $white56;
+          }
+          span.label{
+            border-color: $dBlack;
           }
           &.active{
             color: $nWhite;

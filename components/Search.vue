@@ -1,10 +1,10 @@
 <template>
 <div class="searchbox">
   <div class="top">
-    <a @click.prevent="setRoute()" href="/" class="logo">
-      <svg-icon name="logo_small" class="small"/>
-      <svg-icon name="logo" />
-    </a>
+    <div class="logo">
+      <button @click="$emit('toggle', 'info')" class="small" type="button"><svg-icon name="logo_small"/></button>
+      <nuxt-link to="/"><svg-icon name="logo" /></nuxt-link>
+    </div>
     <form @submit.prevent action="">
       <fieldset>
         <svg-icon class="search" name="ui/search" />
@@ -59,6 +59,9 @@
 <script>
 export default {
 	name: 'SearchComponent',
+  props: {
+    toggleMenu: Function
+  },
   data: () => ({
     query: null,
     loaded: false,

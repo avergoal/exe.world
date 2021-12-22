@@ -5,7 +5,7 @@
   </button>
   <div class="modalcontent removedbox">
     <div class="desc"><strong v-html="modal.user.name"></strong> is removed from your friends list</div>
-    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">continue</button>
+    <button @click="$root.$emit('toggleModal', {target: 'friends'})" type="button" class="btn st2">continue</button>
   </div>
 </div>
 </template>

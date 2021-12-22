@@ -1,7 +1,7 @@
 <template>
 <div class="nav">
   <div class="item">
-    <button @click="toggleModal('userProfile', user.id)" type="button" class="btn st3 mobile">
+    <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: user.uid})" type="button" class="btn st3 mobile">
       <span>write</span>
       <svg-icon name="ui/pencil" class="mobile"/>
     </button>
@@ -11,19 +11,19 @@
     <div :class="{open: openParams}" :style="'top:' + top + 'px;left:' + left + 'px'" class="dropdown">
       <ul class="menu">
         <li>
-          <button @click="toggleModal('friendsRemove', user)" type="button">
+          <button @click="$root.$emit('toggleModal', {target: 'friendsRemove', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/user_remove" /></div>
             <span>Remove From Friends</span>
           </button>
         </li>
         <li>
-          <button @click="toggleModal('userBlock', user)" type="button">
+          <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
             <span>Block User</span>
           </button>
         </li>
         <li>
-          <button @click="toggleModal('userReport', user)" type="button">
+          <button @click="$root.$emit('userReport', {target: 'userBlock', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/report" /></div>
             <span>Report</span>
           </button>
@@ -36,7 +36,7 @@
 
 <script>
 export default{
-  name: 'FriendsActions',
+  name: 'FriendsActionsDropdownComponent',
   props: ['user'],
   data: () => ({
     openParams: false,
@@ -56,12 +56,6 @@ export default{
     })
   },
   methods: {
-    toggleModal(target, user) {
-      this.$root.$emit('toggleModal', {
-        target: target,
-        user: user
-      })
-    },
     toggleParams(e) {
       e = e.target
       if(!e.classList.contains('toggleparams')) {

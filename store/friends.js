@@ -25,31 +25,27 @@ export const actions = {
     commit('setState', {key: 'list', value: data.response.users})
     this.dispatch('friends/requests', {offset: 0})
   },
+  async search({commit}, params) {
+    const { data } = await this.$axios.post('/appApi/user.search', params)
+    commit('setState', {key: 'list', value: data.response.users})
+  },
   async add({}, params) {
-    return new Promise(async (resolve) => {
-      await this.$axios.post('/appApi/friends.add', params)
-      resolve(true)
-    })
+    await this.$axios.post('/appApi/friends.add', params)
+    return true
   },
   async remove({}, params) {
-    return new Promise(async (resolve) => {
-      await this.$axios.post('/appApi/friends.del', params)
-      resolve(true)
-    })
+    await this.$axios.post('/appApi/friends.del', params)
+    return true
   },
   async update({}) {
-    return new Promise(async (resolve) => {
-      await this.dispatch('friends/load', {offset: 0})
-      await this.dispatch('friends/requests', {offset: 0, type: 0})
-      await this.dispatch('friends/requests', {offset: 0, type: 1})
-      resolve(true)
-    }) 
+    await this.dispatch('friends/load', {offset: 0})
+    await this.dispatch('friends/requests', {offset: 0, type: 0})
+    await this.dispatch('friends/requests', {offset: 0, type: 1})
+    return true
   },
   async report({}, params) {
-    return new Promise(async (resolve) => {
-      await this.$axios.post('/appApi/user.report', params)
-      resolve(true)
-    })
+    await this.$axios.post('/appApi/user.report', params)
+    return true
   },
   async requests({state, commit}, params) {
     const { data } = await this.$axios.post('/appApi/friends.requests', params)
@@ -69,28 +65,3 @@ export const getters = {
   requests: state => state.requests,
   filters: state => state.filters
 }
-
-/*
-async setFriends({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/friends.get', params)
-    commit('setState', {
-      key: 'friends',
-      value: {
-        total: data.response.users.length,
-        list: data.response.users
-      }
-    })
-  },
-  async setFriendsRequest({commit}, params) {
-    let key = params.key
-    delete params.key
-    const { data } = await this.$axios.post('/appApi/friends.requests', params)
-    commit('setState', {
-      key: key,
-      value: {
-        total: data.response.users.length,
-        list: data.response.users
-      }
-    })
-  },
-*/

@@ -23,7 +23,7 @@ export default {
   methods: {
     async blockUser() {
       await this.$store.dispatch('blacklist/add', {
-        uid: this.modal.user.id
+        uid: this.modal.user.uid
       })
       this.$root.$emit('toggleModal', {
         target: 'userBlocked',

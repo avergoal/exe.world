@@ -4,7 +4,7 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent removedbox">
-    <div class="desc">You report has benn submited</div>
+    <div class="desc">You report has been submited</div>
     <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">continue</button>
   </div>
 </div>

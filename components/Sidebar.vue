@@ -9,6 +9,9 @@
       <button v-else type="button" @click="$root.$emit('toggleModal', {target: e.target})" :class="{active: e.target == page}" class="togglemodal">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
+        <span v-if="e.target == 'messages' && user.notifications.chats" v-html="user.notifications.chats" class="label"></span>
+        <span v-if="e.target == 'friends' && user.notifications.friends" v-html="user.notifications.friends" class="label"></span>
+        <span v-if="e.target == 'news' && user.notifications.news" v-html="user.notifications.news" class="label"></span>
       </button>
     </li>
   </ul>

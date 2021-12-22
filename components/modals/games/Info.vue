@@ -24,7 +24,7 @@
             <div class="label">Friends playing: <span v-html="game.friends.length"></span></div>
             <ul>
               <li v-for="(e, i) in game.friends" :key="i">
-                <button @click="toggleModal('userProfile', e.uid)" type="button">
+                <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button">
                   <img :src="e.avatar_urls.x100" alt="">
                 </button>
               </li>
@@ -87,8 +87,6 @@ export default {
     } else {
       this.loadGame(this.modal.game)
     }
-    console.log(this.gamesData[this.modal.game])
-     //
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -113,12 +111,6 @@ export default {
     goGame() {
       this.$router.push('/g/' + this.game.gid)
       this.$root.$emit('toggleModal', {})
-    },
-    toggleModal(target, user) {
-      this.$root.$emit('toggleModal', {
-        target: target,
-        user: user
-      })
     }
   },
   computed: {
@@ -126,7 +118,6 @@ export default {
       return this.$store.getters['app/modal']
     },
     gamesData() {
-      console.log(this.$store.getters['games/gamesData'])
       return this.$store.getters['games/gamesData']
     }
   }

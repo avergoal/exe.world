@@ -27,19 +27,17 @@ export const actions = {
       value: params
     })
   },
-  goSearch({commit}, params) {
-    return new Promise(async (resolve) => {
-      const { data } = await this.$axios.post('/appApi/search', params)
-      commit('setState', {
-        key: 'results',
-        value: {
-          query: params.query,
-          games: data.response.games,
-          peoples: data.response.users
-        }
-      })
-      resolve(true)
+  async goSearch({commit}, params) {
+    const { data } = await this.$axios.post('/appApi/search', params)
+    commit('setState', {
+      key: 'results',
+      value: {
+        query: params.query,
+        games: data.response.games,
+        peoples: data.response.users
+      }
     })
+    return true
   }
 }
 

@@ -34,57 +34,47 @@ export const actions = {
     })
   },
   async setCategories({commit, getters}, params) {
-    return new Promise(async (resolve) => {
-      const { data } = await this.$axios.post('/appApi/games', params)
-      let categories = Object.assign({}, getters.categories)
-      categories[params.type] = Object.assign({}, categories[params.type])
-      if(!params.offset) {
-        categories[params.type].list = data.response.games
-      } else {
-        console.log(categories[params.type], params.type)
-        categories[params.type].list = categories[params.type].list.concat(data.response.games)
-      }
-      categories[params.type].offset += (data.response.games.length) ? data.response.games.length : 0
-      categories[params.type].loaded = (data.response.games.length) ? false : true
-      commit('setState', {
-        key: 'categories',
-        value: categories
-      })
-      resolve(true)
+    const { data } = await this.$axios.post('/appApi/games', params)
+    let categories = Object.assign({}, getters.categories)
+    categories[params.type] = Object.assign({}, categories[params.type])
+    if(!params.offset) {
+      categories[params.type].list = data.response.games
+    } else {
+      categories[params.type].list = categories[params.type].list.concat(data.response.games)
+    }
+    categories[params.type].offset += (data.response.games.length) ? data.response.games.length : 0
+    categories[params.type].loaded = (data.response.games.length) ? false : true
+    commit('setState', {
+      key: 'categories',
+      value: categories
     })
+    return true
   },
   async setGamesData({commit, getters}, params) {
-    return new Promise(async (resolve) => {
-      let gamesData = Object.assign({}, getters.gamesData)
-      const { data } = await this.$axios.post('/appApi/games.info', params)
-      if(data.response) {
-        gamesData[data.response.game.gid] = data.response.game
-        commit('setState', {
-          key: 'gamesData',
-          value: gamesData
-        })
-      }
-      resolve(true)
-    })
+    let gamesData = Object.assign({}, getters.gamesData)
+    const { data } = await this.$axios.post('/appApi/games.info', params)
+    if(data.response) {
+      gamesData[data.response.game.gid] = data.response.game
+      commit('setState', {
+        key: 'gamesData',
+        value: gamesData
+      })
+    }
+    return true
   },
   async installGame({}, params) {
-    return new Promise(async (resolve) => {
-      const { data } = await this.$axios.post('/appApi/games.add', params)
-      resolve(data)
-    })
+    const { data } = await this.$axios.post('/appApi/games.add', params)
+    this.dispatch('app/initAppData', {})
+    return data
   },
   async removeGame({}, params) {
-    return new Promise(async (resolve) => {
-      const { data } = await this.$axios.post('/appApi/games.remove', params)
-      resolve(data)
-    })
+    const { data } = await this.$axios.post('/appApi/games.remove', params)
+    return data
   },
   async runGame({}, params) {
-    return new Promise(async (resolve) => {
-      const { data } = await this.$axios.post('/appApi/games.run', params)
-      resolve(data)
-    })
-  },
+    const { data } = await this.$axios.post('/appApi/games.run', params)
+    return data
+  }
 }
 
 export const getters = {

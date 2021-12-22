@@ -98,7 +98,7 @@
             height: 20px;
             border-radius: 50%;
             background: $dWhite;
-            transition: all .35s ease;
+            transition: all .15s ease;
             content: "";
           }
         }
@@ -261,7 +261,7 @@
                   box-shadow: 0px 10px 10px rgb(0 0 0 / 20%);
                   visibility: hidden;
                   opacity: 0;
-                  transition: all .35s ease;
+                  transition: all .15s ease;
                   z-index: 100;
                   &.open{
                     visibility: visible;
@@ -313,7 +313,7 @@
                     margin: 0 18px 0 0;
                     border: 2px solid $dGray;
                     border-radius: 50%;
-                    transition: border-color .35s ease;
+                    transition: border-color .15s ease;
                   }
                   &:after{
                     position: absolute;
@@ -323,7 +323,7 @@
                     height: 12px;
                     border-radius: 50%;
                     background: transparent;
-                    transition: background .35s ease;
+                    transition: background .15s ease;
                   }
                 }
                 input:checked + label:before{
@@ -385,7 +385,7 @@
                   box-shadow: 0px 10px 10px rgb(0 0 0 / 20%);
                   visibility: hidden;
                   opacity: 0;
-                  transition: all .35s ease;
+                  transition: all .15s ease;
                   z-index: 100;
                   &.open{
                     visibility: visible;
@@ -520,7 +520,7 @@
                   fill: $dViolet;
                   visibility: hidden;
                   opacity: 0;
-                  transition: all 0.35s ease;
+                  transition: all 0.15s ease;
                 }
               }
               input:checked + label svg {
@@ -692,7 +692,7 @@
               border-radius: 10px;
               background: $grayLight;
               color: $dGray;
-              transition: background .35s ease, color .35s ease;
+              transition: background .15s ease, color .15s ease;
               &.active{
                 background: $dOrange;
                 color: $dWhite;
@@ -728,7 +728,7 @@
                   margin: 0 18px 0 0;
                   border: 2px solid $dGray;
                   border-radius: 50%;
-                  transition: border-color 0.35s ease;
+                  transition: border-color 0.15s ease;
                 }
                 &:after {
                   position: absolute;
@@ -738,7 +738,7 @@
                   height: 12px;
                   border-radius: 50%;
                   background: transparent;
-                  transition: background 0.35s ease;
+                  transition: background 0.15s ease;
                 }
               }
               input:checked + label:before {

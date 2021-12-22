@@ -107,6 +107,13 @@
           &.observer{
             display: none;
           }
+          &.loader{
+            height: 330px;
+            background: rgba(45, 42, 54, .8)!important;
+            &:after{
+              display: none;
+            }
+          }
           .name{
             @include subTitle1;
           }
@@ -188,14 +195,14 @@
           }
           &.empty{
             display: block;
-            padding: 100px 0;
+            padding: 0;
             &:after{
               display: none;
             }
             .img{
               position: relative;
               width: 300px;
-              height: 223px;
+              height: 210px;
               margin: 0 auto;
             }
             .text{
@@ -314,7 +321,7 @@
               &:after{
                 display: block;
                 border-radius: 50%;
-                transition: border-color .35s ease, background .35s ease;
+                transition: border-color .15s ease, background .15s ease;
                 content: "";
               }
               &:before{

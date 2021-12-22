@@ -15,10 +15,8 @@ export const actions = {
     commit('setState', {key: 'profile', value: data.response})
   },
   async report({}, params) {
-    return new Promise(async (resolve) => {
-      await this.$axios.post('/appApi/user.report', params)
-      resolve(true)
-    })
+    await this.$axios.post('/appApi/user.report', params)
+    return true
   }
 }
 

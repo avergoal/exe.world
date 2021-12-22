@@ -43,7 +43,7 @@ export default {
     },
     async submit() {
       await this.$store.dispatch('users/report', {
-        uid: this.modal.user.id,
+        uid: this.modal.user.uid,
         type: this.model.subject,
         comment: this.model.comment
       })

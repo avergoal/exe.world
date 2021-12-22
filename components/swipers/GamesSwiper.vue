@@ -13,11 +13,12 @@
           <div class="img">
             <img src="/theme/img/loader.gif" alt="" class="lazyloader">
             <img v-lazy="e.poster.default" :alt="e.title">
-            <button v-if="!user" @click="toggleModal('gameSignIn', e.poster.default)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
             <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-            <button v-else @click="toggleModal('gameInfo', e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           </div>
           <div class="info">
+            <span>{{e.installed}}</span>
             <div v-html="e.title" class="title"></div>
             <div v-html="e.type.title" class="desc" :style="'color:#' + e.type.color"></div>
           </div>
@@ -83,12 +84,6 @@ export default {
       } else {
         this.data = this[this.slides][e].list
       }
-    },
-    toggleModal(target, e) {
-      this.$root.$emit('toggleModal', {
-        target: target,
-        game: e
-      })
     }
   },
   computed: {

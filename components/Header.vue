@@ -1,9 +1,17 @@
 <template>
 <header :class="{clear: !user}" class="main">
-  <a @click.prevent="setRoute()" href="/" class="logo">
-    <svg-icon name="logo_small" class="small"/>
-    <svg-icon name="logo" />
-  </a>
+  <div class="logo">
+    <button @click="toggleMenu('info')" class="small togglemenu" type="button"><svg-icon name="logo_small"/></button>
+    <nuxt-link to="/"><svg-icon name="logo" /></nuxt-link>
+    <div :class="{open: dropdown.info}" class="dropdown">
+      <ul>
+        <li>© 2020 EXE. WORLD  All rights reserved</li>
+        <li><nuxt-link to="/about">About</nuxt-link></li>
+        <li><button type="button">Help</button></li>
+        <li><nuxt-link to="/">For Developers</nuxt-link></li>
+      </ul>
+    </div>
+  </div>
   <nav>
     <div class="item search"><button @click="openSearch" class="opensearch btn st1" type="button"><svg-icon name="ui/search" /></button></div>
     <div v-if="user" class="item wallet">
@@ -25,12 +33,17 @@
         </div>
         <ul v-if="notifications.total" class="notify">
           <li v-for="(e, i) in notifications.list" :key="i">
-            <button :class="{active: !e.unread}" type="button">
+            <nuxt-link v-if="e.game && e.game.installed" :to="'/g/' + e.game.gid" :class="{active: e.unread}">
               <div class="img"><img :src="e.icon.default" alt=""></div>
-              <div class="info">
-                <span v-html="e.text"></span>
-                <!--span v-html="e.type"></span-->
-              </div>
+              <div class="info"><span v-html="e.text"></span></div>
+            </nuxt-link>
+            <button v-else-if="e.game" @click="toggleModal('gameInfo', e.game.gid)" :class="{active: e.unread}" type="button">
+              <div class="img"><img :src="e.icon.default" alt=""></div>
+              <div class="info"><span v-html="e.text"></span></div>
+            </button>
+            <button v-else :class="{active: e.unread}" type="button">
+              <div class="img"><img :src="e.icon.default" alt=""></div>
+              <div class="info"><span v-html="e.text"></span></div>
             </button>
           </li>
         </ul>
@@ -69,7 +82,7 @@
       </button>
     </div>
   </nav>
-  <Search :class="{open: search}"/>
+  <Search :class="{open: search}" @toggle="toggleMenu"/>
 </header>
 </template>
 <script>
@@ -77,6 +90,7 @@ export default {
 	name: 'HeaderComponent',
   data: () => ({
     dropdown: {
+      info: false,
       notify: false,
       profile: false
     },
@@ -92,17 +106,19 @@ export default {
   mounted() {
     document.addEventListener('click', (e) => {
       if(!e.target.closest('.dropdown') && !e.target.closest('.togglemenu')) {
-        this.dropdown = {
-          notify: false,
-          profile: false
-        }
+        this.closeDropDown()
       }
     })
   },
   methods: {
     toggleMenu(e) {
-      this.closeDropDown()
-      this.dropdown[e] = true
+      this.$store.dispatch('search/toggleSearch', false)
+      if(this.dropdown[e]) {
+        this.dropdown[e] = false
+      } else {
+        this.closeDropDown()
+        this.dropdown[e] = true
+      }
     },
     setRoute() {
       this.$store.dispatch('app/setPage', 'index')
@@ -117,7 +133,8 @@ export default {
         target: tab
       } : {
         target: target,
-        tab: tab
+        tab: tab,
+        game: tab
       })
     },
     clearNotifications() {
@@ -125,6 +142,7 @@ export default {
     },
     closeDropDown() {
       this.dropdown = {
+        info: false,
         notify: false,
         profile: false
       }
@@ -139,6 +157,11 @@ export default {
     },
     notifications() {
       return this.$store.getters['profile/notifications']
+    }
+  },
+  watch: {
+    $route() {
+      this.closeDropDown()
     }
   }
 }

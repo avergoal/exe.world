@@ -8,7 +8,7 @@
     <form @submit.prevent class="search" action="">
       <fieldset>
         <svg-icon name="ui/search" />
-        <input v-model="search" type="text" name="" value="" placeholder="Search friends">
+        <input v-model="query" @input="search()" type="text" name="" value="" placeholder="Search friends">
       </fieldset>
     </form>
     <perfect-scrollbar ref="scroll" class="filters">
@@ -25,14 +25,15 @@
     <perfect-scrollbar ref="scroll_list" class="friendsscroll">
       <div class="tabs">
         <ul v-if="friends.length" :class="{active: currentFilter == 0}" class="tab">
-          <li v-for="(e, i) in friends" :key="i" :class="{hidden: searchValues(e.user_name)}">
-            <button @click="toggleModal('userProfile', e.uid)" type="button" class="userphoto">
+          <li v-for="(e, i) in friends" :key="i">
+            <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button" class="userphoto">
               <img :src="e.avatar_urls.x100" :alt="e.user_name">
             </button>
             <div v-html="e.user_name" class="name"></div>
-            <FriendsActions :user="{id: e.uid, name: e.user_name}" />
+            <FriendsActions :user="{uid: e.uid, name: e.user_name}" />
           </li>
           <Observer @intersect="intersected"/>
+          <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li>
         </ul>
         <ul v-else :class="{active: currentFilter == 0}" class="tab">
           <li class="empty">
@@ -47,8 +48,10 @@
           </li>
         </ul>
         <ul v-if="requests.total.subscribers" :class="{active: currentFilter == 1}" class="tab st2">
-          <li v-for="(e, i) in requests.list.subscribers" :key="i" :class="{hidden: searchValues(e.user_name)}">
-            <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
+          <li v-for="(e, i) in requests.list.subscribers" :key="i">
+            <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button" class="userphoto">
+              <img :src="e.avatar_urls.x100" :alt="e.user_name">
+            </button>
             <div v-html="e.user_name" class="name"></div>
             <div class="nav">
               <div class="item btn"><button @click="add(e.uid)" type="button" class="btn st2">accept</button></div>
@@ -56,6 +59,7 @@
             </div>
           </li>
           <Observer @intersect="intersected"/>
+          <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li>
         </ul>
         <ul v-else :class="{active: currentFilter == 1}" class="tab">
           <li class="empty">
@@ -70,14 +74,17 @@
           </li>
         </ul>
         <ul v-if="requests.total.subscriptions" :class="{active: currentFilter == 2}" class="tab st2">
-          <li v-for="(e, i) in requests.list.subscriptions" :key="i" :class="{hidden: searchValues(e.user_name)}">
-            <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
+          <li v-for="(e, i) in requests.list.subscriptions" :key="i">
+            <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button" class="userphoto">
+              <img :src="e.avatar_urls.x100" :alt="e.user_name">
+            </button>
             <div v-html="e.user_name" class="name"></div>
             <div class="nav">
               <div class="item"><button @click="remove(e.uid)" type="button" class="btn st3">cancel request</button></div>
             </div>
           </li>
           <Observer @intersect="intersected"/>
+          <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li>
         </ul>
         <ul v-else :class="{active: currentFilter == 2}" class="tab">
           <li class="empty">
@@ -98,58 +105,62 @@
 </template>
 
 <script>
-import FriendsActions from './actions/FriendsActions'
+import FriendsActions from './Actions'
 export default {
 	name: 'FriendsModalComponent',
   components: {FriendsActions},
   data: () => ({
     currentFilter: 0,
     loaded: {0: false, 1: false},
-    search: null
+    query: null,
+    loader: false
   }),
   created() {
     this.$store.dispatch('friends/load', {offset: 0})
   },
   methods: {
     async setFilter(e) {
-      this.currentFilter = e
-      if(this.currentFilter && !this.loaded[this.currentFilter - 1]) {
-        await this.$store.dispatch('friends/requests', {
-          type: this.currentFilter - 1,
+      if(!this.loader) {
+        this.currentFilter = e
+        if(this.currentFilter && !this.loaded[this.currentFilter - 1]) {
+          await this.$store.dispatch('friends/requests', {
+            type: this.currentFilter - 1,
+            offset: 0
+          })
+          this.loaded[this.currentFilter - 1] = true
+        }
+        this.$refs.scroll_list.$el.scrollTop = 0
+      }
+    },
+    async search() {
+      this.loader = true
+      if(this.query) {
+        await this.$store.dispatch('friends/search', {
+          type: 'friends', //subscribers
+          query: this.query,
           offset: 0
         })
-        this.loaded[this.currentFilter - 1] = true
-      }
-      this.$refs.scroll_list.$el.scrollTop = 0
-    },
-    searchValues(e) {
-      if(e && this.search) {
-        let str = e.toString().toLowerCase(),
-            val = this.search.toString().toLowerCase()
-        return !(str.indexOf(val) === 0)
       } else {
-        return false
+        await this.$store.dispatch('friends/load', {offset: 0})
       }
+      this.loader = false
     },
     async add(e) {
+      this.loader = true
       await this.$store.dispatch('friends/add', {uid: e})
       await this.$store.dispatch('friends/update', {uid: e})
       this.$refs.scroll_list.$el.scrollTop = 0
+      this.loader = false
     },
     async remove(e) {
+      this.loader = true
       await this.$store.dispatch('friends/remove', {uid: e})
       await this.$store.dispatch('friends/update', {uid: e})
       this.$refs.scroll_list.$el.scrollTop = 0
+      this.loader = false
     },
     async intersected() {
       console.log('Friends intersected')
-    },
-    toggleModal(target, e) {
-      this.$root.$emit('toggleModal', {
-        target: target,
-        game: e,
-        user: e
-      })
     }
   },
   computed: {

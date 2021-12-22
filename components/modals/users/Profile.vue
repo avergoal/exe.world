@@ -1,18 +1,18 @@
 <template>
 <div class="modalinfo usersmodal bigger">
-  <button @click="toggleModal(null)" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div v-if="profile" class="modalcontent">
     <aside class="info">
-      <div v-if="profile" class="topinfo">
+      <div class="topinfo">
         <div class="userphoto"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></div>
         <div class="username">
           <div v-html="profile.user.user_name" class="name"></div>
           <div :class="{on: profile.user.online}" v-html="(profile.user.online ? 'Online' : 'Offline')" class="online"></div>
         </div>
       </div>
-      <div v-if="profile" class="total">
+      <div class="total">
         <div class="item">
           <svg-icon name="sidebar/all_games" />
           <span><i v-html="profile.games_count"></i> games</span>
@@ -22,17 +22,17 @@
           <span><i v-html="profile.friends_count"></i> friends</span>
         </div>
       </div>
-      <div v-if="profile" class="btns">
+      <div class="btns">
         <div class="btnbox">
           <button v-if="profile.friendship_status === 0 && !request" @click="addFriends(profile.user.uid)" class="toggleparams2 btn st2" type="button">add to friends</button>
           <button v-else-if="request || profile.friendship_status === 1 || profile.friendship_status === 2" class="toggleparams2 btn st3" type="button">request...</button>
           <button v-else @click="toggleParams('openParams2')" class="toggleparams2 btn st3" type="button">your friend</button>
-          <button @click="toggleModal('messagesChat', profile.user)" class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
+          <button @click="$root.$emit('toggleModal', {target: 'messagesChat', user: profile.user})" class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
         </div>
         <div :class="{open: openParams2}" class="dropdown params2">
           <ul class="menu">
             <li>
-              <button @click="toggleModal('friendsRemove', {id: profile.user.uid, name: profile.user.user_name})" type="button">
+              <button @click="$root.$emit('toggleModal', {target: 'friendsRemove', user: profile.user})" type="button">
                 <div class="ico"><svg-icon name="ui/user_remove" /></div>
                 <span>Remove from friends</span>
               </button>
@@ -46,32 +46,32 @@
           </ul>
         </div>
       </div>
-      <ul v-if="profile" class="more">
+      <ul class="more">
         <li>
           <div class="label">Age</div>
-          <div class="desc"></div>
+          <div v-html="getAge().age + ' years old'" class="desc"></div>
         </li>
         <li>
           <div class="label">Date of Birth</div>
-          <div class="desc"></div>
+          <div v-html="getAge().birthday" class="desc"></div>
         </li>
         <li>
           <div class="label">Location</div>
-          <div class="desc"></div>
+          <div class="desc">Location</div>
         </li>
       </ul>
-      <div v-if="profile" class="floatparams">
+      <div class="floatparams">
         <button @click="toggleParams('openParams1')" type="button" class="toggleparams1"><svg-icon name="ui/dotted" /></button>
         <div :class="{open: openParams1}" class="dropdown params1">
           <ul class="menu">
             <li>
-              <button @click="toggleModal('userBlock', {id: profile.user.uid, name: profile.user.user_name})" type="button">
+              <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: profile.user})" type="button">
                 <div class="ico"><svg-icon name="ui/blacklist" /></div>
                 <span>Block User</span>
               </button>
             </li>
             <li>
-              <button @click="toggleModal('userReport', {id: profile.user.uid})" type="button">
+              <button @click="$root.$emit('toggleModal', {target: 'userReport', user: profile.user})" type="button">
                 <div class="ico"><svg-icon name="ui/report" /></div>
                 <span>Report</span>
               </button>
@@ -81,7 +81,7 @@
       </div>
     </aside>
     <div class="interest">
-      <perfect-scrollbar ref="scroll" :options="{suppressScrollX: true}">
+      <perfect-scrollbar ref="scroll">
         <div class="swipers">
           <GamesSwiper v-if="profile && profile.games.games.length" slides="user_profile_games" between="16" title="Games" tab="userProfileGames" slideClass="m"/>
           <UsersSwiper v-if="profile && profile.friends.users.length" slides="user_profile_friends" between="8" title="Friends" tab="userProfileFriends"/>
@@ -128,12 +128,19 @@ export default {
     toggleParams(target) {
       this[target] = !this[target]
     },
-    toggleModal(target, user, code) {
-      this.$root.$emit('toggleModal', (target) ? {
-        target: target,
-        user: user,
-        code: code
-      } : {})
+    getAge() {
+      let date = new Date(),
+          today = new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+          birthDate = new Date(this.profile.user.age.year, this.profile.user.age.month, this.profile.user.age.day),
+          birthDateNow = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate()),
+          out = {
+            birthday: this.profile.user.age.year + '.' + this.profile.user.age.month + '.' + this.profile.user.age.day,
+            age: today.getFullYear() - birthDate.getFullYear()
+          }
+      if (today < birthDateNow) {
+        out.age = out.age - 1
+      }
+      return out
     }
   },
   computed: {
@@ -150,8 +157,15 @@ export default {
           month: age[2],
           day: age[3]
         }
+        let interval = setInterval(() => {
+          if(this.$refs.scroll) {
+            clearInterval(interval)
+            this.$refs.scroll.update()
+          }
+        }, 100)
         profile.user.id = profile.user.uid
       }
+      console.log(profile, 'profile')
       return profile
     }
   }

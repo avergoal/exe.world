@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo myphotomodal small">
-  <button @click="toggleModal('personalData')" class="close" area-label="close">
+  <button @click="$root.$emit('toggleModal', {target: 'personalData'})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -27,7 +27,7 @@
       <p v-if="errors.submit">You have not selected an image</p>
     </div>
     <div class="btns">
-      <button @click="toggleModal('personalData')" type="button" class="btn st3">cancel</button>
+      <button @click="$root.$emit('toggleModal', {target: 'personalData'})" type="button" class="btn st3">cancel</button>
       <button @click="submit()" type="button" class="btn st2">save changes</button>
     </div>
   </div>
@@ -81,9 +81,8 @@ export default{
         this.$emit('submit')
         this.cropper.getCroppedCanvas(this.outputOptions).toBlob(async (blob) => {
           this.$axios.post('https://api.exe.world/settings.avatar.upload', {file: blob}).then(response => {
-            console.log(response)
             this.$store.dispatch('profile/setProfile')
-            this.toggleModal('personalData')
+            this.$root.$emit('toggleModal', {target: 'personalData'})
           })
         }, this.outputMime, this.outputQuality)
       } else {
@@ -139,12 +138,6 @@ export default{
       for(let e in this.errors) {
         this.errors[e] = false
       }
-    },
-    toggleModal(target) {
-      if(this.cropper) this.cropper.destroy()
-      this.$root.$emit('toggleModal', (target) ? {
-        target: target
-      } : {})
     }
   },
   computed: {

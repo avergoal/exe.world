@@ -18,13 +18,13 @@
       <ul v-if="news.length" class="news">
         <li v-for="(e, i) in news" :key="i">
           <!-- Photos -->
-          <button v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" @click="toggleModal('userProfile', e.users[0].uid)" type="button" class="userphoto">
+          <button v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.users[0].uid})" type="button" class="userphoto">
             <img :src="e.users[0].avatar_urls.x100" :alt="e.users[0].user_name">
           </button>
           <nuxt-link v-if="e.type == 4 && e.games[0] && e.games[0].installed" :to="'/g/' + e.games[0].gid" class="img">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </nuxt-link>
-          <button v-else-if="e.type == 4 && e.games[0]" @click="toggleModal('gameInfo', e.games[0].gid)" type="button" class="img">
+          <button v-else-if="e.type == 4 && e.games[0]" @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.games[0].gid})" type="button" class="img">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </button>
           <!-- Info -->
@@ -42,10 +42,10 @@
           <nuxt-link v-if="(e.type == 1 || e.type == 3) && e.games[0] && e.games[0].installed" :to="'/g/' + e.games[0].gid" class="img extended">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </nuxt-link>
-          <button v-else-if="(e.type == 1 || e.type == 3) && e.games[0]" @click="toggleModal('gameInfo', e.games[0].gid)" type="button" class="img extended">
+          <button v-else-if="(e.type == 1 || e.type == 3) && e.games[0]" @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.games[0].gid})" type="button" class="img extended">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </button>
-          <button v-if="e.type == 2 && e.users[1]" @click="toggleModal('userProfile', e.users[1].uid)" type="button" class="userphoto extended">
+          <button v-if="e.type == 2 && e.users[1]" @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.users[1].uid})" type="button" class="userphoto extended">
             <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
           </button>
         </li>
@@ -106,12 +106,6 @@ export default {
         params.type = this.filters.current
       }
       await this.$store.dispatch('app/setNews', params)
-    },
-    toggleModal(target, user) {
-      this.$root.$emit('toggleModal', {
-        target: target,
-        user: user
-      })
     }
   },
   computed: {

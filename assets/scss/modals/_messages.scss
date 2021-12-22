@@ -101,7 +101,7 @@
       max-height: 0;
       padding: 0 40px;
       overflow: hidden;
-      transition: max-height 0.35s ease;
+      transition: max-height 0.15s ease;
       @media screen and (max-width: 700px) {
         padding: 0;
       }
@@ -235,6 +235,9 @@
     .ps{
       height: 400px;
       margin: 0 0 10px;
+      &.chatscroll{
+        height: 440px;
+      }
       @media screen and (max-width: 700px) {
         max-height: calc(100Vh - 152px);
       }
@@ -330,7 +333,7 @@
             }
           }
           &.empty{
-            padding: 100px 0;
+            padding: 0;
             &:after{
               display: none;
             }
@@ -482,7 +485,7 @@
           }
         }
         .empty{
-          padding: 100px 0;
+          padding: 0;
           .img{
             position: relative;
             width: 300px;
@@ -523,6 +526,9 @@
         }
       }
       .usermodaltop{
+        button.userphoto{
+          height: 56px;
+        }
         .nav{
           .item{
             button{

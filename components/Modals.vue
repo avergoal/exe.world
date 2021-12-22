@@ -9,7 +9,7 @@
   <!-- Messages -->
   <Messages v-if="modal.target == 'messages'"/>
   <MessagesChat v-if="modal.target == 'messagesChat'"/>
-  <MessagesWrite v-if="modal.target == 'messagesWrite'"/>
+  <MessagesRemove v-if="modal.target == 'messagesRemove'"/>
   <!-- Friends -->
   <Friends v-if="modal.target == 'friends'"/>
   <FriendsRemove v-if="modal.target == 'friendsRemove'"/>
@@ -28,6 +28,8 @@
   <MyPhotoEditor v-if="modal.target == 'myPhotoEditor'"/>
   <!-- Games -->
   <GameInfo v-if="modal.target == 'gameInfo'"/>
+  <GameBuy v-if="modal.target == 'gameBuy'"/>
+  <GameBuySuccess v-if="modal.target == 'gameBuySuccess'"/>
   <GameSignIn v-if="modal.target == 'gameSignIn'"/>
   <GameRemove v-if="modal.target == 'gameRemove'"/>
   <!-- News -->
@@ -48,8 +50,8 @@ import RestorePassword from './modals/auth/RestorePassword'
 import EmailSend from './modals/auth/EmailSend'
 // Messages
 import Messages from './modals/messages/Messages'
-import MessagesChat from './modals/messages/MessagesChat'
-import MessagesWrite from './modals/messages/MessagesWrite'
+import MessagesChat from './modals/messages/Chat'
+import MessagesRemove from './modals/messages/Remove'
 // Friends
 import Friends from './modals/friends/Friends'
 import FriendsRemove from './modals/friends/Remove'
@@ -67,9 +69,11 @@ import PersonalData from './modals/personal/PersonalData'
 import MyPhoto from './modals/personal/MyPhoto'
 import MyPhotoEditor from './modals/personal/MyPhotoEditor'
 // Games
-import GameInfo from './modals/games/GameInfo'
-import GameSignIn from './modals/games/GameSignIn'
-import GameRemove from './modals/games/GameRemove'
+import GameInfo from './modals/games/Info'
+import GameBuy from './modals/games/Buy'
+import GameBuySuccess from './modals/games/BuySuccess'
+import GameSignIn from './modals/games/SignIn'
+import GameRemove from './modals/games/Remove'
 // News
 import News from './modals/news/News'
 // Request
@@ -83,7 +87,7 @@ export default {
     // Auth
     SignIn, SignUp, LogOut, RestorePassword, EmailSend,
     // Messages
-    Messages, MessagesChat, MessagesWrite,
+    Messages, MessagesChat, MessagesRemove,
     // Friends
     Friends, FriendsRemove, FriendsRemoved,
     // Users
@@ -91,9 +95,7 @@ export default {
     // Personal
     PersonalData, MyPhoto, MyPhotoEditor,
     // Games
-    GameInfo,
-    GameSignIn,
-    GameRemove,
+    GameInfo, GameBuy, GameBuySuccess, GameSignIn, GameRemove,
     // News
     News,
     // Request

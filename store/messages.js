@@ -54,7 +54,7 @@ export const actions = {
   },
   async search({commit}, params) {
     const { data } = await this.$axios.post('/appApi/chat.search', params)
-    console.log(data)
+    commit('setState', {key: 'chats', value: data.response.chats})
   }
 }
 

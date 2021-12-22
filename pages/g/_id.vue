@@ -6,9 +6,9 @@
   </div>
   <div class="info">
     <ul>
-      <li><button @click="toggleModal('gameInfo')" type="button">Terms of use</button></li>
+      <li><button type="button">Terms of use</button></li>
       <li><button type="button">About the developer</button></li>
-      <li><button @click="toggleModal('gameRemove')" type="button">Delete from my games</button></li>
+      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.uid})" type="button">Delete from my games</button></li>
     </ul>
     <div class="checkbox">
       <input type="checkbox" name="" value="1" id="notifications">
@@ -44,11 +44,13 @@ export default {
   }),
   methods: {
     async loadGame() {
+      console.log('loadGame')
       if(!this.gamesData[this.$route.params.id]) {
         await this.$store.dispatch('games/setGamesData', {
           id: this.$route.params.id
         })
       }
+      console.log(this.gamesData[this.$route.params.id])
       if(this.gamesData[this.$route.params.id]) {
         this.game = this.gamesData[this.$route.params.id]
         this.pageTitle = this.game.title
@@ -76,13 +78,6 @@ export default {
       } else {
         alert(data.error)
       }
-    },
-    toggleModal(target) {
-      this.$root.$emit('toggleModal', (target) ? {
-        target: target,
-        game: this.game.gid,
-        name: this.game.title
-      } : {})
     }
   },
   computed: {

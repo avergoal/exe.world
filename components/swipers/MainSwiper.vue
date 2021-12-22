@@ -9,9 +9,9 @@
             <div v-html="e.title" class="title"></div>
             <div v-html="e.description" class="desc"></div>
           </div>
-          <button v-if="!user" @click="toggleModal('gameSignIn', e.poster.default)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+          <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-          <button v-else @click="toggleModal('gameInfo', e.gid)" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+          <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
         </div>
       </div>
     </swiper-slide>
@@ -75,14 +75,6 @@ export default {
         e.slides[e.activeIndex].firstChild.classList.add('current_slide')
       }, 1)
     })
-  },
-  methods: {
-    toggleModal(target, e) {
-      this.$root.$emit('toggleModal', {
-        target: target,
-        game: e
-      })
-    }
   },
   computed: {
     user() {

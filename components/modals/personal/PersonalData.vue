@@ -75,11 +75,11 @@
 </template>
 
 <script>
-import PersonalTab from './tabs/PersonalTab'
-import AccessTab from './tabs/AccessTab'
-import NotificationsTab from './tabs/NotificationsTab'
-import BlacklistTab from './tabs/BlacklistTab'
-import BalanceTab from './tabs/BalanceTab'
+import PersonalTab from './tabs/Personal'
+import AccessTab from './tabs/Access'
+import NotificationsTab from './tabs/Notifications'
+import BlacklistTab from './tabs/Blacklist'
+import BalanceTab from './tabs/Balance'
 import AddFunds from './tabs/AddFunds'
 export default {
 	name: 'PersonalDataModal',

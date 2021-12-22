@@ -1,10 +1,14 @@
 <template>
 <div class="index_page">
   <div class="pagetitle">My games</div>
+  <!--
   <GamesSwiper v-if="user.recent_games.length" slides="recent_games" between="24" title="Recent Games"/>
   <GamesSwiper slides="recommended" between="24" title="Recommended <i>games</i>"/>
+  -->
   <div class="categoriesbox">
+    <!--
     <div class="wrap"><div class="boxtitle">Categories</div></div>
+    -->
     <Filters type="userCategoriesFilters"/>
     <ul class="category">
       <li v-for="(e, i) in games" :key="i" class="gamecard f">
@@ -19,6 +23,7 @@
           </div>
         </div>
       </li>
+      <Observer @intersect="intersected"/>
     </ul>
   </div>
 </div>
@@ -38,23 +43,28 @@ export default {
     }
   },
   data: () => ({
-    games: []
+    games: [],
+    offset: 0,
+    observer: false,
   }),
   mounted() {
     setTimeout(() => {
       this.$root.$emit('resize')
     }, 100)
     this.games = this.user.user_games
+    this.observer = true
   },
   methods: {
-    changeCategory(e) {
-      this.games = (e == 0) ? this.user.user_games : []
-      if(e > 0) {
-        for(let i = 0; i < this.user.user_games.length; i++) {
-          if(this.user.user_games[i].type.cid == e) {
-            this.games.push(this.user.user_games[i])
-          }
-        }
+    async loadGames() {
+      this.offset += 20
+      const response = await this.$store.dispatch('profile/loadUserGames', {
+        uid: this.user.profile.uid,
+        offset: this.offset
+      })
+    },
+    async intersected() {
+      if(this.observer) {
+        this.loadGames()
       }
     },
     openGame(e) {

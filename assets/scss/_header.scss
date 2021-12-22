@@ -57,7 +57,7 @@ header.main{
       right: 16px;
     }
   }
-  a.logo{
+  .logo{
     position: relative;
     display: block;
     width: 63px;
@@ -68,10 +68,10 @@ header.main{
       width: auto;
       height: 16px;
     }
-    svg{
+    a, 
+    button{
       width: 100%;
       height: 100%;
-      fill: $dViolet;
       &.small{
         display: none;
         @media screen and (max-width: 1024px) {
@@ -84,6 +84,39 @@ header.main{
       @media screen and (max-width: 1024px) {
         &:not(.small) {
           width: 42px;
+        }
+      }
+      svg{
+        width: 100%;
+        height: 100%;
+        fill: $dViolet;
+      }
+    }
+    .dropdown{
+      left: 0;
+      right: auto;
+      width: 380px;
+      padding: 24px;
+      ul{
+        li{
+          padding: 0 0 30px;
+          font-size: 14px;
+          line-height: 20px;
+          white-space: nowrap;
+          color: $dGray;
+          &:last-child{
+            padding: 0;
+          }
+          a,
+          button{
+            display: inline-block;
+            width: auto;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+            letter-spacing: 0.0015em;
+            color: $dGray;
+          }
         }
       }
     }
@@ -265,8 +298,24 @@ header.main{
     &:after{
       background: $white20;
     }
-    a.logo svg{
-      fill: $nViolet;
+    .logo{
+      a, 
+      button{
+        svg{
+          fill: $nViolet;
+        }
+      }
+      .dropdown{
+        ul{
+          li{
+            color: $nWhite;
+            a,
+            button{
+              color: $nWhite;
+            }
+          }
+        }
+      }
     }
     .item{
       &.wallet{

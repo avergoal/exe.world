@@ -40,6 +40,13 @@ export const actions = {
     data.response.settings.main.birth_date_obj = {y: age[1], m: age[2], d: age[3]}
     commit('setState', {key: 'user', value: data.response})
   },
+  async loadUserGames({state, commit}, params) {
+    let user = Object.assign({}, state.user),
+        games = Object.assign([], user.user_games)
+    const data = await this.$axios.post('/appApi/user.games', params)
+    //games.push([])
+    console.log(games, data)
+  },
   // Notifications
   async setNotifications({commit}, params) {
     const { data } = await this.$axios.post('/appApi/notifications', params)

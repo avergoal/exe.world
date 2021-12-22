@@ -15,7 +15,7 @@
     height: 100%;
     background: $dWhite;
     box-shadow: 0 0 0 0 transparent;
-    transition: top 0.35s ease;
+    transition: top 0.15s ease;
     overflow: hidden;
     .img{
       position: relative;
@@ -30,7 +30,7 @@
         background: rgba(0, 0, 0, 0.6);
         visibility: hidden;
         opacity: 0;
-        transition: all 0.35s ease;
+        transition: all 0.15s ease;
         content: "";
       }
       a,
@@ -50,7 +50,7 @@
         text-decoration: none;
         visibility: hidden;
         opacity: 0;
-        transition: all 0.35s ease;
+        transition: all 0.15s ease;
         z-index: 1;
         svg{
           display: block;
@@ -69,7 +69,7 @@
       // Lazy loader
       img{
         position: relative;
-        transition: all .35s ease;
+        transition: all .15s ease;
         &[lazy=loading] {
           opacity: 0;
           visibility: hidden;
