@@ -8,9 +8,6 @@
     background: $dWhite!important;
     overflow: scroll;
   }
-  @media screen and (max-width: 700px) {
-    padding: 0!important;
-  }
   &.games,
   &.friends{
     background: $dWhite!important;
@@ -33,10 +30,6 @@
           display: flex;
           align-items: center;
         }
-        @media screen and (max-width: 700px) {
-          display: block;
-          padding: 0 0 24px;
-        }
       }
       .userphoto{
         max-width: 124px;
@@ -49,37 +42,30 @@
           height: 116px;
           margin: 24px 32px 24px 24px;
         }
-        @media screen and (max-width: 700px) {
-          max-width: 96px;
-          min-width: 96px;
-          height: 96px;
-          margin: 24px auto 16px;
-        }
       }
       .name{
         padding: 16px 0 0;
-        @include h6;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: 0.0015em;
         text-align: center;
         @media screen and (max-width: 768px) {
           padding: 0;
           text-align: left;
         }
-        @media screen and (max-width: 700px) {
-          text-align: center;
-        }
       }
       .online{
         padding: 0;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
         text-align: center;
         &.on{
           color: $dEmerald;
         }
         @media screen and (max-width: 768px) {
           text-align: left;
-        }
-        @media screen and (max-width: 700px) {
-          padding: 0;
-          text-align: center;
         }
       }
       .total{
@@ -122,7 +108,10 @@
             display: block;
             width: 100%;
             padding: 8px 0 0;
-            @include body1(700);
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            letter-spacing: 0.007em;
             color: $dGray;
             text-align: center;
             i{
@@ -150,18 +139,15 @@
           right: 50px;
           width: 214px;
         }
-        @media screen and (max-width: 700px) {
-          position: relative;
-          top: 0;
-          right: 0;
-          width: auto;
-          margin: 16px 24px 0;
-        }
         @media screen and (max-width: 576px) {
           margin: 16px 16px 0;
         }
         button{
           width: 100%;
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
           &.icon{
             max-width: 48px;
             min-width: 48px;
@@ -207,12 +193,17 @@
             padding: 0 24px;
           }
           .label{
-            @include caption1;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.004em;
             color: $dGray;
           }
           .desc{
             padding: 2px 0 0;
-            @include body1(500);
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: 0.001em;
           }
         }
       }
@@ -291,14 +282,13 @@
             @media screen and (max-width: 576px) {
               padding: 0 0 0 16px;
             }
-            &:before{
+            &:before,
+            &:after{
               position: absolute;
               top: 0;
-              left: 0;
               display: block;
               width: 40px;
               height: 100%;
-              background: linear-gradient(90deg, white 0, rgba(255, 255, 255, 0) 100%);
               z-index: 100;
               content: "";
               @media screen and (max-width: 768px) {
@@ -307,6 +297,14 @@
               @media screen and (max-width: 576px) {
                 width: 16px;
               }
+            }
+            &:before{              
+              left: 0;              
+              background: linear-gradient(90deg, white 0, rgba(255, 255, 255, 0) 100%);
+            }
+            &:after{              
+              right: 0;              
+              background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, white 100%);
             }
             .boxtitle{
               padding: 0 0 20px;
@@ -349,7 +347,10 @@
                 }
                 .name{
                   padding: 16px 0 0;
-                  @include subTitle1;
+                  font-size: 16px;
+                  font-weight: 700;
+                  line-height: 20px;
+                  letter-spacing: 0.0015em;
                   text-align: center;
                 }
               }
@@ -378,22 +379,19 @@
       .usermodaltop{
         padding: 16px 0;
         overflow: hidden;
-        @media screen and (max-width: 700px) {
-          padding: 16px 24px;
-        }
         @media screen and (max-width: 576px) {
           padding: 16px;
         }
       }
       .titlelist{
-        padding: 24px 40px 12px;
-        @media screen and (max-width: 700px) {
-          padding: 24px 24px 12px;
-        }
+        padding: 24px 40px 0;
         @media screen and (max-width: 576px) {
-          padding: 24px 16px 12px;
+          padding: 24px 16px 0;
         }
-        @include h4;
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 40px;
+        letter-spacing: 0.0025em;
         strong{
           color: $dGray;
         }
@@ -414,10 +412,7 @@
       ul.list{
         display: flex;
         flex-flow: row wrap;
-        padding: 0 32px;
-        @media screen and (max-width: 700px) {
-          padding: 0 16px;
-        }
+        padding: 12px 32px 0;
         @media screen and (max-width: 576px) {
           padding: 0 12px;
         }
@@ -441,7 +436,7 @@
       ul.list{
         display: flex;
         flex-flow: row wrap;
-        padding: 0 32px;
+        padding: 12px 32px 0;
         li{
           max-width: 16.666%;
           min-width: 16.666%;
@@ -474,7 +469,10 @@
             }
             .name{
               padding: 16px 0 0;
-              @include subTitle1;
+              font-size: 16px;
+              font-weight: 700;
+              line-height: 20px;
+              letter-spacing: 0.0015em;
               text-align: center;
             }
           }
@@ -548,6 +546,9 @@
             .users_slider{
               &:before{
                 background: linear-gradient(90deg, $whiteLight 0%, rgba(44, 42, 54, 0) 100%);
+              }
+              &:after{
+                background: linear-gradient(90deg, rgba(44, 42, 54, 0) 0%, $whiteLight 100%);
               }
             }
             .users_slider{

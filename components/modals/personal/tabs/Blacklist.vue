@@ -25,6 +25,15 @@ export default {
   data: () => ({
     search: null
   }),
+  created() {
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scroll) {
+        setTimeout(() => {
+          this.$refs.scroll.update()
+        }, 100)
+      }
+    })
+  },
   mounted() {
     this.loadUsers()
   },

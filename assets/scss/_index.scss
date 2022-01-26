@@ -66,6 +66,9 @@
       height: auto;
       margin: 24px 0 0;
     }
+    @media screen and (max-width: 920px) {
+      padding: 0 0 50px;
+    }
     @media screen and (max-width: 576px) {
       margin: 16px 0 0;
       padding: 0 0 30px;
@@ -127,6 +130,9 @@
           margin-top: 0;
           opacity: .6;
         }
+        @media screen and (max-width: 920px) {
+          border-radius: 16px;
+        }
         @media screen and (max-width: 576px) {
           border-radius: 8px;
         }
@@ -175,19 +181,18 @@
             .title{
               padding: 0;
               margin: 0;
-              @include h4;
+              font-size: 32px;
+              font-weight: 800;
+              line-height: 40px;
               color: $dWhite;
-              @media screen and (max-width: 1024px) {
-                @include h5;
-              }
+              letter-spacing: 0.0025em;
             }
             .desc{
               padding: 12px 0 0;
-              @include body1;
+              font-size: 16px;
+              line-height: 24px;
               color: $dWhite;
-              @media screen and (max-width: 1024px) {
-                @include body2;
-              }
+              letter-spacing: 0.001em;
               br{
                 @media screen and (max-width: 576px) {
                   display: none;
@@ -221,8 +226,11 @@
             span{
               display: block;
               padding: 0 0 0 16px;
-              @include button1(800);
+              font-size: 14px;
+              font-weight: 800;
+              line-height: 16px;
               color: $dWhite;
+              letter-spacing: 0.06em;
               text-transform: uppercase;
               @media screen and (max-width: 576px) {
                 display: none;
@@ -312,30 +320,30 @@
         display: flex;
         align-items: center;
         padding: 18px 24px 0;
+      }
+      @media screen and (max-width: 576px) {
+        justify-content: center;
+      }
+      span{
+        display: block;
+        width: 6px;
+        height: 6px;
+        margin: 0 4px 0 0;
+        border-radius: 3px;
+        background: $grayMedium;
+        transition: all .15s ease;
+        opacity: 1;
         @media screen and (max-width: 576px) {
-          justify-content: center;
+          width: 8px;
+          height: 8px;
+          border-radius: 4px;
         }
-        span{
-          display: block;
-          width: 6px;
-          height: 6px;
-          margin: 0 4px 0 0;
-          border-radius: 3px;
-          background: $grayMedium;
-          transition: all .15s ease;
-          opacity: 1;
-          @media screen and (max-width: 576px) {
-            width: 8px;
-            height: 8px;
-            border-radius: 4px;
-          }
-          &:last-child{
-            margin: 0;
-          }
-          &.swiper-pagination-bullet-active{
-            width: 24px;
-            background: $dGray;
-          }
+        &:last-child{
+          margin: 0;
+        }
+        &.swiper-pagination-bullet-active{
+          width: 24px;
+          background: $dGray;
         }
       }
     }
@@ -343,8 +351,14 @@
   // Filters
   .filters{
     padding: 0 0 20px;
+    @media screen and (max-width: 1024px) {
+      padding: 0;
+    }
     &.categories{
       padding: 0 48px 20px;
+      @media screen and (max-width: 1024px) {
+        padding: 0 24px;
+      }
     }
   }
   // Category slider
@@ -358,21 +372,32 @@
     @media screen and (max-width: 576px) {
       padding: 0 16px;
     }
-    &:before{
+    &:before,
+    &:after{
       position: absolute;
       top: 0;
-      left: 0;
       display: block;
-      width: 48px;
       height: 100%;
-      background: linear-gradient(90deg, white 50%, rgba(255, 255, 255, 0) 100%);
       z-index: 100;
       content: "";
+      @media screen and (max-width: 576px) {
+        display: none;
+      }
+    }
+    &:before{
+      left: 0;
+      width: 48px;
+      background: linear-gradient(90deg, white 50%, rgba(255, 255, 255, 0) 100%);
       @media screen and (max-width: 1024px) {
         width: 24px;
       }
-      @media screen and (max-width: 576px) {
-        display: none;
+    }
+    &:after{
+      right: 0;
+      width: 100px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, white 100%);
+      @media screen and (max-width: 1024px) {
+        width: 24px;
       }
     }
     .swiperbox{
@@ -380,7 +405,7 @@
       .swiper-container{
         padding: 0 0 90px;
         @media screen and (max-width: 1024px) {
-          padding: 0 0 30px;
+          padding: 0 0 40px;
         }
       }
       .swipernav{
@@ -421,7 +446,7 @@
         }
         @media screen and (max-width: 920px) {
           width: 33.333%;
-          padding: 0 12px 16px;
+          padding: 0 12px 24px;
         }
         @media screen and (max-width: 768px) {
           width: 50%;
@@ -478,7 +503,10 @@
         }
         .name{
           padding: 16px 0 0;
-          @include subTitle1;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 20px;
+          letter-spacing: 0.0015em;
           text-align: center;
         }
       }
@@ -521,13 +549,18 @@
       b{
         padding: 0;
         margin: 0;
-        @include h5;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 28px;
+        letter-spacing: 0.0015em;
         color: $dGray;
       }
       p{
         padding: 8px 0 0;
         margin: 0;
-        @include body1;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
         color: $dGray;
       }
     }
@@ -554,10 +587,21 @@
           }
         }
       }
+      .swiperpager{
+        span{
+          background: $white56;
+          &.swiper-pagination-bullet-active{
+            background: $nWhite;
+          }
+        }
+      }
     }
     .category_slider{
       &:before{
         background: linear-gradient(90deg, #2C2A36 50%, rgba(44, 42, 54, 0) 100%);
+      }
+      &:after{
+        background: linear-gradient(90deg, rgba(44, 42, 54, 0) 0, #2C2A36 100%);
       }
       .boxtitle{
         color: $dWhite;

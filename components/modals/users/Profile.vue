@@ -27,7 +27,7 @@
           <button v-if="profile.friendship_status === 0 && !request" @click="addFriends(profile.user.uid)" class="toggleparams2 btn st2" type="button">add to friends</button>
           <button v-else-if="request || profile.friendship_status === 1 || profile.friendship_status === 2" class="toggleparams2 btn st3" type="button">request...</button>
           <button v-else @click="toggleParams('openParams2')" class="toggleparams2 btn st3" type="button">your friend</button>
-          <button @click="$root.$emit('toggleModal', {target: 'messagesChat', user: profile.user})" class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
+          <button @click="$root.$emit('toggleModal', {target: 'messagesChat', user: profile.user.uid})" class="icon btn st2" type="button"><svg-icon name="ui/pencil" /></button>
         </div>
         <div :class="{open: openParams2}" class="dropdown params2">
           <ul class="menu">
@@ -94,6 +94,12 @@
 </template>
 
 <script>
+/*
+0 - не друзья, 
+1 - получен запрос, 
+2 - отправлен запрос, 
+3 - взаимная дружба
+*/
 export default {
   name: 'ProfileModal',
   data: () => ({
@@ -165,7 +171,7 @@ export default {
         }, 100)
         profile.user.id = profile.user.uid
       }
-      console.log(profile, 'profile')
+      console.log(profile)
       return profile
     }
   }

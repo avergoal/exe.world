@@ -3,7 +3,7 @@
   <div class="top">
     <div class="logo">
       <button @click="$emit('toggle', 'info')" class="small" type="button"><svg-icon name="logo_small"/></button>
-      <nuxt-link to="/"><svg-icon name="logo" /></nuxt-link>
+      <button @click="goHome()" type="button"><svg-icon name="logo"/></button>
     </div>
     <form @submit.prevent action="">
       <fieldset>
@@ -20,9 +20,10 @@
         <GamesSwiper slides="search_popular" between="24" title="Popular Searches"/>
         <GamesSwiper v-if="loaded && results.games.length" :key="JSON.stringify(results.games)" slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s" navClass="s"/>
         <div v-else-if="loaded && results.peoples.length" class="empty">
+          <div class="boxtitle"><span>Games</span></div>
           <div class="img">
-            <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-            <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+            <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
+            <img v-else src="~/assets/illustration/notfound.svg" />
           </div>
           <div class="text">
             <b>We did not find any games for your request</b>
@@ -31,9 +32,10 @@
         </div>
         <UsersSwiper v-if="loaded && results.peoples.length" :key="JSON.stringify(results.peoples)" slides="search_peoples" between="8" title="People" target="searchPeoples"/>
         <div v-else-if="loaded && results.games.length" class="empty">
+          <div class="boxtitle"><span>People</span></div>
           <div class="img">
-            <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-            <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+            <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
+            <img v-else src="~/assets/illustration/notfound.svg" />
           </div>
           <div class="text">
             <b>We did not find people for your request</b>
@@ -42,8 +44,8 @@
         </div>
         <div v-if="loaded && !results.peoples.length && !results.games.length" class="empty noresults">
           <div class="img">
-            <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-            <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+            <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
+            <img v-else src="~/assets/illustration/notfound.svg" />
           </div>
           <div class="text">
             <b>We did not find anything for your request</b>
@@ -74,6 +76,13 @@ export default {
     this.$root.$on('closeSearch', () => {
       this.closeSearch()
     })
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scrollSearch) {
+        setTimeout(() => {
+          this.$refs.scrollSearch.update()
+        }, 100)
+      }
+    })
   },
   methods: {
     goSearch() {
@@ -89,8 +98,8 @@ export default {
         }, 350)
       }
     },
-    setRoute() {
-      this.$parent.setRoute()
+    goHome() {
+      this.$parent.goHome()
       this.closeSearch()
     },
     closeSearch() {
@@ -108,6 +117,9 @@ export default {
     },
     results() {
       return this.$store.getters['search/results']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

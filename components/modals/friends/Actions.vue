@@ -23,7 +23,7 @@
           </button>
         </li>
         <li>
-          <button @click="$root.$emit('userReport', {target: 'userBlock', user: user})" type="button">
+          <button @click="$root.$emit('toggleModal', {target: 'userReport', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/report" /></div>
             <span>Report</span>
           </button>

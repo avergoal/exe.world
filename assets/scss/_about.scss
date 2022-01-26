@@ -2,19 +2,32 @@
   min-height: calc(100Vh - 152px);
   .info{
     display: flex;
+    align-items: flex-start;
+    @media screen and (max-width: 920px) {
+      flex-flow: column-reverse nowrap;
+    }
     .text{
       flex: 1 1 auto;
       padding: 60px 0 40px 48px;
+      @media screen and (max-width: 920px) {
+        padding: 0 40px 40px 24px;
+      }
       p{
         padding: 0 0 20px;
       }
       b{
-        @include body1(700);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: 0.001em;
       }
       h5{
         padding: 40px 0 20px;
         margin: 0;
-        @include h5(800);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 32px;
+        letter-spacing: 0.0015em;
       }
     }
     .img{
@@ -23,11 +36,14 @@
       max-width: 490px;
       min-width: 490px;
       margin: 0 220px 0 200px;
+      @media screen and (max-width: 920px) {
+        max-width: 250px;
+        min-width: 250px;
+        margin: 0 0 40px 24px;
+      }
       img{
-        position: absolute;
-        top: 0;
-        left: 0;
         width: auto;
+        max-width: 100%;
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-<div v-if="user && game" class="gamepagebox">
+<div v-if="profile && game" class="gamepagebox">
   <div v-html="pageTitle" class="pagetitle"></div>
   <div class="framebox">
     <iframe :src="frame.url" frameborder="0"></iframe>
@@ -8,15 +8,12 @@
     <ul>
       <li><button type="button">Terms of use</button></li>
       <li><button type="button">About the developer</button></li>
-      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.uid})" type="button">Delete from my games</button></li>
+      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">Delete from my games</button></li>
     </ul>
-    <div class="checkbox">
-      <input type="checkbox" name="" value="1" id="notifications">
-      <label for="notifications">
-        <span>Send game notifications</span>
-        <svg-icon name="ui/checkbox" />
-      </label>
-    </div>
+  </div>
+  <div class="mobilebtns">
+    <button @click="$root.$emit('toggleModal', {target: 'gameMenu', game: game})" type="button"><svg-icon name="ui/menu" /></button>
+    <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>
   </div>
 </div>
 </template>
@@ -24,16 +21,6 @@
 <script>
 export default {
   name: 'GamePage',
-  head() {
-		return {
-      title: this.pageTitle,
-      meta: [{
-        hid: 'description',
-        name: 'description',
-        content: 'description category'
-      }]
-    }
-  },
   data: () => ({
     game: null,
     frame: {
@@ -42,15 +29,22 @@ export default {
     },
     pageTitle: 'EXE.world'
   }),
+  head() {
+		return {
+      title: this.pageTitle,
+      meta: [{hid: 'description', name: 'description', content: 'description category'}]
+    }
+  },
+  created() {
+    this.loadGame()
+  },
   methods: {
     async loadGame() {
-      console.log('loadGame')
       if(!this.gamesData[this.$route.params.id]) {
         await this.$store.dispatch('games/setGamesData', {
           id: this.$route.params.id
         })
       }
-      console.log(this.gamesData[this.$route.params.id])
       if(this.gamesData[this.$route.params.id]) {
         this.game = this.gamesData[this.$route.params.id]
         this.pageTitle = this.game.title
@@ -58,7 +52,7 @@ export default {
       }
     },
     async runGame() {
-      if(!this.gamesData[this.$route.params.id].installed) {
+      if(!this.game.installed) {
         await this.$store.dispatch('games/installGame', {
           gid: this.game.gid
         })
@@ -81,12 +75,12 @@ export default {
     }
   },
   computed: {
-    user() {
-      let user = this.$store.getters['profile/user']
-      if(user) {
-        this.loadGame()
+    profile() {
+      let profile = this.$store.getters['profile/data']
+      if(!profile) {
+        this.$router.push('/')
       }
-      return user
+      return profile
     },
     gamesData() {
       return this.$store.getters['games/gamesData']

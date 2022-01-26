@@ -72,7 +72,6 @@ export default{
   }),
   mounted() {
     this.$emit('triggered', false)
-    console.log(this)
   },
   methods: {
     async submit() {
@@ -80,10 +79,8 @@ export default{
       if(this.cropper) {
         this.$emit('submit')
         this.cropper.getCroppedCanvas(this.outputOptions).toBlob(async (blob) => {
-          this.$axios.post('https://api.exe.world/settings.avatar.upload', {file: blob}).then(response => {
-            this.$store.dispatch('profile/setProfile')
-            this.$root.$emit('toggleModal', {target: 'personalData'})
-          })
+          await this.$store.dispatch('settings/uploadPhoto', blob)
+          this.$root.$emit('toggleModal', {target: 'personalData'})
         }, this.outputMime, this.outputQuality)
       } else {
         this.errors.active = true
@@ -135,9 +132,7 @@ export default{
       return true
     },
     clearErrors() {
-      for(let e in this.errors) {
-        this.errors[e] = false
-      }
+      Object.keys(this.errors).map(e => this.errors[e] = false)
     }
   },
   computed: {

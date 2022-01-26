@@ -10,7 +10,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async chats({commit}, params) {
+  async chats({commit}) {
     const { data } = await this.$axios.post('/appApi/chats', {})
     commit('setState', {key: 'chats', value: data.response.chats})
   },

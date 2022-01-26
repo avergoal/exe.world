@@ -13,12 +13,11 @@
           <div class="img">
             <img src="/theme/img/loader.gif" alt="" class="lazyloader">
             <img v-lazy="e.poster.default" :alt="e.title">
-            <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
             <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
             <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           </div>
           <div class="info">
-            <span>{{e.installed}}</span>
             <div v-html="e.title" class="title"></div>
             <div v-html="e.type.title" class="desc" :style="'color:#' + e.type.color"></div>
           </div>
@@ -42,14 +41,6 @@ export default {
     data: []
   }),
   mounted() {
-    if(this.slides == 'categories') {
-      this.data = this[this.slides][this.filter.current].list
-      this.$root.$on('changeCategory', (e) => {
-        this.changeCategory(e)
-      })
-    } else {
-      this.data = this[this.slides]
-    }
     this.config = {
       slidesPerView: 'auto',
       navigation: {
@@ -62,8 +53,25 @@ export default {
         1025: {spaceBetween: Number(this.between)}
       }
     }
+    this.loadSlides()
+    this.$watch(vm => [vm[this.slides]], () => {      
+      this.loadSlides()
+    }, {
+      immediate: true,
+      deep: true
+    }) 
   },
   methods: {
+    loadSlides() {
+      if(this.slides == 'categories') {
+        this.data = this[this.slides][this.filter.current].list
+        this.$root.$on('changeCategory', (e) => {
+          this.changeCategory(e)
+        })
+      } else {
+        this.data = this[this.slides]
+      }
+    },
     setRoute(target) {
       this.$root.$emit('changeTemplate', target) 
       this.closeSearch()
@@ -96,9 +104,6 @@ export default {
     search_games() {
       return this.$store.getters['search/results'].games
     },
-    recent_games() {
-      return this.$store.getters['profile/user'].recent_games
-    },
     newgames() {
       return this.$store.getters['games/newgames'].list
     },
@@ -114,8 +119,8 @@ export default {
     user_profile_games() {
       return this.$store.getters['users/profile'].games.games
     },
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
     }
   }
 }

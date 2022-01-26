@@ -32,6 +32,7 @@
   <GameBuySuccess v-if="modal.target == 'gameBuySuccess'"/>
   <GameSignIn v-if="modal.target == 'gameSignIn'"/>
   <GameRemove v-if="modal.target == 'gameRemove'"/>
+  <GameMenu v-if="modal.target == 'gameMenu'"/>
   <!-- News -->
   <News v-if="modal.target == 'news'"/>
   <!-- Request -->
@@ -74,6 +75,7 @@ import GameBuy from './modals/games/Buy'
 import GameBuySuccess from './modals/games/BuySuccess'
 import GameSignIn from './modals/games/SignIn'
 import GameRemove from './modals/games/Remove'
+import GameMenu from './modals/games/Menu'
 // News
 import News from './modals/news/News'
 // Request
@@ -95,7 +97,7 @@ export default {
     // Personal
     PersonalData, MyPhoto, MyPhotoEditor,
     // Games
-    GameInfo, GameBuy, GameBuySuccess, GameSignIn, GameRemove,
+    GameInfo, GameBuy, GameBuySuccess, GameSignIn, GameRemove, GameMenu,
     // News
     News,
     // Request

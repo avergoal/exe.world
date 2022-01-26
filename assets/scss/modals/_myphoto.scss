@@ -2,7 +2,10 @@
   padding: 24px;
   .modalcontent{
     .title{
-      @include h5(800);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 28px;
+      letter-spacing: 0.0015em;
     }
     .editor{
       position: relative;
@@ -55,7 +58,6 @@
         }
         span{
           display: block;
-          @include body1(700);
           color: $dWhite;
         }
       }
@@ -79,6 +81,10 @@
       button{
         height: 36px;
         margin: 0 8px 0 0;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 16px;
+        letter-spacing: 0.06em;
         &:last-child{
           margin: 0;
         }

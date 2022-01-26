@@ -23,8 +23,8 @@
   </div>
   <div v-if="!results.peoples.length" class="noresults page">
     <div class="img">
-      <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-      <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+      <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
+      <img v-else src="~/assets/illustration/notfound.svg" />
     </div>
     <div class="text">
       <b>We did not find anything for your request</b>
@@ -60,7 +60,9 @@ export default {
       }
     },
     openUser(e) {
-      if(this.user.uid === e) {
+      if(!this.profile) {
+        this.$root.$emit('toggleModal', {target: 'signIn'})
+      } else if(this.profile.uid === e) {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
         this.$root.$emit('toggleModal', {target: 'userProfile', user: e})
@@ -72,8 +74,11 @@ export default {
     results() {
       return this.$store.getters['search/results']
     },
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

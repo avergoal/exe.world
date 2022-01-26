@@ -12,11 +12,18 @@
   transition: opacity 0.15s ease;
   overflow: hidden;
   z-index: 0;
+  &:before{
+    position: absolute;
+    top: 0;
+    left: 96px;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px 0 0 24px;
+    background: $dWhite;
+    content: "";
+  }
   @media screen and (max-width: 1024px) {
     padding: 0 0 0 80px;
-  }
-  @media screen and (max-width: 700px) {
-    padding: 0;
   }
   &.open{
     max-height: 100Vh;
@@ -40,11 +47,6 @@
       left: 80px;
       padding: 4px 24px;
     }
-    @media screen and (max-width: 700px) {
-      left: 0;
-      padding: 4px 24px;
-      border-radius: 0;
-    }
     @media screen and (max-width: 576px) {
       padding: 4px 16px;
     }
@@ -67,9 +69,6 @@
       padding: 0 0 0 84px;
       @media screen and (max-width: 1024px) {
         padding: 0 0 0 30px;
-      }
-      @media screen and (max-width: 700px) {
-        padding: 0;
       }
       fieldset{
         svg{
@@ -115,22 +114,14 @@
   }
   .searchscroll{
     width: 100%;
-    max-height: calc(100Vh - 88px);
-    min-height: calc(100Vh - 88px);
+    height: calc(100Vh - 88px);
     padding: 0;
     margin: 88px 0 0;
     border-radius: 0 0 0 24px;
     overflow: hidden;
     @media screen and (max-width: 1024px) {
-      max-height: calc(100Vh - 70px);
-      min-height: calc(100Vh - 70px);
+      height: calc(100Vh - 70px);
       margin: 56px 0 0;
-    }
-    @media screen and (max-width: 700px) {
-      max-height: calc(100Vh - 58px);
-      min-height: calc(100Vh - 58px);
-      margin: 56px 0 0;
-      border-radius: 0;
     }
     .results{
       width: 100%;
@@ -199,7 +190,10 @@
             }
             .name{
               padding: 16px 0 0;
-              @include subTitle1;
+              font-size: 16px;
+              font-weight: 700;
+              line-height: 20px;
+              letter-spacing: 0.0015em;
               text-align: center;
             }
           }
@@ -222,24 +216,36 @@
       .users_slider{
         position: relative;
         padding: 0 16px 0 0;
-        &:before{
+        &:before,
+        &:after{
           position: absolute;
           top: 0;
-          left: -194px;
           display: block;
-          width: 194px;
           height: 100%;
-          background: linear-gradient(90deg, white 20%, rgba(255, 255, 255, 0) 100%);
           z-index: 100;
           content: "";
+        }
+        &:before{
+          left: -194px;
+          width: 194px;
+          background: linear-gradient(90deg, white 20%, rgba(255, 255, 255, 0) 100%);
+        }
+        &:after{
+          right: 0;
+          width: 194px;
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0) 20%, white 100%);
         }
       }
       .empty{
         display: flex;
         align-items: center;
+        flex-flow: row wrap;
         padding: 40px 0;
         @media screen and (max-width: 576px) {
           display: block;
+        }
+        .boxtitle{
+          width: 100%;
         }
         .img{
           position: relative;
@@ -260,17 +266,22 @@
             text-align: center;
           }
           b{
-            @include h6;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 24px;
             color: $dGray;
+            letter-spacing: 0.0015em;
             @media screen and (max-width: 576px) {
               text-align: center;
             }
           }
           p{
-            padding: 0;
+            padding: 4px 0 0;
             margin: 0;
-            @include body1;
+            font-size: 16px;
+            line-height: 24px;
             color: $dGray;
+            letter-spacing: 0.001em;
             @media screen and (max-width: 576px) {
               text-align: center;
             }
@@ -290,7 +301,10 @@
             }
           }
           b{
-            @include h5(800);
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 28px;
+            letter-spacing: 0.0015em;
           }
         }
         img{
@@ -314,6 +328,9 @@
 
 .night{
   .searchbox{
+    &:before{
+      background: $nBlack;
+    }
     .top{
       background: $nBlack;
       a.logo{
@@ -347,6 +364,9 @@
         .users_slider{
           &:before{
             background: linear-gradient(90deg, #2C2A36 0%, rgba(44, 42, 54, 0) 100%);
+          }
+          &:after{
+            background: linear-gradient(90deg, rgba(44, 42, 54, 0) 0%, #2C2A36 100%);
           }
         }
         .users_slider{

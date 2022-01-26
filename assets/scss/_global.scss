@@ -32,7 +32,6 @@ button{
   border: 0;
   background: transparent;
   text-decoration: none;
-  @include button1(800);
   text-transform: uppercase;
   cursor: pointer;
   &.btn{
@@ -84,7 +83,9 @@ textarea{
   border-radius: 12px;
   background: $grayLight;
   outline: 0;
-  @include body1;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.001em;
   color: $dGray;
   &::placeholder{
     color: $dGray;
@@ -208,8 +209,11 @@ fieldset{
     align-items: center;
     padding: 16px;
     span{
-      @include h6;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
       color: $dBlack;
+      letter-spacing: 0.0015em;
     }
     svg{
       display: block;
@@ -241,7 +245,6 @@ fieldset{
         margin: 0;
         border-left: 2px solid transparent;
         background: $dWhite;
-        @include subtitle2;
         text-transform: none;
         &.active{
           border-color: $dOrange;
@@ -269,7 +272,6 @@ fieldset{
             padding: 0;
             border: 0;
             background: transparent;
-            @include body2;
             color: $dBlack;
             text-align: left;
           }
@@ -290,8 +292,11 @@ fieldset{
     }
     .text{
       padding: 28px 0 0;
-      @include h6;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
       color: $dGray;
+      letter-spacing: 0.0015em;
       text-align: center;
     }
   }
@@ -320,7 +325,10 @@ fieldset{
         }
         span{
           display: block;
-          @include subtitle2(600);
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 16px;
+          letter-spacing: 0.001em;
           color: $dGray;
           text-transform: none!important;
         }
@@ -412,11 +420,6 @@ span.badge{
       width: calc(100% - 80px);
       margin: 0 0 0 80px;
     }
-    @media screen and (max-width: 700px) {
-      width: 100%;
-      margin: 0;
-      border-radius: 0;
-    }
     &.clear{
       width: 100%;
       margin: 0;
@@ -434,8 +437,7 @@ span.badge{
       background: $black32;
       opacity: 1;
       z-index: 100;
-      @media screen and (max-width: 1024px) {
-        right: 5px!important;
+      @media screen and (max-width: 920px) {
         width: 6px;
         border-radius: 3px;
       }
@@ -456,6 +458,17 @@ span.badge{
   &--active-y{
     .ps__rail-y{
       display: block;
+    }
+  }
+}
+.gamepage{
+  @media screen and (max-width: 920px) {
+    .ps.appscroll{
+      z-index: 1100;
+    }
+    .ps__rail-y,
+    .ps__rail-x{
+      display: none;
     }
   }
 }
@@ -490,18 +503,24 @@ main.content{
 .pagetitle{
   padding: 40px 48px 60px;
   margin: 0;
-  @include h1;
+  font-size: 60px;
+  font-weight: 900;
+  line-height: 68px;
+  letter-spacing: -0.01em;
   @media screen and (max-width: 1024px) {
     padding: 24px 24px 40px;
-    @include h2;
+  }
+  @media screen and (max-width: 920px) {
+    padding: 24px;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 48px;
   }
   @media screen and (max-width: 768px) {
     padding: 24px 24px 30px;
-    @include h3;
   }
   @media screen and (max-width: 576px) {
     padding: 16px 16px 24px;
-    @include h4;
   }
 }
 .night{
@@ -512,14 +531,17 @@ main.content{
   display: flex;
   align-items: center;
   padding: 0 0 24px;
-  @include h3;
-  @media screen and (max-width: 1024px) {
-    @include h4;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 48px;
+  @media screen and (max-width: 920px) {
+    padding: 0 0 16px;
+    font-size: 32px;
+    line-height: 40px;
   }
   @media screen and (max-width: 576px) {
     justify-content: space-between;
     padding: 0 0 16px;
-    @include h5;
   }
   span{
     display: block;
@@ -561,32 +583,6 @@ main.content{
     }
   }
 }
-// Img illustration
-img.illustration{
-  position: absolute;
-  top: 0;
-  left: 0;
-  &.day{
-    opacity: 1;
-    visibility: visible;
-  }
-  &.night{
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-.night{
-  img.illustration{
-    &.day{
-      opacity: 0;
-      visibility: hidden;
-    }
-    &.night{
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-}
 // Svg ico
 svg.icon{
   display: block;
@@ -616,7 +612,7 @@ svg.icon{
   left: 0;
   width: 100%;
   height: 0;
-  z-index: 100;
+  z-index: 200;
   @media screen and (max-width: 1024px) {
     display: none;
   }
@@ -683,19 +679,21 @@ svg.icon{
         }
         span{
           display: block;
-          @include button1(800);
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
           color: $dGray;
           text-transform: uppercase;
-          @media screen and (max-width: 576px) {
-            @include button2(800);
-          }
+          letter-spacing: 0.06em;
           &.badge{
             position: relative;
             height: 20px;
             margin: 0 0 0 10px;
             padding: 0 8px 2px;
-            @include caption2;
+            font-size: 12px;
+            line-height: 20px;
             color: $dWhite;
+            letter-spacing: 0.01em;
           }
         }
         &.active{
@@ -783,6 +781,9 @@ svg.icon{
     }
     input{
       padding: 0 20px 0 60px;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.001em;
     }
   }
   .btns{
@@ -800,6 +801,10 @@ svg.icon{
       border-radius: 12px;
       background: $grayLight;
       transition: background 0.15s ease;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 16px;
+      letter-spacing: 0.06em;
       white-space: nowrap;
       color: $dGray;
       &.active{
@@ -842,12 +847,6 @@ svg.icon{
       width: 1112px;
       max-width: calc(100% - 48px);
       height: 628px;
-      @media screen and (max-width: 700px) {
-        max-width: 100%;
-        height: 100%;
-        border-radius: 0;
-        padding: 24px!important;
-      }
       @media screen and (max-width: 576px) {
         padding: 16px!important;
       }
@@ -856,12 +855,6 @@ svg.icon{
       width: 1048px;
       max-width: calc(100% - 48px);
       height: 628px;
-      @media screen and (max-width: 700px) {
-        max-width: 100%;
-        height: 100%;
-        border-radius: 0;
-        padding: 24px!important;
-      }
       @media screen and (max-width: 576px) {
         padding: 16px!important;
       }
@@ -870,12 +863,6 @@ svg.icon{
       width: 700px;
       max-width: calc(100% - 48px);
       height: 628px;
-      @media screen and (max-width: 700px) {
-        max-width: 100%;
-        height: 100%;
-        border-radius: 0;
-        padding: 24px!important;
-      }
       @media screen and (max-width: 576px) {
         padding: 16px!important;
       }
@@ -892,6 +879,9 @@ svg.icon{
       @media screen and (max-width: 480px) {
         padding: 16px!important;
       }
+    }
+    .modalcontent{
+      height: 100%;
     }
     button.close{
       position: absolute;
@@ -950,8 +940,8 @@ svg.icon{
     width: 20px;
     height: 16px;
     margin: 0 28px 0 40px;
-    @media screen and (max-width: 700px) {
-      margin: 0 20px 0 0;
+    @media screen and (max-width: 920px) {
+      margin: 0 28px 0 24px;
     }
     svg{
       width: 100%;
@@ -964,13 +954,18 @@ svg.icon{
   }
   .info{
     .name{
-      @include subTitle1;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      letter-spacing: 0.0015em;
     }
     .online{
       display: flex;
       align-items: center;
       padding: 4px 0 0;
-      @include caption1;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0.004em;
       color: $dGray;
       span{
         display: block;

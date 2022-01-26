@@ -7,41 +7,10 @@ aside.sidebar{
   @media screen and (max-width: 1024px) {
     width: 80px;
   }
-  @media screen and (max-width: 700px) {
-    display: none;
-  }
   &.mobile{
     display: none;
     &:after{
       display: none;
-    }
-    @media screen and (max-width: 700px) {
-      position: relative;
-      display: block;
-      width: 100%;
-      height: 78px;
-      background: $grayLight;
-      ul.menu{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        li{
-          a,
-          button{
-            @media screen and (max-width: 576px) {
-              @include caption2(500);
-            }
-            i{
-              @media screen and (max-width: 576px) {
-                display: none;
-              }
-            }
-          }
-        }
-      }
     }
   }
   &:after{
@@ -92,7 +61,11 @@ aside.sidebar{
           span{
             display: block;
             padding: 10px 0 0;
-            @include caption1(500, uppercase);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
             text-align: center;
             @media screen and (max-width: 1024px) {
               text-transform: none;
@@ -112,7 +85,6 @@ aside.sidebar{
               font-size: 10px;
               line-height: 12px;
               color: $dWhite;
-              font-feature-settings: 'pnum' on, 'lnum' on;
             }
           }
           i{
@@ -139,7 +111,8 @@ aside.sidebar{
         &:last-child{
           padding: 0;
         }
-        a{
+        a, 
+        button{
           display: block;
           width: 44px;
           height: 44px;
@@ -159,22 +132,6 @@ aside.sidebar{
   aside.sidebar{
     &:after{
       background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(39,38,45,1) 100%);
-    }
-    &.mobile{
-      @media screen and (max-width: 700px) {
-        background: $dBlack;
-        ul.menu{
-          li{
-            a,
-            button{
-              color: $white56;
-              svg{
-                fill: $white56;
-              }
-            }
-          }
-        }
-      }
     }
     ul.menu{
       li{

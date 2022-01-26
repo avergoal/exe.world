@@ -9,17 +9,16 @@
       <button v-else type="button" @click="$root.$emit('toggleModal', {target: e.target})" :class="{active: e.target == page}" class="togglemodal">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
-        <span v-if="e.target == 'messages' && user.notifications.chats" v-html="user.notifications.chats" class="label"></span>
-        <span v-if="e.target == 'friends' && user.notifications.friends" v-html="user.notifications.friends" class="label"></span>
-        <span v-if="e.target == 'news' && user.notifications.news" v-html="user.notifications.news" class="label"></span>
+        <span v-if="e.target == 'messages' && notifications.chats" v-html="notifications.chats" class="label"></span>
+        <span v-if="e.target == 'friends' && notifications.friends" v-html="notifications.friends" class="label"></span>
+        <span v-if="e.target == 'news' && notifications.news" v-html="notifications.news" class="label"></span>
       </button>
     </li>
   </ul>
   <ul class="games">
-    <li v-for="(e, i) in user.recent_games" :key="i">
-      <nuxt-link :to="'/g/' + e.gid">
-        <img :src="e.icon.default" :alt="e.title">
-      </nuxt-link>
+    <li v-for="(e, i) in recent" :key="i">
+      <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><img :src="e.icon.default" :alt="e.title"></nuxt-link>
+      <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><img :src="e.icon.default" :alt="e.title"></button>
     </li>
   </ul>
 </aside>
@@ -42,11 +41,14 @@ export default {
     }
   },
   computed: {
-    user() {
-      return this.$store.getters['profile/user']
-    },
     page() {
       return this.$store.getters['app/page']
+    },
+    recent() {
+      return this.$store.getters['games/userRecent']
+    },
+    notifications() {
+      return this.$store.getters['notifications/sidebar']
     }
   }
 }

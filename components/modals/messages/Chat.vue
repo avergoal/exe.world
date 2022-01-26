@@ -6,10 +6,10 @@
   <div v-if="show" class="modalcontent">
     <div v-if="profile" class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
-      <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: profile.user.uid})" class="userphoto" type="button"><img :src="profile.user.avatar_urls.x100" :alt="profile.user.user_name"></button>
+      <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: user.user.uid})" class="userphoto" type="button"><img :src="user.user.avatar_urls.x100" :alt="user.user.user_name"></button>
       <div class="info">
-        <div v-html="profile.user.user_name" class="name"></div>
-        <div :class="{active: profile.user.online}" class="online"><span></span> {{ (profile.user.online ? 'Online' : 'Offline') }}</div>
+        <div v-html="user.user.user_name" class="name"></div>
+        <div :class="{active: user.user.online}" class="online"><span></span> {{ (user.user.online ? 'Online' : 'Offline') }}</div>
       </div>
       <div class="nav">
         <div class="item">
@@ -17,13 +17,13 @@
           <div :class="{open: openParams}" class="dropdown">
             <ul class="menu">
               <li>
-                <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: profile.user})" type="button">
+                <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: user.user})" type="button">
                   <div class="ico"><svg-icon name="ui/blacklist" /></div>
                   <span>Block User</span>
                 </button>
               </li>
               <li>
-                <button @click="$root.$emit('toggleModal', {target: 'messagesRemove', code: messages.code, uid: profile.user.uid})" type="button">
+                <button @click="$root.$emit('toggleModal', {target: 'messagesRemove', code: messages.code, uid: user.user.uid})" type="button">
                   <div class="ico"><svg-icon name="ui/remove" /></div>
                   <span>Delete History</span>
                 </button>
@@ -48,10 +48,10 @@
       <div v-if="messages" class="chatbox">
         <div v-for="(e, i) in messages.list" :key="i" class="day">
           <div v-html="i.split('.').join(' ')" class="date"></div>
-          <div v-for="(e2, i2) in e" :key="i2" :class="(e2.user.uid == user.profile.uid) ? 'out' : 'in'" class="item">
+          <div v-for="(e2, i2) in e" :key="i2" :class="(e2.user.uid == profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
-            <div v-if="e2.user.uid != user.profile.uid" class="userphoto"><img :src="e2.user.avatar_urls.x100" alt=""></div>
-            <div v-if="e2.user.uid != user.profile.uid" class="info">
+            <div v-if="e2.user.uid != profile.uid" class="userphoto"><img :src="e2.user.avatar_urls.x100" alt=""></div>
+            <div v-if="e2.user.uid != profile.uid" class="info">
               <div class="message">
                 <div v-html="e2.user.user_name" class="name"></div>
                 <div v-html="e2.text" class="text"></div>
@@ -59,8 +59,8 @@
               <div v-html="e2.time" class="time"></div>
             </div>
             <!-- Out -->
-            <div v-if="e2.user.uid == user.profile.uid" v-html="e2.text" class="message"></div>
-            <div v-if="e2.user.uid == user.profile.uid" class="info">
+            <div v-if="e2.user.uid == profile.uid" v-html="e2.text" class="message"></div>
+            <div v-if="e2.user.uid == profile.uid" class="info">
               <div class="check">
                 <svg-icon v-if="e2.unread" name="ui/unreceived" />
                 <svg-icon v-else name="ui/received" />
@@ -73,8 +73,8 @@
       <div v-else class="chatbox">
         <div class="empty">
           <div class="img">
-            <img src="~/assets/illustration/messages.svg" alt="" class="illustration day">
-            <img src="~/assets/illustration/messages_inverse.svg" alt="" class="illustration night">
+            <img v-if="theme" src="~/assets/illustration/messages_inverse.svg" />
+            <img v-else src="~/assets/illustration/messages.svg" />
           </div>
           <div class="text">
             <b>There are no messages here yet</b>
@@ -85,6 +85,14 @@
     </perfect-scrollbar>
     <form @submit.prevent class="send" action="">
       <button type="button" class="smile"><svg-icon name="ui/smile" /></button>
+      <!--
+      <twemoji-picker
+        :emojiData="emojiDataAll"
+        :emojiGroups="emojiGroups"
+        :skinsSelection="false"
+        :searchEmojisFeat="false"
+      ></twemoji-picker>
+      -->
       <input v-model="message" v-on:keyup.enter="sendMessage()" type="text" name="" value="" placeholder="Write message">
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
@@ -94,8 +102,14 @@
 </template>
 
 <script>
+import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
+import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ru/emoji-all-groups.json'
+import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json'
 export default {
 	name: 'MessagesChatModal',
+  components: {
+    'twemoji-picker': TwemojiPicker
+  },
   data: () => ({
     message: null,
     date: '',
@@ -109,6 +123,19 @@ export default {
       }
     })
     this.loadMessages()
+    if(this.notifications.chats) {
+      this.$store.dispatch('notifications/set', {
+        type: 'sidebar'
+      })
+    }
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scroll) {
+        setTimeout(() => {
+          this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
+          this.$refs.scroll.update()
+        }, 100)
+      }
+    })
   },
   methods: {
     async loadMessages() {
@@ -140,17 +167,29 @@ export default {
     }
   },
   computed: {
-    profile() {
+    user() {
       return this.$store.getters['users/profile']
     },
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
     },
     modal() {
       return this.$store.getters['app/modal']
     },
     messages() {
       return this.$store.getters['messages/messages']
+    },
+    emojiDataAll() {
+      return EmojiAllData
+    },
+    emojiGroups() {
+      return EmojiGroups
+    },
+    notifications() {
+      return this.$store.getters['notifications/sidebar']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

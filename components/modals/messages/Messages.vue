@@ -8,7 +8,7 @@
     <form action="">
       <fieldset>
         <svg-icon name="ui/search" />
-        <input v-model="search" @input="setSearchResults()" type="text" name="" value="" placeholder="Search contacts">
+        <input v-model="query" @input="setSearchResults()" type="text" name="" value="" placeholder="Search contacts">
       </fieldset>
     </form>
     <perfect-scrollbar ref="scroll">
@@ -28,8 +28,8 @@
         </li>
         <li v-if="!chats.length" class="empty">
           <div class="img">
-            <img src="~/assets/illustration/messages.svg" alt="" class="illustration day">
-            <img src="~/assets/illustration/messages_inverse.svg" alt="" class="illustration night">
+            <img v-if="theme" src="~/assets/illustration/messages_inverse.svg" />
+            <img v-else src="~/assets/illustration/messages.svg" />
           </div>
           <div class="text">
             <b>There are no messages here yet</b>
@@ -46,19 +46,33 @@
 export default {
 	name: 'MessagesModal',
   data: () => ({
-    search: null
+    query: null
   }),
   created() {
     this.$store.dispatch('messages/chats')
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scroll) {
+        setTimeout(() => {
+          this.$refs.scroll.update()
+        }, 100)
+      }
+    })
   },
   methods: {
-    async setSearchResults() {
-      await this.$store.dispatch('messages/search', {query: this.search})
+    setSearchResults() {
+      if(this.query) {
+        this.$store.dispatch('messages/search', {query: this.query})
+      } else {
+        this.$store.dispatch('messages/chats')
+      }
     }
   },
   computed: {
     chats() {
       return this.$store.getters['messages/chats']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

@@ -4,38 +4,41 @@
     <button @click="$root.$emit('toggleModalTab', 'wallet')" type="button"><svg-icon name="ui/back" /></button>
     <span>Add Funds</span>
   </div>
-  <ul class="select">
-    <li><button @click="paysystem = 0" :class="{active: paysystem === 0}" type="button">Credit Card</button></li>
-    <li><button @click="paysystem = 1" :class="{active: paysystem === 1}" type="button">PayPal</button></li>
-    <li><button @click="paysystem = 2" :class="{active: paysystem === 2}" type="button">Xsolla</button></li>
-  </ul>
-  <form @submit.prevent action="">
-    <div class="label">Balance Quantity</div>
-    <ul class="radio">
-      <li>
-        <input type="radio" name="payment" value="" id="r1" checked>
-        <label for="r1">$1</label>
-      </li>
-      <li>
-        <input type="radio" name="payment" value="" id="r2">
-        <label for="r2">$5</label>
-      </li>
-      <li>
-        <input type="radio" name="payment" value="" id="r3">
-        <label for="r3">$10</label>
-      </li>
-      <li>
-        <input type="radio" name="payment" value="" id="r4">
-        <label for="r4">$15</label>
-      </li>
-      <li>
-        <input type="radio" name="payment" value="" id="r5">
-        <label for="r5">$20</label>
-      </li>
+  <perfect-scrollbar ref="scroll_tab">
+    <ul class="select">
+      <li><button @click="paysystem = 'yookassa'" :class="{active: paysystem === 'yookassa'}" type="button">yookassa</button></li>
     </ul>
-    <fieldset><input type="text" name="" value="" placeholder="Other quantity"></fieldset>
-    <button type="button" class="btn st2">Continue</button>
-  </form>
+    <form @submit.prevent action="">
+      <div class="label">Balance Quantity</div>
+      <ul class="radio">
+        <li>
+          <input v-model="balanceQuantity" type="radio" name="payment" value="1" id="r1" checked>
+          <label for="r1">$1</label>
+        </li>
+        <li>
+          <input v-model="balanceQuantity" type="radio" name="payment" value="5" id="r2">
+          <label for="r2">$5</label>
+        </li>
+        <li>
+          <input v-model="balanceQuantity" type="radio" name="payment" value="10" id="r3">
+          <label for="r3">$10</label>
+        </li>
+        <li>
+          <input v-model="balanceQuantity" type="radio" name="payment" value="15" id="r4">
+          <label for="r4">$15</label>
+        </li>
+        <li>
+          <input v-model="balanceQuantity" type="radio" name="payment" value="20" id="r5">
+          <label for="r5">$20</label>
+        </li>
+      </ul>
+      <fieldset>
+        <input v-model="otherQuantity" type="number" name="" value="" placeholder="Other quantity">
+        <span v-if="error" v-html="error" class="error"></span>
+      </fieldset>
+      <button @click="submit()" type="button" class="btn st2">Continue</button>
+    </form>
+  </perfect-scrollbar>
 </div>
 </template>
 
@@ -43,7 +46,32 @@
 export default {
   name: 'BalanceTabAddFunds',
   data: () => ({
-    paysystem: 0
-  })
+    paysystem: 'yookassa',
+    balanceQuantity: 1,
+    otherQuantity: null,
+    error: null
+  }),
+  created() {
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scroll_tab) {
+        setTimeout(() => {
+          this.$refs.scroll_tab.update()
+        }, 100)
+      }
+    })
+  },
+  methods: {
+    async submit() {
+      let response = await this.$store.dispatch('profile/paymentsPrepare', {
+        type: this.paysystem,
+        sum: (this.otherQuantity) ? this.otherQuantity : this.balanceQuantity
+      })
+      if(response.error) {
+        this.error = response.error
+      } else {
+        window.open(response.response.url, '_blank')
+      }
+    }
+  }
 }
 </script>

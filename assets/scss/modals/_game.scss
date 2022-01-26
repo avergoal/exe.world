@@ -2,7 +2,10 @@
   padding: 24px;
   .modalcontent{
     .title{
-      @include h5(800);
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 40px;
+      letter-spacing: 0.0025em;
     }
     .desc{
       padding: 24px 0 0;
@@ -18,8 +21,58 @@
       padding: 30px 0 0;
       button{
         margin: 0 8px 0 0;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 16px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
         &:last-child{
           margin: 0;
+        }
+      }
+    }
+    &.menu{
+      .topinfo{
+        display: flex;
+        align-items: center;
+        .img{
+          max-width: 64px;
+          min-width: 64px;
+          height: 64px;
+          margin: 0 24px 0 0;
+          border-radius: 8px;
+          overflow: hidden;
+          img{
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .name{
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 20px;
+          color: $dBlack;
+          letter-spacing: 0.0015em;
+        }
+      }
+      ul.menu{
+        padding: 38px 0 10px;
+        li{
+          padding: 0 0 28px;
+          &:last-child{
+            padding: 0;
+            button{
+              color: $dOrange; 
+            }
+          }
+          button{
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 20px;
+            color: $dGray;
+            letter-spacing: 0.0015em;
+          }
         }
       }
     }
@@ -54,9 +107,6 @@
       }
       .info{
         flex: 1 1 auto;
-        .title{
-          @include h4;
-        }
         .btns{
           display: flex;
           align-items: center;
@@ -68,11 +118,15 @@
               padding: 0;
             }
             .dropdown{
+              left: 0;
+              right: auto;
               ul{
                 li{
                   &:nth-child(1){
                     a{
-                      color: $dFacebook;
+                      span{
+                        color: $dFacebook;
+                      }
                       svg{
                         fill: $dFacebook;
                       }
@@ -80,7 +134,9 @@
                   }
                   &:nth-child(2){
                     a{
-                      color: $dTwitter;
+                      span{
+                        color: $dTwitter;
+                      }
                       svg{
                         fill: $dTwitter;
                       }
@@ -88,7 +144,9 @@
                   }
                   &:nth-child(3){
                     a{
-                      color: $dVk;
+                      span{
+                        color: $dVk;
+                      }
                       svg{
                         fill: $dVk;
                       }
@@ -103,7 +161,9 @@
             align-items: center;
             margin: 0 0 0 auto;
             .label{
-              @include caption1;
+              font-size: 12px;
+              line-height: 16px;
+              letter-spacing: 0.004em;
               span{
                 padding: 0 0 0 4px;
               }
@@ -131,81 +191,180 @@
         }
       }
     }
-    .screens{
-      .boxtitle{
-        padding: 40px 40px 24px;
-        @include h4;
-      }
-      .swiperbox{
-        padding: 0 0 0 40px;
-        .swiper-container{
-          overflow: visible;
+    .gameinfo{
+      max-height: 414px;
+      padding: 40px 0 0;
+      .screens{
+        .boxtitle{
+          padding: 0 40px 24px;
+          font-size: 32px;
+          font-weight: 800;
+          line-height: 40px;
+          letter-spacing: 0.0025em;
         }
-        .swiper-slide{
-          max-width: 414px;
-          min-width: 414px;
-          margin-bottom: 24px;
-          border-radius: 16px;
-          box-shadow:  0px 64px 67px rgba(0, 0, 0, 0);
-          transition: all .15s ease;
-          cursor: pointer;
-          .img{
-            position: relative;
+        .swiperbox{
+          padding: 0 0 0 40px;
+          .swiper-container{
+            overflow: visible;
+          }
+          .swiper-slide{
+            max-width: 414px;
+            min-width: 414px;
+            margin-bottom: 24px;
             border-radius: 16px;
-            overflow: hidden;
-            span{
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 48px;
-              height: 48px;
-              margin: -24px 0 0 -24px;
-              border-radius: 50%;
-              background: $dViolet;
-              visibility: hidden;
-              opacity: 0;
-              transition: all .15s ease;
-              svg{
-                width: 24px;
-                height: 24px;
-                fill: $dWhite;
+            box-shadow:  0px 64px 67px rgba(0, 0, 0, 0);
+            transition: all .15s ease;
+            cursor: pointer;
+            .img{
+              position: relative;
+              border-radius: 16px;
+              overflow: hidden;
+              span{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 48px;
+                height: 48px;
+                margin: -24px 0 0 -24px;
+                border-radius: 50%;
+                background: $dViolet;
+                visibility: hidden;
+                opacity: 0;
+                transition: all .15s ease;
+                svg{
+                  width: 24px;
+                  height: 24px;
+                  fill: $dWhite;
+                }
+              }
+              &:before{
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                visibility: hidden;
+                opacity: 0;
+                transition: all .15s ease;
+                content: "";
               }
             }
-            &:before{
-              position: absolute;
-              top: 0;
-              left: 0;
-              display: block;
-              width: 100%;
-              height: 100%;
-              background: rgba(0, 0, 0, 0.6);
-              visibility: hidden;
-              opacity: 0;
-              transition: all .15s ease;
-              content: "";
+            &:hover{
+              box-shadow:  0px 64px 67px rgba(0, 0, 0, 0.2);
+              .img{
+                &:before{
+                  visibility: visible;
+                  opacity: 1;
+                }
+                span{
+                  visibility: visible;
+                  opacity: 1;
+                }
+              }
             }
           }
-          &:hover{
-            box-shadow:  0px 64px 67px rgba(0, 0, 0, 0.2);
-            .img{
-              &:before{
-                visibility: visible;
-                opacity: 1;
+          .swipernav{
+            button{
+              margin: -44px 0 0;
+              &.prev_screen{
+                left: 40px;
               }
-              span{
-                visibility: visible;
-                opacity: 1;
+              &.next_screen{
+                right: 40px;
               }
+            }
+          }
+        }
+      }
+      .desc{
+        padding: 0 40px 20px;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
+      }
+    }
+  }
+
+}
+.night{
+  .gamemodal{
+    .modalcontent{
+      .desc{
+        color: $nWhite;
+        strong{
+          color: $nWhite;
+        }
+      }
+      &.menu{
+        .topinfo{
+          .name{
+            color: $nWhite;
+          }
+        }
+        ul.menu{
+          li{
+            &:last-child{
+              button{
+                color: $nOrange;
+              }
+            }
+            button{
+              color: $nWhite;
             }
           }
         }
       }
     }
-    .desc{
-      padding: 40px;
+    &.info{
+      .top{
+        .info{
+          .btns{
+            .item{
+              .dropdown{
+                ul{
+                  li{
+                    &:nth-child(1){
+                      a{
+                        span{
+                          color: $nFacebook;
+                        }
+                        svg{
+                          fill: $nFacebook;
+                        }
+                      }
+                    }
+                    &:nth-child(2){
+                      a{
+                        span{
+                          color: $nTwitter;
+                        }
+                        svg{
+                          fill: $nTwitter;
+                        }
+                      }
+                    }
+                    &:nth-child(3){
+                      a{
+                        span{
+                          color: $nVk;
+                        }
+                        svg{
+                          fill: $nVk;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -260,7 +419,9 @@
         padding: 60px 40px;
         background: rgba(39, 38, 45, 0.9);
         backdrop-filter: blur(5px);
-        @include h6;
+        font-size: 20px;
+        line-height: 24px;
+        letter-spacing: 0.0015em;
         color: $nWhite;
         text-align: center;
       }
@@ -322,12 +483,18 @@
         border: 1px solid $grayMedium;
         border-width: 1px 0;
         .text{
-          @include body1(500);
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 24px;
+          letter-spacing: 0.001em;
           color: $dGray;
         }
         button{
           display: block;
-          @include button1(800);
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
           color: $dViolet;
           text-transform: uppercase;
         }
@@ -341,7 +508,10 @@
           display: block;
         }
         .text{
-          @include body1(500);
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 24px;
+          letter-spacing: 0.001em;
           color: $dGray;
           @media screen and (max-width: 576px) {
             padding: 0 0 12px;

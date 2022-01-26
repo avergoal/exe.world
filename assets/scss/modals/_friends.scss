@@ -1,5 +1,8 @@
 .friendsmodal{
   padding: 40px 40px 0;
+  @media screen and (max-width: 920px) {
+    padding: 24px 24px 0;
+  }
   &.remove,
   &.removed,
   &.block,
@@ -8,44 +11,104 @@
   }
   .modalcontent{
     .top{
-      @include h3;
-    }
-    form{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
-      padding: 40px 0 24px;
-      @media screen and (max-width: 700px) {
-        padding: 20px 0;
+      span{
+        display: block;
+        font-size: 40px;
+        font-weight: 800;
+        line-height: 48px;
+        @media screen and (max-width: 920px) {
+          font-size: 32px;
+          line-height: 40px;
+          letter-spacing: 0.0025em;
+        }
       }
-      fieldset{
+      button{
+        max-width: 20px;
+        min-width: 20px;
+        height: 20px;
+        margin: 0 28px 0 0;
+        transition: opacity .15s ease;
+        &.disabled{
+          opacity: .5;
+        }
         svg{
-          position: absolute;
-          top: 50%;
-          left: 18px;
-          width: 20px;
-          height: 20px;
-          margin: -10px 0 0;
+          width: 100%;
+          height: 100%;
           fill: $dGray;
         }
-        input{
-          padding: 0 16px 0 64px;
+      }
+    }
+    .searchchat{
+      position: relative;
+      height: 100%;
+      max-height: 0;
+      padding: 0;
+      overflow: hidden;
+      transition: max-height 0.15s ease;
+      &.open:not(.hidden){
+        max-height: 68px;
+      }
+      form{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 20px 0 0;
+        fieldset{
+          position: relative;
+          svg{
+            position: absolute;
+            top: 50%;
+            left: 18px;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0;
+            fill: $dGray;
+          }
+          input{
+            padding: 0 16px 0 64px;
+          }
+        }
+        button{
+          max-width: 20px;
+          min-width: 20px;
+          height: 20px;
+          margin: 0 0 0 20px;
+          svg{
+            width: 100%;
+            height: 100%;
+            fill: $dGray;
+          }
         }
       }
     }
     .filters{
+      margin: 24px 0 10px!important;
+      @media screen and (max-width: 920px) {
+        ul{
+          li{
+            button{
+              height: 36px;
+            }
+          }
+        }
+      }
       @media screen and (max-width: 576px) {
         padding: 0;
       }
     }
     .ps{
-      margin: 0 0 10px;
       &.friendsscroll{
-        height: 330px;
-      }
-      @media screen and (max-width: 700px) {
-        max-height: calc(100Vh - 250px);
+        height: calc(100% - 160px);
+        @media screen and (max-width: 920px) {
+          height: calc(100% - 144px);
+        }
+        &.small{
+          height: 360px;
+        }
       }
       @media screen and (max-width: 576px) {
         max-height: calc(100Vh - 220px);
@@ -82,9 +145,6 @@
           display: flex;
           align-items: center;
           padding: 16px 60px 16px 0;
-          @media screen and (max-width: 700px) {
-            padding: 16px 40px 16px 0;
-          }
           @media screen and (max-width: 576px) {
             padding: 10px 20px 10px 0;
           }
@@ -105,7 +165,10 @@
             display: none;
           }
           &.observer{
-            display: none;
+            padding: 0;
+            &:after{
+              display: none;
+            }
           }
           &.loader{
             height: 330px;
@@ -115,7 +178,10 @@
             }
           }
           .name{
-            @include subTitle1;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 20px;
+            letter-spacing: 0.0015em;
           }
           .nav{
             display: flex;
@@ -151,6 +217,12 @@
                     }
                   }
                 }
+                span{
+                  font-size: 14px;
+                  font-weight: 800;
+                  line-height: 16px;
+                  letter-spacing: 0.06em;
+                }
                 svg{
                   width: 8px;
                   height: 20px;
@@ -176,6 +248,10 @@
                   }
                   button{
                     height: auto;
+                    span{
+                      font-weight: 600;
+                      letter-spacing: 0.001px;
+                    }
                     svg{
                       width: 20px;
                       height: 20px;
@@ -209,7 +285,10 @@
               padding: 45px 0 0;
               b{
                 display: block;
-                @include h6;
+                font-size: 20px;
+                font-weight: 700;
+                line-height: 24px;
+                letter-spacing: 0.0015em;
                 color: $dGray;
                 text-align: center;
               }
@@ -223,16 +302,27 @@
           }
         }
       }
+      @media screen and (max-width: 920px) {
+        .ps__rail-y{
+          right: 0;
+        }
+      }
     }
     &.removebox{
       .title{
-        @include h5(800);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 28px;
+        letter-spacing: 0.0015em;
       }
       .desc{
         padding: 24px 0 0;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
         color: $dGray;
         strong{
-          @include body1(700);
+          font-weight: 700;
         }
       }
       .btns{
@@ -242,6 +332,10 @@
         button{
           height: 36px;
           border-radius: 8px;
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
           &:first-child{
             margin: 0 8px 0 0;
           }
@@ -250,26 +344,39 @@
     }
     &.removedbox{
       .desc{
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
         color: $dGray;
         strong{
-          @include body1(700);
+          font-weight: 700;
         }
       }
       button{
         height: 36px;
         margin: 32px 0 0;
         border-radius: 8px;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 16px;
+        letter-spacing: 0.06em;
       }
     }
     &.blockbox{
       .title{
-        @include h5(800);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 28px;
+        letter-spacing: 0.0015em;
       }
       .desc{
         padding: 24px 0 0;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
         color: $dGray;
         strong{
-          @include body1(700);
+          font-weight: 700;
         }
         p{
           margin: 0;
@@ -286,6 +393,10 @@
         button{
           height: 36px;
           border-radius: 8px;
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
           &:first-child{
             margin: 0 8px 0 0;
           }
@@ -294,10 +405,16 @@
     }
     &.reportbox{
       .title{
-        @include h5(800);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 28px;
+        letter-spacing: 0.0015em;
       }
       .desc{
         padding: 24px 0 0;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
       }
       form{
         display: block;
@@ -317,6 +434,9 @@
             label{
               display: flex;
               align-items: center;
+              font-size: 16px;
+              line-height: 24px;
+              letter-spacing: 0.001em;
               &:before,
               &:after{
                 display: block;
@@ -352,6 +472,9 @@
         textarea{
           margin: 32px 0 0;
           padding: 12px 16px;
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0.001em;
         }
         .btns{
           display: flex;
@@ -360,6 +483,10 @@
           button{
             height: 36px;
             border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 16px;
+            letter-spacing: 0.06em;
             &:first-child{
               margin: 0 8px 0 0;
             }
@@ -373,13 +500,26 @@
 .night{
   .friendsmodal{
     .modalcontent{
+      .top{
+        button{
+          svg{
+            fill: $white56;
+          }
+        }
+      }
       form{
         fieldset{
           svg{
             fill: $white56;
           }
           input{
+            border-color: $blackLight;
             background: $blackLight;
+          }
+        }
+        button{
+          svg{
+            fill: $white56;
           }
         }
       }

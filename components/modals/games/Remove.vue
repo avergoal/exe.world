@@ -19,11 +19,9 @@ export default {
 	name: 'GameRemoveModal',
   methods: {
     async removeGame() {
+      this.$router.push('/')
       await this.$store.dispatch('games/removeGame', {
         gid: this.modal.game
-      })
-      await this.$store.dispatch('games/setGamesData', {
-        id: this.modal.game
       })
       this.$root.$emit('toggleModal', {})
     }

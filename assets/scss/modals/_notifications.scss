@@ -2,15 +2,25 @@
   padding: 24px;
   .modalcontent{
     .top{
-      @include h5(800);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 28px;
+      letter-spacing: 0.0015em;
     }
     .text{
       padding: 24px 0 0;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.001em;
       color: $dGray;
     }
     button{
       height: 36px;
       margin: 32px 0 0;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 16px;
+      letter-spacing: 0.06em;
     }
   }
 }

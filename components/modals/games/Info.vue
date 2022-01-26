@@ -33,24 +33,26 @@
         </div>
       </div>
     </div>
-    <div v-if="game.media.length" class="screens">
-      <div class="boxtitle">Screenshots</div>
-      <div class="swiperbox">
-        <swiper :options="config" ref="newSwiper">
-          <swiper-slide v-for="(e, i) in game.media" :key="i">
-            <div @click="index = i" class="img">
-              <img :src="e.image">
-              <span><svg-icon name="ui/plus" /></span>
-            </div>
-          </swiper-slide>
-        </swiper>
-        <div class="swipernav">
-          <button class="prev_screen b" type="button"><svg-icon name="ui/swiper_prev"/></button>
-          <button class="next_screen b" type="button"><svg-icon name="ui/swiper_next"/></button>
+    <perfect-scrollbar ref="scroll" class="gameinfo">
+      <div v-if="game.media.length" class="screens">
+        <div class="boxtitle">Screenshots</div>
+        <div class="swiperbox">
+          <swiper :options="config" ref="screens">
+            <swiper-slide v-for="(e, i) in game.media" :key="i">
+              <div @click="index = i" class="img">
+                <img :src="e.image">
+                <span><svg-icon name="ui/plus" /></span>
+              </div>
+            </swiper-slide>
+          </swiper>
+          <div class="swipernav">
+            <button class="prev_screen b" type="button"><svg-icon name="ui/swiper_prev"/></button>
+            <button class="next_screen b" type="button"><svg-icon name="ui/swiper_next"/></button>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-html="game.description" class="desc"></div>
+      <div v-html="game.description" class="desc"></div>
+    </perfect-scrollbar>
   </div>
   <CoolLightBox :items="gallery" :index="index" :effect="'fade'" @close="index = null" />
 </div>
@@ -80,9 +82,7 @@ export default {
   created() {
     if(this.gamesData[this.modal.game]) {
       this.game = this.gamesData[this.modal.game]
-      for(let i = 0; i < this.game.media.length; i++) {
-        this.gallery.push(this.game.media[i].image)
-      }
+      this.game.media.map(e => this.gallery.push(e.image))
       this.loaded = true
     } else {
       this.loadGame(this.modal.game)
@@ -102,10 +102,15 @@ export default {
       })
       if(this.gamesData[this.modal.game]) {
         this.game = this.gamesData[this.modal.game]
-        for(let i = 0; i < this.game.media.length; i++) {
-          this.gallery.push(this.game.media[i].image)
-        }
+        this.game.media.map(e => this.gallery.push(e.image))
         this.loaded = true
+        let interval = setInterval(() => {
+          if(this.$refs.scroll) {
+            clearInterval(interval)
+            this.$refs.scroll.$el.scrollBy(0, 0)
+            this.$refs.scroll.update()
+          }
+        }, 100)
       }
     },
     goGame() {

@@ -8,7 +8,7 @@
         <div class="box">
           <div class="img">
             <img v-lazy="e.poster.default" :alt="e.title">
-            <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
             <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
             <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           </div>
@@ -30,17 +30,13 @@ export default {
   data: () => ({
     games: [],
     title: 'Exe world',
-    decsription: 'Exe world'
+    decsription: 'Exe world',
+    observer: false
   }),
   head() {
     return {
       title: this.title,
-      observer: false,
-      meta: [{
-        hid: 'description',
-        name: 'description',
-        content: this.description
-      }]
+      meta: [{hid: 'description', name: 'description', content: this.description}]
     }
   },
   created() {
@@ -78,27 +74,36 @@ export default {
           this.games = this.categories[this.filter.current].list
           break
       }
-      setTimeout(() => {
-        this.observer = true
-      }, 500)
+      this.observer = true
     },
     changeCategory(e) {
       if(!this.categories[e].list.length) {
-        this.loadGames(e, 0)
+        this.loadGames(e)
       } else {
         this.games = this.categories[e].list
       }
     },
-    async loadGames(t, o) {
-      await this.$store.dispatch('games/setCategories', {
-        type: t,
-        offset: o
-      })
-      this.games = this.categories[this.filter.current].list
+    async loadGames(e) {
+      switch(this.page) {
+        case 'new':
+          this.observer = await this.$store.dispatch('games/setNew', {})
+          this.games = this.newgames.list
+          break
+        case 'reccomends':
+          this.observer = await this.$store.dispatch('games/setRecommend', {})
+          this.games = this.recommended.list
+          break
+        case 'categories':
+          this.observer = await this.$store.dispatch('games/setCategories', {
+            type: e
+          })
+          this.games = this.categories[this.filter.current].list
+          break
+      }
     },
     async intersected() {
-      if(this.observer && !this.categories[this.filter.current].loaded) {
-        this.loadGames(this.filter.current, this.categories[this.filter.current].offset)
+      if(this.observer) {
+        this.loadGames(this.filter.current)
       }
     }
   },
@@ -118,8 +123,8 @@ export default {
     filter() {
       return this.$store.getters['filters/allCategories']
     },
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
     }
   }
 }

@@ -30,7 +30,7 @@
           <!-- Info -->
           <div class="info">
             <div class="name">
-              <strong v-html="e.name"></strong>
+              <strong v-if="e.name" v-html="e.name"></strong>
               <span v-html="'// '+$moment.unix(e.timestamp).format('DD.MM.YYYY')"></span>
             </div>
             <div v-html="e.text" class="text"></div>
@@ -45,7 +45,10 @@
           <button v-else-if="(e.type == 1 || e.type == 3) && e.games[0]" @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.games[0].gid})" type="button" class="img extended">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </button>
-          <button v-if="e.type == 2 && e.users[1]" @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.users[1].uid})" type="button" class="userphoto extended">
+          <button v-if="e.type == 2 && e.users[1] && e.users[1].gid != profile.gid" @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.users[1].uid})" type="button" class="userphoto extended">
+            <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
+          </button>
+          <button v-else-if="e.type == 2 && e.users[1]" @click="$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})" type="button" class="userphoto extended">
             <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
           </button>
         </li>
@@ -54,8 +57,8 @@
       <ul v-else class="news">
         <li class="empty">
           <div class="img">
-            <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-            <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+            <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
+            <img v-else src="~/assets/illustration/notfound.svg" />
           </div>
           <div class="text">
             <b>You have no news yet</b>
@@ -78,6 +81,15 @@ export default {
     },
     offset: 0
   }),
+  created() {
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scroll_list) {
+        setTimeout(() => {
+          this.$refs.scroll_list.update()
+        }, 100)
+      }
+    })
+  },
   mounted() {
     this.loadNews({offset: this.offset})
   },
@@ -111,6 +123,12 @@ export default {
   computed: {
     news() {
       return this.$store.getters['app/news']
+    },
+    profile() {
+      return this.$store.getters['profile/data']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   },
   watch: {

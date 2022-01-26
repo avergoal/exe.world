@@ -25,8 +25,10 @@ footer.main{
     content: "";
   }
   .copywrite{
-    @include body2;
+    font-size: 14px;
+    line-height: 20px;
     color: $dGray;
+    letter-spacing: 0.0015em;
   }
   ul{
     display: flex;
@@ -39,9 +41,13 @@ footer.main{
       a,
       button{
         display: block;
-        @include body2(500);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
         color: $dGray;
         text-decoration: none;
+        text-transform: none;
+        letter-spacing: 0.0015em;
       }
     }
   }

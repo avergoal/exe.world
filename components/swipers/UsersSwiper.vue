@@ -43,7 +43,10 @@ export default {
   },
   methods: {
     openUser(e) {
-      if(this.user && this.user.profile.uid === e) {
+      if(!this.profile) {
+        this.$root.$emit('toggleModal', {target: 'signIn'})
+        this.closeSearch()
+      } else if(this.profile.uid === e) {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
         this.$root.$emit('toggleModal', {target: 'userProfile', user: e})
@@ -71,8 +74,8 @@ export default {
       let friends = this.$store.getters['users/profile'].mutual_friends
       return (friends) ? friends.users : []
     },
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
     }
   }
 }

@@ -9,7 +9,7 @@
             <div v-html="e.title" class="title"></div>
             <div v-html="e.description" class="desc"></div>
           </div>
-          <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+          <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
           <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
         </div>
@@ -66,19 +66,17 @@ export default {
     this.swiper.on('slideChangeTransitionStart', (e) => {
       e.slides[e.previousIndex].firstChild.classList.add('previous')
       setTimeout(() => {
-        for(let slide in e.slides) {
-          if(typeof e.slides[slide] == 'object') {
-            e.slides[slide].firstChild.classList.remove('previous')
-            e.slides[slide].firstChild.classList.remove('current_slide')
-          }
-        }
+        e.slides.map(slide => {
+          slide.firstChild.classList.remove('previous')
+          slide.firstChild.classList.remove('current_slide')
+        })
         e.slides[e.activeIndex].firstChild.classList.add('current_slide')
       }, 1)
     })
   },
   computed: {
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
     }
   }
 }

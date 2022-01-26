@@ -4,8 +4,8 @@
   <div class="info">
     <div v-html="data.text" class="text"></div>
     <div class="img">
-      <img src="~/assets/illustration/about.svg" class="illustration day" />
-      <img src="~/assets/illustration/about_inverse.svg" class="illustration night" />
+      <img v-if="theme" src="~/assets/illustration/about_inverse.svg" />
+      <img v-else src="~/assets/illustration/about.svg" />
     </div>
   </div>
 </div>
@@ -22,6 +22,11 @@ export default {
 		return {
       title: this.data.title,
       meta: [{hid: 'description', name: 'description', content: this.data.title}]
+    }
+  },
+  computed: {
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

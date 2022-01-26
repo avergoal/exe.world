@@ -28,7 +28,10 @@
         span{
           display: block;
           padding: 0 0 0 20px;
-          @include h5;
+          font-size: 24px;
+          font-weight: 800;
+          line-height: 28px;
+          letter-spacing: 0.0015em;
         }
       }
     }
@@ -45,7 +48,9 @@
       }
       .desc{
         padding: 0 0 34px;
-        @include body1;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
       }
       .alert{
         padding: 8px 16px;
@@ -89,6 +94,10 @@
           padding: 0 16px;
           margin: 0 24px 0 0;
           border-radius: 12px;
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
           &.link{
             width: auto;
             height: auto;
@@ -108,12 +117,18 @@
         border: 1px solid $grayMedium;
         border-width: 1px 0;
         .text{
-          @include body1(500);
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 24px;
+          letter-spacing: 0.001em;
           color: $dGray;
         }
         button{
           display: block;
-          @include button1(800);
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
           color: $dViolet;
           text-transform: uppercase;
         }
@@ -127,7 +142,10 @@
           display: block;
         }
         .text{
-          @include body1(500);
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 24px;
+          letter-spacing: 0.001em;
           color: $dGray;
           @media screen and (max-width: 576px) {
             padding: 0 0 12px;
@@ -189,10 +207,16 @@
     padding: 24px;
     .modalcontent{
       .top{
-        @include h5(800);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 28px;
+        letter-spacing: 0.0015em;
       }
       .text{
         padding: 24px 0 0;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
         color: $dGray;
       }
       button{
@@ -205,10 +229,16 @@
     padding: 24px;
     .modalcontent{
       .top{
-        @include h5(800);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 28px;
+        letter-spacing: 0.0015em;
       }
       .text{
         padding: 24px 0 0;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.001em;
         color: $dGray;
       }
       .btns{
@@ -218,6 +248,10 @@
         button{
           height: 36px;
           margin: 0 8px 0 0;
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
           &:last-child{
             margin: 0;
           }

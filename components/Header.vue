@@ -1,8 +1,8 @@
 <template>
-<header :class="{clear: !user}" class="main">
+<header :class="{clear: !profile}" class="main">
   <div class="logo">
     <button @click="toggleMenu('info')" class="small togglemenu" type="button"><svg-icon name="logo_small"/></button>
-    <nuxt-link to="/"><svg-icon name="logo" /></nuxt-link>
+    <button @click="goHome()" type="button"><svg-icon name="logo"/></button>
     <div :class="{open: dropdown.info}" class="dropdown">
       <ul>
         <li>© 2020 EXE. WORLD  All rights reserved</li>
@@ -14,14 +14,14 @@
   </div>
   <nav>
     <div class="item search"><button @click="openSearch" class="opensearch btn st1" type="button"><svg-icon name="ui/search" /></button></div>
-    <div v-if="user" class="item wallet">
+    <div v-if="profile" class="item wallet">
       <button @click="toggleModal('personalData', 'addfunds')" type="button" class="btn st1">
         <svg-icon name="ui/wallet" />
-        <span v-html="user.balance"></span>
+        <span v-html="profile.balance"></span>
         <div class="plus"><svg-icon name="ui/plus" /></div>
       </button>
     </div>
-    <div v-if="user" class="item notifications">
+    <div v-if="profile" class="item notifications">
       <button @click="toggleMenu('notify')" type="button" class="togglemenu btn st1">
         <div class="ico"><svg-icon name="ui/bell" /></div>
         <span v-if="notifications.total" v-html="notifications.total" class="badge"></span>
@@ -49,17 +49,17 @@
         </ul>
         <div v-else class="notifyempty">
           <div class="img">
-            <img src="~/assets/illustration/notifications.svg" alt="" class="illustration day">
-            <img src="~/assets/illustration/notifications_inverse.svg" alt="" class="illustration night">
+            <img v-if="theme" src="~/assets/illustration/notifications_inverse.svg" alt="" class="illustration">
+            <img v-else src="~/assets/illustration/notifications.svg" alt="" class="illustration">
           </div>
           <div class="text">There are no notifications here yet</div>
         </div>
       </div>
     </div>
-    <div v-if="user" class="item account">
+    <div v-if="profile" class="item account">
       <button @click="toggleMenu('profile')" type="button" class="togglemenu btn st1">
-        <div class="photo"><img :src="user.profile.avatar_urls.x100" :alt="user.profile.user_name"></div>
-        <span v-html="user.profile.user_name"></span>
+        <div class="photo"><img :src="profile.avatar_urls.x100" :alt="profile.user_name"></div>
+        <span v-html="profile.user_name"></span>
         <svg-icon name="ui/user_settings" />
       </button>
       <div :class="{open: dropdown.profile}" class="dropdown">
@@ -73,7 +73,7 @@
         </ul>
       </div>
     </div>
-    <div v-if="!user" class="item signin">
+    <div v-else class="item signin">
       <button @click="toggleModal('signIn', null)" type="button" class="btn st3">
         <span>Sign in</span>
       </button>
@@ -120,7 +120,7 @@ export default {
         this.dropdown[e] = true
       }
     },
-    setRoute() {
+    goHome() {
       this.$store.dispatch('app/setPage', 'index')
       this.$route.path == '/' || this.$router.push('/')
     },
@@ -152,11 +152,14 @@ export default {
     search() {
       return this.$store.getters['search/open']
     },
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
     },
     notifications() {
-      return this.$store.getters['profile/notifications']
+      return this.$store.getters['notifications/header']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   },
   watch: {

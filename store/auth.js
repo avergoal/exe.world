@@ -9,26 +9,53 @@ export const mutations = {
 }
 
 export const actions = {
-  // Auth
-  async auth({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/auth', params)
+  async auth({commit}, token) {
+    const { data } = await this.$axios.post('/appApi/auth', {
+      api_token: token
+    })
     if(data.error) {
       localStorage.removeItem('token')
     } else {
-      if(params.api_token) {
-        commit('setState', {key: 'token', value: params.api_token})
-        localStorage.setItem('token', params.api_token)
-      }
-      this.dispatch('profile/load', data.response)
-      await this.dispatch('app/initAppData', {})
-      this.dispatch('profile/setNotifications', {})
+      this.dispatch('app/setTheme', {
+        theme: data.response.theme
+      })
+      this.dispatch('profile/set', Object.assign({
+        wssid: data.response.wssid,
+        balance: data.response.balance
+      }, data.response.profile))
+      this.dispatch('notifications/set', {
+        type: 'sidebar',
+        notifications: data.response.notifications
+      })
+      data.response.recent_games.map(e => {
+        delete e.type
+        delete e.title
+        delete e.poster
+      })
+      this.dispatch('games/setGames', {
+        category: 'userRecent',
+        data: data.response.recent_games
+      })
+      this.dispatch('games/setGames', {
+        category: 'userAll',
+        data: {
+          offset: 0,
+          list: data.response.user_games.splice(0, 20)
+        }
+      })
+      this.dispatch('settings/set', data.response.settings)
+      commit('setState', {
+        key: 'token', 
+        value: token
+      })
+      localStorage.setItem('token', token)
+      await this.dispatch('app/initAppData')
     }
-    return true
   },
   async signIn({}, params) {
     const { data } = await this.$axios.post('/appApi/signin', params)
     if(!data.error) {
-      this.dispatch('auth/auth', { api_token: data.response.api_token })
+      this.dispatch('auth/auth', data.response.api_token)
       return false
     }
     return data.error
@@ -36,7 +63,7 @@ export const actions = {
   async signUp({}, params) {
     const { data } = await this.$axios.post('/appApi/signup', params)
     if(!data.error) {
-      this.dispatch('auth/auth', { api_token: data.response.api_token })
+      this.dispatch('auth/auth', data.response.api_token)
       return false
     }
     return data.error

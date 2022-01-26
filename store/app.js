@@ -2,8 +2,6 @@ export const state = () => ({
   theme: 0,
   page: 'index',
   modal: {},
-  countries: [],
-  cities: [],
   news: [],
   subjects: {}
 })
@@ -16,58 +14,51 @@ export const mutations = {
 
 export const actions = {
   // Inititial app data
-  async initAppData({}, params) {
-    const { response } = await this.$axios.$post('/appApi/init', params)
+  async initAppData() {
+    const { response } = await this.$axios.$post('/appApi/init', {})
     let games = {},
         search = []
-    for(let i = 0; i < response.length; i++) {
-      for(let e in response[i]) {
-        switch(e) {
-          case 'guest_token':
-            if(!this.getters['auth/token']) {
-              this.dispatch('auth/setToken', response[i][e])
+    response.map(e => {
+      let keys = Object.keys(e)
+      switch(keys[0]) {
+        case 'guest_token':
+          this.getters['auth/token'] || this.dispatch('auth/setToken', e[keys[0]])
+          break
+        case 'games_carousel':
+        case 'games_new':
+        case 'games_recommended':
+          games[keys[0]] = {
+            list: e[keys[0]],
+            offset: 0
+          }
+          break
+        case 'games_all':
+          games[keys[0]] = e[keys[0]]
+          break
+        case 'categories':
+          let categories = {}
+          e[keys[0]].map(c => {
+            if(c.total_games) {
+              categories[c.cid] = c
+              categories[c.cid].list = []
+              categories[c.cid].offset = 0
             }
-            break
-          case 'games_carousel':
-          case 'games_new':
-          case 'games_recommended':
-            games[e] = {
-              list: response[i][e],
-              loaded: false,
-              offset: 0
-            }
-            break
-          case 'games_all':
-            games[e] = response[i][e]
-            break
-          case 'categories':
-            let categories = {}
-            for(let c = 0; c < response[i][e].length; c++) {
-              if(response[i][e][c].total_games) {
-                categories[response[i][e][c].cid] = response[i][e][c]
-                categories[response[i][e][c].cid].list = []
-                categories[response[i][e][c].cid].loaded = false
-                categories[response[i][e][c].cid].offset = 0
-              }
-            }
-            categories[0] = {
-              cid: 0,
-              title: 'All',
-              loaded: false,
-              list: [],
-              offset: 0
-            }
-            games[e] = categories
-            break
-          case 'popular_search':
-            search = response[i][e]
-            break
-        }
-      }  
-    }
+          })
+          categories[0] = {
+            cid: 0,
+            title: 'All',
+            list: [],
+            offset: 0
+          }
+          games[keys[0]] = categories
+          break
+        case 'popular_search':
+          search = e[keys[0]]
+          break
+      }
+    })
     this.dispatch('games/setInitData', games)
     this.dispatch('search/setPopular', search)
-    return true
   },
   // Modals
   toggleModal({state, commit}, params) {
@@ -102,33 +93,21 @@ export const actions = {
     modal.tab = params
     commit('setState', {key: 'modal', value: modal})
   },
-  // Utilities
-  async setCountries({commit}) {
-    const { data } = await this.$axios.post('/appApi/util.countries')
-    let countries = {}
-    for(let i = 0; i < data.response.countries.length; i++) {
-      countries[data.response.countries[i].id] = data.response.countries[i].title
-    }
-    commit('setState', {key: 'countries', value: countries})
-    return true
-  },
-  async setCities({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/util.cities', params)
-    let cities = {}
-    for(let i = 0; i < data.response.cities.length; i++) {
-      cities[data.response.cities[i].id] = data.response.cities[i].title
-    }
-    commit('setState', {key: 'cities', value: cities})
-    return true
-  },
   // Pages
   setPage({commit}, params) {
     commit('setState', {key: 'page', value: params})
   },
   // Theme
   setTheme({commit}, params) {
-    commit('setState', {key: 'theme', value: params})
-    this.$axios.post('/appApi/settings.theme.switch', {theme: params})
+    commit('setState', {
+      key: 'theme', 
+      value: Number(params.theme)
+    })
+    if(params.update) {
+      this.$axios.post('/appApi/settings.theme.switch', {
+        theme: params.theme
+      })
+    }
   },
   // About
   async setAbout() {
@@ -145,7 +124,6 @@ export const actions = {
     let intersect = params.intersect
     delete params.intersect
     const { data } = await this.$axios.post('/appApi/news.my', params)
-    console.log(data)
     let results = data.response.news
     if(intersect) {
       results = getters.news.concat(results)
@@ -163,7 +141,6 @@ export const actions = {
     const { data } = await this.$axios.post('/appApi/user.report.subjects', {})
     let subjects = this.$deepClone(data.response.subjects)
     subjects.report = data.response.result
-    console.log(subjects)
     commit('setState', {key: 'subjects', value: subjects})
   }
 }
@@ -172,8 +149,6 @@ export const getters = {
   theme: state => state.theme,
   page: state => state.page,
   modal: state => state.modal,
-  countries: state => state.countries,
-  cities: state => state.cities,
   news: state => state.news,
   subjects: state => state.subjects,
 }

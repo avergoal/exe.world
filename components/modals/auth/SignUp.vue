@@ -54,9 +54,7 @@ export default {
   }),
   methods: {
     async signUp() {
-      for(let el in this.errors) {
-        this.errors[el].show = false
-      }
+      Object.keys(this.errors).map(e => this.errors[e].show = false)
       const error = await this.$store.dispatch('auth/signUp', {
         name: this.model.name,
         emailorphone: this.model.emailorphone,

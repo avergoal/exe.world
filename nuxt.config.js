@@ -31,9 +31,10 @@ export default {
   ],
   plugins: [
     { src: '~/plugins/axios' },
-    { src: '~/plugins/LoadAppData', mode: 'server' },
-    { src: '~/plugins/LoadJsPlugins' },
-    { src: '~/plugins/LoadTemplates' }
+    { src: '~/plugins/data', mode: 'server' },
+    { src: '~/plugins/plugins' },
+    { src: '~/plugins/services' },
+    { src: '~/plugins/templates' }
   ],
   components: true,
   buildModules: [
@@ -86,6 +87,7 @@ export default {
     }
   },
   build: {
+    cssSourceMap: true,
     extractCSS: true
   },
   telemetry: false

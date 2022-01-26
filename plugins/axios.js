@@ -10,9 +10,9 @@ export default function ({ $axios, store }) {
       if(config.data.api_token) {
         delete config.data.api_token
       }
-      for(let e in config.data) {
-        formData.append(e, config.data[e])
-      }
+      Object.keys(config.data).map(k => {
+        formData.append(k, config.data[k])
+      })
       config.data = formData
     }
     return config

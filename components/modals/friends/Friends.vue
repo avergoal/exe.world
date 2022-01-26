@@ -4,13 +4,19 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">Friends</div>
-    <form @submit.prevent class="search" action="">
-      <fieldset>
-        <svg-icon name="ui/search" />
-        <input v-model="query" @input="search()" type="text" name="" value="" placeholder="Search friends">
-      </fieldset>
-    </form>
+    <div class="top">
+      <span>Friends</span>
+      <button @click="openSearch = (activeSearch) ? !openSearch : false" :class="{disabled: !activeSearch}" type="button"><svg-icon name="ui/search" /></button>
+    </div>
+    <div :class="{open: openSearch, hidden: !activeSearch}" class="searchchat">
+      <form @submit.prevent class="search" action="">
+        <fieldset>
+          <svg-icon name="ui/search" />
+          <input v-model="query" @input="search()" type="text" name="" value="" placeholder="Search friends">
+        </fieldset>
+        <button @click="openSearch = false" type="button"><svg-icon name="ui/close" /></button>
+      </form>
+    </div>
     <perfect-scrollbar ref="scroll" class="filters">
       <ul>
         <li v-for="(e, i) in filters" :key="i">
@@ -22,7 +28,7 @@
         </li>
       </ul>
     </perfect-scrollbar>
-    <perfect-scrollbar ref="scroll_list" class="friendsscroll">
+    <perfect-scrollbar ref="scroll_list" :class="{small: openSearch}" class="friendsscroll">
       <div class="tabs">
         <ul v-if="friends.length" :class="{active: currentFilter == 0}" class="tab">
           <li v-for="(e, i) in friends" :key="i">
@@ -38,8 +44,8 @@
         <ul v-else :class="{active: currentFilter == 0}" class="tab">
           <li class="empty">
             <div class="img">
-              <img src="~/assets/illustration/friends.svg" alt="empty" class="illustration day">
-              <img src="~/assets/illustration/friends_inverse.svg" alt="empty" class="illustration night">
+              <img v-if="theme" src="~/assets/illustration/friends_inverse.svg" />
+              <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
               <b>You don't have friends yet</b>
@@ -64,8 +70,8 @@
         <ul v-else :class="{active: currentFilter == 1}" class="tab">
           <li class="empty">
             <div class="img">
-              <img src="~/assets/illustration/friends.svg" alt="empty" class="illustration day">
-              <img src="~/assets/illustration/friends_inverse.svg" alt="empty" class="illustration night">
+              <img v-if="theme" src="~/assets/illustration/friends_inverse.svg" />
+              <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
               <b>You don't have friends yet</b>
@@ -89,8 +95,8 @@
         <ul v-else :class="{active: currentFilter == 2}" class="tab">
           <li class="empty">
             <div class="img">
-              <img src="~/assets/illustration/friends.svg" alt="empty" class="illustration day">
-              <img src="~/assets/illustration/friends_inverse.svg" alt="empty" class="illustration night">
+              <img v-if="theme" src="~/assets/illustration/friends_inverse.svg" />
+              <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
               <b>You don't have friends yet</b>
@@ -110,6 +116,8 @@ export default {
 	name: 'FriendsModalComponent',
   components: {FriendsActions},
   data: () => ({
+    openSearch: false,
+    activeSearch: true,
     currentFilter: 0,
     loaded: {0: false, 1: false},
     query: null,
@@ -117,6 +125,13 @@ export default {
   }),
   created() {
     this.$store.dispatch('friends/load', {offset: 0})
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scroll_list) {
+        setTimeout(() => {
+          this.$refs.scroll_list.update()
+        }, 100)
+      }
+    })
   },
   methods: {
     async setFilter(e) {
@@ -136,7 +151,7 @@ export default {
       this.loader = true
       if(this.query) {
         await this.$store.dispatch('friends/search', {
-          type: 'friends', //subscribers
+          type: 'friends',
           query: this.query,
           offset: 0
         })
@@ -150,6 +165,9 @@ export default {
       await this.$store.dispatch('friends/add', {uid: e})
       await this.$store.dispatch('friends/update', {uid: e})
       this.$refs.scroll_list.$el.scrollTop = 0
+      this.$store.dispatch('notifications/set', {
+        type: 'sidebar'
+      })
       this.loader = false
     },
     async remove(e) {
@@ -157,6 +175,9 @@ export default {
       await this.$store.dispatch('friends/remove', {uid: e})
       await this.$store.dispatch('friends/update', {uid: e})
       this.$refs.scroll_list.$el.scrollTop = 0
+      this.$store.dispatch('notifications/set', {
+        type: 'sidebar'
+      })
       this.loader = false
     },
     async intersected() {
@@ -172,6 +193,21 @@ export default {
     },
     requests() {
       return this.$store.getters['friends/requests']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
+    }
+  },
+  watch: {
+    openSearch(e) {
+      if(!e) {
+        this.query = null
+        this.$store.dispatch('friends/load', {offset: 0})
+      }
+      this.$refs.scroll_list.$el.scrollTop = 0
+    },
+    currentFilter(e) {
+      this.activeSearch = (e > 0) ? false : true
     }
   }
 }

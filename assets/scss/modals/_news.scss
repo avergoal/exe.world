@@ -1,26 +1,43 @@
 .newsmodal{
   padding: 40px 0 0;
+  @media screen and (max-width: 920px) {
+    padding: 24px 0 0;
+  }
   .modalcontent{
     .top{
       padding: 0 40px 40px;
-      @include h3;
-      @media screen and (max-width: 700px) {
-        padding: 0 0 20px;
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 48px;
+      @media screen and (max-width: 920px) {
+        padding: 0 24px 24px;
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: 0.0025em;
       }
     }
     .filters{
       margin: 0 40px!important;
-      @media screen and (max-width: 700px) {
-        margin: 0!important;
+      @media screen and (max-width: 920px) {
+        margin: 0 24px!important;
+        ul{
+          li{
+            button{
+              height: 36px;
+            }
+          }
+        }
       }
       @media screen and (max-width: 576px) {
         padding: 0;
       }
     }
     .ps{
-      margin: 0 0 10px;
       &.list{
-        height: 410px;
+        height: calc(100% - 170px);
+        @media screen and (max-width: 920px) {
+          height: calc(100% - 140px);
+        }
       }
       ul.news{
         li{
@@ -28,8 +45,8 @@
           display: flex;
           align-items: flex-start;
           padding: 16px 35px 16px 40px;
-          @media screen and (max-width: 700px) {
-            padding: 16px 35px 16px 0;
+          @media screen and (max-width: 920px) {
+            padding: 16px 40px 17px 24px;
           }
           @media screen and (max-width: 576px) {
             padding: 16px 15px 16px 0;
@@ -46,8 +63,8 @@
             height: 1px;
             background: $grayMedium;
             content: "";
-            @media screen and (max-width: 700px) {
-              left: 80px;
+            @media screen and (max-width: 920px) {
+              left: 104px;
             }
             @media screen and (max-width: 576px) {
               left: 58px;
@@ -72,18 +89,24 @@
           }
           .info{
             flex: 1 1 auto;
+            padding: 4px 0 0;
             .name{
               display: flex;
               align-items: center;
               strong{
                 display: block;
-                @include subTitle1;
+                padding: 0 8px 0 0;
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 20px;
+                letter-spacing: 0.0015em;
               }
               span{
                 display: block;
-                padding: 0 0 0 8px;
-                @include caption1;
+                font-size: 12px;
+                line-height: 16px;
                 color: $dGray;
+                letter-spacing: 0.001em;
               }
             }
             .text{
@@ -133,7 +156,10 @@
               padding: 80px 0 0;
               b{
                 display: block;
-                @include h6;
+                font-size: 20px;
+                font-weight: 700;
+                line-height: 24px;
+                letter-spacing: 0.0015em;
                 color: $dGray;
                 text-align: center;
               }
@@ -146,6 +172,11 @@
               }
             }
           }
+        }
+      }
+      @media screen and (max-width: 920px) {
+        .ps__rail-y{
+          right: 20px;
         }
       }
     }

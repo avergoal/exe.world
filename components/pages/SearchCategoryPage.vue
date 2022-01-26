@@ -31,8 +31,8 @@
   </div>
   <div v-if="!results.games.length" class="noresults page">
     <div class="img">
-      <img src="~/assets/illustration/notfound.svg" alt="" class="illustration day">
-      <img src="~/assets/illustration/notfound_inverse.svg" alt="" class="illustration night">
+      <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
+      <img v-else src="~/assets/illustration/notfound.svg" />
     </div>
     <div class="text">
       <b>We did not find anything for your request</b>
@@ -74,6 +74,9 @@ export default {
     },
     user() {
       return this.$store.getters['profile/user']
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

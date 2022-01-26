@@ -6,9 +6,9 @@
   <div class="modalcontent">
     <aside class="info">
       <div class="profile">
-        <div class="userphoto"><img :src="user.profile.avatar_urls.x100" alt=""></div>
+        <div class="userphoto"><img :src="profile.avatar_urls.x100" alt=""></div>
         <div class="data">
-          <div v-html="user.profile.user_name" class="name"></div>
+          <div v-html="profile.user_name" class="name"></div>
           <div class="text">My profile</div>
         </div>
         <button @click="$root.$emit('toggleModal', {target: 'myPhoto'})" type="button" class="edit"><svg-icon name="ui/pencil" /></button>
@@ -99,15 +99,18 @@ export default {
   },
   methods: {
     switchTheme() {
-      this.$store.dispatch('app/setTheme', (this.darkTheme ? 1 : 0))
+      this.$store.dispatch('app/setTheme', {
+        update: true,
+        theme: (this.darkTheme ? 1 : 0)
+      })
     }
   },
   computed: {
     theme() {
       return this.$store.getters['app/theme']
     },
-    user() {
-      return this.$store.getters['profile/user']
+    profile() {
+      return this.$store.getters['profile/data']
     },
     modal() {
       return this.$store.getters['app/modal']
