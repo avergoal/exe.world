@@ -74,20 +74,16 @@ export default {
       }
     },
     openWindow(url) {
-      let handler
+      let handler, timer
       this.$root.$emit('setLoader', false)
-      if(handler != null) {
-        handler.close()
-      }
+      if(handler) handler.close()
       handler = window.open(url, 'paymentProccess')
-      console.log(window, handler)
-      this.timer = setInterval(this.checkWindow(handler), 500)
-    },
-    checkWindow(handler) {
-      if(handler.closed) {
-        clearInterval(this.timer)
-        this.$root.$emit('setLoader', true)
-      }
+      timer = setInterval(() => {
+        if(handler.closed) {
+          clearInterval(timer)
+          this.$root.$emit('setLoader', true)
+        }
+      }, 500)
     }
   }
 }

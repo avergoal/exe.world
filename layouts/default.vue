@@ -5,7 +5,6 @@
     <main class="content">
       <Nuxt />
       <Footer />
-      <!--Sidebar class="mobile" v-if="profile"/>-->
     </main>
   </perfect-scrollbar>
   <Sidebar v-if="profile"/>

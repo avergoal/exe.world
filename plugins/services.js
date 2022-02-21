@@ -10,6 +10,7 @@ export const deepClone = (data) => {
   }
   return out
 }
+
 export default ({}, inject) => {
   inject('deepClone', deepClone)
 }
