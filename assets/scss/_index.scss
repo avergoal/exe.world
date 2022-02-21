@@ -186,6 +186,23 @@
               line-height: 40px;
               color: $dWhite;
               letter-spacing: 0.0025em;
+              @media screen and (max-width: 920px) {
+                font-size: 28px;
+                line-height: 32px;
+              }
+              @media screen and (max-width: 768px) {
+                font-size: 24px;
+                line-height: 28px;
+              }
+              @media screen and (max-width: 576px) {
+                font-size: 20px;
+                line-height: 24px;
+              }
+              @media screen and (max-width: 480px) {
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 20px;
+              }
             }
             .desc{
               padding: 12px 0 0;
@@ -193,6 +210,19 @@
               line-height: 24px;
               color: $dWhite;
               letter-spacing: 0.001em;
+              @media screen and (max-width: 768px) {
+                padding: 6px 0 0;
+                font-size: 14px;
+                line-height: 20px;
+              }
+              @media screen and (max-width: 576px) {
+                font-size: 12px;
+                line-height: 16px;
+              }
+              @media screen and (max-width: 480px) {
+                font-size: 10px;
+                line-height: 12px;
+              }
               br{
                 @media screen and (max-width: 576px) {
                   display: none;
@@ -350,14 +380,44 @@
   }
   // Filters
   .filters{
-    padding: 0 0 20px;
+    width: calc(100% + 96px);
+    max-width: calc(100% + 96px);
+    padding: 0 0 20px 48px;
+    margin: 0 0 0 -48px;
     @media screen and (max-width: 1024px) {
-      padding: 0;
+      width: calc(100% + 48px);
+      max-width: calc(100% + 48px);
+      padding: 0 0 0 24px;
+      margin: 0 0 0 -24px;
+    }
+    @media screen and (max-width: 576px) {
+      width: calc(100% + 32px);
+      max-width: calc(100% + 32px);
+      padding: 0 0 0 16px;
+      margin: 0 0 0 -16px;
     }
     &.categories{
+      width: 100%;
+      max-width: 100%;
+      min-width: auto;
       padding: 0 48px 20px;
+      margin: 0;
       @media screen and (max-width: 1024px) {
         padding: 0 24px;
+      }
+      @media screen and (max-width: 576px) {
+        padding: 0 16px;
+      }
+    }
+    ul{
+      li:last-child{
+        padding-right: 48px;
+        @media screen and (max-width: 1024px) {
+          padding-right: 24px;
+        }
+        @media screen and (max-width: 576px) {
+          padding-right: 16px;
+        }
       }
     }
   }
@@ -452,7 +512,18 @@
           width: 50%;
         }
         @media screen and (max-width: 576px) {
-          padding: 0 4px 16px;
+          padding: 0 4px 8px;
+        }
+      }
+    }
+    .notgames{
+      padding: 40px 0 0;
+      .img{
+        max-width: 426px;
+        margin: 0 auto;
+        img{
+          display: block;
+          width: 100%;
         }
       }
     }
@@ -495,7 +566,7 @@
         .userphoto{
           max-width: 112px;
           min-width: 112px;
-          height: 112px;
+          height: 112px!important;
           margin: 0 auto;
           img{
             height: 100%;
@@ -584,6 +655,11 @@
           }
           &.previous{
             box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.16);
+          }
+          .info{
+            @media screen and (max-width: 576px) {
+              background: $whiteLight;
+            }
           }
         }
       }

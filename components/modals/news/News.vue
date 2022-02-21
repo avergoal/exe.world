@@ -34,8 +34,8 @@
               <span v-html="'// '+$moment.unix(e.timestamp).format('DD.MM.YYYY')"></span>
             </div>
             <div v-html="e.text" class="text"></div>
-            <div class="btns">
-              <nuxt-link v-if="(e.type == 3 || e.type == 4) && e.button && e.games[0]" v-html="e.button" :to="'/g/' + e.games[0].gid" class="btn st2"></nuxt-link>
+            <div v-if="(e.type == 3 || e.type == 4) && e.button && e.games[0]" class="btns">
+              <nuxt-link v-html="e.button" :to="'/g/' + e.games[0].gid" class="btn st2"></nuxt-link>
             </div>
           </div>
           <!-- Ext Photos -->
@@ -97,6 +97,9 @@ export default {
     async loadNews(params) {
       await this.$store.dispatch('app/setNews', params)
       this.$refs.scroll_list.$el.scrollTop = 0
+      this.$store.dispatch('notifications/set', {
+        type: 'sidebar'
+      })
     },
     async setFilter(e) {
       let params = {

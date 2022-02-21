@@ -1,6 +1,9 @@
 <template>
 <div class="tab personal">
-  <div class="title">Personal data</div>
+  <div class="title">
+    <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
+    Personal data
+  </div>
   <perfect-scrollbar ref="scroll_tab">
     <form action="">
       <fieldset v-if="loaded" class="text">

@@ -1,6 +1,9 @@
 <template>
 <div class="tab balance">
-  <div class="title">Balance</div>
+  <div class="title">
+    <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
+    Balance
+  </div>
   <perfect-scrollbar ref="scroll">
     <div class="inform">
       <div class="top">

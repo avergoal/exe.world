@@ -3,6 +3,15 @@
   @media screen and (max-width: 920px) {
     padding: 24px 0 0;
   }
+  @media screen and (max-width: 576px) {
+    position: absolute!important;
+    max-width: 100%!important;
+    height: 100%!important;
+    border-radius: 0 0 16px 16px!important;
+    button.close{
+      display: none!important;
+    }
+  }
   .modalcontent{
     .top{
       padding: 0 40px 40px;
@@ -14,6 +23,9 @@
         font-size: 32px;
         line-height: 40px;
         letter-spacing: 0.0025em;
+      }
+      @media screen and (max-width: 576px) {
+        display: none;
       }
     }
     .filters{
@@ -30,13 +42,18 @@
       }
       @media screen and (max-width: 576px) {
         padding: 0;
+        margin: 0!important;
       }
     }
     .ps{
       &.list{
         height: calc(100% - 170px);
+        overflow: hidden;
         @media screen and (max-width: 920px) {
           height: calc(100% - 140px);
+        }
+        @media screen and (max-width: 576px) {
+          height: calc(100% - 50px);
         }
       }
       ul.news{
@@ -49,7 +66,7 @@
             padding: 16px 40px 17px 24px;
           }
           @media screen and (max-width: 576px) {
-            padding: 16px 15px 16px 0;
+            padding: 12px 15px 15px 0;
           }
           &.observer{
             display: none;
@@ -89,7 +106,7 @@
           }
           .info{
             flex: 1 1 auto;
-            padding: 4px 0 0;
+            padding: 4px 10px 0 0;
             .name{
               display: flex;
               align-items: center;
@@ -111,6 +128,11 @@
             }
             .text{
               padding: 10px 0 0;
+              @media screen and (max-width: 576px) {
+                padding: 4px 0 0;
+                font-size: 14px;
+                line-height: 20px;
+              }
             }
             .btns{
               display: flex;
@@ -177,6 +199,11 @@
       @media screen and (max-width: 920px) {
         .ps__rail-y{
           right: 20px;
+        }
+      }
+      @media screen and (max-width: 576px) {
+        .ps__rail-y{
+          right: 0;
         }
       }
     }

@@ -6,16 +6,28 @@
   <div v-if="show" class="modalcontent">
     <div v-if="profile" class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
-      <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: user.user.uid})" class="userphoto" type="button"><img :src="user.user.avatar_urls.x100" :alt="user.user.user_name"></button>
+      <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: user.user.uid})" class="userphoto" type="button">
+        <img :src="user.user.avatar_urls.x100" :alt="user.user.user_name">
+      </button>
       <div class="info">
         <div v-html="user.user.user_name" class="name"></div>
-        <div :class="{active: user.user.online}" class="online"><span></span> {{ (user.user.online ? 'Online' : 'Offline') }}</div>
+        <div v-if="user.blacklist_status === 1" class="online">blacklisted</div>
+        <div v-else :class="{active: user.user.online}" class="online">
+          <span></span> 
+          {{ (user.user.online ? 'Online' : 'Offline') }}
+        </div>
       </div>
       <div class="nav">
         <div class="item">
           <button @click="toggleParams()" class="toggleparams"><svg-icon name="ui/dotted" /></button>
           <div :class="{open: openParams}" class="dropdown">
             <ul class="menu">
+              <li class="title">
+                <span v-html="user.user.user_name"></span>
+                <button @click="openParams = false" class="close" area-label="close">
+                  <svg-icon name="ui/close" />
+                </button>
+              </li>
               <li>
                 <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: user.user})" type="button">
                   <div class="ico"><svg-icon name="ui/blacklist" /></div>
@@ -33,19 +45,8 @@
         </div>
       </div>
     </div>
-    <!--
-    <div :class="{open: openSearch}" class="searchchat">
-      <form @submit.prevent action="">
-        <fieldset>
-          <svg-icon name="ui/search" />
-          <input type="text" name="" value="" placeholder="Search messages">
-        </fieldset>
-        <button type="button"><svg-icon name="ui/close" /></button>
-      </form>
-    </div>
-    -->
     <perfect-scrollbar ref="scroll" class="chatscroll">
-      <div v-if="messages" class="chatbox">
+      <div v-if="messages.total" class="chatbox">
         <div v-for="(e, i) in messages.list" :key="i" class="day">
           <div v-html="i.split('.').join(' ')" class="date"></div>
           <div v-for="(e2, i2) in e" :key="i2" :class="(e2.user.uid == profile.uid) ? 'out' : 'in'" class="item">
@@ -83,7 +84,7 @@
         </div>
       </div>
     </perfect-scrollbar>
-    <form @submit.prevent class="send" action="">
+    <form v-if="!user.blacklist_status" @submit.prevent class="send" action="">
       <button type="button" class="smile"><svg-icon name="ui/smile" /></button>
       <!--
       <twemoji-picker
@@ -148,6 +149,9 @@ export default {
           clearInterval(interval)
           this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
           this.$refs.scroll.update()
+          this.$store.dispatch('notifications/set', {
+            type: 'sidebar'
+          })
         }
       }, 100)
     },

@@ -1,11 +1,11 @@
 <template>
-<div class="modalinfo gamemodal small">
+<div class="modalinfo gamemodal menumodal small">
   <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent menu">
     <div class="topinfo">
-      <div class="img"><img :src="modal.game.poster.default" alt=""></div>
+      <div class="img"><img :src="modal.game.icon.hires" alt=""></div>
       <div v-html="modal.game.title" class="name"></div>
     </div>
     <ul class="menu">
@@ -23,6 +23,7 @@ export default {
   name: 'GameMenuModalComponent',
   computed: {
     modal() {
+      console.log(this.$store.getters['app/modal'])
       return this.$store.getters['app/modal']
     }
   }

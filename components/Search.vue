@@ -11,15 +11,18 @@
         <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games and users">
         <button @click="resetSearch()" type="button"><svg-icon class="close" name="ui/close" /></button>
       </fieldset>
-      <button @click="closeSearch()" type="button" class="btn st1"><svg-icon name="ui/close" /></button>
+      <div class="close">
+        <button @click="closeSearch()" type="button" class="btn st1"><svg-icon name="ui/close" /></button>
+        <span class="mobile">Search</span>
+      </div>
     </form>
   </div>
   <client-only>
     <perfect-scrollbar class="searchscroll" ref="scrollSearch">
       <div class="results">
-        <GamesSwiper slides="search_popular" between="24" title="Popular Searches"/>
-        <GamesSwiper v-if="loaded && results.games.length" :key="JSON.stringify(results.games)" slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s" navClass="s"/>
-        <div v-else-if="loaded && results.peoples.length" class="empty">
+        <GamesSwiper v-if="query === null" slides="search_popular" between="24" title="Popular Searches" boxClass="popular_search"/>
+        <GamesSwiper v-if="query !== null && loaded && results.games.length" :key="JSON.stringify(results.games)" slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s" navClass="s"/>
+        <div v-else-if="query !== null && loaded && results.peoples.length" class="empty">
           <div class="boxtitle"><span>Games</span></div>
           <div class="img">
             <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
@@ -30,8 +33,8 @@
             <p>Try changing your search text</p>
           </div>
         </div>
-        <UsersSwiper v-if="loaded && results.peoples.length" :key="JSON.stringify(results.peoples)" slides="search_peoples" between="8" title="People" target="searchPeoples"/>
-        <div v-else-if="loaded && results.games.length" class="empty">
+        <UsersSwiper v-if="query !== null && loaded && results.peoples.length" :key="JSON.stringify(results.peoples)" slides="search_peoples" between="8" title="People" target="searchPeoples"/>
+        <div v-else-if="query !== null && loaded && results.games.length" class="empty">
           <div class="boxtitle"><span>People</span></div>
           <div class="img">
             <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
@@ -42,7 +45,7 @@
             <p>Try changing your search text</p>
           </div>
         </div>
-        <div v-if="loaded && !results.peoples.length && !results.games.length" class="empty noresults">
+        <div v-if="query !== null && loaded && !results.peoples.length && !results.games.length" class="empty noresults">
           <div class="img">
             <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg" />
             <img v-else src="~/assets/illustration/notfound.svg" />
@@ -96,6 +99,8 @@ export default {
           })
           this.loaded = true
         }, 350)
+      } else if(this.query.length === 0) {
+        this.query = null
       }
     },
     goHome() {
@@ -108,7 +113,7 @@ export default {
     },
     resetSearch() {
       this.loaded = false
-      this.query = ''
+      this.query = null
     }
   },
   computed: {

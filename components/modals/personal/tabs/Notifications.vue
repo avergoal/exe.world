@@ -1,6 +1,9 @@
 <template>
 <div class="tab notifications">
-  <div class="title">Notifications</div>
+  <div class="title">
+    <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
+    Notifications
+  </div>
   <perfect-scrollbar ref="scroll_tab">
     <form @submit.prevent action="">
       <div class="label">Newsletter by e-mail</div>

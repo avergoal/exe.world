@@ -3,12 +3,19 @@
   @media screen and (max-width: 920px) {
     padding: 24px 0 0;
   }
+  @media screen and (max-width: 576px) {
+    position: absolute!important;
+    max-width: 100%!important;
+    height: 100%!important;
+    border-radius: 0 0 16px 16px!important;
+    button.close{
+      display: none!important;
+    }
+  }
   &.chat{
     padding: 16px 0;
-    button.close{
-      @media screen and (max-width: 576px) {
-        display: none;
-      }
+    @media screen and (max-width: 576px) {
+      border-radius: 0!important;
     }
   }
   .modalcontent{
@@ -23,6 +30,9 @@
         font-size: 32px;
         line-height: 40px;
         letter-spacing: 0.0025em;
+      }
+      @media screen and (max-width: 576px) {
+        display: none;
       }
     }
     .usermodaltop{
@@ -63,7 +73,39 @@
             }
           }
           .dropdown{
+            @media screen and (max-width: 576px) {
+              display: flex;
+              align-items: flex-end;
+              background: rgba(0, 0, 0, 0.6);
+              ul{
+                width: 100%;
+                border-radius: 16px 16px 0px 0px;
+                background: $blackLight;
+              }
+            }
             li{
+              &.title{
+                position: relative;
+                display: none;
+                padding: 0 16px 10px;
+                @media screen and (max-width: 576px) {
+                  display: block;
+                }
+                span{
+                  color: $grayMedium;
+                }
+                button{
+                  display: flex!important;
+                  top: 0!important;
+                  width: 24px;
+                  height: 24px;
+                  padding: 0;
+                  svg{
+                    width: 9px;
+                    height: 9px;
+                  }
+                }
+              }
               svg{
                 width: 20px;
                 height: 20px;
@@ -130,6 +172,9 @@
       @media screen and (max-width: 920px) {
         padding: 24px;
       }
+      @media screen and (max-width: 576px) {
+        padding: 0 0 16px;
+      }
       &.st1{
         padding: 32px 40px;
       }
@@ -145,6 +190,9 @@
         }
         input{
           padding: 0 16px 0 64px;
+          @media screen and (max-width: 576px) {
+            padding: 0 16px 0 54px;
+          }
         }
       }
       button{
@@ -169,6 +217,10 @@
         height: 48px;
         padding: 0 16px;
         margin: 30px 0 0;
+        @media screen and (max-width: 576px) {
+          padding: 0;
+          margin: 10px 0 0;
+        }
         button{
           position: absolute;
           top: 50%;
@@ -209,18 +261,18 @@
     }
     .ps{
       height: calc(100% - 178px);
+      overflow: hidden;
       @media screen and (max-width: 920px) {
         height: calc(100% - 146px);
       }
       @media screen and (max-width: 576px) {
         width: calc(100% + 32px);
-        max-height: calc(100Vh - 144px);
         margin: 0 0 0 -16px;
       }
       &.chatscroll{
         height: calc(100% - 150px);
         @media screen and (max-width: 576px) {
-          max-height: calc(100Vh - 186px);
+          height: calc(100Vh - 196px);
         }
       }
       ul.list{
@@ -276,6 +328,9 @@
               .name{
                 display: flex;
                 align-items: flex-start;
+                @media screen and (max-width: 576px) {
+                  align-items: flex-end;
+                }
                 strong{
                   display: block;
                   padding: 0 8px 0 0;
@@ -283,12 +338,25 @@
                   font-weight: 700;
                   line-height: 20px;
                   letter-spacing: 0.0015em;
+                  white-space: nowrap;
+                  @media screen and (max-width: 576px) {
+                    font-size: 14px;
+                    font-weight: 600;
+                    line-height: 16px;
+                  }
                 }
                 .date{
                   font-size: 12px;
                   line-height: 16px;
                   letter-spacing: 0.004em;
                   color: $dGray;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  @media screen and (max-width: 576px) {
+                    font-size: 10px;
+                    line-height: 12px;
+                  }
                 }
               }
               .text{
@@ -296,6 +364,11 @@
                 font-size: 16px;
                 line-height: 24px;
                 letter-spacing: 0.001em;
+                @media screen and (max-width: 576px) {
+                  padding: 4px 0 0;
+                  font-size: 14px;
+                  line-height: 16px;
+                }
               }
               .badge{
                 top: 50%;
@@ -354,16 +427,24 @@
             line-height: 16px;
             letter-spacing: 0.001em;
             text-align: center;
+            @media screen and (max-width: 576px) {
+              padding: 0 0 16px;
+              font-size: 12px;
+              line-height: 16px;
+            }
           }
           .item{
             display: flex;
             padding: 0 0 20px;
+            @media screen and (max-width: 576px) {
+              padding: 0 0 8px;
+            }
             &.in{
               align-items: flex-end;
               .userphoto{
                 max-width: 32px;
                 min-width: 32px;
-                height: 32px;
+                height: 32px!important;
                 margin: 0 8px 16px 0;
               }
               .info{
@@ -376,12 +457,20 @@
                     font-weight: 700;
                     line-height: 20px;
                     letter-spacing: 0.0015em;
+                    @media screen and (max-width: 576px) {
+                      font-size: 14px;
+                      line-height: 16px;
+                    }
                   }
                   .text{
                     padding: 6px 0 0;
                     font-size: 16px;
                     line-height: 24px;
                     letter-spacing: 0.001em;
+                    @media screen and (max-width: 576px) {
+                      font-size: 14px;
+                      line-height: 20px;
+                    }
                   }
                 }
                 .time{
@@ -405,6 +494,10 @@
                 line-height: 24px;
                 letter-spacing: 0.001em;
                 color: $dWhite;
+                @media screen and (max-width: 576px) {
+                  font-size: 14px;
+                  line-height: 20px;
+                }
               }
               .info{
                 display: flex;
@@ -484,9 +577,6 @@
         }
       }
       .usermodaltop{
-        button.userphoto{
-          height: 56px;
-        }
         .nav{
           .item{
             button{
@@ -496,6 +586,11 @@
             }
             .dropdown{
               li{
+                &.title{
+                  span{
+                    color: rgba(255, 255, 255, 0.56);
+                  }
+                }
                 &:last-child{
                   span{
                     color: $nOrange;

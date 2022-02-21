@@ -1,7 +1,7 @@
 <template>
 <div class="nav">
   <div class="item">
-    <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: user.uid})" type="button" class="btn st3 mobile">
+    <button @click="$root.$emit('toggleModal', {target: 'messagesChat', user: user.uid})" type="button" class="btn st3 mobile">
       <span>write</span>
       <svg-icon name="ui/pencil" class="mobile"/>
     </button>
@@ -10,6 +10,12 @@
     <button @click="toggleParams" type="button" class="ico toggleparams"><svg-icon name="ui/dotted" /></button>
     <div :class="{open: openParams}" :style="'top:' + top + 'px;left:' + left + 'px'" class="dropdown">
       <ul class="menu">
+        <li class="mobile">
+          <span v-html="user.name"></span>
+          <button @click="toggleParams" class="close" area-label="close">
+            <svg-icon name="ui/close" />
+          </button>
+        </li>
         <li>
           <button @click="$root.$emit('toggleModal', {target: 'friendsRemove', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/user_remove" /></div>

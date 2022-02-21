@@ -12,7 +12,7 @@
       <form @submit.prevent class="search" action="">
         <fieldset>
           <svg-icon name="ui/search" />
-          <input v-model="query" @input="search()" type="text" name="" value="" placeholder="Search friends">
+          <input v-model="query" @input="search()" :disabled="!activeSearch" type="text" name="" value="" placeholder="Search friends">
         </fieldset>
         <button @click="openSearch = false" type="button"><svg-icon name="ui/close" /></button>
       </form>
@@ -22,6 +22,7 @@
         <li v-for="(e, i) in filters" :key="i">
           <button @click="setFilter(i)" :class="{active: currentFilter == i}" type="button">
             <span v-html="e"></span>
+            <span v-if="i == 0 && friendsTotal" v-html="friendsTotal" class="badge"></span>
             <span v-if="i == 1 && requests.total.subscribers" v-html="requests.total.subscribers" class="badge"></span>
             <span v-if="i == 2 && requests.total.subscriptions" v-html="requests.total.subscriptions" class="badge"></span>
           </button>
@@ -30,8 +31,8 @@
     </perfect-scrollbar>
     <perfect-scrollbar ref="scroll_list" :class="{small: openSearch}" class="friendsscroll">
       <div class="tabs">
-        <ul v-if="friends.length" :class="{active: currentFilter == 0}" class="tab">
-          <li v-for="(e, i) in friends" :key="i">
+        <ul v-if="friendsList.length" :class="{active: currentFilter == 0}" class="tab">
+          <li v-for="(e, i) in friendsList" :key="i">
             <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button" class="userphoto">
               <img :src="e.avatar_urls.x100" :alt="e.user_name">
             </button>
@@ -185,8 +186,11 @@ export default {
     }
   },
   computed: {
-    friends() {
+    friendsList() {
       return this.$store.getters['friends/list']
+    },
+    friendsTotal() {
+      return this.$store.getters['friends/total']
     },
     filters() {
       return this.$store.getters['friends/filters']

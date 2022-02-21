@@ -30,8 +30,10 @@
         <div class="text">Login via services</div>
         <ul>
           <li><a href=""><svg-icon name="ui/facebook" /></a></li>
+          <!--
           <li><a href=""><svg-icon name="ui/twitter" /></a></li>
           <li><a href=""><img src="~assets/google.svg" alt=""></a></li>
+          -->
         </ul>
       </div>
     </form>

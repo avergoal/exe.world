@@ -5,7 +5,7 @@
     <main class="content">
       <Nuxt />
       <Footer />
-      <Sidebar class="mobile" v-if="profile"/>
+      <!--Sidebar class="mobile" v-if="profile"/>-->
     </main>
   </perfect-scrollbar>
   <Sidebar v-if="profile"/>
@@ -31,6 +31,9 @@ export default {
     })
     this.$root.$on('resize', () => {
       this.scrollUpdate()
+    })
+    this.$root.$on('setLoader', (e) => {
+      this.loaded = e
     })
     window.addEventListener('resize', () => {
       this.scrollUpdate()

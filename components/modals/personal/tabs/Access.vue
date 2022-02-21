@@ -1,6 +1,9 @@
 <template>
 <div class="tab access">
-  <div class="title">Access Settings</div>
+  <div class="title">
+    <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
+    Access Settings
+  </div>
   <perfect-scrollbar ref="scroll_tab">
     <form @submit.prevent action="">
       <div class="item">

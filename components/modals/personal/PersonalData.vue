@@ -1,6 +1,7 @@
 <template>
-<div class="modalinfo personalmodal bigger">
+<div :class="modal.tab + '_tab'" class="modalinfo personalmodal bigger">
   <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
+    <svg-icon name="ui/back" class="mobile"/>
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">

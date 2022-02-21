@@ -1,5 +1,6 @@
 export const state = () => ({
   list: [],
+  total: 0,
   requests: {
     total: {
       subscribers: 0,
@@ -23,6 +24,7 @@ export const actions = {
   async load({commit}, params) {
     const { data } = await this.$axios.post('/appApi/friends.get', params)
     commit('setState', {key: 'list', value: data.response.users})
+    commit('setState', {key: 'total', value: data.response.total_friends})
     this.dispatch('friends/requests', {offset: 0})
   },
   async search({commit}, params) {
@@ -62,6 +64,7 @@ export const actions = {
 
 export const getters = {
   list: state => state.list,
+  total: state => state.total,
   requests: state => state.requests,
   filters: state => state.filters
 }

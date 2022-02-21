@@ -49,7 +49,8 @@ export default {
     paysystem: 'yookassa',
     balanceQuantity: 1,
     otherQuantity: null,
-    error: null
+    error: null,
+    timer: null
   }),
   created() {
     this.$root.$on('scrollUpdate', () => {
@@ -69,7 +70,23 @@ export default {
       if(response.error) {
         this.error = response.error
       } else {
-        window.open(response.response.url, '_blank')
+        this.openWindow(response.response.url)
+      }
+    },
+    openWindow(url) {
+      let handler
+      this.$root.$emit('setLoader', false)
+      if(handler != null) {
+        handler.close()
+      }
+      handler = window.open(url, 'paymentProccess')
+      console.log(window, handler)
+      this.timer = setInterval(this.checkWindow(handler), 500)
+    },
+    checkWindow(handler) {
+      if(handler.closed) {
+        clearInterval(this.timer)
+        this.$root.$emit('setLoader', true)
       }
     }
   }

@@ -1,6 +1,9 @@
 <template>
 <div class="tab blacklist">
-  <div class="title">Blacklist</div>
+  <div class="title">
+    <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
+    Blacklist
+  </div>
   <form @submit.prevent action="">
     <fieldset>
       <svg-icon name="ui/search" />

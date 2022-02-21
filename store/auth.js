@@ -27,10 +27,8 @@ export const actions = {
         type: 'sidebar',
         notifications: data.response.notifications
       })
-      data.response.recent_games.map(e => {
-        delete e.type
-        delete e.title
-        delete e.poster
+      this.dispatch('notifications/set', {
+        type: 'header'
       })
       this.dispatch('games/setGames', {
         category: 'userRecent',

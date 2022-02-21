@@ -25,6 +25,9 @@
   @media screen and (max-width: 1024px) {
     padding: 0 0 0 80px;
   }
+  @media screen and (max-width: 920px) {
+    padding: 0;
+  }
   &.open{
     max-height: 100Vh;
     min-height: 100Vh;
@@ -47,19 +50,16 @@
       left: 80px;
       padding: 4px 24px;
     }
+    @media screen and (max-width: 920px) {
+      left: 0;
+      border-radius: 0;
+    }
     @media screen and (max-width: 576px) {
       padding: 4px 16px;
     }
-    a.logo{
-      position: relative;
-      display: block;
-      max-width: 63px;
-      min-width: 63px;
-      height: 24px;
-      svg{
-        width: 100%;
-        height: 100%;
-        fill: $dViolet;
+    .logo{
+      @media screen and (max-width: 576px) {
+        display: none;
       }
     }
     form{
@@ -69,6 +69,14 @@
       padding: 0 0 0 84px;
       @media screen and (max-width: 1024px) {
         padding: 0 0 0 30px;
+      }
+      @media screen and (max-width: 576px) {
+        display: flex;
+        flex-flow: column-reverse nowrap;
+        align-items: flex-start;
+        align-content: flex-start;
+        min-width: 0;
+        padding: 0;
       }
       fieldset{
         svg{
@@ -90,6 +98,9 @@
           padding: 0 64px;
           border: 2px solid $dViolet;
           background: transparent;
+          @media screen and (max-width: 480px) {
+            padding: 0 52px;
+          }
         }
         button{
           position: absolute;
@@ -100,14 +111,38 @@
           margin: -7px 0 0;
         }
       }
-      button.btn{
+      .close{
         width: 48px;
-        height: 48px;
-        margin: 0 0 0 16px;
-        svg{
-          width: 12px;
-          height: 12px;
-          fill: $dGray;
+        @media screen and (max-width: 576px) {
+          display: flex;
+          align-items: center;
+          width: auto;
+        }
+        button.btn{
+          width: 100%;
+          height: 48px;
+          margin: 0 0 0 16px;
+          @media screen and (max-width: 576px) {
+            margin: 0 4px 0 -12px;
+            background: transparent;
+          }
+          svg{
+            width: 12px;
+            height: 12px;
+            fill: $dGray;
+          }
+        }
+        span.mobile{
+          display: none;
+          @media screen and (max-width: 576px) {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 20px;
+            svg{
+              fill: $dViolet;
+            }
+          }
         }
       }
     }
@@ -120,8 +155,14 @@
     border-radius: 0 0 0 24px;
     overflow: hidden;
     @media screen and (max-width: 1024px) {
-      height: calc(100Vh - 70px);
+      height: calc(100Vh - 56px);
       margin: 56px 0 0;
+    }
+    @media screen and (max-width: 920px) {
+      border-radius: 0;
+    }
+    @media screen and (max-width: 576px) {
+      margin: 100px 0 0;
     }
     .results{
       width: 100%;
@@ -136,8 +177,14 @@
       @media screen and (max-width: 576px) {
         padding: 0 0 0 16px;
       }
+      @media screen and (max-width: 480px) {
+        padding: 0 16px;
+      }
       .boxtitle{
         padding-top: 32px;
+        @media screen and (max-width: 576px) {
+          padding-top: 24px;
+        }
       }
       .swiper-container{
         overflow: visible;
@@ -145,6 +192,13 @@
       .category_slider{
         .swiperbox{
           position: relative;
+        }
+        &:not(.popular_search) {
+          .swiper-slide{
+            @media screen and (max-width: 480px) {
+              margin: 0 0 8px!important;
+            }
+          }
         }
         .swipernav{
           button{
@@ -176,6 +230,9 @@
         .swiper-slide{
           max-width: 164px;
           min-width: 164px;
+          @media screen and (max-width: 480px) {
+            margin: 0 0 20px!important;
+          }
           button{
             display: block;
             width: 100%;
@@ -185,8 +242,13 @@
             .userphoto{
               max-width: 112px;
               min-width: 112px;
-              height: 112px;
+              height: 112px!important;
               margin: 0 auto;
+              @media screen and (max-width: 480px) {
+                max-width: 72px;
+                min-width: 72px;
+                height: 72px!important;
+              }
             }
             .name{
               padding: 16px 0 0;
@@ -195,6 +257,11 @@
               line-height: 20px;
               letter-spacing: 0.0015em;
               text-align: center;
+              @media screen and (max-width: 480px) {
+                padding: 8px 0 0;
+                font-size: 14px;
+                line-height: 16px;
+              }
             }
           }
         }
@@ -224,6 +291,9 @@
           height: 100%;
           z-index: 100;
           content: "";
+          @media screen and (max-width: 920px) {
+            display: none;
+          }
         }
         &:before{
           left: -194px;
@@ -235,14 +305,45 @@
           width: 194px;
           background: linear-gradient(90deg, rgba(255, 255, 255, 0) 20%, white 100%);
         }
+        &:not(.popular_search) {
+          padding: 0;
+          .swiper-wrapper{
+            @media screen and (max-width: 480px) {
+              flex-flow: row wrap;
+              justify-content: space-between;
+              transform: translate3d(0, 0, 0)!important;
+              .swiper-slide{
+                max-width: calc(50% - 4px);
+                min-width: calc(50% - 4px);
+                .box{
+                  top: 0!important;
+                  box-shadow: 0 0 0 transparent!important;
+                  .title{
+                    font-size: 14px;
+                    line-height: 16px;
+                  }
+                  .desc{
+                    padding: 2px 0 0;
+                    font-weight: 500;
+                    font-size: 10px;
+                    line-height: 12px;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
       .empty{
         display: flex;
         align-items: center;
         flex-flow: row wrap;
         padding: 40px 0;
-        @media screen and (max-width: 576px) {
+        @media screen and (max-width: 1150px) {
           display: block;
+        }
+        @media screen and (max-width: 576px) {
+          padding: 24px 0;
         }
         .boxtitle{
           width: 100%;
@@ -253,17 +354,26 @@
           min-width: 210px;
           height: 130px;
           margin: 0 64px 0 0;
-          @media screen and (max-width: 768px) {
-            margin: 0 20px 0 0;
+          @media screen and (max-width: 1150px) {
+            margin: 0 0 20px;
           }
           @media screen and (max-width: 576px) {
             margin: 0 auto 20px;
+          }
+          @media screen and (max-width: 480px) {
+            max-width: 160px;
+            min-width: 160px;
+            height: auto;
+            margin: 0 0 20px;
           }
         }
         .text{
           flex: 1 1 auto;
           @media screen and (max-width: 576px) {
             text-align: center;
+          }
+          @media screen and (max-width: 480px) {
+            text-align: left;
           }
           b{
             font-size: 20px;
@@ -273,6 +383,11 @@
             letter-spacing: 0.0015em;
             @media screen and (max-width: 576px) {
               text-align: center;
+            }
+            @media screen and (max-width: 480px) {
+              font-size: 16px;
+              line-height: 20px;
+              text-align: left;
             }
           }
           p{
@@ -285,6 +400,11 @@
             @media screen and (max-width: 576px) {
               text-align: center;
             }
+            @media screen and (max-width: 480px) {
+              font-size: 16px;
+              line-height: 20px;
+              text-align: left;
+            }
           }
         }
         &.noresults{
@@ -293,8 +413,8 @@
             min-width: 300px;
             height: 186px;
             margin: 0 80px 0 0;
-            @media screen and (max-width: 768px) {
-              margin: 0 20px 0 0;
+            @media screen and (max-width: 1150px) {
+              margin: 0 0 20px;
             }
             @media screen and (max-width: 576px) {
               margin: 0 auto 20px;
@@ -305,6 +425,10 @@
             font-weight: 800;
             line-height: 28px;
             letter-spacing: 0.0015em;
+            @media screen and (max-width: 480px) {
+              font-size: 16px;
+              line-height: 20px;
+            }
           }
         }
         img{
@@ -347,9 +471,14 @@
             border-color: $nViolet;
           }
         }
-        button.btn{
-          svg{
-            fill: $white72;
+        .close{
+          @media screen and (max-width: 576px) {
+            button.btn{
+              background: transparent;
+              svg{
+                fill: $nViolet;
+              }
+            }
           }
         }
       }

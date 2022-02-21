@@ -1,5 +1,14 @@
 .gamemodal{
   padding: 24px;
+  &.menumodal{
+    @media screen and (max-width: 576px) {
+      position: absolute;
+      top: auto !important;
+      bottom: 0;
+      height: auto!important;
+      border-radius: 16px 16px 0 0!important;
+    }
+  }
   .modalcontent{
     .title{
       font-size: 32px;
@@ -42,6 +51,9 @@
           margin: 0 24px 0 0;
           border-radius: 8px;
           overflow: hidden;
+          @media screen and (max-width: 576px) {
+            display: none;
+          }
           img{
             display: block;
             width: 100%;
@@ -54,6 +66,9 @@
           line-height: 20px;
           color: $dBlack;
           letter-spacing: 0.0015em;
+          @media screen and (max-width: 576px) {
+            color: $grayMedium;
+          }
         }
       }
       ul.menu{
@@ -304,6 +319,9 @@
         .topinfo{
           .name{
             color: $nWhite;
+            @media screen and (max-width: 576px) {
+              color: $white56;
+            }
           }
         }
         ul.menu{

@@ -76,8 +76,10 @@ export const actions = {
   async setCategories({state, commit}, params) {
     let categories = Object.assign({}, state.categories)
     categories[params.type] = Object.assign({}, categories[params.type])
-    categories[params.type].offset += state.limit
-    params.offset = categories[params.type].offset
+    if(!params.filters) {
+      categories[params.type].offset += state.limit
+      params.offset = categories[params.type].offset
+    }
     const { data } = await this.$axios.post('/appApi/games', params)
     categories[params.type].list = categories[params.type].list.concat(data.response.games)
     commit('setState', {
@@ -126,8 +128,20 @@ export const actions = {
     this.dispatch('app/initAppData')
     return data
   },
-  async removeGame({}, params) {
-    const { data } = await this.$axios.post('/appApi/games.remove', params)
+  async removeGame({commit}, params) {
+    await this.$axios.post('/appApi/games.remove', params)
+    const { data } = await this.$axios.post('/appApi/user.games', {
+      uid: this.getters['profile/data'].uid,
+      offset: 0
+    })
+    let games = {
+      list: data.response.games,
+      offset: 0
+    }
+    commit('setState', {
+      key: 'userAll',
+      value: games
+    })
     this.dispatch('app/initAppData')
     return data
   },

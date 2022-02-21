@@ -1,8 +1,17 @@
 .authmodal{
   padding: 40px;
+  button.close{
+    @media screen and (max-width: 576px) {
+      top: 36px!important;
+      right: 16px!important;
+    }
+  }
   .modalcontent{
     .top{
       position: relative;
+      @media screen and (max-width: 576px) {
+        padding: 20px 0 0;
+      }
       a.logo{
         display: block;
         width: 72px;
@@ -32,6 +41,11 @@
           font-weight: 800;
           line-height: 28px;
           letter-spacing: 0.0015em;
+          @media screen and (max-width: 576px) {
+            padding: 0 0 0 16px;
+            font-size: 20px;
+            line-height: 24px;
+          }
         }
       }
     }
@@ -40,7 +54,7 @@
       &.st1{
         padding: 40px 0 0 40px;
         @media screen and (max-width: 576px) {
-          padding: 40px 0 0;
+          padding: 32px 0 0;
         }
         .btns{
           padding: 0;
@@ -51,6 +65,11 @@
         font-size: 16px;
         line-height: 24px;
         letter-spacing: 0.001em;
+        @media screen and (max-width: 576px) {
+          padding: 0 0 24px;
+          font-size: 14px;
+          line-height: 20px;
+        }
       }
       .alert{
         padding: 8px 16px;
@@ -106,6 +125,9 @@
             border-radius: 0;
             background: transparent;
             color: $dViolet;
+            @media screen and (max-width: 576px) {
+              margin: 0 0 0 auto;
+            }
           }
         }
       }

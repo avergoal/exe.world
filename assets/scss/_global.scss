@@ -139,6 +139,12 @@ fieldset{
     @media screen and (max-width: 1024px) {
       padding: 56px 0 0;
     }
+    @media screen and (max-width: 768px) {
+      max-height: none;
+    }
+    @media screen and (max-width: 576px) {
+      padding: 56px 0;
+    }
     &.night{
       background: $dBlack;
     }
@@ -409,6 +415,9 @@ span.badge{
   -ms-overflow-style: none;
   touch-action: auto;
   -ms-touch-action: auto;
+  @media screen and (max-width: 768px) {
+    overflow: auto;
+  }
   &.appscroll{
     position: relative;
     width: calc(100% - 96px);
@@ -419,6 +428,14 @@ span.badge{
     @media screen and (max-width: 1024px) {
       width: calc(100% - 80px);
       margin: 0 0 0 80px;
+    }
+    @media screen and (max-width: 768px) {
+      height: auto;
+    }
+    @media screen and (max-width: 576px) {
+      width: 100%;
+      margin: 0;
+      border-radius: 0 0 16px 16px;
     }
     &.clear{
       width: 100%;
@@ -509,18 +526,29 @@ main.content{
   letter-spacing: -0.01em;
   @media screen and (max-width: 1024px) {
     padding: 24px 24px 40px;
+    font-size: 56px;
+    line-height: 64px;
   }
   @media screen and (max-width: 920px) {
     padding: 24px;
+    font-size: 48px;
+    line-height: 56px;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 24px 24px 30px;
     font-weight: 800;
     font-size: 40px;
     line-height: 48px;
   }
-  @media screen and (max-width: 768px) {
-    padding: 24px 24px 30px;
-  }
   @media screen and (max-width: 576px) {
     padding: 16px 16px 24px;
+    font-size: 36px;
+    line-height: 42px;
+  }
+  @media screen and (max-width: 480px) {
+    padding: 16px 16px 24px;
+    font-size: 32px;
+    line-height: 40px;
   }
 }
 .night{
@@ -542,6 +570,8 @@ main.content{
   @media screen and (max-width: 576px) {
     justify-content: space-between;
     padding: 0 0 16px;
+    font-size: 24px;
+    line-height: 28px;
   }
   span{
     display: block;
@@ -591,14 +621,14 @@ svg.icon{
 .userphoto{
   max-width: 56px;
   min-width: 56px;
-  height: 56px;
+  height: 56px!important;
   margin: 0 24px 0 0;
   border-radius: 50%;
   overflow: hidden;
   @media screen and (max-width: 576px) {
     max-width: 40px;
     min-width: 40px;
-    height: 40px;
+    height: 40px!important;
     margin: 0 16px 0 0;
   }
   img{
@@ -695,6 +725,10 @@ svg.icon{
             color: $dWhite;
             letter-spacing: 0.01em;
           }
+          @media screen and (max-width: 576px) {
+            font-size: 12px;
+            line-height: 16px;
+          }
         }
         &.active{
           background: $dOrange;
@@ -781,6 +815,7 @@ svg.icon{
     }
     input{
       padding: 0 20px 0 60px;
+      border: 0;
       font-size: 16px;
       line-height: 24px;
       letter-spacing: 0.001em;
@@ -833,6 +868,29 @@ svg.icon{
     visibility: visible;
     opacity: 1;
   }
+  @media screen and (max-width: 576px) {
+    transition: none;
+    &[data-modal="messages"],
+    &[data-modal="messagesChat"],
+    &[data-modal="friends"],
+    &[data-modal="news"] {
+      top: 56px!important;
+      bottom: 56px;
+      height: auto;
+      background: $grayLight;
+    }
+    &[data-modal="messagesChat"] {
+      bottom: 0;
+    }
+    &[data-modal="userProfile"],
+    &[data-modal="personalData"]{
+      top: 0!important;
+      bottom: 0;
+      height: 100Vh;
+      background: $grayLight;
+      z-index: 4000;
+    }
+  }
   .modalinfo{
     position: relative;
     top: -100px;
@@ -843,12 +901,16 @@ svg.icon{
     opacity: 0;
     transition: all .15s ease;
     overflow: hidden;
+    @media screen and (max-width: 576px) {
+      top: 0;
+      transition: none;
+    }
     &.bigger{
       width: 1112px;
       max-width: calc(100% - 48px);
       height: 628px;
       @media screen and (max-width: 576px) {
-        padding: 16px!important;
+        padding: 16px;
       }
     }
     &.big{
@@ -910,6 +972,14 @@ svg.icon{
 }
 .night{
   .modalbox{
+    @media screen and (max-width: 576px) {
+      &[data-modal="messages"],
+      &[data-modal="messagesChat"],
+      &[data-modal="friends"],
+      &[data-modal="news"] {
+        background: $dBlack;
+      }
+    }
     .modalinfo{
       background: $nBlack!important;
       button.close{
@@ -943,6 +1013,9 @@ svg.icon{
     @media screen and (max-width: 920px) {
       margin: 0 28px 0 24px;
     }
+    @media screen and (max-width: 576px) {
+      margin: 0 16px 0 0;
+    }
     svg{
       width: 100%;
       height: 100%;
@@ -958,6 +1031,10 @@ svg.icon{
       font-weight: 700;
       line-height: 20px;
       letter-spacing: 0.0015em;
+      @media screen and (max-width: 576px) {
+        font-size: 12px;
+        line-height: 16px;
+      }
     }
     .online{
       display: flex;
@@ -967,6 +1044,10 @@ svg.icon{
       line-height: 16px;
       letter-spacing: 0.004em;
       color: $dGray;
+      @media screen and (max-width: 576px) {
+        font-size: 10px;
+        line-height: 12px;
+      }
       span{
         display: block;
         max-width: 8px;

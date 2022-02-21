@@ -5,20 +5,22 @@
   </button>
   <div class="modalcontent reportbox">
     <div class="title">Report</div>
-    <div class="desc">State the reason for the report:</div>
-    <form @submit.prevent action="">
-      <ul v-if="subjects" class="radio">
-        <li v-for="(e, i) in subjects" :key="i">
-          <input v-model="model.subject" :value="e.id" type="radio" name="radio" :id="'subject_' + e.id">
-          <label v-html="e.title" :for="'subject_' + e.id"></label>
-        </li>
-      </ul>
-      <textarea v-model="model.comment" name="" placeholder="Describe the problem"></textarea>
-      <div class="btns">
-        <button @click="$root.$emit('toggleModal', {target: 'friends'})" type="button" class="btn st3">cancel</button>
-        <button @click="submit()" type="button" class="btn st2">send report</button>
-      </div>
-    </form>
+    <perfect-scrollbar vref="scroll">
+      <div class="desc">State the reason for the report:</div>
+      <form @submit.prevent action="">
+        <ul v-if="subjects" class="radio">
+          <li v-for="(e, i) in subjects" :key="i">
+            <input v-model="model.subject" :value="e.id" type="radio" name="radio" :id="'subject_' + e.id">
+            <label v-html="e.title" :for="'subject_' + e.id"></label>
+          </li>
+        </ul>
+        <textarea v-model="model.comment" name="" placeholder="Describe the problem"></textarea>
+        <div class="btns">
+          <button @click="$root.$emit('toggleModal', {target: 'friends'})" type="button" class="btn st3">cancel</button>
+          <button @click="submit()" type="button" class="btn st2">send report</button>
+        </div>
+      </form>
+    </perfect-scrollbar>
   </div>
 </div>
 </template>

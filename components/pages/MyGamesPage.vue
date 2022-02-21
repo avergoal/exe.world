@@ -2,7 +2,7 @@
 <div class="index_page">
   <div class="pagetitle">My games</div>
   <div class="categoriesbox">
-    <ul class="category">
+    <ul v-if="games.length" class="category">
       <li v-for="(e, i) in games" :key="i" class="gamecard f">
         <div class="box">
           <div class="img">
@@ -17,6 +17,12 @@
       </li>
       <Observer @intersect="loadGames"/>
     </ul>
+    <div v-else class="notgames">
+      <div class="img">
+        <img v-if="theme" src="~/assets/illustration/pad_inverse.svg" />
+        <img v-else src="~/assets/illustration/pad.svg" />
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -57,6 +63,9 @@ export default {
     }, 
     games() {
       return this.$store.getters['games/userAll'].list
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

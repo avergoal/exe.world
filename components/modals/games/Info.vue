@@ -5,7 +5,7 @@
   </button>
   <div v-if="loaded" class="modalcontent">
     <div class="top">
-      <div class="img"><img :src="game.poster.default" alt=""></div>
+      <div class="img"><img :src="game.icon.hires" alt=""></div>
       <div class="info">
         <div v-html="game.title" class="title"></div>
         <div class="btns">

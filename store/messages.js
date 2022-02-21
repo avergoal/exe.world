@@ -18,9 +18,11 @@ export const actions = {
     const { data } = await this.$axios.post('/appApi/messages', params)
     let messages = {
       code: '',
-      list: {}
+      list: {},
+      total: 0
     }
     if(data.response) {
+      messages.total = data.response.messages.length
       data.response.messages.sort((a, b) => {
         if(a.mid > b.mid) {
           return 1

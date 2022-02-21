@@ -18,7 +18,6 @@ export const actions = {
   },
   async getBalance({state, commit}) {
     const { data } = await this.$axios.post('/appApi/user.balance', {})
-    console.log(data, 'user.balance')
     let profile = Object.assign({}, state.data)
     profile.balance = data.response.balance
     commit('setState', {

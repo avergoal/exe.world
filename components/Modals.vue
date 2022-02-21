@@ -1,5 +1,5 @@
 <template>
-<div :class="{open: modal.open, active: modal.active}" class="modalbox">
+<div :class="{open: modal.open, active: modal.active}" class="modalbox" :data-modal="modal.target">
   <!-- Auth -->
   <SignIn v-if="modal.target == 'signIn'"/>
   <SignUp v-if="modal.target == 'signUp'"/>
@@ -39,6 +39,9 @@
   <Request v-if="modal.target == 'request'"/>
   <!-- Notification -->
   <Notification v-if="modal.target == 'notification'"/>
+  <!-- Help -->
+  <Help v-if="modal.target == 'help'"/>
+  <HelpSubmited v-if="modal.target == 'helpSubmited'"/>
 </div>
 </template>
 
@@ -82,6 +85,9 @@ import News from './modals/news/News'
 import Request from './modals/Request'
 // Notification
 import Notification from './modals/Notification'
+// Help
+import Help from './modals/Help'
+import HelpSubmited from './modals/HelpSubmited'
 
 export default {
 	name: 'ModalsComponent',
@@ -103,8 +109,13 @@ export default {
     // Request
     Request,
     // Notification
-    Notification
+    Notification,
+    // Help
+    Help, HelpSubmited
   },
+  data: () => ({
+    prev: null
+  }),
   mounted() {
     this.$root.$on('toggleModal', (e) => {
       this.$store.dispatch('app/toggleModal', e)
@@ -115,6 +126,16 @@ export default {
     document.addEventListener('click', (e) => {
       if(e.target.closest('.modalbox') && !e.target.closest('.modalinfo')) {
         this.$store.dispatch('app/toggleModal', {})
+      }
+      if(window.matchMedia('(max-width: 576px)').matches) {
+        if(this.prev != this.modal.target) {
+          this.prev = this.modal.target
+        } else {
+          this.prev = null
+          if(!e.target.closest('.modalinfo')) {
+            this.$store.dispatch('app/toggleModal', {})
+          }
+        }
       }
     })
   },

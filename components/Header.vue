@@ -7,7 +7,7 @@
       <ul>
         <li>© 2020 EXE. WORLD  All rights reserved</li>
         <li><nuxt-link to="/about">About</nuxt-link></li>
-        <li><button type="button">Help</button></li>
+        <li><button  @click="$root.$emit('toggleModal', {target: 'help'})" type="button">Help</button></li>
         <li><nuxt-link to="/">For Developers</nuxt-link></li>
       </ul>
     </div>
@@ -76,9 +76,11 @@
     <div v-else class="item signin">
       <button @click="toggleModal('signIn', null)" type="button" class="btn st3">
         <span>Sign in</span>
+        <svg-icon name="ui/personal_data" />
       </button>
       <button @click="toggleModal('signUp', null)" type="button" class="btn st2">
         <span>registration</span>
+        <svg-icon name="ui/access" />
       </button>
     </div>
   </nav>
@@ -113,7 +115,9 @@ export default {
   methods: {
     toggleMenu(e) {
       this.$store.dispatch('search/toggleSearch', false)
-      if(this.dropdown[e]) {
+      if(window.matchMedia('(max-width: 768px)').matches && e == 'profile') {
+        this.toggleModal('personalData', 'mobile')
+      } else if(this.dropdown[e]) {
         this.dropdown[e] = false
       } else {
         this.closeDropDown()

@@ -1,5 +1,5 @@
 <template>
-<div class="category_slider">
+<div :class="boxClass" class="category_slider">
   <div class="boxtitle">
     <span v-html="title"></span>
     <button v-if="target" @click="setRoute(target)" type="button"><svg-icon name="ui/more"/></button>
@@ -35,7 +35,7 @@
 <script>
 export default {
   name: 'GamesSwiperTemplate',
-  props: ['slides', 'between', 'filters', 'title', 'target', 'tab', 'slideClass', 'navClass'],
+  props: ['slides', 'between', 'filters', 'title', 'target', 'tab', 'slideClass', 'navClass', 'boxClass'],
   data: () => ({
     config: null,
     data: []
@@ -86,7 +86,8 @@ export default {
       if(!this[this.slides][e].length) {
         await this.$store.dispatch('games/setCategories', {
           type: e,
-          offset: 0
+          offset: 0,
+          filters: true
         })
         this.data = this[this.slides][e].list
       } else {

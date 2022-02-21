@@ -131,17 +131,25 @@ export const actions = {
     commit('setState', {key: 'news', value: results})
   },
   // Subjects
-  async setSupportSubjects({commit}) {
+  async setSupportSubjects({state, commit}) {
     const { data } = await this.$axios.post('/appApi/support.subjects', {})
-    let subjects = this.$deepClone(data.response.subjects)
+    let subjects = this.$deepClone(state.subjects)
     subjects.support = data.response.subjects
     commit('setState', {key: 'subjects', value: subjects})
   },
-  async setReportSubjects({commit}) {
+  async setReportSubjects({state, commit}) {
     const { data } = await this.$axios.post('/appApi/user.report.subjects', {})
-    let subjects = this.$deepClone(data.response.subjects)
+    let subjects = this.$deepClone(state.subjects)
     subjects.report = data.response.result
     commit('setState', {key: 'subjects', value: subjects})
+  },
+  // Support
+  async sendSupport({}, params) {
+    const { data } = await this.$axios.post('/appApi/support.send', params)
+    if(!data.error) {
+      return false
+    }
+    return data.error
   }
 }
 
