@@ -29,7 +29,6 @@
       <div class="social">
         <div class="text">Login via services</div>
         <ul>
-          <li><v-facebook-login :app-id="$config.fbAppId" /></li>
           <!--
           <li><a href=""><svg-icon name="ui/twitter" /></a></li>
           <li><a href=""><img src="~assets/google.svg" alt=""></a></li>

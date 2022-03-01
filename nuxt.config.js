@@ -29,12 +29,8 @@ export default {
   css: [
     '@/assets/scss/main',
   ],
-  publicRuntimeConfig: {
-    fbAppId: '3130123093891076'
-  },
   plugins: [
     { src: '~/plugins/axios' },
-    { src: '~/plugins/fb', mode: 'client' },
     { src: '~/plugins/data', mode: 'server' },
     { src: '~/plugins/plugins' },
     { src: '~/plugins/services' },
