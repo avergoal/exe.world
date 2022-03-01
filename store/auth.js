@@ -50,6 +50,10 @@ export const actions = {
       await this.dispatch('app/initAppData')
     }
   },
+  async authSocilas({}, params) {
+    const { data } = await this.$axios.post('/appApi/social.' + params)
+    return (data.response) ? data.response.url : false
+  },
   async signIn({}, params) {
     const { data } = await this.$axios.post('/appApi/signin', params)
     if(!data.error) {

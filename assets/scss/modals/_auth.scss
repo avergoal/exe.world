@@ -187,33 +187,6 @@
               align-items: center;
               width: 48px;
               height: 48px;
-              border: 2px solid $dFacebook;
-              border-radius: 12px;
-              background: $dFacebook;
-              opacity: 1;
-              cursor: pointer;
-              svg,
-              span{
-                display: none!important;
-              }
-              &:before{
-                display: block;
-                width: 8px;
-                height: 16px;
-                background: url('~@/assets/img/facebook.svg') 50% 50% no-repeat;
-                content: "";
-              }
-              &:hover{
-                background: $dFacebook;
-              }
-            }
-            /*
-            a{
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 48px;
-              height: 48px;
               border: 2px solid transparent;
               border-radius: 12px;
               svg{
@@ -223,31 +196,36 @@
                 width: 20px;
               }
             }
-            &:nth-child(1) a{
-              border-color: $dFacebook;
-              background: $dFacebook;
-              svg{
-                width: 8px;
-                height: 16px;
+            &:nth-child(1){
+              button{
+                border-color: $dFacebook;
+                background: $dFacebook;
+                svg{
+                  width: 8px;
+                  height: 16px;
+                }
               }
             }
-            &:nth-child(2) a{
-              border-color: $dTwitter;
-              background: $dTwitter;
-              svg{
-                width: 16px;
-                height: 14px;
+            &:nth-child(2){
+              button{
+                border-color: $dTwitter;
+                background: $dTwitter;
+                svg{
+                  width: 16px;
+                  height: 14px;
+                }
               }
             }
-            &:nth-child(3) a{
-              border-color: $grayLight;
-              background: $dWhite;
-              svg{
-                width: 18px;
-                height: 18px;
+            &:nth-child(3){
+              button{
+                border-color: $grayLight;
+                background: $dWhite;
+                svg{
+                  width: 18px;
+                  height: 18px;
+                }
               }
             }
-            */
           }
         }
       }

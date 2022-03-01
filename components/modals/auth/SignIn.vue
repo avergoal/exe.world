@@ -29,7 +29,7 @@
       <div class="social">
         <div class="text">Login via services</div>
         <ul>
-          <li><v-facebook-login :app-id="$config.fbAppId" /></li>
+          <li><button @click="socialAuth('fb')" type="button"><svg-icon name="ui/facebook" /></button></li>
           <!--
           <li><a href=""><svg-icon name="ui/twitter" /></a></li>
           <li><a href=""><img src="~assets/google.svg" alt=""></a></li>
@@ -62,6 +62,12 @@ export default {
       if(error) {
         this.errors[error].show = true
       } else this.$root.$emit('toggleModal', {})
+    },
+    async socialAuth(e) {
+      const url = await this.$store.dispatch('auth/authSocilas', e)
+      if(url) {
+        window.open(url, '_blank')
+      }
     },
     goHome() {
       this.$root.$emit('toggleModal', {})
