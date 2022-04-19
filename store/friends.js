@@ -21,11 +21,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async load({commit}, params) {
+  async load({commit, state}, params) {
     const { data } = await this.$axios.post('/appApi/friends.get', params)
-    commit('setState', {key: 'list', value: data.response.users})
+    if(params.offset === 0) commit('setState', {key: 'list', value: []})
+    commit('setState', {key: 'list', value: state.list.concat(data.response.users)})
     commit('setState', {key: 'total', value: data.response.total_friends})
-    this.dispatch('friends/requests', {offset: 0})
+    this.dispatch('friends/requests', {offset: params.offset})
   },
   async search({commit}, params) {
     const { data } = await this.$axios.post('/appApi/user.search', params)
@@ -39,10 +40,10 @@ export const actions = {
     await this.$axios.post('/appApi/friends.del', params)
     return true
   },
-  async update({}) {
-    await this.dispatch('friends/load', {offset: 0})
-    await this.dispatch('friends/requests', {offset: 0, type: 0})
-    await this.dispatch('friends/requests', {offset: 0, type: 1})
+  async update({}, params) {
+    await this.dispatch('friends/load', params)
+    await this.dispatch('friends/requests', Object.assign({type: 0}, params))
+    await this.dispatch('friends/requests', Object.assign({type: 1}, params))
     return true
   },
   async report({}, params) {

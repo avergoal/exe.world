@@ -76,9 +76,7 @@ export default {
   proxy: {
     '/appApi': {
       target: 'https://api.exe.world/',
-      pathRewrite: {
-        '^/appApi': ''
-      }
+      pathRewrite: { '^/appApi': '' }
     }
   },
   pwa: {

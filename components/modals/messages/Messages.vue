@@ -57,6 +57,9 @@ export default {
         }, 100)
       }
     })
+    this.$root.$on('getNewMessage', () => {
+      this.$store.dispatch('messages/chats')
+    })
   },
   methods: {
     setSearchResults() {

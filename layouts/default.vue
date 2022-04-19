@@ -66,6 +66,8 @@ export default {
           this.$store.dispatch('notifications/set', {
             type: 'sidebar'
           })
+          if(e.event === 'new_message') this.$root.$emit('getNewMessage')
+          if(e.event === 'new_friend') this.$root.$emit('getNewFriendRequest')
           break
         case 'new_notification':
           this.$store.dispatch('notifications/set', {

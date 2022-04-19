@@ -18,6 +18,7 @@
   <UserProfile v-if="modal.target == 'userProfile'"/>
   <UserProfileGames v-if="modal.target == 'userProfileGames'"/>
   <UserProfileFriends v-if="modal.target == 'userProfileFriends'"/>
+  <UserProfileMutualFriends v-if="modal.target == 'userProfileMutualFriends'"/>
   <UserBlock v-if="modal.target == 'userBlock'"/>
   <UserBlocked v-if="modal.target == 'userBlocked'"/>
   <UserReport v-if="modal.target == 'userReport'"/>
@@ -64,6 +65,7 @@ import FriendsRemoved from './modals/friends/Removed'
 import UserProfile from './modals/users/Profile'
 import UserProfileGames from './modals/users/Games'
 import UserProfileFriends from './modals/users/Friends'
+import UserProfileMutualFriends from './modals/users/MutualFriends'
 import UserBlock from './modals/users/Block'
 import UserBlocked from './modals/users/Blocked'
 import UserReport from './modals/users/Report'
@@ -99,7 +101,7 @@ export default {
     // Friends
     Friends, FriendsRemove, FriendsRemoved,
     // Users
-    UserProfile, UserProfileGames, UserProfileFriends, UserBlock, UserBlocked, UserReport, UserReported,
+    UserProfile, UserProfileGames, UserProfileFriends, UserProfileMutualFriends, UserBlock, UserBlocked, UserReport, UserReported,
     // Personal
     PersonalData, MyPhoto, MyPhotoEditor,
     // Games

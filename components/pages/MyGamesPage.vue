@@ -22,6 +22,7 @@
         <img v-if="theme" src="~/assets/illustration/pad_inverse.svg" />
         <img v-else src="~/assets/illustration/pad.svg" />
       </div>
+      <div class="desc">You don't have games yet. Use the search bar to find them.</div>
     </div>
   </div>
 </div>
@@ -39,7 +40,11 @@ export default {
       meta: [{hid: 'description', name: 'description', content: 'My games'}]
     }
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch('games/loadUserGames', {
+      uid: this.profile.uid,
+      type: 'load'
+    })
     this.observer = true
   },
   methods: {

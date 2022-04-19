@@ -33,6 +33,16 @@ export const actions = {
         }
       })
     }
+  },
+  clear({ commit }) {
+    this.$axios.post('/appApi/notifications.clear', {})
+    commit('setState', {
+      key: 'header',
+      value: {
+        total: 0,
+        list: []
+      }
+    })
   }
 }
 

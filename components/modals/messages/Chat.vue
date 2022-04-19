@@ -123,7 +123,7 @@ export default {
         this.openParams = false
       }
     })
-    this.loadMessages()
+    this.loadMessages(true)
     if(this.notifications.chats) {
       this.$store.dispatch('notifications/set', {
         type: 'sidebar'
@@ -137,11 +137,16 @@ export default {
         }, 100)
       }
     })
+    this.$root.$on('getNewMessage', () => {
+      this.loadMessages(false)
+    })
   },
   methods: {
-    async loadMessages() {
-      this.show = false
-      await this.$store.dispatch('users/load', {uid: this.modal.user})
+    async loadMessages(start) {
+      if(start) {
+        this.show = false
+        await this.$store.dispatch('users/load', {uid: this.modal.user})
+      }
       await this.$store.dispatch('messages/load', {uid: this.modal.user})
       this.show = true
       let interval = setInterval(() => {

@@ -526,6 +526,15 @@
           width: 100%;
         }
       }
+      .desc{
+        padding: 60px 0;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 28px;
+        color: #556980;
+        letter-spacing: 0.0015em;
+        text-align: center;
+      }
     }
   }
   // Peoples list
@@ -681,6 +690,13 @@
       }
       .boxtitle{
         color: $dWhite;
+      }
+    }
+    .categoriesbox{
+      .notgames{
+        .desc{
+          color: rgba(255, 255, 255, 0.72);
+        }
       }
     }
     ul.peoples_list{

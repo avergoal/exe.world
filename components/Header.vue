@@ -142,7 +142,7 @@ export default {
       })
     },
     clearNotifications() {
-      this.$store.dispatch('profile/clearNotifications')
+      this.$store.dispatch('notifications/clear')
     },
     closeDropDown() {
       this.dropdown = {

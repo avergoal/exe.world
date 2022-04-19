@@ -67,7 +67,10 @@
           </li>
           <li>
             <div class="label">Location</div>
-            <div class="desc">Location</div>
+            <div class="desc">
+              {{ profile.user.location.country }}
+              {{ (profile.user.location.city) ? (', ' + profile.user.location.city) : ''}}
+            </div>
           </li>
         </ul>
         <div v-if="profile.blacklist_status !== 2" class="floatparams">
@@ -98,10 +101,17 @@
       </aside>
       <div class="interest">
         <perfect-scrollbar v-if="profile.blacklist_status !== 2" ref="scroll">
-          <div class="swipers">
+          <div v-if="profile && (profile.games.games.length || profile.friends.users.length || profile.mutual_friends.users.length)" class="swipers">
             <GamesSwiper v-if="profile && profile.games.games.length" slides="user_profile_games" between="16" title="Games" tab="userProfileGames" slideClass="m"/>
             <UsersSwiper v-if="profile && profile.friends.users.length" slides="user_profile_friends" between="8" title="Friends" tab="userProfileFriends"/>
-            <UsersSwiper v-if="profile && profile.mutual_friends.users.length" slides="user_profile_mutual_friends" between="8" title="Mutual friends" tab="userProfileFriends"/>
+            <UsersSwiper v-if="profile && profile.mutual_friends.users.length" slides="user_profile_mutual_friends" between="8" title="Mutual friends" tab="userProfileMutualFriends"/>
+          </div>
+          <div v-else class="notdata">
+            <div class="img">
+              <img v-if="theme" src="~/assets/illustration/signin_inverse.svg" />
+              <img v-else src="~/assets/illustration/signin.svg" />
+            </div>
+            <div class="desc">You don't have friends and games yet. Use the search bar to find them.</div>
           </div>
         </perfect-scrollbar>
         <div v-else class="blocked">
@@ -192,6 +202,9 @@ export default {
         profile.user.id = profile.user.uid
       }
       return profile
+    },
+    theme() {
+      return this.$store.getters['app/theme']
     }
   }
 }

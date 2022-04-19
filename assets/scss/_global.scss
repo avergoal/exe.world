@@ -452,7 +452,8 @@ span.badge{
       width: 12px;
       border-radius: 6px;
       background: $black32;
-      opacity: 1;
+      transition: opacity .15s ease;
+      opacity: 0;
       z-index: 100;
       @media screen and (max-width: 920px) {
         width: 6px;
@@ -470,6 +471,11 @@ span.badge{
     }
     &-x{
       display: none;
+    }
+  }
+  &.ps--scrolling-y{
+    .ps__rail-y{
+      opacity: 1;
     }
   }
   &--active-y{
@@ -796,6 +802,13 @@ svg.icon{
   justify-content: space-between;
   align-items: center;
   padding: 32px 48px 0;
+  @media screen and (max-width: 1024px) {
+    padding: 32px 24px 0;
+  }
+  @media screen and (max-width: 768px) {
+    display: block;
+    padding: 24px 24px 0;
+  }
   fieldset{
     position: relative;
     display: block;
@@ -825,6 +838,9 @@ svg.icon{
     display: flex;
     align-items: center;
     padding: 0 0 0 16px;
+    @media screen and (max-width: 768px) {
+      padding: 24px 0 0;
+    }
     button{
       display: flex;
       justify-content: center;
@@ -842,6 +858,9 @@ svg.icon{
       letter-spacing: 0.06em;
       white-space: nowrap;
       color: $dGray;
+      @media screen and (max-width: 768px) {
+        margin: 0 8px 0 0;
+      }
       &.active{
         background: $dOrange;
         color: $dWhite;
@@ -862,7 +881,7 @@ svg.icon{
   background: rgba(0, 0, 0, 0.6);
   visibility: hidden;
   opacity: 0;
-  z-index: 2000;
+  z-index: 5000;
   transition: all .5s ease;
   &.open{
     visibility: visible;

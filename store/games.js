@@ -2,16 +2,16 @@ export const state = () => ({
   limit: 20,
   userRecent: [],
   userAll: {
-    offset: 0,
+    total: 0,
     list: []
   },
   carousel: [],
   newgames: {
-    offset: 0,
+    total: 0,
     list: []
   },
   recommended: {
-    offset: 0,
+    total: 0,
     list: []
   },
   categories: {},
@@ -32,9 +32,10 @@ export const actions = {
     })
   },
   async loadUserGames({ state, commit }, params) {
-    let games = Object.assign({}, state.userAll)
-    games.offset += state.limit
-    params.offset = games.offset
+    let games = (params.type === 'load') ? {
+      total: 0,
+      list: []
+    } : Object.assign({}, state.userAll)
     const { data } = await this.$axios.post('/appApi/user.games', params)
     games.list = games.list.concat(data.response.games)
     commit('setState', {
@@ -124,26 +125,14 @@ export const actions = {
     }
   },
   async installGame({}, params) {
-    const { data } = await this.$axios.post('/appApi/games.add', params)
-    this.dispatch('app/initAppData')
-    return data
+    await this.$axios.post('/appApi/games.add', params)
+    await this.dispatch('app/initAppData')
+    return
   },
   async removeGame({commit}, params) {
     await this.$axios.post('/appApi/games.remove', params)
-    const { data } = await this.$axios.post('/appApi/user.games', {
-      uid: this.getters['profile/data'].uid,
-      offset: 0
-    })
-    let games = {
-      list: data.response.games,
-      offset: 0
-    }
-    commit('setState', {
-      key: 'userAll',
-      value: games
-    })
-    this.dispatch('app/initAppData')
-    return data
+    await this.dispatch('app/initAppData')
+    return
   },
   async runGame({}, params) {
     const { data } = await this.$axios.post('/appApi/games.run', params)

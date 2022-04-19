@@ -52,6 +52,7 @@ export default {
       }
     },
     async runGame() {
+      console.log(this.game.installed)
       if(!this.game.installed) {
         await this.$store.dispatch('games/installGame', {
           gid: this.game.gid

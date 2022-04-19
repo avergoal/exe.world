@@ -122,10 +122,11 @@ export default {
     currentFilter: 0,
     loaded: {0: false, 1: false},
     query: null,
-    loader: false
+    loader: false,
+    offset: 0
   }),
   created() {
-    this.$store.dispatch('friends/load', {offset: 0})
+    this.$store.dispatch('friends/load', {offset: this.offset})
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_list) {
         setTimeout(() => {
@@ -133,15 +134,20 @@ export default {
         }, 100)
       }
     })
+    this.$root.$on('getNewFriendRequest', () => {
+      this.offset = 0
+      this.$store.dispatch('friends/load', {offset: this.offset})
+    })
   },
   methods: {
     async setFilter(e) {
       if(!this.loader) {
         this.currentFilter = e
         if(this.currentFilter && !this.loaded[this.currentFilter - 1]) {
+          this.offset = 0
           await this.$store.dispatch('friends/requests', {
             type: this.currentFilter - 1,
-            offset: 0
+            offset: this.offset
           })
           this.loaded[this.currentFilter - 1] = true
         }
@@ -150,21 +156,23 @@ export default {
     },
     async search() {
       this.loader = true
+      this.offset = 0
       if(this.query) {
         await this.$store.dispatch('friends/search', {
           type: 'friends',
           query: this.query,
-          offset: 0
+          offset: this.offset
         })
       } else {
-        await this.$store.dispatch('friends/load', {offset: 0})
+        await this.$store.dispatch('friends/load', {offset: this.offset})
       }
       this.loader = false
     },
     async add(e) {
       this.loader = true
+      this.offset = 0
       await this.$store.dispatch('friends/add', {uid: e})
-      await this.$store.dispatch('friends/update', {uid: e})
+      await this.$store.dispatch('friends/update', {offset: this.offset})
       this.$refs.scroll_list.$el.scrollTop = 0
       this.$store.dispatch('notifications/set', {
         type: 'sidebar'
@@ -182,7 +190,29 @@ export default {
       this.loader = false
     },
     async intersected() {
-      console.log('Friends intersected')
+      this.offset += 20
+      if(this.currentFilter) {
+        let check = false
+        if(this.currentFilter === 1 && this.requests.total.subscribers > this.offset) {
+          check = true
+        } else if(this.requests.total.subscriptions > this.offset) {
+          check = true
+        }
+        if(check) {
+          this.$store.dispatch('friends/requests', {
+            type: this.currentFilter - 1,
+            offset: this.offset
+          })
+        }
+      } else if(this.openSearch && this.query) {
+        this.$store.dispatch('friends/search', {
+          type: 'friends',
+          query: this.query,
+          offset: this.offset
+        })
+      } else if(this.friendsTotal > this.offset) {
+        this.$store.dispatch('friends/load', {offset: this.offset})
+      }
     }
   },
   computed: {
@@ -206,7 +236,8 @@ export default {
     openSearch(e) {
       if(!e) {
         this.query = null
-        this.$store.dispatch('friends/load', {offset: 0})
+        this.offset = 0
+        this.$store.dispatch('friends/load', {offset: this.offset})
       }
       this.$refs.scroll_list.$el.scrollTop = 0
     },

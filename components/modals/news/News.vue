@@ -112,6 +112,7 @@ export default {
       this.filters.current = e
     },
     async intersected() {
+      console.log('intersected')
       this.offset += 20
       let params = {
         offset: this.offset,

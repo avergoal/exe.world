@@ -120,13 +120,14 @@ export const actions = {
     return data
   },
   // News
-  async setNews({getters, commit}, params) {
+  async setNews({state, commit}, params) {
     let intersect = params.intersect
     delete params.intersect
     const { data } = await this.$axios.post('/appApi/news.my', params)
+    console.log(data.response)
     let results = data.response.news
     if(intersect) {
-      results = getters.news.concat(results)
+      results = state.news.concat(results)
     }
     commit('setState', {key: 'news', value: results})
   },

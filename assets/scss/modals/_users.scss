@@ -462,7 +462,6 @@
             margin: 0;
             overflow: visible;
           }
-
           .swipers{
             padding: 0 0 40px;
             .swiper-container{
@@ -587,6 +586,28 @@
                   margin: 20px 0 0;
                 }
               }
+            }
+          }
+          .notdata{
+            padding: 40px 20px 0;
+            .img{
+              max-width: 260px;
+              margin: 0 auto;
+              img{
+                display: block;
+                width: 100%;
+              }
+            }
+            .desc{
+              max-width: 460px;
+              margin: 0 auto;
+              padding: 60px 0;
+              font-size: 24px;
+              font-weight: 800;
+              line-height: 28px;
+              color: #556980;
+              letter-spacing: 0.0015em;
+              text-align: center;
             }
           }
         }
@@ -850,6 +871,11 @@
                     }
                   }
                 }
+              }
+            }
+            .notdata{
+              .desc{
+                color: rgba(255, 255, 255, 0.72);
               }
             }
           }
