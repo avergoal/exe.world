@@ -172,10 +172,44 @@ fieldset{
         height: 100px;
       }
     }
+    .loader-wrap{
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      background: $dWhite;
+    }
+  }
+}
+// Loader wrap animate
+.loader{
+  &-enter{
+    opacity: 0;
+
+    &-active{
+      transition: all 0s ease;
+    }
+  }
+  &-leave{
+    &-active{
+      opacity: 0;
+      transition: all .5s ease!important;
+    }
   }
 }
 .night{
   .loader{
+    background: $nBlack!important;
+  }
+  .loader-wrap{
     background: $nBlack!important;
   }
 }

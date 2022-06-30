@@ -1,4 +1,7 @@
 import Vue from 'vue'
+// Loader animation
+import LoaderAnimation from '~/components/LoaderAnimation'
+Vue.component('LoaderAnimation', LoaderAnimation)
 // Main pages
 import MainPage from '~/components/pages/MainPage'
 import CategoryPage from '~/components/pages/CategoryPage'

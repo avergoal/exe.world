@@ -9,7 +9,9 @@
   </perfect-scrollbar>
   <Sidebar v-if="profile"/>
   <Modals />
-  <div :class="{loaded: loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div>
+  <transition v-if="!loaded" name="loader">
+    <LoaderAnimation />
+  </transition>
 </div>
 </template>
 
