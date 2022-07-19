@@ -57,7 +57,13 @@
       </div>
     </div>
     <div v-if="profile" class="item account">
-      <button @click="toggleMenu('profile')" type="button" class="togglemenu btn st1">
+      <button v-if="isGuest" type="button" class="togglemenu_guest btn st1" disabled="disabled">
+        <div class="photo">
+          <img :src="profile.avatar_urls.x100" :alt="profile.user_name">
+        </div>
+        <span v-html="profile.user_name"></span>
+      </button>
+      <button v-else @click="toggleMenu('profile')" type="button" class="togglemenu btn st1">
         <div class="photo"><img :src="profile.avatar_urls.x100" :alt="profile.user_name"></div>
         <span v-html="profile.user_name"></span>
         <svg-icon name="ui/user_settings" />
@@ -164,6 +170,9 @@ export default {
     },
     theme() {
       return this.$store.getters['app/theme']
+    },
+    isGuest() {
+      return this.$store.getters['profile/isGuest']
     }
   },
   watch: {

@@ -50,6 +50,21 @@ export const actions = {
       await this.dispatch('app/initAppData')
     }
   },
+  async regGuest({}) {
+    let guestToken = this.getters['auth/token']
+    const { data } = await this.$axios.post('/appApi/guest', {
+      api_token: guestToken
+    })
+
+    if (data.response.success) {
+      guestToken = data.response.api_token
+      this.dispatch('auth/setToken', guestToken)
+      localStorage.setItem('token', guestToken)
+      await this.dispatch('app/initAppData')
+    } else {
+      localStorage.removeItem('token')      
+    }
+  },
   async authSocilas({}, params) {
     const { data } = await this.$axios.post('/appApi/social.' + params)
     return (data.response) ? data.response.url : false

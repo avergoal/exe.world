@@ -1,6 +1,10 @@
 <template>
 <div v-if="profile && game" class="gamepagebox">
   <div v-html="pageTitle" class="pagetitle"></div>
+  <GuestSave
+    v-if="isGuest && !hideGuestSave"
+    @closeGuestSave="hideGuestSave = true"
+  ></GuestSave>
   <div class="framebox">
     <iframe :src="frame.url" frameborder="0"></iframe>
   </div>
@@ -19,15 +23,20 @@
 </template>
 
 <script>
+import GuestSave from '~/components/guest/GuestSave'
 export default {
   name: 'GamePage',
+  components: {
+    GuestSave
+  },
   data: () => ({
     game: null,
     frame: {
       height: 0,
       url: null
     },
-    pageTitle: 'EXE.world'
+    pageTitle: 'EXE.world',
+    hideGuestSave: false
   }),
   head() {
 		return {
@@ -82,6 +91,9 @@ export default {
         this.$router.push('/')
       }
       return profile
+    },
+    isGuest() {
+      return this.$store.getters['profile/isGuest']
     },
     gamesData() {
       return this.$store.getters['games/gamesData']

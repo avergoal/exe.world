@@ -21,6 +21,149 @@
       letter-spacing: 0.0025em;
     }
   }
+  .guest-save{
+    position: absolute;
+
+    width: 100%;
+    height: 150px;
+    top: 88px;
+    left: 0;
+    
+    background: $dBlack;
+    border-radius: 24px 24px 0px 0px;
+    z-index: 50;
+    
+    @media screen and (max-width: 920px) {
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      height: auto;
+      z-index: 1500;
+    }
+
+    button.close {
+      display: flex;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: $white10;
+      z-index: 1;
+
+      @media screen and (max-width: 920px) {
+        display: flex;
+      }
+    
+      svg {
+        width: 9px;
+        height: 9px;
+        fill: $white72;
+        pointer-events: none;
+      }
+    }
+
+    &-wrap{
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      width: 100%;
+      max-width: 1142px;
+
+      margin: 0 auto;
+      padding: 0 48px;
+
+      @media screen and (max-width: 920px) {
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        
+        max-width: 100%;
+        padding: 0 32px 32px;
+      }
+      @media screen and (max-width: 576px) {
+        padding: 0 16px 16px;
+      }
+    }
+    &__img{
+      position: relative;
+      top: -16px;
+      display: block;
+      width: 194px;
+      height: 149px;
+      object-fit: contain;
+
+      @media screen and (max-width: 920px) {
+        top: -24px;
+        width: 186px;
+        height: 143px;
+      }
+      @media screen and (max-width: 576px) {
+        top: -16px;
+        width: 116px;
+        height: 89px;
+      }
+    }
+    &-text{
+      margin: 0 24px;
+
+      @media screen and (max-width: 920px) {
+        margin: -8px 0 0;
+      }
+      @media screen and (max-width: 576px) {
+        margin: 0;
+      }
+    }
+    &__title{
+      font-weight: 800;
+      font-size: 32px;
+      line-height: 40px;
+      letter-spacing: 0.0025em;
+      color: $nWhite;
+      
+      @media screen and (max-width: 920px) {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+    &__desc{
+      margin-top: 8px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.001em;
+      color: $white72;
+
+      @media screen and (max-width: 920px) {
+        margin-top: 6px;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+    &-btns{
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      @media screen and (max-width: 920px) {
+        margin-top: 24px;
+      }
+
+      .btn{
+        margin-right: 8px;
+      }
+      .btn:last-child{
+        margin-right: 0;
+      }
+    }
+  }
   .framebox{
     position: relative;
     width: 100%;
@@ -138,6 +281,9 @@
 
 .night{
   .gamepagebox{
+    .guest-save{
+      background: linear-gradient(0deg, rgba(150, 127, 232, 0.14), rgba(150, 127, 232, 0.14)), #27262D;
+    }
     .framebox{
       @media screen and (max-width: 920px) {
         background: $dBlack;

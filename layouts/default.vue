@@ -45,7 +45,11 @@ export default {
   },
   methods: {
     async loadUser() {
-      if(localStorage.token) {
+      if (!localStorage.token) {
+        await this.$store.dispatch('auth/regGuest')
+      }
+      
+      if(localStorage.token !== 'logout') {
         await this.$store.dispatch('auth/auth', localStorage.token)
         let connection = new WebSocket('wss://ws.exe.world')
         connection.onopen = () => {
@@ -58,6 +62,7 @@ export default {
           this.updateData(JSON.parse(e.data))
         }
       }
+
       this.loaded = true
     },
     updateData(e) {

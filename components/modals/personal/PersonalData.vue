@@ -10,9 +10,9 @@
         <div class="userphoto"><img :src="profile.avatar_urls.x100" alt=""></div>
         <div class="data">
           <div v-html="profile.user_name" class="name"></div>
-          <div class="text">My profile</div>
+          <div v-if="!isGuest" class="text">My profile</div>
         </div>
-        <button @click="$root.$emit('toggleModal', {target: 'myPhoto'})" type="button" class="edit"><svg-icon name="ui/pencil" /></button>
+        <button v-if="!isGuest" @click="$root.$emit('toggleModal', {target: 'myPhoto'})" type="button" class="edit"><svg-icon name="ui/pencil" /></button>
       </div>
       <div class="theme">
         <div class="label">
@@ -25,25 +25,25 @@
         </div>
       </div>
       <ul class="menu">
-        <li>
+        <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'personal')" :class="{active: modal.tab == 'personal'}" type="button">
             <div class="ico"><svg-icon name="ui/personal_data" /></div>
             <span>Personal Data</span>
           </button>
         </li>
-        <li>
+        <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'access')" :class="{active: modal.tab == 'access'}" type="button">
             <div class="ico"><svg-icon name="ui/access" /></div>
             <span>Access Settings</span>
           </button>
         </li>
-        <li>
+        <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'notifications')" :class="{active: modal.tab == 'notifications'}" type="button">
             <div class="ico"><svg-icon name="ui/bell" /></div>
             <span>Notifications</span>
           </button>
         </li>
-        <li>
+        <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'blacklist')" :class="{active: modal.tab == 'blacklist'}" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
             <span>Blacklist</span>
@@ -115,6 +115,9 @@ export default {
     },
     modal() {
       return this.$store.getters['app/modal']
+    },
+    isGuest() {
+      return this.$store.getters['profile/isGuest']
     }
   }
 }
