@@ -19,7 +19,7 @@ export default {
 	name: 'LogOutModal',
   methods: {
     logOut() {
-      localStorage.setItem('token', 'logout')
+      localStorage.removeItem('token')
       window.location.reload()
     }
   }

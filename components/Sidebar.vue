@@ -2,11 +2,11 @@
 <aside class="sidebar">
   <ul class="menu">
     <li v-for="(e, i) in menu" :key="i">
-      <a v-if="e.type == 'link'" @click.prevent="setRoute(e.target)" :href="e.link" :class="{active: e.target == page}">
+      <a v-if="e.type == 'link'" @click.prevent="clickLink(e.target)" :href="e.link" :class="{active: e.target == page}">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
       </a>
-      <button v-else type="button" @click="$root.$emit('toggleModal', {target: e.target})" :class="{active: e.target == page}" class="togglemodal">
+      <button v-else type="button" @click="clickBtn(e.target)" :class="{active: e.target == page}" class="togglemodal">
         <div class="ico"><svg-icon :name="e.ico" /></div>
         <span v-html="e.title"></span>
         <span v-if="e.target == 'messages' && notifications.chats" v-html="notifications.chats" class="label"></span>
@@ -38,6 +38,16 @@ export default {
   methods: {
     setRoute(target) {
       this.$root.$emit('changeTemplate', target) 
+    },
+    clickLink(target) {
+      this.setRoute(target)
+    },
+    clickBtn(target) {
+      if(this.isGuest) {
+        this.$root.$emit('toggleModal', { target: 'signIn' })
+      } else{
+        this.$root.$emit('toggleModal', { target: target })
+      }
     }
   },
   computed: {
@@ -49,6 +59,9 @@ export default {
     },
     notifications() {
       return this.$store.getters['notifications/sidebar']
+    },
+    isGuest() {
+      return this.$store.getters['profile/isGuest']
     }
   }
 }

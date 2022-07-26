@@ -56,14 +56,11 @@ export const actions = {
       api_token: guestToken
     })
 
-    if (data.response.success) {
-      guestToken = data.response.api_token
-      this.dispatch('auth/setToken', guestToken)
-      localStorage.setItem('token', guestToken)
-      await this.dispatch('app/initAppData')
-    } else {
-      localStorage.removeItem('token')      
+    if (!data.error) {
+      await this.dispatch('auth/auth', data.response.api_token)
+      return false
     }
+    return data.error
   },
   async authSocilas({}, params) {
     const { data } = await this.$axios.post('/appApi/social.' + params)

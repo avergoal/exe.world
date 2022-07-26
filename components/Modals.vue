@@ -1,49 +1,50 @@
 <template>
-<div :class="{open: modal.open, active: modal.active}" class="modalbox" :data-modal="modal.target">
-  <!-- Auth -->
-  <SignIn v-if="modal.target == 'signIn'"/>
-  <SignUp v-if="modal.target == 'signUp'"/>
-  <LogOut v-if="modal.target == 'logOut'"/>
-  <RestorePassword v-if="modal.target == 'restorePassword'"/>
-  <EmailSend v-if="modal.target == 'emailSend'"/>
-  <!-- Messages -->
-  <Messages v-if="modal.target == 'messages'"/>
-  <MessagesChat v-if="modal.target == 'messagesChat'"/>
-  <MessagesRemove v-if="modal.target == 'messagesRemove'"/>
-  <!-- Friends -->
-  <Friends v-if="modal.target == 'friends'"/>
-  <FriendsRemove v-if="modal.target == 'friendsRemove'"/>
-  <FriendsRemoved v-if="modal.target == 'friendsRemoved'"/>
-  <!-- Users -->
-  <UserProfile v-if="modal.target == 'userProfile'"/>
-  <UserProfileGames v-if="modal.target == 'userProfileGames'"/>
-  <UserProfileFriends v-if="modal.target == 'userProfileFriends'"/>
-  <UserProfileMutualFriends v-if="modal.target == 'userProfileMutualFriends'"/>
-  <UserBlock v-if="modal.target == 'userBlock'"/>
-  <UserBlocked v-if="modal.target == 'userBlocked'"/>
-  <UserReport v-if="modal.target == 'userReport'"/>
-  <UserReported v-if="modal.target == 'userReported'"/>
-  <!-- Personal -->
-  <PersonalData v-if="modal.target == 'personalData'"/>
-  <MyPhoto v-if="modal.target == 'myPhoto'"/>
-  <MyPhotoEditor v-if="modal.target == 'myPhotoEditor'"/>
-  <!-- Games -->
-  <GameInfo v-if="modal.target == 'gameInfo'"/>
-  <GameBuy v-if="modal.target == 'gameBuy'"/>
-  <GameBuySuccess v-if="modal.target == 'gameBuySuccess'"/>
-  <GameSignIn v-if="modal.target == 'gameSignIn'"/>
-  <GameRemove v-if="modal.target == 'gameRemove'"/>
-  <GameMenu v-if="modal.target == 'gameMenu'"/>
-  <!-- News -->
-  <News v-if="modal.target == 'news'"/>
-  <!-- Request -->
-  <Request v-if="modal.target == 'request'"/>
-  <!-- Notification -->
-  <Notification v-if="modal.target == 'notification'"/>
-  <!-- Help -->
-  <Help v-if="modal.target == 'help'"/>
-  <HelpSubmited v-if="modal.target == 'helpSubmited'"/>
-</div>
+  <div :class="{open: modal.open, active: modal.active}" class="modalbox" :data-modal="modal.target">
+    <!-- Auth -->
+    <SignIn v-if="modal.target == 'signIn'" />
+    <SignUp v-if="modal.target == 'signUp'" />
+    <LogOut v-if="modal.target == 'logOut'" />
+    <LogInTemp v-if="modal.target == 'logInTemp'" />
+    <RestorePassword v-if="modal.target == 'restorePassword'" />
+    <EmailSend v-if="modal.target == 'emailSend'" />
+    <!-- Messages -->
+    <Messages v-if="modal.target == 'messages'" />
+    <MessagesChat v-if="modal.target == 'messagesChat'" />
+    <MessagesRemove v-if="modal.target == 'messagesRemove'" />
+    <!-- Friends -->
+    <Friends v-if="modal.target == 'friends'" />
+    <FriendsRemove v-if="modal.target == 'friendsRemove'" />
+    <FriendsRemoved v-if="modal.target == 'friendsRemoved'" />
+    <!-- Users -->
+    <UserProfile v-if="modal.target == 'userProfile'" />
+    <UserProfileGames v-if="modal.target == 'userProfileGames'" />
+    <UserProfileFriends v-if="modal.target == 'userProfileFriends'" />
+    <UserProfileMutualFriends v-if="modal.target == 'userProfileMutualFriends'" />
+    <UserBlock v-if="modal.target == 'userBlock'" />
+    <UserBlocked v-if="modal.target == 'userBlocked'" />
+    <UserReport v-if="modal.target == 'userReport'" />
+    <UserReported v-if="modal.target == 'userReported'" />
+    <!-- Personal -->
+    <PersonalData v-if="modal.target == 'personalData'" />
+    <MyPhoto v-if="modal.target == 'myPhoto'" />
+    <MyPhotoEditor v-if="modal.target == 'myPhotoEditor'" />
+    <!-- Games -->
+    <GameInfo v-if="modal.target == 'gameInfo'" />
+    <GameBuy v-if="modal.target == 'gameBuy'" />
+    <GameBuySuccess v-if="modal.target == 'gameBuySuccess'" />
+    <GameSignIn v-if="modal.target == 'gameSignIn'" />
+    <GameRemove v-if="modal.target == 'gameRemove'" />
+    <GameMenu v-if="modal.target == 'gameMenu'" />
+    <!-- News -->
+    <News v-if="modal.target == 'news'" />
+    <!-- Request -->
+    <Request v-if="modal.target == 'request'" />
+    <!-- Notification -->
+    <Notification v-if="modal.target == 'notification'" />
+    <!-- Help -->
+    <Help v-if="modal.target == 'help'" />
+    <HelpSubmited v-if="modal.target == 'helpSubmited'" />
+  </div>
 </template>
 
 <script>
@@ -51,6 +52,7 @@
 import SignIn from './modals/auth/SignIn'
 import SignUp from './modals/auth/SignUp'
 import LogOut from './modals/auth/LogOut'
+import LogInTemp from './modals/auth/LogInTemp'
 import RestorePassword from './modals/auth/RestorePassword'
 import EmailSend from './modals/auth/EmailSend'
 // Messages
@@ -95,7 +97,7 @@ export default {
 	name: 'ModalsComponent',
   components: {
     // Auth
-    SignIn, SignUp, LogOut, RestorePassword, EmailSend,
+    SignIn, SignUp, LogOut, LogInTemp, RestorePassword, EmailSend,
     // Messages
     Messages, MessagesChat, MessagesRemove,
     // Friends

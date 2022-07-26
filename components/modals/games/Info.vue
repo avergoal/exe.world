@@ -100,6 +100,7 @@ export default {
       await this.$store.dispatch('games/setGamesData', {
         id: this.modal.game
       })
+
       if(this.gamesData[this.modal.game]) {
         this.game = this.gamesData[this.modal.game]
         this.game.media.map(e => this.gallery.push(e.image))
@@ -114,8 +115,12 @@ export default {
       }
     },
     goGame() {
-      this.$router.push('/g/' + this.game.gid)
-      this.$root.$emit('toggleModal', {})
+      if(localStorage.token) {
+        this.$router.push('/g/' + this.game.gid)
+        this.$root.$emit('toggleModal', {})
+      } else {
+        this.$root.$emit('toggleModal', { target: 'logInTemp', game_id: this.game.gid })
+      }
     }
   },
   computed: {
