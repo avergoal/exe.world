@@ -180,7 +180,7 @@ fieldset{
       left: 0;
       right: 0;
       z-index: 1000;
-      
+
       display: flex;
       flex-flow: row nowrap;
       justify-content: center;
@@ -445,7 +445,7 @@ span.badge{
 .ps{
   position: relative;
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   overflow-anchor: none;
   -ms-overflow-style: none;
   touch-action: auto;

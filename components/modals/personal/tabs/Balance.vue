@@ -7,7 +7,7 @@
   <perfect-scrollbar ref="scroll">
     <div class="inform">
       <div class="top">
-        <div v-html="(balance.balance) ? balance.balance : '0'" class="balance"></div>
+        <div v-html="(balance) ? balance : '0'" class="balance"></div>
         <button @click="$root.$emit('toggleModalTab', 'addfunds')" type="button" class="btn">
           <svg-icon name="ui/plus" />
           <span>Add funds</span>

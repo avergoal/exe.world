@@ -22,7 +22,7 @@
                 <div v-html="'// ' + $moment.unix(e.timestamp).format('DD.MMMM.YYYY')" class="date"></div>
               </div>
               <div v-html="e.message.text" class="text"></div>
-              <span v-if="e.new_messages" v-html="e.new_messages" class="badge">5</span>
+              <span v-if="e.new_messages" v-html="e.new_messages" class="badge"></span>
             </div>
           </button>
         </li>

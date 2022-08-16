@@ -13,7 +13,7 @@
         <div v-html="user.user.user_name" class="name"></div>
         <div v-if="user.blacklist_status === 1" class="online">blacklisted</div>
         <div v-else :class="{active: user.user.online}" class="online">
-          <span></span> 
+          <span></span>
           {{ (user.user.online ? 'Online' : 'Offline') }}
         </div>
       </div>
@@ -169,6 +169,10 @@ export default {
         this.message = null
         this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
         this.$refs.scroll.update()
+
+        if(this.messages.total < 1) {
+          this.loadMessages(true)
+        }
       }
     },
     toggleParams() {

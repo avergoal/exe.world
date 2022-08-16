@@ -1,18 +1,18 @@
 <template>
-<div :class="{night: theme, gamepage: gamepage}" class="app" :page="page">
-  <Header />
-  <perfect-scrollbar ref="scroll" :class="{clear: !profile}" class="appscroll" id="scroll">
-    <main class="content">
-      <Nuxt />
-      <Footer />
-    </main>
-  </perfect-scrollbar>
-  <Sidebar v-if="profile"/>
-  <Modals />
-  <transition v-if="!loaded" name="loader">
-    <LoaderAnimation />
-  </transition>
-</div>
+  <div :class="{night: theme, gamepage: gamepage}" class="app" :page="page">
+    <Header />
+    <div class="ps appscroll" :class="{clear: !profile}">
+      <main class="content">
+        <Nuxt />
+        <Footer />
+      </main>
+    </div>
+    <Sidebar v-if="profile" />
+    <Modals />
+    <transition v-if="!loaded" name="loader">
+      <LoaderAnimation />
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -39,9 +39,9 @@ export default {
     window.addEventListener('resize', () => {
       this.scrollUpdate()
     }, true)
-    this.$Lazyload.$on('loaded', () => {
+    /* this.$Lazyload.$on('loaded', () => {
       this.$refs.scroll.update()
-    })
+    }) */
   },
   methods: {
     async loadUser() {
@@ -63,6 +63,7 @@ export default {
     },
     updateData(e) {
       switch(e.event) {
+        case 'chat_read':
         case 'new_message':
         case 'new_friend':
         case 'new_news':

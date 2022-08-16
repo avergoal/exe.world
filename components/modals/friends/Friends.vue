@@ -75,7 +75,7 @@
               <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
-              <b>You don't have friends yet</b>
+              <b>You don't have friend requests yet</b>
               <p>Use the search bar to find them</p>
             </div>
           </li>
@@ -137,6 +137,10 @@ export default {
     this.$root.$on('getNewFriendRequest', () => {
       this.offset = 0
       this.$store.dispatch('friends/load', {offset: this.offset})
+      this.$store.dispatch('friends/requests', {
+        type: this.currentFilter - 1,
+        offset: this.offset
+      })
     })
   },
   methods: {

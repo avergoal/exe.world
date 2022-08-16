@@ -107,6 +107,7 @@
       }
       .btns{
         display: flex;
+        justify-content: space-between;
         align-items: center;
         padding: 0 0 24px;
         button{
@@ -129,6 +130,15 @@
               margin: 0 0 0 auto;
             }
           }
+        }
+        .btns__privacy{
+          display: block;
+          font-size: 14px;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.06em;
+          color: $dViolet;
+          text-transform: uppercase;
         }
       }
       .signup{
@@ -321,6 +331,9 @@
             &.link{
               color: $nViolet;
             }
+          }
+          .btns__privacy{
+            color: $nViolet;
           }
         }
         .signup{

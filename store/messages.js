@@ -34,7 +34,7 @@ export const actions = {
       for(let i = 0; i < data.response.messages.length; i++) {
         let date = this.$moment.unix(data.response.messages[i].timestamp).format('DD.MMMM.YYYY')
         messages.list[date] = (messages.list[date]) ? messages.list[date] : []
-        data.response.messages[i].time = this.$moment.unix(data.response.messages[i].timestamp).format('hh:mm')
+        data.response.messages[i].time = this.$moment.unix(data.response.messages[i].timestamp).format('HH:mm')
         messages.list[date].push(data.response.messages[i])
       }
       messages.code = data.response.chat.clear_code
@@ -47,7 +47,7 @@ export const actions = {
         date = this.$moment.unix(data.response.result.message.timestamp).format('DD.MMMM.YYYY')
     messages.list[date] = (messages.list[date]) ? messages.list[date] : {}
     messages.list[date] = Object.values(messages.list[date])
-    data.response.result.message.time = this.$moment.unix(data.response.result.message.timestamp).format('hh:mm')
+    data.response.result.message.time = this.$moment.unix(data.response.result.message.timestamp).format('HH:mm')
     messages.list[date].push(data.response.result.message)
     commit('setState', {key: 'messages', value: messages})
   },

@@ -134,11 +134,11 @@ export default {
       profile: false
     },
     userMenu: [
-      {title: 'Personal Data', tab: 'personal', ico: 'ui/personal_data'}, 
-      {title: 'Access Settings', tab: 'access', ico: 'ui/access'}, 
-      {title: 'Notifications', tab: 'notifications', ico: 'ui/bell'}, 
-      {title: 'Blacklist', tab: 'blacklist', ico: 'ui/blacklist'}, 
-      {title: 'Balance', tab: 'wallet', ico: 'ui/wallet'}, 
+      {title: 'Personal Data', tab: 'personal', ico: 'ui/personal_data'},
+      {title: 'Access Settings', tab: 'access', ico: 'ui/access'},
+      {title: 'Notifications', tab: 'notifications', ico: 'ui/bell'},
+      {title: 'Blacklist', tab: 'blacklist', ico: 'ui/blacklist'},
+      {title: 'Balance', tab: 'wallet', ico: 'ui/wallet'},
       {title: 'Log Out', tab: 'logOut', ico: 'ui/logout'}
     ]
   }),

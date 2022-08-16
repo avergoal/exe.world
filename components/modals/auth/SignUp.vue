@@ -1,43 +1,58 @@
 <template>
-<div class="modalinfo authmodal small">
-  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
-    <svg-icon name="ui/close" />
-  </button>
-  <div class="modalcontent">
-    <div class="top"><a @click.prevent="goHome()" href="/" class="logo"><svg-icon name="logo" /></a></div>
-    <form @submit.prevent="signUp()" action="">
-      <fieldset><input v-model="model.name" type="text" placeholder="Your name"></fieldset>
-      <fieldset>
-        <input v-model="model.emailorphone" :class="{error: errors.email_exists.show || errors.email_not_valid.show}" type="text" placeholder="E-mail or Phone">
-        <span v-if="errors.email_exists.show || errors.email_not_valid.show" v-html="(errors.email_exists.show) ? errors.email_exists.text : errors.email_not_valid.text" class="error"></span>
-      </fieldset>
-      <fieldset>
-        <input v-model="model.pass" :class="{error: errors.pass_too_short.show}" :type="passwordType" placeholder="Password">
-        <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
-        <span v-if="errors.pass_too_short.show" v-html="errors.pass_too_short.text" class="error"></span>
-      </fieldset>
-      <fieldset>
-        <input v-model="model.pass_check" :class="{error: errors.passwords_does_not_match.show}" :type="passwordType" placeholder="Repeat password">
-        <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
-        <span v-if="errors.passwords_does_not_match.show" v-html="errors.passwords_does_not_match.text" class="error"></span>
-      </fieldset>
-      <div class="btns"><button type="submit" class="btn st2">sign up</button></div>
-      <div class="signup">
-        <div class="text">Already have an account?</div>
-        <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button">log in</button>
-      </div>
-      <div class="social">
-        <div class="text">Login via services</div>
-        <ul>
-          <!--
+  <div class="modalinfo authmodal small">
+    <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
+      <svg-icon name="ui/close" />
+    </button>
+    <div class="modalcontent">
+      <div class="top"><a @click.prevent="goHome()" href="/" class="logo">
+          <svg-icon name="logo" />
+        </a></div>
+      <form @submit.prevent="signUp()" action="">
+        <fieldset><input v-model="model.name" type="text" placeholder="Your name"></fieldset>
+        <fieldset>
+          <input v-model="model.emailorphone" :class="{error: errors.email_exists.show || errors.email_not_valid.show}"
+            type="text" placeholder="E-mail or Phone">
+          <span v-if="errors.email_exists.show || errors.email_not_valid.show"
+            v-html="(errors.email_exists.show) ? errors.email_exists.text : errors.email_not_valid.text"
+            class="error"></span>
+        </fieldset>
+        <fieldset>
+          <input v-model="model.pass" :class="{error: errors.pass_too_short.show}" :type="passwordType"
+            placeholder="Password">
+          <button @click="togglePasswordType()" type="button">
+            <svg-icon name="ui/eye" />
+          </button>
+          <span v-if="errors.pass_too_short.show" v-html="errors.pass_too_short.text" class="error"></span>
+        </fieldset>
+        <fieldset>
+          <input v-model="model.pass_check" :class="{error: errors.passwords_does_not_match.show}" :type="passwordType"
+            placeholder="Repeat password">
+          <button @click="togglePasswordType()" type="button">
+            <svg-icon name="ui/eye" />
+          </button>
+          <span v-if="errors.passwords_does_not_match.show" v-html="errors.passwords_does_not_match.text"
+            class="error"></span>
+        </fieldset>
+        <div class="btns">
+          <button type="submit" class="btn st2">sign up</button>
+          <a href="https://exe.ru/rules" class="btns__privacy">privacy policy</a>
+        </div>
+        <div class="signup">
+          <div class="text">Already have an account?</div>
+          <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button">log in</button>
+        </div>
+        <div class="social">
+          <div class="text">Login via services</div>
+          <ul>
+            <!--
           <li><a href=""><svg-icon name="ui/twitter" /></a></li>
           <li><a href=""><img src="~assets/google.svg" alt=""></a></li>
           -->
-        </ul>
-      </div>
-    </form>
+          </ul>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
