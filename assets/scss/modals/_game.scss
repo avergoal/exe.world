@@ -78,7 +78,7 @@
           &:last-child{
             padding: 0;
             button{
-              color: $dOrange; 
+              color: $dOrange;
             }
           }
           button{
@@ -543,7 +543,8 @@
             &:last-child{
               padding: 0;
             }
-            a{
+            a,
+            button{
               display: flex;
               justify-content: center;
               align-items: center;
@@ -558,7 +559,8 @@
                 width: 20px;
               }
             }
-            &:nth-child(1) a{
+            &:nth-child(1) a,
+            &:nth-child(1) button{
               border-color: $dFacebook;
               background: $dFacebook;
               svg{

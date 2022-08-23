@@ -65,6 +65,7 @@ export default {
     },
     async socialAuth(e) {
       const url = await this.$store.dispatch('auth/authSocilas', e)
+
       if(url) {
         let handler, timer
         //this.$root.$emit('setLoader', false)

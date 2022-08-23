@@ -125,9 +125,9 @@
 
 <script>
 /*
-0 - не друзья, 
-1 - получен запрос, 
-2 - отправлен запрос, 
+0 - не друзья,
+1 - получен запрос,
+2 - отправлен запрос,
 3 - взаимная дружба
 */
 export default {
@@ -170,7 +170,7 @@ export default {
           birthDate = new Date(this.profile.user.age.year, this.profile.user.age.month, this.profile.user.age.day),
           birthDateNow = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate()),
           out = {
-            birthday: this.profile.user.age.year + '.' + this.profile.user.age.month + '.' + this.profile.user.age.day,
+            birthday: this.profile.user.age.day + '.' + this.profile.user.age.month + '.' + this.profile.user.age.year,
             age: today.getFullYear() - birthDate.getFullYear()
           }
       if (today < birthDateNow) {

@@ -44,6 +44,7 @@
         <div class="social">
           <div class="text">Login via services</div>
           <ul>
+            <li><button @click="socialAuth('fb')" type="button"><svg-icon name="ui/facebook" /></button></li>
             <!--
           <li><a href=""><svg-icon name="ui/twitter" /></a></li>
           <li><a href=""><img src="~assets/google.svg" alt=""></a></li>
@@ -80,6 +81,23 @@ export default {
       if(error) {
         this.errors[error].show = true
       } else this.$root.$emit('toggleModal', {})
+    },
+    async socialAuth(e) {
+      const url = await this.$store.dispatch('auth/authSocilas', e)
+
+      if (url) {
+        let handler, timer
+        //this.$root.$emit('setLoader', false)
+        if (handler) handler.close()
+        handler = window.open(url, 'paymentProccess')
+        timer = setInterval(() => {
+          if (handler.closed) {
+            clearInterval(timer)
+            console.log('close', handler)
+          }
+        }, 500)
+        //window.open(url, '_blank')
+      }
     },
     goHome() {
       this.$root.$emit('toggleModal', {})
