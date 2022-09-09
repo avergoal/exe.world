@@ -1,0 +1,54 @@
+.alertmodal{
+	padding: 24px;
+
+	@media screen and (max-width: 920px) {
+		padding: 24px 24px 0;
+	}
+	@media screen and (max-width: 576px) {
+		position: absolute !important;
+		max-width: 100% !important;
+		height: 100% !important;
+		border-radius: 0 0 16px 16px !important;
+
+		button.close{
+			display: none!important;
+		}
+	}
+	.modalcontent{
+    .desc{
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.001em;
+      color: $dGray;
+
+      .title{
+        font-weight: 700;
+      }
+    }
+		button{
+			height: 36px;
+			margin: 32px 0 0;
+			border-radius: 8px;
+			font-size: 14px;
+			font-weight: 800;
+			line-height: 16px;
+			letter-spacing: 0.06em;
+		}
+	}
+}
+
+.night{
+	.alertmodal{
+		.modalcontent{
+      .desc {
+        color: $nWhite;
+      }
+			button{
+				svg{
+					fill: $white56;
+				}
+			}
+		}
+
+	}
+}

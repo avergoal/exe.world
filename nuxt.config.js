@@ -88,5 +88,8 @@ export default {
     cssSourceMap: true,
     extractCSS: true
   },
-  telemetry: false
+  telemetry: false,
+  server: {
+    host: '192.168.0.10'
+  }
 }

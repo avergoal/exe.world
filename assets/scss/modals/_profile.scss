@@ -16,7 +16,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: $grayLight!important;
+    background: $dWhite!important;
     transition: background 0s ease!important;
     content: "";
   }
@@ -116,9 +116,9 @@
         span{
           display: block;
           padding: 0 0 0 20px;
-          font-size: 14px;
-          font-weight: 600;
-          line-height: 16px;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 17px;
           letter-spacing: 0.001em;
           color: $dGray;
         }
@@ -1176,7 +1176,7 @@
       }
     }
   }
-  
+
   &.mobile_tab{
     max-width: 576px!important;
     &:before{
@@ -1190,10 +1190,10 @@
         .theme{
           .label{
             svg{
-              fill: $nWhite;
+              fill: $dGray;
             }
             span{
-              color: $nWhite;
+              color: $dGray;
             }
           }
         }
@@ -1202,11 +1202,11 @@
             button{
               .ico{
                 svg{
-                  fill: $nWhite;
+                  fill: $dGray;
                 }
               }
               span{
-                color: $nWhite;
+                color: $dGray;
               }
               &.active{
                 background: transparent;
@@ -1226,7 +1226,7 @@
       }
     }
   }
-  
+
   &.personal_tab,
   &.access_tab,
   &.notifications_tab,
@@ -1549,6 +1549,22 @@
     &.mobile_tab{
       &:before{
         background: $whiteLight!important;
+      }
+      .modalcontent aside.info{
+        ul.menu li button{
+          span{
+            color: $white72;
+          }
+          .ico svg{
+            fill: $white72;
+          }
+        }
+        .theme .label span{
+          color: $white72;
+        }
+        .theme .label svg {
+          fill: $white72;
+        }
       }
     }
   }

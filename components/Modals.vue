@@ -44,6 +44,8 @@
     <!-- Help -->
     <Help v-if="modal.target == 'help'" />
     <HelpSubmited v-if="modal.target == 'helpSubmited'" />
+    <!-- Alerts -->
+    <PaymentSuccesfull v-if="modal.target == 'paymentSuccesfull'" />
   </div>
 </template>
 
@@ -92,6 +94,8 @@ import Notification from './modals/Notification'
 // Help
 import Help from './modals/Help'
 import HelpSubmited from './modals/HelpSubmited'
+// Alerts
+import PaymentSuccesfull from './modals/PaymentSuccesfull'
 
 export default {
 	name: 'ModalsComponent',
@@ -115,7 +119,9 @@ export default {
     // Notification
     Notification,
     // Help
-    Help, HelpSubmited
+    Help, HelpSubmited,
+    // Alerts
+    PaymentSuccesfull
   },
   data: () => ({
     prev: null

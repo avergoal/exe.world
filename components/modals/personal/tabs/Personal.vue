@@ -1,94 +1,104 @@
 <template>
-<div class="tab personal">
-  <div class="title">
-    <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
-    Personal data
+  <div class="tab personal">
+    <div class="title">
+      <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button">
+        <svg-icon name="ui/back" />
+      </button>
+      Personal data
+    </div>
+    <perfect-scrollbar ref="scroll_tab">
+      <form action="">
+        <fieldset v-if="loaded" class="text">
+          <div class="item">
+            <input v-model="model.firstname" :class="{error: errors.first_name_too_short.open}" type="text" name=""
+              value="" id="firstname">
+            <label for="firstname">First Name</label>
+            <span v-if="errors.first_name_too_short.open" v-html="errors.first_name_too_short.text"
+              class="error"></span>
+          </div>
+          <div class="item">
+            <input v-model="model.lastname" :class="{error: errors.last_name_too_short.open}" type="text" name=""
+              value="" id="lastname">
+            <label for="lastname">Last Name</label>
+            <span v-if="errors.last_name_too_short.open" v-html="errors.last_name_too_short.text" class="error"></span>
+          </div>
+        </fieldset>
+        <div v-if="loaded" class="label">Birth Date</div>
+        <fieldset v-if="loaded" class="date">
+          <div class="selectbox">
+            <button @click="toggleSelectbox(0)" v-html="(model.birthdate.d) ? Number(model.birthdate.d) : ''"
+              type="button" data-before="Day" class="toggleselect"></button>
+            <perfect-scrollbar :class="{open: selectbox[0]}">
+              <ul>
+                <li v-for="(e, i) in days" :key="i">
+                  <button @click="setBirthday('d', e)" v-html="e" type="button"></button>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+          <div class="selectbox">
+            <button @click="toggleSelectbox(1)" v-html="months.byIdx[model.birthdate.m]" type="button"
+              data-before="Month" class="toggleselect"></button>
+            <perfect-scrollbar :class="{open: selectbox[1]}">
+              <ul>
+                <li v-for="(e, i) in months.byName" :key="i">
+                  <button @click="setBirthday('m', e)" v-html="i" type="button"></button>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+          <div class="selectbox">
+            <button @click="toggleSelectbox(2)" v-html="(model.birthdate.y) ? Number(model.birthdate.y) : ''"
+              type="button" data-before="Year" class="toggleselect"></button>
+            <perfect-scrollbar :class="{open: selectbox[2]}">
+              <ul>
+                <li v-for="(e, i) in years" :key="i">
+                  <button @click="setBirthday('y', e)" v-html="e" type="button"></button>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+        </fieldset>
+        <div v-if="loaded" class="label">Gender</div>
+        <fieldset v-if="loaded" class="radio">
+          <div class="item">
+            <input v-model="model.sex" type="radio" name="gender" value="0" id="man" :checked="model.sex === 0">
+            <label for="man">Man</label>
+          </div>
+          <div class="item">
+            <input v-model="model.sex" type="radio" name="gender" value="1" id="woman" :checked="model.sex === 1">
+            <label for="woman">Woman</label>
+          </div>
+        </fieldset>
+        <fieldset v-if="loaded" class="location">
+          <div class="selectbox">
+            <button @click="toggleSelectbox(3)" v-html="model.country" type="button" data-before="Country"
+              class="toggleselect"></button>
+            <perfect-scrollbar :class="{open: selectbox[3]}">
+              <ul>
+                <li v-for="(e, i) in countries" :key="i">
+                  <button @click="setLocation('country', i, e)" v-html="e" type="button"></button>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+          <div class="selectbox">
+            <button @click="toggleSelectbox(4)" v-html="model.city" type="button" data-before="City"
+              class="toggleselect"></button>
+            <perfect-scrollbar :class="{open: selectbox[4]}">
+              <ul>
+                <li v-for="(e, i) in cities" :key="i">
+                  <button @click="setLocation('city', i, e)" v-html="e" type="button"></button>
+                </li>
+              </ul>
+            </perfect-scrollbar>
+          </div>
+        </fieldset>
+        <button v-if="loaded" @click="saveData()" type="button" class="btn st2">Save changes</button>
+        <div :class="{loaded: !loader || !loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div>
+      </form>
+    </perfect-scrollbar>
   </div>
-  <perfect-scrollbar ref="scroll_tab">
-    <form action="">
-      <fieldset v-if="loaded" class="text">
-        <div class="item">
-          <input v-model="model.firstname" :class="{error: errors.first_name_too_short.open}" type="text" name="" value="" id="firstname">
-          <label for="firstname">First Name</label>
-          <span v-if="errors.first_name_too_short.open" v-html="errors.first_name_too_short.text" class="error"></span>
-        </div>
-        <div class="item">
-          <input v-model="model.lastname" :class="{error: errors.last_name_too_short.open}" type="text" name="" value="" id="lastname">
-          <label for="lastname">Last Name</label>
-          <span v-if="errors.last_name_too_short.open" v-html="errors.last_name_too_short.text" class="error"></span>
-        </div>
-      </fieldset>
-      <div v-if="loaded" class="label">Birth Date</div>
-      <fieldset v-if="loaded" class="date">
-        <div class="selectbox">
-          <button @click="toggleSelectbox(0)" v-html="(model.birthdate.d) ? Number(model.birthdate.d) : ''" type="button" data-before="Day" class="toggleselect"></button>
-          <perfect-scrollbar :class="{open: selectbox[0]}" ref="dayScroll">
-            <ul>
-              <li v-for="(e, i) in days" :key="i">
-                <button @click="setBirthday('d', e)" v-html="e" type="button"></button>
-              </li>
-            </ul>
-          </perfect-scrollbar>
-        </div>
-        <div class="selectbox">
-          <button @click="toggleSelectbox(1)" v-html="months.byIdx[model.birthdate.m]" type="button" data-before="Month" class="toggleselect"></button>
-          <perfect-scrollbar :class="{open: selectbox[1]}" ref="dayScroll">
-            <ul>
-              <li v-for="(e, i) in months.byName" :key="i">
-                <button @click="setBirthday('m', e)" v-html="i" type="button"></button>
-              </li>
-            </ul>
-          </perfect-scrollbar>
-        </div>
-        <div class="selectbox">
-          <button @click="toggleSelectbox(2)" v-html="(model.birthdate.y) ? Number(model.birthdate.y) : ''" type="button" data-before="Year" class="toggleselect"></button>
-          <perfect-scrollbar :class="{open: selectbox[2]}" ref="dayScroll">
-            <ul>
-              <li v-for="(e, i) in years" :key="i">
-                <button @click="setBirthday('y', e)" v-html="e" type="button"></button>
-              </li>
-            </ul>
-          </perfect-scrollbar>
-        </div>
-      </fieldset>
-      <div v-if="loaded" class="label">Gender</div>
-      <fieldset v-if="loaded" class="radio">
-        <div class="item">
-          <input v-model="model.sex" type="radio" name="gender" value="0" id="man" :checked="model.sex === 0">
-          <label for="man">Man</label>
-        </div>
-        <div class="item">
-          <input v-model="model.sex" type="radio" name="gender" value="1" id="woman" :checked="model.sex === 1">
-          <label for="woman">Woman</label>
-        </div>
-      </fieldset>
-      <fieldset v-if="loaded" class="location">
-        <div class="selectbox">
-          <button @click="toggleSelectbox(3)" v-html="model.country" type="button" data-before="Country" class="toggleselect"></button>
-          <perfect-scrollbar :class="{open: selectbox[3]}" ref="dayScroll">
-            <ul>
-              <li v-for="(e, i) in countries" :key="i">
-                <button @click="setLocation('country', i, e)" v-html="e" type="button"></button>
-              </li>
-            </ul>
-          </perfect-scrollbar>
-        </div>
-        <div class="selectbox">
-          <button @click="toggleSelectbox(4)" v-html="model.city" type="button" data-before="City" class="toggleselect"></button>
-          <perfect-scrollbar :class="{open: selectbox[4]}" ref="dayScroll">
-            <ul>
-              <li v-for="(e, i) in cities" :key="i">
-                <button @click="setLocation('city', i, e)" v-html="e" type="button"></button>
-              </li>
-            </ul>
-          </perfect-scrollbar>
-        </div>
-      </fieldset>
-      <button v-if="loaded" @click="saveData()" type="button" class="btn st2">Save changes</button>
-      <div :class="{loaded: !loader || !loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div>
-    </form>
-  </perfect-scrollbar>
-</div>
 </template>
 
 <script>
@@ -98,17 +108,17 @@ export default {
     days: [],
     months: {
       byName: {
-        January: '01', 
-        February: '02', 
-        March: '03', 
-        April: '04', 
-        May: '05', 
-        June: '06', 
-        July: '07', 
-        August: '08', 
-        September: '09', 
-        October: '10', 
-        November: '11', 
+        January: '01',
+        February: '02',
+        March: '03',
+        April: '04',
+        May: '05',
+        June: '06',
+        July: '07',
+        August: '08',
+        September: '09',
+        October: '10',
+        November: '11',
         December: '12'
       },
       byIdx: {
@@ -168,13 +178,6 @@ export default {
         setTimeout(() => {
           this.$refs.scroll_tab.update()
         }, 100)
-      }
-    })
-  },
-  mounted() {
-    document.addEventListener('click', (e) => {
-      if(!e.target.closest('.ps') && !e.target.closest('.toggleselect')) {
-        this.closeAllSelectbox()
       }
     })
   },
@@ -258,8 +261,10 @@ export default {
     toggleSelectbox(target) {
       if(!this.selectbox[target]) {
         this.closeAllSelectbox()
+        this.selectbox[target] = true
+      } else {
+        this.closeAllSelectbox()
       }
-      this.selectbox[target] = !this.selectbox[target]
     },
     closeAllSelectbox() {
       this.selectbox = [false, false, false, false, false]

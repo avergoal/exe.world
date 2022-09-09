@@ -231,7 +231,7 @@
                 fill: $dWhite;
               }
             }
-  
+
           }
           .dropdown{
             left: 0;
@@ -493,12 +493,12 @@
                   width: 16px;
                 }
               }
-              &:before{              
-                left: 0;              
+              &:before{
+                left: 0;
                 background: linear-gradient(90deg, white 0, rgba(255, 255, 255, 0) 100%);
               }
-              &:after{              
-                right: 0;              
+              &:after{
+                right: 0;
                 background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, white 100%);
               }
               .boxtitle{

@@ -81,6 +81,7 @@ export default {
           this.$store.dispatch('profile/getBalance', {
             type: 'header'
           })
+          this.$root.$emit('toggleModal', { target: 'paymentSuccesfull' })
           break
       }
     },
