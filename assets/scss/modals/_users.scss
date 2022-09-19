@@ -466,6 +466,9 @@
             padding: 0 0 40px;
             .swiper-container{
               overflow: visible;
+              @media screen and (max-width: 576px) {
+                overflow: hidden;
+              }
             }
             .category_slider,
             .users_slider{
@@ -647,6 +650,17 @@
         font-weight: 800;
         line-height: 40px;
         letter-spacing: 0.0025em;
+        @media screen and (max-width: 576px) {
+          padding: 24px 16px 12px 16px;
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 24px;
+          strong{
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 24px;
+          }
+        }
         strong{
           color: $dGray;
         }
@@ -694,6 +708,9 @@
         display: flex;
         flex-flow: row wrap;
         padding: 12px 32px 0;
+        @media screen and (max-width: 576px) {
+          padding: 0 24px;
+        }
         li{
           max-width: 16.666%;
           min-width: 16.666%;
@@ -723,6 +740,11 @@
               min-width: 112px;
               height: 112px!important;
               margin: 0 auto;
+              @media screen and (max-width: 576px) {
+                max-width: calc(100vw / 4.4444);
+                min-width: calc(100vw / 4.4444);
+                height: calc(100vw / 4.4444) !important;
+              }
             }
             .name{
               padding: 16px 0 0;
@@ -731,6 +753,11 @@
               line-height: 20px;
               letter-spacing: 0.0015em;
               text-align: center;
+              @media screen and (max-width: 576px) {
+                padding: 8px 0 0;
+                font-size: 14px;
+                line-height: 16px;
+              }
             }
           }
         }

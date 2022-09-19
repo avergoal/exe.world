@@ -17,6 +17,30 @@
     @media screen and (max-width: 576px) {
       border-radius: 0!important;
     }
+
+    .modalcontent{
+      @media screen and (max-width: 576px) {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+      .usermodaltop{
+        @media screen and (max-width: 576px) {
+          flex:0 0 auto;
+        }
+      }
+      .chatscroll {
+        @media screen and (max-width: 576px) {
+          flex: 1 1 auto;
+        }
+      }
+      .send {
+        @media screen and (max-width: 576px) {
+          flex: 0 0 auto;
+        }
+      }
+    }
   }
   .modalcontent{
     .top{
@@ -74,13 +98,14 @@
           }
           .dropdown{
             @media screen and (max-width: 576px) {
+              top: 0;
               display: flex;
               align-items: flex-end;
               background: rgba(0, 0, 0, 0.6);
               ul{
                 width: 100%;
                 border-radius: 16px 16px 0px 0px;
-                background: $blackLight;
+                background: $dWhite;
               }
             }
             li{
@@ -100,6 +125,7 @@
                   width: 24px;
                   height: 24px;
                   padding: 0;
+                  background: $grayLight;
                   svg{
                     width: 9px;
                     height: 9px;
@@ -219,7 +245,7 @@
         margin: 30px 0 0;
         @media screen and (max-width: 576px) {
           padding: 0;
-          margin: 10px 0 0;
+          margin:16px 0 0;
         }
         button{
           position: absolute;
@@ -272,7 +298,7 @@
       &.chatscroll{
         height: calc(100% - 150px);
         @media screen and (max-width: 576px) {
-          height: calc(100Vh - 196px);
+          height: auto;
         }
       }
       ul.list{
@@ -379,6 +405,16 @@
                 font-weight: 500;
                 line-height: 24px;
                 letter-spacing: 0.001em;
+
+                @media screen and (max-width: 576px) {
+                  top: 12px;
+                  right: 16px;
+                  height: 16px;
+                  width: 24px;
+                  font-size: 12px;
+                  line-height: 16px;
+                  border-radius: 4px;
+                }
               }
             }
           }
@@ -581,7 +617,7 @@
           .item{
             button{
               svg{
-                fill: $white56;
+                fill: $nWhite;
               }
             }
             .dropdown{
@@ -598,6 +634,12 @@
                   svg{
                     fill: $nOrange;
                   }
+                }
+              }
+
+              @media screen and (max-width: 576px) {
+                ul {
+                  background: linear-gradient(0deg, rgba(150, 127, 232, 0.19), rgba(150, 127, 232, 0.19)), #27262D;
                 }
               }
             }

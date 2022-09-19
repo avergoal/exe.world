@@ -95,6 +95,122 @@
   &.info{
     padding: 40px 0 0;
     overflow: hidden;
+
+    &.modalinfo{
+      .bottom-btns{
+        display: none;
+      }
+      @media screen and (max-width: 576px) {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 16px 16px 0px 0px;
+
+        button.close{
+          background: $grayLight;
+        }
+        .modalcontent {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: flex-start;
+          align-items: stretch;
+
+          .top{
+            padding: 0 0 16px 0;
+            &::after{
+              left: 0;
+              right: 0;
+            }
+
+            .img{
+              max-width: 80px;
+              min-width: 80px;
+              height: 80px;
+              margin: 0 16px 0 0;
+              border-radius: 16px;
+            }
+            .info{
+              .title{
+                font-size: 20px;
+                line-height: 24px;
+              }
+              .btns{
+                padding-top: 4px;
+                .friends{
+                  margin: 0;
+                  ul{
+                    display: none;
+                  }
+                }
+                .item{
+                  display: none;
+                }
+              }
+            }
+          }
+          .gameinfo{
+            flex: 1 0 auto;
+            padding: 16px 0 0;
+            max-height: none;
+            overflow-x: hidden !important;
+
+            .screens{
+              .boxtitle{
+                padding: 0;
+                font-size: 20px;
+                font-weight: 700;
+                line-height: 24px;
+              }
+              .swiperbox{
+                margin: 8px 0 16px;
+                padding: 0;
+
+                .swiper-slide{
+                  max-width: 172px;
+                  min-width: auto;
+                  max-height: 182px;
+                  margin-bottom: 0;
+                  margin-right: 8px !important;
+                  border-radius: 8px;
+
+                  .img{
+                    border-radius: 8px;
+                  }
+                }
+              }
+            }
+            .desc{
+              padding: 0 0 16px;
+              font-size: 14px;
+              line-height: 20px;
+              /* color: $dBlack; */
+            }
+          }
+          .bottom-btns{
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: flex-end;
+
+            .item{
+              margin-right: 8px;
+
+              &:last-child {
+                margin-right: 0;
+              }
+              button {
+                height: 36px;
+                font-size: 14px;
+                font-weight: 800;
+                line-height: 16px;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                border-radius: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
     .top{
       position: relative;
       display: flex;

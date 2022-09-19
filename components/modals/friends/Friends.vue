@@ -244,10 +244,10 @@ export default {
         this.$store.dispatch('friends/load', {offset: this.offset})
       }
       this.$refs.scroll_list.$el.scrollTop = 0
-    },
+    }/* ,
     currentFilter(e) {
       this.activeSearch = (e > 0) ? false : true
-    }
+    } */
   }
 }
 </script>

@@ -49,9 +49,9 @@ export default {
       } else if(this.profile.uid === e) {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
-        this.$root.$emit('toggleModal', {target: 'userProfile', user: e})
+        /* this.$root.$emit('toggleModal', {target: 'userProfile', user: e}) */
         this.$root.$emit('updateUserProfile')
-        this.closeSearch()
+        /* this.closeSearch() */
       }
     },
     setRoute(target) {

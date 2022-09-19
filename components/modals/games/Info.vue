@@ -53,6 +53,40 @@
       </div>
       <div v-html="game.description" class="desc"></div>
     </perfect-scrollbar>
+    <div class="bottom-btns">
+      <div class="item"><button @click="goGame()" type="button" class="btn st2">launch game</button></div>
+      <div class="item">
+        <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">share</button>
+        <div :class="{open: shareOpen}" class="dropdown">
+          <ul class="menu">
+            <li>
+              <a href="">
+                <div class="ico">
+                  <svg-icon name="ui/facebook" />
+                </div>
+                <span>Facebook</span>
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <div class="ico">
+                  <svg-icon name="ui/twitter" />
+                </div>
+                <span>Twitter</span>
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <div class="ico">
+                  <svg-icon name="ui/vk" />
+                </div>
+                <span>VK</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
   <CoolLightBox :items="gallery" :index="index" :effect="'fade'" @close="index = null" />
 </div>

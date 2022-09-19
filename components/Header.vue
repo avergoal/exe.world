@@ -9,12 +9,19 @@
       </button>
       <div :class="{open: dropdown.info}" class="dropdown">
         <ul>
-          <li>© 2020 EXE. WORLD All rights reserved</li>
-          <li>
+          <li class="close-cell">
+            <button @click="closeDropDown()" class="close" area-label="close">
+              <svg-icon name="ui/close" />
+            </button>
+          </li>
+          <li class="title-cell"><svg-icon name="logo" /><span>© 2020 EXE. WORLD All rights reserved</span></li>
+          <li class="list-cell">
             <nuxt-link to="/about">About</nuxt-link>
           </li>
-          <li><button @click="$root.$emit('toggleModal', {target: 'help'})" type="button">Help</button></li>
-          <li>
+          <li class="list-cell">
+            <button @click="$root.$emit('toggleModal', {target: 'help'})" type="button">Help</button>
+          </li>
+          <li class="list-cell">
             <nuxt-link to="/">For Developers</nuxt-link>
           </li>
         </ul>
