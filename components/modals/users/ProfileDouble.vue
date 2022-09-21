@@ -131,7 +131,7 @@
 3 - взаимная дружба
 */
 export default {
-  name: 'ProfileModal',
+  name: 'ProfileDoubleModal',
   data: () => ({
     openParams1: false,
     openParams2: false,
@@ -140,7 +140,7 @@ export default {
   created() {
     this.loadProfile()
     this.$root.$on('updateUserProfile', (e) => {
-      this.$root.$emit('toggleModal', { target: 'userProfileDouble', user: e })
+      this.$root.$emit('toggleModal', { target: 'userProfile', user: e })
     })
   },
   mounted() {

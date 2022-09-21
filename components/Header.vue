@@ -1,5 +1,8 @@
 <template>
-  <header :class="{clear: !profile}" class="main">
+  <header
+    :class="{clear: !profile, 'is_guest': guestClass}"
+    class="main"
+  >
     <div class="logo">
       <button @click="toggleMenu('info')" class="small togglemenu" type="button">
         <svg-icon name="logo_small" />
@@ -93,7 +96,7 @@
         </div>
       </div>
       <div v-if="profile" class="item account">
-        <button v-if="isGuest" @click="toggleModal('signIn', null)" type="button" class="togglemenu_guest btn st1">
+        <button v-if="isGuest" @click="toggleModal('signIn', null)" type="button" class="togglemenu_guest_desk btn st1">
           <div class="photo">
             <img :src="profile.avatar_urls.x100" :alt="profile.user_name">
           </div>
@@ -147,7 +150,8 @@ export default {
       {title: 'Blacklist', tab: 'blacklist', ico: 'ui/blacklist'},
       {title: 'Balance', tab: 'wallet', ico: 'ui/wallet'},
       {title: 'Log Out', tab: 'logOut', ico: 'ui/logout'}
-    ]
+    ],
+    guestClass: false
   }),
   mounted() {
     document.addEventListener('click', (e) => {
@@ -210,7 +214,8 @@ export default {
       return this.$store.getters['app/theme']
     },
     isGuest() {
-      return this.$store.getters['profile/isGuest']
+      this.guestClass = this.$store.getters['profile/isGuest']
+      return this.guestClass
     }
   },
   watch: {

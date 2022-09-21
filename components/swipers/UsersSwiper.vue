@@ -42,16 +42,15 @@ export default {
     }
   },
   methods: {
-    openUser(e) {
+    async openUser(e) {
       if(!this.profile) {
         this.$root.$emit('toggleModal', {target: 'signIn'})
         this.closeSearch()
       } else if(this.profile.uid === e) {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
-        /* this.$root.$emit('toggleModal', {target: 'userProfile', user: e}) */
-        this.$root.$emit('updateUserProfile')
-        /* this.closeSearch() */
+        this.$root.$emit('updateUserProfile', e)
+        this.closeSearch()
       }
     },
     setRoute(target) {

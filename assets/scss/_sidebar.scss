@@ -25,6 +25,7 @@ aside.sidebar{
   }
   @media screen and (max-width: 1024px) {
     width: 80px;
+    overflow-y: auto;
   }
   @media screen and (max-width: 576px) {
     top: auto;
@@ -150,7 +151,7 @@ aside.sidebar{
         &:last-child{
           padding: 0;
         }
-        a, 
+        a,
         button{
           display: block;
           width: 44px;

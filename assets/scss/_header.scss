@@ -483,3 +483,47 @@ header.main{
     }
   }
 }
+
+
+header.main.is_guest{
+  nav {
+    .item {
+      &.wallet {
+        @media screen and (max-width: 576px) {
+          display: none;
+        }
+      }
+      &.notifications {
+        @media screen and (max-width: 576px) {
+          display: none;
+        }
+      }
+      &.account{
+        .togglemenu_guest_desk{
+          @media screen and (max-width: 576px) {
+            padding: 0 16px;
+            margin: 0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 16px;
+            letter-spacing: 0.06em;
+            background: $dViolet;
+            color: $dWhite;
+            white-space: nowrap;
+            text-transform: uppercase;
+
+            &::after{
+              content: 'Log in';
+            }
+          }
+          .photo{
+            @media screen and (max-width: 576px) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

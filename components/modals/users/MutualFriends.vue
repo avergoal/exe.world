@@ -37,8 +37,7 @@ export default {
       if(this.user.profile.uid === e) {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
-        this.$root.$emit('toggleModal', {target: 'userProfile', user: e})
-        this.$root.$emit('updateUserProfile')
+        this.$root.$emit('updateUserProfile', e)
       }
     }
   },

@@ -11,8 +11,16 @@ export const mutations = {
 
 export const actions = {
   async chats({commit}) {
-    const { data } = await this.$axios.post('/appApi/chats', {})
-    commit('setState', {key: 'chats', value: data.response.chats})
+    let { data } = await this.$axios.post('/appApi/chats', {}),
+      offset = data.response.offset,
+      chats = data.response.chats
+
+    for (; offset != 0;) {
+      let { data } = await this.$axios.post('/appApi/chats', {'offset': offset})
+      chats = [...chats, ...data.response.chats]
+      offset = data.response.offset
+    }
+    commit('setState', {key: 'chats', value: chats})
   },
   async load({commit}, params) {
     const { data } = await this.$axios.post('/appApi/messages', params)
