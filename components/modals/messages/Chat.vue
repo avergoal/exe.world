@@ -98,7 +98,7 @@
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
   </div>
-  <div :class="{loaded: show}" class="loader"><img src="/theme/img/loader.gif" alt=""></div>
+  <!-- <div :class="{loaded: show}" class="loader"><img src="/theme/img/loader.gif" alt=""></div> -->
 </div>
 </template>
 

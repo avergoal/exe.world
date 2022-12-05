@@ -100,7 +100,7 @@ export const actions = {
   // Theme
   setTheme({commit}, params) {
     commit('setState', {
-      key: 'theme', 
+      key: 'theme',
       value: Number(params.theme)
     })
     if(params.update) {

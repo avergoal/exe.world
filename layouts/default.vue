@@ -42,6 +42,16 @@ export default {
     /* this.$Lazyload.$on('loaded', () => {
       this.$refs.scroll.update()
     }) */
+    this.$nextTick(function () {
+      const perf = () => {
+        const duration = performance.getEntriesByType("navigation")[0].duration
+        if (!duration) setTimeout(perf, 0)
+        else console.log('%c Page load time ',
+          'color: white; background-color: #95B46A',
+          `${Math.trunc(duration) / 1000 } s`)
+      }
+      window.addEventListener('DOMContentLoaded', perf)
+    })
   },
   methods: {
     async loadUser() {

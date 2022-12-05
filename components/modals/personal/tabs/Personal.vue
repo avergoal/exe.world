@@ -95,7 +95,7 @@
           </div>
         </fieldset>
         <button v-if="loaded" @click="saveData()" type="button" class="btn st2">Save changes</button>
-        <div :class="{loaded: !loader || !loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div>
+        <!-- <div :class="{loaded: !loader || !loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div> -->
       </form>
     </perfect-scrollbar>
   </div>

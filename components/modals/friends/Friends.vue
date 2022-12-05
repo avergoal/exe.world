@@ -40,7 +40,7 @@
             <FriendsActions :user="{uid: e.uid, name: e.user_name}" />
           </li>
           <Observer @intersect="intersected"/>
-          <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li>
+          <!-- <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li> -->
         </ul>
         <ul v-else :class="{active: currentFilter == 0}" class="tab">
           <li class="empty">
@@ -66,7 +66,7 @@
             </div>
           </li>
           <Observer @intersect="intersected"/>
-          <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li>
+          <!-- <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li> -->
         </ul>
         <ul v-else :class="{active: currentFilter == 1}" class="tab">
           <li class="empty">
@@ -91,7 +91,7 @@
             </div>
           </li>
           <Observer @intersect="intersected"/>
-          <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li>
+          <!-- <li :class="{loaded: !loader}" class="loader"><img src="/theme/img/loader.gif" alt=""></li> -->
         </ul>
         <ul v-else :class="{active: currentFilter == 2}" class="tab">
           <li class="empty">

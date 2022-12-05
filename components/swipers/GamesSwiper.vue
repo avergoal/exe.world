@@ -11,7 +11,7 @@
       <swiper-slide v-for="(e, i) in data" :key="i" :class="(slideClass ? slideClass : 'b')" class="gamecard">
         <div class="box">
           <div class="img">
-            <img src="/theme/img/loader.gif" alt="" class="lazyloader">
+            <!-- <img src="/theme/img/loader.gif" alt="" class="lazyloader"> -->
             <img v-lazy="e.poster.default" :alt="e.title">
             <!-- <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button> -->
             <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
@@ -54,12 +54,12 @@ export default {
       }
     }
     this.loadSlides()
-    this.$watch(vm => [vm[this.slides]], () => {      
+    this.$watch(vm => [vm[this.slides]], () => {
       this.loadSlides()
     }, {
       immediate: true,
       deep: true
-    }) 
+    })
   },
   methods: {
     loadSlides() {
@@ -73,7 +73,7 @@ export default {
       }
     },
     setRoute(target) {
-      this.$root.$emit('changeTemplate', target) 
+      this.$root.$emit('changeTemplate', target)
       this.closeSearch()
     },
     setTab(target) {

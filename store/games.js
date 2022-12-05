@@ -57,7 +57,7 @@ export const actions = {
         data[e][0].offset = data.games_all.length
       }
       commit('setState', {
-        key: key[e], 
+        key: key[e],
         value: data[e]
       })
     })
