@@ -32,6 +32,11 @@
 <script>
 export default {
   name: 'ProfileMutualFriendsModal',
+  created() {
+    this.$root.$on('updateUserProfile', (e) => {
+      this.$root.$emit('toggleModal', { target: 'userProfile', user: e })
+    })
+  },
   methods: {
     openUser(e) {
       if(this.user.profile.uid === e) {

@@ -20,7 +20,13 @@ export default function ({ $axios, store }) {
   $axios.onRequestError(error => {
     console.log(error, 'requestError')
   })
-  $axios.onResponseError(error => {
-    return Promise.resolve(error.response)
+  $axios.onResponseError(
+    async function(error) {
+      if(error.response.data.error === 'token_expired') {
+        await store.dispatch('app/toggleModal', { target: 'refreshPage' })
+        return Promise.reject(error.response)
+      } else {
+        return Promise.resolve(error.response)
+      }
   })
 }

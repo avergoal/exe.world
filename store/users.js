@@ -2,7 +2,7 @@ export const state = () => ({
   profile: null
 })
 
-export const mutations = {  
+export const mutations = {
   setState(state, data) {
     state[data.key] = data.value
   }

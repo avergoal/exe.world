@@ -14,7 +14,7 @@ export const actions = {
       api_token: token
     })
     if(data.error) {
-      localStorage.removeItem('token')
+        localStorage.removeItem('token')
     } else {
       this.dispatch('app/setTheme', {
         theme: data.response.theme
@@ -43,7 +43,7 @@ export const actions = {
       })
       this.dispatch('settings/set', data.response.settings)
       commit('setState', {
-        key: 'token', 
+        key: 'token',
         value: token
       })
       localStorage.setItem('token', token)

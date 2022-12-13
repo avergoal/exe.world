@@ -47,6 +47,9 @@ export default {
   created() {
     this.loadGame()
   },
+  mounted() {
+    this.iframeListener()
+  },
   methods: {
     async loadGame() {
       if(!this.gamesData[this.$route.params.id]) {
@@ -59,6 +62,18 @@ export default {
         this.pageTitle = this.game.title
         this.runGame()
       }
+    },
+    iframeListener() {
+      let that = this
+      window.addEventListener("message", function (e) {
+        if (e.data.type == 'showOrderBox') {
+          that.showOrderBox(e.data.data.item)
+        }
+      },
+      false)
+    },
+    showOrderBox(item) {
+      this.$root.$emit('toggleModal', { target: 'gameBuy', item})
     },
     async runGame() {
       console.log(this.game.installed)

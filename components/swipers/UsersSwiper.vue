@@ -50,7 +50,7 @@ export default {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
         this.$root.$emit('updateUserProfile', e)
-        this.closeSearch()
+        /* this.closeSearch() */
       }
     },
     setRoute(target) {

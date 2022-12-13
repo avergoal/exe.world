@@ -17,7 +17,6 @@
     <FriendsRemoved v-if="modal.target == 'friendsRemoved'" />
     <!-- Users -->
     <UserProfile v-if="modal.target == 'userProfile'" />
-    <UserProfileDouble v-if="modal.target == 'userProfileDouble'" />
     <UserProfileGames v-if="modal.target == 'userProfileGames'" />
     <UserProfileFriends v-if="modal.target == 'userProfileFriends'" />
     <UserProfileMutualFriends v-if="modal.target == 'userProfileMutualFriends'" />
@@ -47,6 +46,8 @@
     <HelpSubmited v-if="modal.target == 'helpSubmited'" />
     <!-- Alerts -->
     <PaymentSuccesfull v-if="modal.target == 'paymentSuccesfull'" />
+    <!-- Refresh -->
+    <RefreshPage v-if="modal.target == 'refreshPage'" />
   </div>
 </template>
 
@@ -68,7 +69,6 @@ import FriendsRemove from './modals/friends/Remove'
 import FriendsRemoved from './modals/friends/Removed'
 // Users
 import UserProfile from './modals/users/Profile'
-import UserProfileDouble from './modals/users/ProfileDouble'
 import UserProfileGames from './modals/users/Games'
 import UserProfileFriends from './modals/users/Friends'
 import UserProfileMutualFriends from './modals/users/MutualFriends'
@@ -98,6 +98,8 @@ import Help from './modals/Help'
 import HelpSubmited from './modals/HelpSubmited'
 // Alerts
 import PaymentSuccesfull from './modals/PaymentSuccesfull'
+// Refresh
+import RefreshPage from './modals/RefreshPage'
 
 export default {
 	name: 'ModalsComponent',
@@ -109,7 +111,7 @@ export default {
     // Friends
     Friends, FriendsRemove, FriendsRemoved,
     // Users
-    UserProfile, UserProfileDouble, UserProfileGames, UserProfileFriends, UserProfileMutualFriends, UserBlock, UserBlocked, UserReport, UserReported,
+    UserProfile, UserProfileGames, UserProfileFriends, UserProfileMutualFriends, UserBlock, UserBlocked, UserReport, UserReported,
     // Personal
     PersonalData, MyPhoto, MyPhotoEditor,
     // Games
@@ -123,7 +125,9 @@ export default {
     // Help
     Help, HelpSubmited,
     // Alerts
-    PaymentSuccesfull
+    PaymentSuccesfull,
+    // Refresh
+    RefreshPage
   },
   data: () => ({
     prev: null

@@ -86,6 +86,9 @@ export default {
         }, 100)
       }
     })
+    this.$root.$on('updateUserProfile', (e) => {
+      this.$root.$emit('toggleModal', { target: 'userProfile', user: e })
+    })
   },
   methods: {
     goSearch() {

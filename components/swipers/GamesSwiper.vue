@@ -62,14 +62,20 @@ export default {
     })
   },
   methods: {
-    loadSlides() {
+    async loadSlides() {
       if(this.slides == 'categories') {
+        /* await this.$store.dispatch('games/setAllGames') */
+
         this.data = this[this.slides][this.filter.current].list
         this.$root.$on('changeCategory', (e) => {
           this.changeCategory(e)
         })
       } else {
-        this.data = this[this.slides]
+        if (this[this.slides][0].gid) {
+          this.data = this[this.slides]
+        } else {
+          this.data = []
+        }
       }
     },
     setRoute(target) {

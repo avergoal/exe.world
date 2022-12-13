@@ -16,6 +16,7 @@ export const actions = {
   // Inititial app data
   async initAppData() {
     const { response } = await this.$axios.$post('/appApi/init', {})
+
     let games = {},
         search = []
     response.map(e => {

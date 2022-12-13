@@ -1,0 +1,31 @@
+.thanksmodal{
+  .modalcontent{
+    padding: 24px;
+    .title{
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 28px;
+      color: $dBlack;
+    }
+    .desc{
+      margin:24px 0 32px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: $dGray;
+    }
+  }
+}
+
+.night{
+  .thanksmodal{
+    .modalcontent{
+      .title{
+        color: $nWhite;
+      }
+      .desc {
+        color: $white72;
+      }
+    }
+  }
+}

@@ -74,6 +74,13 @@ export const actions = {
       list: filters
     })
   },
+  async setAllGames() {
+    const { data } = await this.$axios.post('/appApi/games', {
+      type: 0,
+      offset: 0
+    })
+    console.log(data)
+  },
   async setCategories({state, commit}, params) {
     let categories = Object.assign({}, state.categories)
     categories[params.type] = Object.assign({}, categories[params.type])

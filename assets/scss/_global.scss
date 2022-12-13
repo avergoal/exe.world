@@ -57,6 +57,14 @@ button{
       background: $violet15;
       color: $dViolet;
     }
+    &.btn_small{
+      height: 36px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 16px;
+      letter-spacing: 0.06em;
+    }
   }
 }
 .night{
@@ -979,6 +987,15 @@ svg.icon{
       height: 628px;
       @media screen and (max-width: 576px) {
         padding: 16px!important;
+      }
+    }
+    &.buy{
+      width: 1048px;
+      max-width: calc(100% - 48px);
+      min-height: 316px;
+
+      @media screen and (max-width: 576px) {
+        padding: 16px !important;
       }
     }
     &.middle{

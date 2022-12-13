@@ -140,7 +140,7 @@ export default {
   created() {
     this.loadProfile()
     this.$root.$on('updateUserProfile', (e) => {
-      this.$root.$emit('toggleModal', { target: 'userProfileDouble', user: e })
+      this.reloadProfile(e)
     })
   },
   mounted() {
@@ -156,6 +156,9 @@ export default {
   methods: {
     async loadProfile() {
       this.$store.dispatch('users/load', {uid: this.modal.user})
+    },
+    async reloadProfile(e) {
+      this.$store.dispatch('users/load', { uid: e })
     },
     async addFriends(e) {
       await this.$store.dispatch('friends/add', {uid: this.modal.user})
