@@ -1,7 +1,6 @@
 export const state = () => ({
   data: null,
-  balanceHistory: [],
-  isGuest: false
+  balanceHistory: []
 })
 
 export const mutations = {
@@ -43,5 +42,5 @@ export const actions = {
 export const getters = {
   data: state => state.data,
   balanceHistory: state => state.balanceHistory,
-  isGuest: state => state.isGuest
+  isGuest: state => state.data.is_guest
 }

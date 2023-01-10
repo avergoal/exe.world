@@ -30,14 +30,14 @@ export default {
     menu: [
       {title: '<i>All</i> Games', target: 'index', link: '/', ico: 'sidebar/all_games', type: 'link'},
       {title: 'My Games', target: 'myGames', link: '/', ico: 'sidebar/my_games', type: 'link'},
-      {title: 'Messages', target: 'messages', ico: 'sidebar/messages', type: 'button'}, 
-      {title: 'Friends', target: 'friends', ico: 'sidebar/friends', type: 'button'}, 
+      {title: 'Messages', target: 'messages', ico: 'sidebar/messages', type: 'button'},
+      {title: 'Friends', target: 'friends', ico: 'sidebar/friends', type: 'button'},
       {title: 'News', target: 'news', ico: 'sidebar/news', type: 'button'}
     ]
   }),
   methods: {
     setRoute(target) {
-      this.$root.$emit('changeTemplate', target) 
+      this.$root.$emit('changeTemplate', target)
     },
     clickLink(target) {
       this.setRoute(target)

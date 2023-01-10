@@ -1,6 +1,6 @@
 <template>
   <div class="modalinfo thanksmodal small">
-    <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
+    <button @click="refreshPage" class="close" area-label="close">
       <svg-icon name="ui/close" />
     </button>
     <div class="modalcontent">
