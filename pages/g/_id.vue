@@ -6,7 +6,7 @@
     @closeGuestSave="hideGuestSave = true"
   ></GuestSave>
   <div class="framebox">
-    <iframe :src="frame.url" frameborder="0"></iframe>
+    <iframe :src="frame.url" id="gameFrame" frameborder="0"></iframe>
   </div>
   <div class="info">
     <ul>
@@ -64,15 +64,28 @@ export default {
       }
     },
     iframeListener() {
-      let that = this
-      window.addEventListener("message", function (e) {
-        if (e.data.type == 'showOrderBox') {
-          that.showOrderBox(e.data.data.item)
-        }
-      },
-      false)
+      // let that = this
+      // window.addEventListener("message", function (e) {
+      //   if (e.data.type == 'showOrderBox') {
+      //     that.showOrderBox(e.data.data.item)
+      //   }
+      // },
+      // false)
+      window.ExeWorldApi.setCallbacks({
+        'orderBoxShow': this.orderBoxShow, // функция для отображения модального окна покупки
+        'orderBoxResult': this.orderBoxResult, // функция для получения результатов покупки
+      })
     },
-    showOrderBox(item) {
+    // showOrderBox(item) {
+    //   console.log(item)
+    //   this.$root.$emit('toggleModal', { target: 'gameBuy', item})
+    // },
+    orderBoxResult(item) {
+      if(item.success){
+        this.$root.$emit('toggleModal', { target: 'gameBuySuccess'})
+      }
+    },
+    orderBoxShow(item) {
       this.$root.$emit('toggleModal', { target: 'gameBuy', item})
     },
     async runGame() {

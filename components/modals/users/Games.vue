@@ -30,6 +30,7 @@
               </div>
             </div>
           </li>
+          <Observer @intersect="intersected"/>
         </ul>
       </perfect-scrollbar>
     </div>
@@ -40,6 +41,11 @@
 <script>
 export default {
   name: 'ProfileGamesModal',
+  methods:{
+    async intersected() {
+      await this.$store.dispatch('users/loadGames')
+    }
+  },
   computed: {
     profile() {
       return this.$store.getters['users/profile']

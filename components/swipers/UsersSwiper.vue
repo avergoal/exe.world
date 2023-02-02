@@ -9,10 +9,11 @@
     <swiper :options="config" ref="newSwiper">
       <swiper-slide v-for="(e, i) in data" :key="i">
         <button @click="openUser(e.uid)" type="button">
-          <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
+          <div class="userphoto"><img :src="e.avatar_urls?.x100" :alt="e.user_name"></div>
           <div class="name" v-html="e.user_name"></div>
         </button>
       </swiper-slide>
+      <Observer @intersect="intersected"/>
     </swiper>
     <div class="swipernav">
       <button :class="'prev_'+_uid" class="prev b" type="button"><svg-icon name="ui/swiper_prev"/></button>
@@ -59,6 +60,10 @@ export default {
     },
     closeSearch() {
       this.$root.$emit('closeSearch')
+    },
+    async intersected() {
+      await this.$store.dispatch('users/loadFriends')
+      this.data = this[this.slides]
     }
   },
   computed: {

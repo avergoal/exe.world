@@ -704,6 +704,12 @@
       }
     }
     &.friendsbox{
+      .friends{
+        height: calc(100% - 88px);
+        @media screen and (max-width: 768px) {
+          height: calc(100% - 58px);
+        }
+      }
       ul.list{
         display: flex;
         flex-flow: row wrap;

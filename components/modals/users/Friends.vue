@@ -22,6 +22,7 @@
               <div class="name" v-html="e.user_name"></div>
             </button>
           </li>
+          <Observer @intersect="intersected"/>
         </ul>
       </perfect-scrollbar>
     </div>
@@ -39,6 +40,9 @@ export default {
       } else {
         this.$root.$emit('updateUserProfile', e)
       }
+    },
+    async intersected() {
+      await this.$store.dispatch('users/loadFriends')
     }
   },
   computed: {

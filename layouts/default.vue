@@ -28,6 +28,7 @@ export default {
   },
   mounted() {
     this.$root.$on('changeTemplate', (e) => {
+      console.log(e)
       this.changeTemplate(e)
     })
     this.$root.$on('resize', () => {
@@ -72,6 +73,7 @@ export default {
       this.loaded = true
     },
     updateData(e) {
+      console.log(e)
       switch(e.event) {
         case 'chat_read':
         case 'new_message':

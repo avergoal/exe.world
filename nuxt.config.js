@@ -18,6 +18,9 @@ export default {
   head: {
     title: 'exeWorld',
     meta: [
+      { 'http-equiv': 'cache-control', content: 'no-cache, no-store, must-revalidate' },
+      { 'http-equiv': 'pragma', content: 'no-cache' },
+      { 'http-equiv': 'expires', content: '0' },
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
@@ -25,6 +28,9 @@ export default {
     link: [
       { rel: 'icon', type: 'image/png', href: '/icon.png' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      {src: '//api.exe.world/assets/js/main.js'}
     ]
   },
   css: [
@@ -35,14 +41,26 @@ export default {
     { src: '~/plugins/data', mode: 'server' },
     { src: '~/plugins/plugins' },
     { src: '~/plugins/services' },
-    { src: '~/plugins/templates' }
+    { src: '~/plugins/templates' },
+    '~/plugins/lodash'
   ],
   components: true,
   buildModules: [
     '@aceforth/nuxt-optimized-images',
     '@nuxtjs/svg-sprite',
     '@nuxtjs/moment',
-    'nuxt-font-loader'
+    'nuxt-font-loader',
+    [
+      'nuxt-compress',
+      {
+        gzip: {
+          threshold: 8192,
+        },
+        brotli: {
+          threshold: 8192,
+        },
+      },
+    ],
   ],
   optimizedImages: {
     optimizeImages: true,
@@ -87,7 +105,13 @@ export default {
   },
   build: {
     cssSourceMap: true,
-    extractCSS: true
+    extractCSS: true,
+    // hotMiddleware: {
+    //   client: {
+    //     autoConnect: false,
+    //   },
+    // },
+    // indicator: false,
   },
   telemetry: false/*,
   server: {

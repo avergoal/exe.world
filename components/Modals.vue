@@ -35,6 +35,7 @@
     <GameSignIn v-if="modal.target == 'gameSignIn'" />
     <GameRemove v-if="modal.target == 'gameRemove'" />
     <GameMenu v-if="modal.target == 'gameMenu'" />
+    <AddFundsToGame v-if="modal.target == 'addFunds'"/>
     <!-- News -->
     <News v-if="modal.target == 'news'" />
     <!-- Request -->
@@ -100,10 +101,12 @@ import HelpSubmited from './modals/HelpSubmited'
 import PaymentSuccesfull from './modals/PaymentSuccesfull'
 // Refresh
 import RefreshPage from './modals/RefreshPage'
+import AddFundsToGame from "~/components/modals/games/AddFundsToGame.vue";
 
 export default {
 	name: 'ModalsComponent',
   components: {
+    AddFundsToGame,
     // Auth
     SignIn, SignUp, LogOut, LogInTemp, RestorePassword, EmailSend,
     // Messages

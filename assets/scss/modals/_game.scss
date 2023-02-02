@@ -435,6 +435,15 @@
         flex-flow: column nowrap;
         margin-top: 16px;
       }
+      .info{
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 40px;
+        margin-top: 24px;
+        button{
+          margin-top: 30px;
+        }
+      }
 
       .img{
         display: block;
@@ -499,6 +508,50 @@
             align-items: center;
             height: 100%;
             margin-left: 104px;
+
+            .checkbox {
+              font-style: normal;
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 24px;
+              display: flex;
+              margin-top: 67px;
+              align-items: center;
+
+              input {
+                display: none;
+              }
+
+              input:checked ~ span {
+                background-color: #755EC6;
+              }
+
+              input:checked ~ span:after {
+                content: '';
+                display: block;
+              }
+
+              span {
+                display: block;
+                width: 18px;
+                height: 18px;
+                background: #FFFFFF;
+                border-radius: 4px;
+                margin-right: 19px;
+                position: relative;
+
+                &:after {
+                  left: 5px;
+                  position: absolute;
+                  top: 2px;
+                  width: 4px;
+                  height: 8px;
+                  border: solid white;
+                  border-width: 0 3px 3px 0;
+                  transform: rotate(45deg);
+                }
+              }
+            }
 
               @media screen and (max-width: 576px) {
                 margin-left: 0px;
@@ -623,6 +676,12 @@
               }
               .desc {
                 color: $nWhite;
+              }
+            }
+
+            .description {
+              p {
+                color: rgba(255, 255, 255, 0.9);
               }
             }
           }

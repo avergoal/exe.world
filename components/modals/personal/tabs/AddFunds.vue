@@ -1,35 +1,22 @@
 <template>
 <div class="tab addfunds">
   <div class="title">
-    <button @click="$root.$emit('toggleModalTab', 'wallet')" type="button"><svg-icon name="ui/back" /></button>
+    <button v-if="game" @click="$root.$emit('toggleModal', {target:'gameBuy'})" type="button"><svg-icon name="ui/back" /></button>
+    <button v-else @click="$root.$emit('toggleModalTab', 'wallet')" type="button"><svg-icon name="ui/back" /></button>
     <span>Add Funds</span>
   </div>
   <perfect-scrollbar ref="scroll_tab">
     <ul class="select">
-      <li><button @click="paysystem = 'yookassa'" :class="{active: paysystem === 'yookassa'}" type="button">yookassa</button></li>
+      <li v-for="(method,index) in paymentMethods">
+        <button @click="selectPaySystem(method.pid,index)" :class="{active: index === selected}" type="button">
+        {{ method.pid }}</button></li>
     </ul>
     <form @submit.prevent action="">
       <div class="label">Balance Quantity</div>
       <ul class="radio">
-        <li>
-          <input v-model="balanceQuantity" type="radio" name="payment" value="1" id="r1" checked>
-          <label for="r1">$1</label>
-        </li>
-        <li>
-          <input v-model="balanceQuantity" type="radio" name="payment" value="5" id="r2">
-          <label for="r2">$5</label>
-        </li>
-        <li>
-          <input v-model="balanceQuantity" type="radio" name="payment" value="10" id="r3">
-          <label for="r3">$10</label>
-        </li>
-        <li>
-          <input v-model="balanceQuantity" type="radio" name="payment" value="15" id="r4">
-          <label for="r4">$15</label>
-        </li>
-        <li>
-          <input v-model="balanceQuantity" type="radio" name="payment" value="20" id="r5">
-          <label for="r5">$20</label>
+        <li v-for="n in 5">
+          <input v-model="balanceQuantity" type="radio" name="payment" :value="quantity+n*5-5">
+          <label @click="balanceQuantity = quantity+n*5-5" for="r1">${{quantity+n*5-5}}</label>
         </li>
       </ul>
       <fieldset>
@@ -45,14 +32,21 @@
 <script>
 export default {
   name: 'BalanceTabAddFunds',
+  props: {
+    game: {
+      default: false
+    }
+  },
   data: () => ({
-    paysystem: 'yookassa',
-    balanceQuantity: 1,
+    paysystem: 0,
+    selected: 0,
+    balanceQuantity: 0,
     otherQuantity: null,
     error: null,
     timer: null
   }),
   created() {
+    this.$store.dispatch('profile/getPaymentsMethods')
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_tab) {
         setTimeout(() => {
@@ -73,6 +67,11 @@ export default {
         this.openWindow(response.response.url)
       }
     },
+    selectPaySystem(pid,index){
+      this.paysystem = pid
+      this.selected = index
+      this.otherQuantity = null
+    },
     openWindow(url) {
       let handler, timer
       this.$root.$emit('setLoader', false)
@@ -83,7 +82,19 @@ export default {
           clearInterval(timer)
           this.$root.$emit('setLoader', true)
         }
+        this.$store.dispatch('profile/getBalance')
+        this.$root.$emit('toggleModal', {target:'gameBuy'})
       }, 500)
+    }
+  },
+  computed:{
+    paymentMethods(){
+      const methods = this.$store.getters['profile/paymentsMethods']
+      this.balanceQuantity = methods[this.selected]?.limits[0]
+      return methods
+    },
+    quantity(){
+      return this.paymentMethods[this.selected]?.limits[0]
     }
   }
 }

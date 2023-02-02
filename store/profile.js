@@ -1,6 +1,7 @@
 export const state = () => ({
   data: null,
-  balanceHistory: []
+  balanceHistory: [],
+  paymentsMethods: []
 })
 
 export const mutations = {
@@ -36,11 +37,20 @@ export const actions = {
   async paymentsPrepare({}, params) {
     const { data } = await this.$axios.post('/appApi/payments.prepare', params)
     return data
+  },
+  async getPaymentsMethods({commit}, params) {
+    const { data } = await this.$axios.post('/appApi/payments.methods', params)
+
+    commit('setState', {
+      key: 'paymentsMethods',
+      value: data.response
+    })
   }
 }
 
 export const getters = {
   data: state => state.data,
   balanceHistory: state => state.balanceHistory,
-  isGuest: state => state.data.is_guest
+  isGuest: state => state.data.is_guest,
+  paymentsMethods: state => state.paymentsMethods
 }

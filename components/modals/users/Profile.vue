@@ -103,7 +103,7 @@
         <perfect-scrollbar v-if="profile.blacklist_status !== 2" ref="scroll">
           <div v-if="profile && (profile.games.games.length || profile.friends.users.length || profile.mutual_friends.users.length)" class="swipers">
             <GamesSwiper v-if="profile && profile.games.games.length" slides="user_profile_games" between="16" title="Games" tab="userProfileGames" slideClass="m"/>
-            <UsersSwiper v-if="profile && profile.friends.users.length" slides="user_profile_friends" between="8" title="Friends" tab="userProfileFriends"/>
+            <UsersSwiper v-if="profile && profile.friends.users" slides="user_profile_friends" between="8" title="Friends" tab="userProfileFriends"/>
             <UsersSwiper v-if="profile && profile.mutual_friends.users.length" slides="user_profile_mutual_friends" between="8" title="Mutual friends" tab="userProfileMutualFriends"/>
           </div>
           <div v-else class="notdata">
@@ -138,10 +138,13 @@ export default {
     request: false
   }),
   created() {
-    this.loadProfile()
-    this.$root.$on('updateUserProfile', (e) => {
-      this.reloadProfile(e)
-    })
+    if (!this.modal.updateUserProfileRegistered) {
+      this.$root.$on('updateUserProfile', (e) => {
+        this.reloadProfile(e)
+      })
+      this.loadProfile()
+    }
+    this.$root.$emit('toggleModal', {target:'userProfile', updateUserProfileRegistered: true })
   },
   mounted() {
     document.addEventListener('click', (e) => {
@@ -189,7 +192,7 @@ export default {
     profile() {
       let profile = this.$store.getters['users/profile']
       if(profile) {
-        profile = Object.assign({}, profile)
+        profile = JSON.parse(JSON.stringify(profile))
         let age = profile.user.birth_date.match(/(\d{4})(\d{2})(\d{2})/)
         profile.user.age = {
           year: age[1],

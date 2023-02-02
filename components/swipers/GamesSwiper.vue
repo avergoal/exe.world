@@ -12,17 +12,18 @@
         <div class="box">
           <div class="img">
             <!-- <img src="/theme/img/loader.gif" alt="" class="lazyloader"> -->
-            <img v-lazy="e.poster.default" :alt="e.title">
+            <img v-lazy="e?.poster?.default" :alt="e?.title">
             <!-- <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button> -->
-            <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-            <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <nuxt-link v-if="e?.installed" :to="'/g/' + e?.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+            <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e?.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           </div>
           <div class="info">
-            <div v-html="e.title" class="title"></div>
-            <div v-html="e.type.title" class="desc" :style="'color:#' + e.type.color"></div>
+            <div v-html="e?.title" class="title"></div>
+            <div v-html="e?.type?.title" class="desc" :style="'color:#' + e?.type?.color"></div>
           </div>
         </div>
       </swiper-slide>
+      <Observer @intersect="intersected"/>
     </swiper>
     <div :class="navClass" class="swipernav">
       <button :class="'prev_'+_uid" class="prev b" type="button"><svg-icon name="ui/swiper_prev"/></button>
@@ -38,7 +39,8 @@ export default {
   props: ['slides', 'between', 'filters', 'title', 'target', 'tab', 'slideClass', 'navClass', 'boxClass'],
   data: () => ({
     config: null,
-    data: []
+    data: [],
+    current: 0
   }),
   mounted() {
     this.config = {
@@ -65,9 +67,13 @@ export default {
     async loadSlides() {
       if(this.slides == 'categories') {
         /* await this.$store.dispatch('games/setAllGames') */
-
-        this.data = this[this.slides][this.filter.current].list
+        if (this.slides === 'user_profile_games') {
+          this.data = this[this.slides]
+        } else {
+          this.data = this[this.slides][this.filter.current].list
+        }
         this.$root.$on('changeCategory', (e) => {
+          this.current = e
           this.changeCategory(e)
         })
       } else {
@@ -98,6 +104,16 @@ export default {
         this.data = this[this.slides][e].list
       } else {
         this.data = this[this.slides][e].list
+      }
+    },
+    async intersected() {
+      if(this.slides === 'categories') {
+        await this.$store.dispatch('games/setCategories', {
+          type: this.current
+        })
+      }
+      if (this.slides === 'user_profile_games') {
+        await this.$store.dispatch('users/loadGames')
       }
     }
   },
