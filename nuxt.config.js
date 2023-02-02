@@ -106,12 +106,12 @@ export default {
   build: {
     cssSourceMap: true,
     extractCSS: true,
-    // hotMiddleware: {
-    //   client: {
-    //     autoConnect: false,
-    //   },
-    // },
-    // indicator: false,
+    hotMiddleware: {
+      client: {
+        autoConnect: false,
+      },
+    },
+    indicator: false,
   },
   telemetry: false/*,
   server: {
