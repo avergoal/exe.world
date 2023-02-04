@@ -42,7 +42,6 @@ export default {
     { src: '~/plugins/plugins' },
     { src: '~/plugins/services' },
     { src: '~/plugins/templates' },
-    '~/plugins/lodash'
   ],
   components: true,
   buildModules: [
@@ -50,17 +49,6 @@ export default {
     '@nuxtjs/svg-sprite',
     '@nuxtjs/moment',
     'nuxt-font-loader',
-    [
-      'nuxt-compress',
-      {
-        gzip: {
-          threshold: 8192,
-        },
-        brotli: {
-          threshold: 8192,
-        },
-      },
-    ],
   ],
   optimizedImages: {
     optimizeImages: true,
@@ -87,7 +75,18 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    [
+      'nuxt-compress',
+      {
+        gzip: {
+          threshold: 8192,
+        },
+        brotli: {
+          threshold: 8192,
+        },
+      },
+    ],
   ],
   axios: {
     proxy: true
@@ -112,6 +111,30 @@ export default {
       },
     },
     indicator: false,
+    babel: {
+      plugins: [
+        ['lodash', { id: 'lodash' }]
+      ]
+    },
+    extend (config, { isDev, isClient }) {
+      if (!isDev) {
+        config.optimization.minimize = true
+      }
+    },
+    uglify: {
+      cache: true,
+      parallel: true,
+      sourceMap: true,
+    },
+  },
+  cache: {
+    max: 1000,
+    maxAge: 900000,
+  },
+  render: {
+    gzip: {
+      threshold: 1024,
+    },
   },
   telemetry: false/*,
   server: {

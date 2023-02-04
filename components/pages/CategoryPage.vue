@@ -77,7 +77,7 @@ export default {
       this.observer = true
     },
     changeCategory(e) {
-      if(!this.categories[e].list.length) {
+      if(this.categories[e].list.length !== this.categories[e]?.total_games || this.categories[e].offset) {
         this.loadGames(e)
       } else {
         this.games = this.categories[e].list

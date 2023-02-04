@@ -62,8 +62,10 @@ export default {
       this.$root.$emit('closeSearch')
     },
     async intersected() {
-      await this.$store.dispatch('users/loadFriends')
-      this.data = this[this.slides]
+      if (this.slides !=='search_peoples'){
+        await this.$store.dispatch('users/loadFriends')
+        this.data = this[this.slides]
+      }
     }
   },
   computed: {

@@ -3,13 +3,17 @@ export const state = () => ({
   page: 'index',
   modal: {},
   news: [],
-  subjects: {}
+  subjects: {},
+  listeners: {}
 })
 
 export const mutations = {
   setState(state, data) {
     state[data.key] = data.value
-  }
+  },
+  registerListener(state, { event, handler }) {
+    state.listeners[event] =  handler ;
+  },
 }
 
 export const actions = {
@@ -49,7 +53,7 @@ export const actions = {
             cid: 0,
             title: 'All',
             list: [],
-            offset: 0
+            offset: 20
           }
           games[keys[0]] = categories
           break
@@ -161,4 +165,5 @@ export const getters = {
   modal: state => state.modal,
   news: state => state.news,
   subjects: state => state.subjects,
+  listeners: state => state.listeners
 }

@@ -6,7 +6,7 @@
   <div class="modalcontent friendsbox">
     <div class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: profile.user.uid})" type="button"><svg-icon name="ui/back" /></button>
-      <div class="userphoto"><img :src="profile.user.avatar_urls.x250" alt=""></div>
+      <div class="userphoto"><img :src="profile.user.avatar_urls?.x250" alt=""></div>
       <div class="info">
         <div v-html="profile.user.user_name" class="name"></div>
         <div :class="{active: profile.user.online}" class="online"><span></span> {{ (profile.user.online) ? 'Online' : 'Offline' }}</div>

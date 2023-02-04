@@ -138,7 +138,8 @@ export default {
     request: false
   }),
   created() {
-    if (!this.modal.updateUserProfileRegistered) {
+    if (!this.listeners.updateUserProfileFromProfile) {
+      this.$store.commit('app/registerListener', { event: 'updateUserProfileFromProfile',handler: true });
       this.$root.$on('updateUserProfile', (e) => {
         this.reloadProfile(e)
       })
@@ -158,10 +159,10 @@ export default {
   },
   methods: {
     async loadProfile() {
-      this.$store.dispatch('users/load', {uid: this.modal.user})
+      await this.$store.dispatch('users/load', {uid: this.modal.user})
     },
     async reloadProfile(e) {
-      this.$store.dispatch('users/load', { uid: e })
+      await this.$store.dispatch('users/load', {uid: e})
     },
     async addFriends(e) {
       await this.$store.dispatch('friends/add', {uid: this.modal.user})
@@ -188,6 +189,9 @@ export default {
   computed: {
     modal() {
       return this.$store.getters['app/modal']
+    },
+    listeners() {
+      return this.$store.getters['app/listeners']
     },
     profile() {
       let profile = this.$store.getters['users/profile']

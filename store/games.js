@@ -1,3 +1,4 @@
+import uniqBy from 'lodash/uniqBy'
 export const state = () => ({
   limit: 20,
   offset:0,
@@ -92,7 +93,7 @@ export const actions = {
     }
 
     const {data} = await this.$axios.post('/appApi/games', params)
-    categories[params.type].list = _.uniqBy(categories[params.type].list.concat(data.response.games), function (e) {
+    categories[params.type].list = uniqBy(categories[params.type].list.concat(data.response.games), function (e) {
       return e.gid
     })
     categories[params.type].offset = data.response.offset
@@ -100,7 +101,7 @@ export const actions = {
       key: 'categories',
       value: categories
     })
-    return (data.response.games.length < state.limit) ? false : true
+    return categories[params.type].offset
 
 
 
