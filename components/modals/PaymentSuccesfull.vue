@@ -7,13 +7,19 @@
       <div class="desc">
         <div class="title">Payment Succesfull</div>
       </div>
-      <button @click="$root.$emit('toggleModal', {target: ''})" type="button" class="btn st2">continue</button>
+      <button @click="toggleModal" type="button" class="btn st2">continue</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PaymentSuccesfull'
+  name: 'PaymentSuccesfull',
+  methods:{
+    toggleModal(){
+      this.$root.$emit('toggleModal', {target: ''})
+      this.$root.$emit('setLoader', true)
+    }
+  }
 }
 </script>

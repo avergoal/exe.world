@@ -67,6 +67,8 @@ export const actions = {
   },
   // Modals
   toggleModal({state, commit}, params) {
+    console.log(params)
+    console.log(state)
     let data = {
       key: 'modal',
       value: Object.assign(this.$deepClone(state.modal), params)

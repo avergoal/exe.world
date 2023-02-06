@@ -81,10 +81,15 @@ export default {
         if(handler.closed) {
           clearInterval(timer)
           this.$root.$emit('setLoader', true)
+          this.$store.dispatch('profile/getBalance')
+          if (!this.game) {
+            this.$root.$emit('toggleModal', {target: 'paymentSuccesfull'})
+          }
         }
-        this.$store.dispatch('profile/getBalance')
-        this.$root.$emit('toggleModal', {target:'gameBuy'})
       }, 500)
+      if(this.game) {
+        this.$root.$emit('toggleModal', {target: 'gameBuy'})
+      }
     }
   },
   computed:{

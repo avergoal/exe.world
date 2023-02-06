@@ -1,6 +1,6 @@
 <template>
 <div class="modalinfo gamemodal buy">
-  <button @click="$root.$emit('toggleModal', {})" class="close" area-label="close">
+  <button @click="cancelModal" class="close" area-label="close">
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="btns">
-          <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st3">cancel</button>
+          <button @click="cancelModal" type="button" class="btn st3">cancel</button>
           <button v-if="modal.item.price<=balance" @click="buyItems" type="button" class="btn st2">buy</button>
           <button v-else @click="toggleModal('addFunds')" type="button" class="btn st2">add funds</button>
         </div>
@@ -60,6 +60,10 @@ export default {
     //     this.enough = false
     //   }
     // },
+    cancelModal(){
+      this.$root.$emit('toggleModal', {})
+      this.$root.$emit('setLoader', true)
+    },
     buyItems() {
       window.ExeWorldApi.orderComplete({test: this.test})
       console.log('buy!')
