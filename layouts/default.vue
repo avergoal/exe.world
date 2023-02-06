@@ -23,10 +23,10 @@ export default {
     gamepage: false
   }),
   created() {
-    (typeof window == 'undefined') || this.loadUser()
     this.setGamePage()
   },
   mounted() {
+    (typeof window == 'undefined') || this.loadUser()
     this.$root.$on('changeTemplate', (e) => {
       console.log(e)
       this.changeTemplate(e)
