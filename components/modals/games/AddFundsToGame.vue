@@ -4,7 +4,7 @@
       <svg-icon name="ui/close" />
     </button>
     <div class="modalcontent">
-        <AddFunds :game="true"/>
+        <AddFunds/>
     </div>
   </div>
 </template>

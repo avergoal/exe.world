@@ -33,6 +33,7 @@ export const actions = {
       key: 'isGuest',
       value: data.response.is_guest
     })
+    return data.response.balance
   },
   async paymentsPrepare({}, params) {
     const { data } = await this.$axios.post('/appApi/payments.prepare', params)

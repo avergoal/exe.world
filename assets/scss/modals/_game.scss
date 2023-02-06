@@ -524,6 +524,7 @@
 
               input:checked ~ span {
                 background-color: #755EC6;
+                border: none;
               }
 
               input:checked ~ span:after {
@@ -532,6 +533,7 @@
               }
 
               span {
+                border: 1px solid;
                 display: block;
                 width: 18px;
                 height: 18px;

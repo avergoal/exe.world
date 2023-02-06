@@ -33,7 +33,6 @@ export const actions = {
     }
   },
   async loadFriends({commit,state}){
-    console.log(state)
     let profile = JSON.parse(JSON.stringify(state.profile))
     if (profile.friends.offset){
       let params = {

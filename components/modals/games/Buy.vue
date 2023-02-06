@@ -32,7 +32,7 @@
         </div>
         <div class="btns">
           <button @click="cancelModal" type="button" class="btn st3">cancel</button>
-          <button v-if="modal.item.price<=balance" @click="buyItems" type="button" class="btn st2">buy</button>
+          <button v-if="modal.item.price<=balance || test" @click="buyItems" type="button" class="btn st2">buy</button>
           <button v-else @click="toggleModal('addFunds')" type="button" class="btn st2">add funds</button>
         </div>
       </div>
@@ -66,7 +66,6 @@ export default {
     },
     buyItems() {
       window.ExeWorldApi.orderComplete({test: this.test})
-      console.log('buy!')
     },
     toggleModal(target, tab) {
       this.$root.$emit('toggleModal', (tab == 'logOut') ? {
@@ -74,7 +73,8 @@ export default {
       } : {
         target: target,
         tab: tab,
-        game: tab
+        game: tab,
+        fromGame: true
       })
     }
   },

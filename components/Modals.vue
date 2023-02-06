@@ -145,6 +145,7 @@ export default {
     document.addEventListener('click', (e) => {
       if(e.target.closest('.modalbox') && !e.target.closest('.modalinfo')) {
         this.$store.dispatch('app/toggleModal', {})
+        this.$root.$emit('setLoader', true)
       }
       if(window.matchMedia('(max-width: 576px)').matches) {
         if(this.prev != this.modal.target) {
@@ -153,6 +154,7 @@ export default {
           this.prev = null
           if(!e.target.closest('.modalinfo')) {
             this.$store.dispatch('app/toggleModal', {})
+            this.$root.$emit('setLoader', true)
           }
         }
       }

@@ -28,7 +28,6 @@ export default {
   mounted() {
     (typeof window == 'undefined') || this.loadUser()
     this.$root.$on('changeTemplate', (e) => {
-      console.log(e)
       this.changeTemplate(e)
     })
     this.$root.$on('resize', () => {
@@ -73,7 +72,6 @@ export default {
       this.loaded = true
     },
     updateData(e) {
-      console.log(e)
       switch(e.event) {
         case 'chat_read':
         case 'new_message':
@@ -93,7 +91,10 @@ export default {
           this.$store.dispatch('profile/getBalance', {
             type: 'header'
           })
-          this.$root.$emit('toggleModal', { target: 'paymentSuccesfull' })
+          this.$root.$emit('setLoader', true)
+          if(!this.modal.fromGame){
+            this.$root.$emit('toggleModal', { target: 'paymentSuccesfull' })
+          }
           break
       }
     },
@@ -128,7 +129,10 @@ export default {
     },
     profile() {
       return this.$store.getters['profile/data']
-    }
+    },
+    modal() {
+      return this.$store.getters['app/modal']
+    },
   },
   watch: {
     $route(e) {

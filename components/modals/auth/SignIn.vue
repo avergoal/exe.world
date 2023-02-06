@@ -74,7 +74,6 @@ export default {
         timer = setInterval(() => {
           if(handler.closed) {
             clearInterval(timer)
-            console.log('close', handler)
           }
         }, 500)
         //window.open(url, '_blank')

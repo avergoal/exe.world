@@ -23,7 +23,6 @@ export default {
   name: 'GameMenuModalComponent',
   computed: {
     modal() {
-      console.log(this.$store.getters['app/modal'])
       return this.$store.getters['app/modal']
     }
   }

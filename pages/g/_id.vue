@@ -76,10 +76,6 @@ export default {
         'orderBoxResult': this.orderBoxResult, // функция для получения результатов покупки
       })
     },
-    // showOrderBox(item) {
-    //   console.log(item)
-    //   this.$root.$emit('toggleModal', { target: 'gameBuy', item})
-    // },
     orderBoxResult(item) {
       if(item.success){
         this.$root.$emit('toggleModal', { target: 'gameBuySuccess'})
