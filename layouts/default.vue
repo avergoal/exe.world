@@ -10,7 +10,7 @@
     <Sidebar v-if="profile" />
     <Modals />
     <transition v-if="!loaded" name="loader">
-      <LoaderAnimation />
+      <LoaderAnimation :modal="modalLoader"/>
     </transition>
   </div>
 </template>
@@ -20,7 +20,8 @@ export default {
 	name: 'DefaultLayout',
   data: () => ({
     loaded: false,
-    gamepage: false
+    gamepage: false,
+    modalLoader: false
   }),
   created() {
     this.setGamePage()
@@ -33,8 +34,9 @@ export default {
     this.$root.$on('resize', () => {
       this.scrollUpdate()
     })
-    this.$root.$on('setLoader', (e) => {
+    this.$root.$on('setLoader', (e,modal=false) => {
       this.loaded = e
+      this.modalLoader = modal
     })
     window.addEventListener('resize', () => {
       this.scrollUpdate()

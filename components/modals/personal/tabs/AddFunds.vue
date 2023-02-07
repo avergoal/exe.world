@@ -67,19 +67,27 @@ export default {
       this.selected = index
       this.otherQuantity = null
     },
-    openWindow(url) {
-      let handler, timer, oldValue
-      this.$root.$emit('setLoader', false)
+    async openWindow(url) {
+      let handler, timer, oldValue, fromGame
+      this.$root.$emit('setLoader', false, true)
       if(handler) handler.close()
+      oldValue = await this.$store.dispatch('profile/getBalance')
+      fromGame = this.modal.fromGame
       handler = window.open(url, 'paymentProccess')
-      timer = setInterval(() => {
+      timer = setInterval(async () => {
         if(handler.closed) {
           clearInterval(timer)
           this.$root.$emit('setLoader', true)
+          if (!fromGame) {
+            const newValue = await this.$store.dispatch('profile/getBalance')
+            if (oldValue === newValue) {
+              this.$root.$emit('toggleModal', {target: 'paymentSuccesfull', success: true})
+            }
+          }
         }
       }, 500)
       if(this.modal.fromGame) {
-        this.$root.$emit('toggleModal', {target: 'gameBuy',fromGame:true})
+        this.$root.$emit('toggleModal', {target: 'gameBuy'})
       }
     }
   },

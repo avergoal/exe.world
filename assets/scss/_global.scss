@@ -195,6 +195,10 @@ fieldset{
       align-items: center;
 
       background: $dWhite;
+      &.modal_loader{
+        z-index: 5001;
+        background: rgba(255, 255, 255, 0.7);
+      }
     }
   }
 }
@@ -220,6 +224,10 @@ fieldset{
   }
   .loader-wrap{
     background: $nBlack!important;
+    &.modal_loader{
+      z-index: 5001;
+      background: rgba(45, 42, 54, 0.7) !important;
+    }
   }
 }
 // Dropdown
