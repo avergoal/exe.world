@@ -34,17 +34,20 @@ export const actions = {
     })
   },
   async loadUserGames({ state, commit }, params) {
+    console.log('pxer')
     let games = (params.type === 'load') ? {
       total: 0,
       list: []
     } : Object.assign({}, state.userAll)
-    const { data } = await this.$axios.post('/appApi/user.games', params)
+    const {data} = await this.$axios.post('/appApi/user.games', params)
     games.list = games.list.concat(data.response.games)
+    games.total = data.response.total_games
+    games.offset = data.response.offset
     commit('setState', {
       key: 'userAll',
       value: games
     })
-    return (data.response.total_games < state.limit) ? false : true
+    return games.total < games.list.length
   },
   setInitData({commit}, data) {
     let key = {

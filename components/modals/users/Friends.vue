@@ -35,7 +35,7 @@ export default {
   name: 'ProfileFriendsModal',
   methods: {
     openUser(e) {
-      if (this.profile.user.uid === e) {
+      if (this.user.uid === e) {
         this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
       } else {
         this.$root.$emit('updateUserProfile', e)
@@ -50,7 +50,7 @@ export default {
       return this.$store.getters['users/profile']
     },
     user() {
-      return this.$store.getters['profile/user']
+      return this.$store.getters['profile/data']
     }
   }
 }

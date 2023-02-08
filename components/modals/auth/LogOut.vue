@@ -5,6 +5,7 @@
   </button>
   <div class="modalcontent">
     <div class="top">Log Out</div>
+    <div class="alert" v-if="errors.length" v-for="error in errors">{{error}}</div>
     <div class="text">Are you sure you want to log out of your account?</div>
     <div class="btns">
       <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">cancel</button>
@@ -17,10 +18,14 @@
 <script>
 export default {
 	name: 'LogOutModal',
+  data(){
+    return{
+      errors:[]
+    }
+  },
   methods: {
-    logOut() {
-      localStorage.removeItem('token')
-      window.location.reload()
+    async logOut() {
+      this.errors = await this.$store.dispatch('auth/logout')
     }
   }
 }

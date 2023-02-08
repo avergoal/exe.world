@@ -1,0 +1,43 @@
+[
+  {
+    "name": "icons-list",
+    "path": "/_icons",
+    "component": "/var/www/exe.world/node_modules/@nuxtjs/svg-sprite/lib/pages/icons-list.vue",
+    "_name": "_8ea1fb2e"
+  },
+  {
+    "name": "about",
+    "path": "/about",
+    "component": "/var/www/exe.world/pages/about/index.vue",
+    "chunkName": "pages/about/index",
+    "_name": "_4b6a310b"
+  },
+  {
+    "name": "auth-token",
+    "path": "/auth/:token?",
+    "component": "/var/www/exe.world/pages/auth/_token.vue",
+    "chunkName": "pages/auth/_token",
+    "_name": "_381b8ffc"
+  },
+  {
+    "name": "g-id",
+    "path": "/g/:id?",
+    "component": "/var/www/exe.world/pages/g/_id.vue",
+    "chunkName": "pages/g/_id",
+    "_name": "_63b1868d"
+  },
+  {
+    "name": "request-all",
+    "path": "/request/*",
+    "component": "/var/www/exe.world/pages/request/_.vue",
+    "chunkName": "pages/request/_",
+    "_name": "_08597b5a"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/var/www/exe.world/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_1f6a0b4d"
+  }
+]

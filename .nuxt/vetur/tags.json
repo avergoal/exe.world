@@ -1,0 +1,191 @@
+{
+  "Filters": {
+    "description": "Auto imported from components/Filters.vue"
+  },
+  "Footer": {
+    "description": "Auto imported from components/Footer.vue"
+  },
+  "Header": {
+    "description": "Auto imported from components/Header.vue"
+  },
+  "LoaderAnimation": {
+    "description": "Auto imported from components/LoaderAnimation.vue"
+  },
+  "Modals": {
+    "description": "Auto imported from components/Modals.vue"
+  },
+  "Observer": {
+    "description": "Auto imported from components/Observer.vue"
+  },
+  "Search": {
+    "description": "Auto imported from components/Search.vue"
+  },
+  "Sidebar": {
+    "description": "Auto imported from components/Sidebar.vue"
+  },
+  "GuestSave": {
+    "description": "Auto imported from components/guest/GuestSave.vue"
+  },
+  "PagesCategoryPage": {
+    "description": "Auto imported from components/pages/CategoryPage.vue"
+  },
+  "PagesMainPage": {
+    "description": "Auto imported from components/pages/MainPage.vue"
+  },
+  "PagesMyGamesPage": {
+    "description": "Auto imported from components/pages/MyGamesPage.vue"
+  },
+  "PagesSearchCategoryPage": {
+    "description": "Auto imported from components/pages/SearchCategoryPage.vue"
+  },
+  "PagesSearchPeoplesPage": {
+    "description": "Auto imported from components/pages/SearchPeoplesPage.vue"
+  },
+  "ModalsHelp": {
+    "description": "Auto imported from components/modals/Help.vue"
+  },
+  "ModalsHelpSubmited": {
+    "description": "Auto imported from components/modals/HelpSubmited.vue"
+  },
+  "ModalsNotification": {
+    "description": "Auto imported from components/modals/Notification.vue"
+  },
+  "ModalsPaymentSuccesfull": {
+    "description": "Auto imported from components/modals/PaymentSuccesfull.vue"
+  },
+  "ModalsRefreshPage": {
+    "description": "Auto imported from components/modals/RefreshPage.vue"
+  },
+  "ModalsRequest": {
+    "description": "Auto imported from components/modals/Request.vue"
+  },
+  "ModalsThanks": {
+    "description": "Auto imported from components/modals/Thanks.vue"
+  },
+  "SwipersGamesSwiper": {
+    "description": "Auto imported from components/swipers/GamesSwiper.vue"
+  },
+  "SwipersMainSwiper": {
+    "description": "Auto imported from components/swipers/MainSwiper.vue"
+  },
+  "SwipersUsersSwiper": {
+    "description": "Auto imported from components/swipers/UsersSwiper.vue"
+  },
+  "ModalsAuthEmailSend": {
+    "description": "Auto imported from components/modals/auth/EmailSend.vue"
+  },
+  "ModalsAuthLogInTemp": {
+    "description": "Auto imported from components/modals/auth/LogInTemp.vue"
+  },
+  "ModalsAuthLogOut": {
+    "description": "Auto imported from components/modals/auth/LogOut.vue"
+  },
+  "ModalsAuthRestorePassword": {
+    "description": "Auto imported from components/modals/auth/RestorePassword.vue"
+  },
+  "ModalsAuthSignIn": {
+    "description": "Auto imported from components/modals/auth/SignIn.vue"
+  },
+  "ModalsAuthSignUp": {
+    "description": "Auto imported from components/modals/auth/SignUp.vue"
+  },
+  "ModalsGamesAddFundsToGame": {
+    "description": "Auto imported from components/modals/games/AddFundsToGame.vue"
+  },
+  "ModalsGamesBuy": {
+    "description": "Auto imported from components/modals/games/Buy.vue"
+  },
+  "ModalsGamesBuySuccess": {
+    "description": "Auto imported from components/modals/games/BuySuccess.vue"
+  },
+  "ModalsGamesInfo": {
+    "description": "Auto imported from components/modals/games/Info.vue"
+  },
+  "ModalsGamesMenu": {
+    "description": "Auto imported from components/modals/games/Menu.vue"
+  },
+  "ModalsGamesRemove": {
+    "description": "Auto imported from components/modals/games/Remove.vue"
+  },
+  "ModalsGamesSignIn": {
+    "description": "Auto imported from components/modals/games/SignIn.vue"
+  },
+  "ModalsFriendsActions": {
+    "description": "Auto imported from components/modals/friends/Actions.vue"
+  },
+  "ModalsFriends": {
+    "description": "Auto imported from components/modals/friends/Friends.vue"
+  },
+  "ModalsFriendsRemove": {
+    "description": "Auto imported from components/modals/friends/Remove.vue"
+  },
+  "ModalsFriendsRemoved": {
+    "description": "Auto imported from components/modals/friends/Removed.vue"
+  },
+  "ModalsMessagesChat": {
+    "description": "Auto imported from components/modals/messages/Chat.vue"
+  },
+  "ModalsMessages": {
+    "description": "Auto imported from components/modals/messages/Messages.vue"
+  },
+  "ModalsMessagesRemove": {
+    "description": "Auto imported from components/modals/messages/Remove.vue"
+  },
+  "ModalsNewsAdd": {
+    "description": "Auto imported from components/modals/news/Add.vue"
+  },
+  "ModalsNews": {
+    "description": "Auto imported from components/modals/news/News.vue"
+  },
+  "ModalsPersonalMyPhoto": {
+    "description": "Auto imported from components/modals/personal/MyPhoto.vue"
+  },
+  "ModalsPersonalMyPhotoEditor": {
+    "description": "Auto imported from components/modals/personal/MyPhotoEditor.vue"
+  },
+  "ModalsPersonalData": {
+    "description": "Auto imported from components/modals/personal/PersonalData.vue"
+  },
+  "ModalsUsersBlock": {
+    "description": "Auto imported from components/modals/users/Block.vue"
+  },
+  "ModalsUsersBlocked": {
+    "description": "Auto imported from components/modals/users/Blocked.vue"
+  },
+  "ModalsUsersFriends": {
+    "description": "Auto imported from components/modals/users/Friends.vue"
+  },
+  "ModalsUsersGames": {
+    "description": "Auto imported from components/modals/users/Games.vue"
+  },
+  "ModalsUsersMutualFriends": {
+    "description": "Auto imported from components/modals/users/MutualFriends.vue"
+  },
+  "ModalsUsersProfile": {
+    "description": "Auto imported from components/modals/users/Profile.vue"
+  },
+  "ModalsUsersReport": {
+    "description": "Auto imported from components/modals/users/Report.vue"
+  },
+  "ModalsUsersReported": {
+    "description": "Auto imported from components/modals/users/Reported.vue"
+  },
+  "ModalsPersonalTabsAccess": {
+    "description": "Auto imported from components/modals/personal/tabs/Access.vue"
+  },
+  "ModalsPersonalTabsAddFunds": {
+    "description": "Auto imported from components/modals/personal/tabs/AddFunds.vue"
+  },
+  "ModalsPersonalTabsBalance": {
+    "description": "Auto imported from components/modals/personal/tabs/Balance.vue"
+  },
+  "ModalsPersonalTabsBlacklist": {
+    "description": "Auto imported from components/modals/personal/tabs/Blacklist.vue"
+  },
+  "ModalsPersonalTabsNotifications": {
+    "description": "Auto imported from components/modals/personal/tabs/Notifications.vue"
+  },
+  "ModalsPersonal": {
+    "description": "Auto imported from components/modals/personal/tabs/Personal.vue"
+  }
+}

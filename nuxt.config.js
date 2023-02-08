@@ -105,11 +105,11 @@ export default {
   build: {
     cssSourceMap: true,
     extractCSS: true,
-    hotMiddleware: {
-      client: {
-        autoConnect: false,
-      },
-    },
+    // hotMiddleware: {
+    //   client: {
+    //     autoConnect: false,
+    //   },
+    // },
     indicator: false,
     babel: {
       plugins: [

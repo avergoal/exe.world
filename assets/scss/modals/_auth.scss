@@ -279,6 +279,13 @@
         letter-spacing: 0.001em;
         color: $dGray;
       }
+      .alert{
+        padding: 8px 16px;
+        border: 1px solid #ffb2b2;
+        border-radius: 12px;
+        background: #fbe3e3;
+        margin-top: 10px;
+      }
       .btns{
         display: flex;
         align-items: center;
