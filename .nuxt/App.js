@@ -7,10 +7,9 @@ import NuxtLoading from './components/nuxt-loading.vue'
 
 import '../assets/scss/main.scss'
 
-import _1c3006c4 from './layouts.svg-sprite.7ab26c21.vue'
 import _6f6c098b from '../layouts/default.vue'
 
-const layouts = { "_svg-sprite": sanitizeComponent(_1c3006c4),"_default": sanitizeComponent(_6f6c098b) }
+const layouts = { "_default": sanitizeComponent(_6f6c098b) }
 
 export default {
   render (h, props) {
@@ -181,10 +180,6 @@ export default {
     },
 
     setLayout (layout) {
-      if(layout && typeof layout !== 'string') {
-        throw new Error('[nuxt] Avoid using non-string value as layout property.')
-      }
-
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }

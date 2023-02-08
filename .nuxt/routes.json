@@ -1,11 +1,5 @@
 [
   {
-    "name": "icons-list",
-    "path": "/_icons",
-    "component": "/var/www/exe.world/node_modules/@nuxtjs/svg-sprite/lib/pages/icons-list.vue",
-    "_name": "_8ea1fb2e"
-  },
-  {
     "name": "about",
     "path": "/about",
     "component": "/var/www/exe.world/pages/about/index.vue",
