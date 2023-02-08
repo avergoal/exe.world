@@ -17,7 +17,7 @@
     "form-data": "^4.0.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.15.3",
-    "swiper": "6.7.5",
+    "swiper": "^7.0.0",
     "vue-avatar-cropper": "^3.0.6",
     "vue-awesome-swiper": "5.0.1",
     "vue-cool-lightbox": "^2.7.4",
