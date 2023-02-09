@@ -85,15 +85,45 @@
       </div>
     </perfect-scrollbar>
     <form v-if="!user.blacklist_status" @submit.prevent class="send" action="">
-      <button type="button" class="smile"><svg-icon name="ui/smile" /></button>
-      <!--
-      <twemoji-picker
-        :emojiData="emojiDataAll"
-        :emojiGroups="emojiGroups"
-        :skinsSelection="false"
-        :searchEmojisFeat="false"
-      ></twemoji-picker>
-      -->
+<!--      <button type="button" class="smile"><svg-icon name="ui/smile" /></button>-->
+<!--      <twemoji-picker-->
+<!--        :emojiData="emojiDataAll"-->
+<!--        :emojiGroups="emojiGroups"-->
+<!--        :skinsSelection="false"-->
+<!--        :searchEmojisFeat="false"-->
+<!--      ></twemoji-picker>-->
+      <emoji-picker @emoji="append" :search="search">
+        <button
+          class="emoji-invoker smile"
+          slot="emoji-invoker"
+          slot-scope="{ events: { click: clickEvent } }"
+          @click.stop="clickEvent"
+        >
+          <svg-icon name="ui/smile" />
+        </button>
+        <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
+          <div class="emoji-picker">
+            <perfect-scrollbar ref="emojiScroll" class="emoji_scroll">
+            <div class="emoji-picker__search">
+              <input type="text" v-model="search" v-focus>
+            </div>
+            <div>
+              <div v-for="(emojiGroup, category) in emojis" :key="category">
+                <h5>{{ category }}</h5>
+                <div class="emojis">
+                <span
+                  v-for="(emoji, emojiName) in emojiGroup"
+                  :key="emojiName"
+                  @click="insert(emoji)"
+                  :title="emojiName"
+                >{{ emoji }}</span>
+                </div>
+              </div>
+            </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+      </emoji-picker>
       <input v-model="message" v-on:keyup.enter="sendMessage()" type="text" name="" value="" placeholder="Write message">
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
@@ -106,16 +136,19 @@
 import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ru/emoji-all-groups.json'
 import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json'
+import EmojiPicker from 'vue-emoji-picker'
 export default {
 	name: 'MessagesChatModal',
   components: {
-    'twemoji-picker': TwemojiPicker
+    'twemoji-picker': TwemojiPicker,
+    EmojiPicker
   },
   data: () => ({
-    message: null,
+    message: '',
     date: '',
     openParams: false,
-    show: false
+    show: false,
+    search: '',
   }),
   created() {
     document.addEventListener('click', (e) => {
@@ -130,10 +163,17 @@ export default {
       })
     }
     this.$root.$on('scrollUpdate', () => {
-      if(this.$refs.scroll) {
+      if (this.$refs.scroll) {
         setTimeout(() => {
           this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
           this.$refs.scroll.update()
+        }, 100)
+      }
+    })
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.emojiScroll) {
+        setTimeout(() => {
+          this.$refs.emojiScroll.update()
         }, 100)
       }
     })
@@ -141,7 +181,18 @@ export default {
       this.loadMessages(false)
     })
   },
+  directives: {
+    focus: {
+      inserted(el) {
+        el.focus()
+      },
+    },
+  },
   methods: {
+    append(emoji) {
+      console.log(typeof emoji)
+      this.message += emoji
+    },
     async loadMessages(start) {
       if(start) {
         this.show = false

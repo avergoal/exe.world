@@ -517,23 +517,32 @@
       }
     }
     .notgames{
-      padding: 40px 0 0;
+      padding: 40px 10px 0;
+      @media screen and (max-width: 375px) {
+        padding: 20px 10px 0;
+      }
       .img{
         max-width: 426px;
         margin: 0 auto;
+        @media screen and (max-width: 375px) {
+          max-width: 320px;
+        }
         img{
           display: block;
           width: 100%;
         }
       }
       .desc{
-        padding: 60px 0;
+        padding: 60px 10px;
         font-size: 24px;
         font-weight: 800;
         line-height: 28px;
         color: #556980;
         letter-spacing: 0.0015em;
         text-align: center;
+        @media screen and (max-width: 375px) {
+          padding: 20px 10px;
+        }
       }
     }
   }

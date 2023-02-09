@@ -260,6 +260,9 @@
             width: 20px;
             height: 20px;
             margin: -10px 0 0;
+            @media screen and (max-width: 576px) {
+              left: 18px;
+            }
             svg{
               width: 100%;
               height: 100%;
@@ -283,6 +286,71 @@
           padding: 0 56px;
           border-radius: 24px;
         }
+      }
+      .emoji_scroll{
+        width: 13rem;
+        height: 18rem;
+        margin: 0!important;
+        padding-right: 1rem;
+        .ps__rail-y{
+          right: 4px!important;
+        }
+      }
+      .emoji-invoker:hover {
+        transform: scale(1.1);
+      }
+      .emoji-invoker > svg {
+        fill: #b1c6d0;
+      }
+
+      .emoji-picker {
+        position: absolute;
+        z-index: 5001;
+        font-family: Montserrat;
+        border: 1px solid #ccc;
+        width: 14rem;
+        height: 20rem;
+        top:-321px;
+        padding: 1rem 0 1rem 1rem;
+        box-sizing: border-box;
+        border-radius: 0.5rem;
+        background: #fff;
+        box-shadow: 1px 1px 8px #c7dbe6;
+      }
+      .emoji-picker__search {
+        display: flex;
+      }
+      .emoji-picker__search > input {
+        flex: 1;
+        border-radius: 10rem;
+        border: 1px solid #ccc;
+        padding: 0.5rem 1rem;
+        outline: none;
+      }
+      .emoji-picker h5 {
+        margin-bottom: 0;
+        color: #b1b1b1;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        cursor: default;
+      }
+      .emoji-picker .emojis {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .emoji-picker .emojis:after {
+        content: "";
+        flex: auto;
+      }
+      .emoji-picker .emojis span {
+        padding: 0.2rem;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .emoji-picker .emojis span:hover {
+        background: #ececec;
+        cursor: pointer;
       }
     }
     .ps{
@@ -331,6 +399,7 @@
           button{
             position: relative;
             align-items: flex-start;
+            color: $dBlack;
             width: 100%;
             padding: 16px 40px 16px 36px;
             border: 0 solid transparent;

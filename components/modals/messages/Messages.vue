@@ -12,6 +12,7 @@
       </fieldset>
     </form>
     <perfect-scrollbar ref="scroll">
+      <template v-if="!waiting">
       <ul class="list messages">
         <li v-for="(e, i) in chats" :key="i">
           <button @click="$root.$emit('toggleModal', {target: 'messagesChat', user: e.uid})" :class="{active: e.new_messages}" type="button">
@@ -37,6 +38,10 @@
           </div>
         </li>
       </ul>
+      </template>
+      <div v-else class="waiting">
+        <img src="/theme/img/loader.svg" alt="">
+      </div>
     </perfect-scrollbar>
   </div>
 </div>
@@ -46,10 +51,12 @@
 export default {
 	name: 'MessagesModal',
   data: () => ({
-    query: null
+    query: null,
+    waiting: false,
   }),
-  created() {
-    this.$store.dispatch('messages/chats')
+  async created() {
+    this.waiting = true
+    await this.$store.dispatch('messages/chats')
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll) {
         setTimeout(() => {
@@ -60,6 +67,7 @@ export default {
     this.$root.$on('getNewMessage', () => {
       this.$store.dispatch('messages/chats')
     })
+    this.waiting = false
   },
   methods: {
     setSearchResults() {

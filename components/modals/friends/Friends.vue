@@ -30,10 +30,10 @@
       </ul>
     </perfect-scrollbar>
     <perfect-scrollbar ref="scroll_list" :class="{small: openSearch}" class="friendsscroll">
-      <div class="tabs">
+      <div class="tabs" v-if="!waiting">
         <ul v-if="friendsList.length" :class="{active: currentFilter == 0}" class="tab">
           <li v-for="(e, i) in friendsList" :key="i">
-            <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button" class="userphoto">
+            <button @click="openUser(e.uid)" type="button" class="userphoto">
               <img :src="e.avatar_urls.x100" :alt="e.user_name">
             </button>
             <div v-html="e.user_name" class="name"></div>
@@ -56,7 +56,7 @@
         </ul>
         <ul v-if="requests.total.subscribers" :class="{active: currentFilter == 1}" class="tab st2">
           <li v-for="(e, i) in requests.list.subscribers" :key="i">
-            <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button" class="userphoto">
+            <button @click="openUser(e.uid)" type="button" class="userphoto">
               <img :src="e.avatar_urls.x100" :alt="e.user_name">
             </button>
             <div v-html="e.user_name" class="name"></div>
@@ -82,7 +82,7 @@
         </ul>
         <ul v-if="requests.total.subscriptions" :class="{active: currentFilter == 2}" class="tab st2">
           <li v-for="(e, i) in requests.list.subscriptions" :key="i">
-            <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button" class="userphoto">
+            <button @click="openUser(e.uid)" type="button" class="userphoto">
               <img :src="e.avatar_urls.x100" :alt="e.user_name">
             </button>
             <div v-html="e.user_name" class="name"></div>
@@ -106,6 +106,9 @@
           </li>
         </ul>
       </div>
+      <div v-else class="waiting">
+        <img src="/theme/img/loader.svg" alt="">
+      </div>
     </perfect-scrollbar>
   </div>
 </div>
@@ -123,10 +126,12 @@ export default {
     loaded: {0: false, 1: false},
     query: null,
     loader: false,
-    offset: 0
+    offset: 0,
+    waiting:false
   }),
-  created() {
-    this.$store.dispatch('friends/load', {offset: this.offset})
+  async created() {
+    this.waiting = true
+    await this.$store.dispatch('friends/load', {offset: this.offset})
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_list) {
         setTimeout(() => {
@@ -142,8 +147,13 @@ export default {
         offset: this.offset
       })
     })
+    this.waiting = false
   },
   methods: {
+    openUser(id){
+      this.$root.$emit('toggleModal', {target: 'userProfile'})
+      this.$root.$emit('updateUserProfile', id)
+    },
     async setFilter(e) {
       if(!this.loader) {
         this.currentFilter = e
@@ -203,19 +213,23 @@ export default {
           check = true
         }
         if(check) {
-          this.$store.dispatch('friends/requests', {
+          await this.$store.dispatch('friends/requests', {
             type: this.currentFilter - 1,
             offset: this.offset
           })
         }
       } else if(this.openSearch && this.query) {
-        this.$store.dispatch('friends/search', {
-          type: 'friends',
-          query: this.query,
-          offset: this.offset
-        })
+        if(this.friendsList.length>=20) {
+          await this.$store.dispatch('friends/search', {
+            type: 'friends',
+            query: this.query,
+            offset: this.offset
+          })
+        }else {
+          this.offset -=20
+        }
       } else if(this.friendsTotal > this.offset) {
-        this.$store.dispatch('friends/load', {offset: this.offset})
+        await this.$store.dispatch('friends/load', {offset: this.offset})
       }
     }
   },
@@ -244,10 +258,10 @@ export default {
         this.$store.dispatch('friends/load', {offset: this.offset})
       }
       this.$refs.scroll_list.$el.scrollTop = 0
-    }/* ,
+    } ,
     currentFilter(e) {
-      this.activeSearch = (e > 0) ? false : true
-    } */
+      this.activeSearch = (e <= 0)
+    }
   }
 }
 </script>

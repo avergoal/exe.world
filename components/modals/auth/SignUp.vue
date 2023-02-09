@@ -35,7 +35,7 @@
         </fieldset>
         <div class="btns">
           <button type="submit" class="btn st2">sign up</button>
-          <a href="https://exe.ru/rules" class="btns__privacy">privacy policy</a>
+          <a @click="privacy" class="btns__privacy">privacy policy</a>
         </div>
         <div class="signup">
           <div class="text">Already have an account?</div>
@@ -70,6 +70,10 @@ export default {
     passwordType: 'password'
   }),
   methods: {
+    privacy(){
+      this.$router.push('/privacy')
+      this.$root.$emit('toggleModal', {})
+    },
     async signUp() {
       Object.keys(this.errors).map(e => this.errors[e].show = false)
       const error = await this.$store.dispatch('auth/signUp', {

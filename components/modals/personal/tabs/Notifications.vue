@@ -75,7 +75,7 @@ export default {
         target: 'notification',
         data: {
           title: 'Updated',
-          text: 'Все обновилось'
+          text: 'Success. The data has been updated.'
         }
       })
     }

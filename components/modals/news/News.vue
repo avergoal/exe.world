@@ -15,10 +15,11 @@
       </ul>
     </perfect-scrollbar>
     <perfect-scrollbar ref="scroll_list" class="list">
+      <template v-if="!waiting">
       <ul v-if="news.length" class="news">
         <li v-for="(e, i) in news" :key="i">
           <!-- Photos -->
-          <button v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.users[0].uid})" type="button" class="userphoto">
+          <button v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" @click="openUser(e.users[0].uid)" type="button" class="userphoto">
             <img :src="e.users[0].avatar_urls.x100" :alt="e.users[0].user_name">
           </button>
           <nuxt-link v-if="e.type == 4 && e.games[0] && e.games[0].installed" :to="'/g/' + e.games[0].gid" class="img">
@@ -66,6 +67,10 @@
           </div>
         </li>
       </ul>
+      </template>
+      <div v-else class="waiting">
+        <img src="/theme/img/loader.svg" alt="">
+      </div>
     </perfect-scrollbar>
   </div>
 </div>
@@ -79,9 +84,11 @@ export default {
       current: 0,
       list: ['All News', 'Friends', 'Games']
     },
-    offset: 0
+    offset: 0,
+    waiting: false,
   }),
   created() {
+    this.waiting = true
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_list) {
         setTimeout(() => {
@@ -90,10 +97,15 @@ export default {
       }
     })
   },
-  mounted() {
-    this.loadNews({offset: this.offset})
+  async mounted() {
+    await this.loadNews({offset: this.offset})
+    this.waiting = false
   },
   methods: {
+    openUser(id){
+      this.$root.$emit('toggleModal', {target: 'userProfile'})
+      this.$root.$emit('updateUserProfile', id)
+    },
     async loadNews(params) {
       await this.$store.dispatch('app/setNews', params)
       this.$refs.scroll_list.$el.scrollTop = 0

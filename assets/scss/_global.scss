@@ -144,7 +144,7 @@ fieldset{
     min-height: 100%;
     padding: 88px 0 0;
     background: $grayLight;
-    overflow-x: hidden;
+    //overflow-x: hidden;
     @media screen and (max-width: 1024px) {
       padding: 56px 0 0;
     }
@@ -461,7 +461,7 @@ span.badge{
 .ps{
   position: relative;
   width: 100%;
-  /* overflow: hidden; */
+  overflow: hidden;
   overflow-anchor: none;
   -ms-overflow-style: none;
   touch-action: auto;
@@ -480,9 +480,9 @@ span.badge{
       width: calc(100% - 80px);
       margin: 0 0 0 80px;
     }
-    @media screen and (max-width: 768px) {
-      height: auto;
-    }
+    //@media screen and (max-width: 768px) {
+    //  height: auto;
+    //}
     @media screen and (max-width: 576px) {
       width: 100%;
       margin: 0;
@@ -1030,6 +1030,11 @@ svg.icon{
     }
     .modalcontent{
       height: 100%;
+      .waiting{
+        width: 100%;
+        display: flex;
+        height: 100%;
+      }
     }
     button.close{
       position: absolute;

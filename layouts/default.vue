@@ -1,12 +1,18 @@
 <template>
+
   <div :class="{night: theme, gamepage: gamepage}" class="app" :page="page">
     <Header />
-    <div class="ps appscroll" :class="{clear: !profile}">
+<!--    <div class="ps appscroll" :class="{clear: !profile}">-->
+      <perfect-scrollbar ref="scroll" class=" appscroll" :class="{clear: !profile}">
+
       <main class="content">
         <Nuxt />
         <Footer />
       </main>
-    </div>
+      </perfect-scrollbar>
+
+<!--    </div>-->
+
     <Sidebar v-if="profile" />
     <Modals />
     <transition v-if="!loaded" name="loader">
@@ -25,6 +31,13 @@ export default {
   }),
   created() {
     this.setGamePage()
+    this.$root.$on('scrollUpdate', () => {
+      if(this.$refs.scroll) {
+        setTimeout(() => {
+          this.$refs.scroll.update()
+        }, 100)
+      }
+    })
   },
   mounted() {
     (typeof window == 'undefined') || this.loadUser()

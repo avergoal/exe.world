@@ -105,12 +105,12 @@ export default {
   build: {
     cssSourceMap: true,
     extractCSS: true,
-    hotMiddleware: {
-      client: {
-        autoConnect: false,
-      },
-    },
-    indicator: false,
+    // hotMiddleware: {
+    //   client: {
+    //     autoConnect: false,
+    //   },
+    // },
+    // indicator: false,
     babel: {
       plugins: [
         ['lodash', { id: 'lodash' }]
