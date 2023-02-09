@@ -136,8 +136,8 @@ export default {
       threshold: 1024,
     },
   },
-  telemetry: false/*,
+  telemetry: false,
   server: {
-    host: '192.168.0.10'
-  }*/
+    port: 8001
+  }
 }
