@@ -90,6 +90,15 @@ export const actions = {
     }
     return data.error
   },
+  async logout({state}){
+    const { data } = await this.$axios.post('/appApi/signout', {api_token:state.token})
+    if(!data.error) {
+      localStorage.removeItem('token')
+      window.location.reload()
+      return false
+    }
+    return data.error
+  },
   setToken({commit}, params) {
     commit('setState', {key: 'token', value: params})
   }

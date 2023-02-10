@@ -41,6 +41,7 @@ export default {
     }
   },
   async mounted() {
+    console.log('pix')
     await this.$store.dispatch('games/loadUserGames', {
       uid: this.profile.uid,
       type: 'load'
@@ -65,7 +66,7 @@ export default {
   computed: {
     profile() {
       return this.$store.getters['profile/data']
-    }, 
+    },
     games() {
       return this.$store.getters['games/userAll'].list
     },
