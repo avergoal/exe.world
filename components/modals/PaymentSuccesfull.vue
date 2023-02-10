@@ -5,7 +5,7 @@
     </button>
     <div class="modalcontent">
       <div class="desc">
-        <div class="title">Payment {{ !modal.success?'successfully': 'cancelled' }}</div>
+        <div class="title">Payment {{ !modal.success?'successfull': 'cancelled' }}</div>
       </div>
       <button @click="toggleModal" type="button" class="btn st2">continue</button>
     </div>

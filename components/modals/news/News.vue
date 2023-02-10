@@ -46,10 +46,10 @@
           <button v-else-if="(e.type == 1 || e.type == 3) && e.games[0]" @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.games[0].gid})" type="button" class="img extended">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </button>
-          <button v-if="e.type == 2 && e.users[1] && e.users[1].gid != profile.gid" @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.users[1].uid})" type="button" class="userphoto extended">
+          <button v-if="e.type == 2 && e.users[1] && e.users[1].gid != profile.gid" @click="openUser(e.users[1].uid)" type="button" class="userphoto extended">
             <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
           </button>
-          <button v-else-if="e.type == 2 && e.users[1]" @click="$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})" type="button" class="userphoto extended">
+          <button v-else-if="e.type == 2 && e.users[1]" @click="openUser(e.users[1].uid)" type="button" class="userphoto extended">
             <img :src="e.users[1].avatar_urls.x100" :alt="e.users[1].user_name">
           </button>
         </li>
@@ -69,7 +69,7 @@
       </ul>
       </template>
       <div v-else class="waiting">
-        <img src="/theme/img/loader.svg" alt="">
+        <img src="~/assets/illustration/loader.svg" alt="">
       </div>
     </perfect-scrollbar>
   </div>
@@ -85,10 +85,9 @@ export default {
       list: ['All News', 'Friends', 'Games']
     },
     offset: 0,
-    waiting: false,
+    waiting: true,
   }),
   created() {
-    this.waiting = true
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_list) {
         setTimeout(() => {
@@ -103,8 +102,14 @@ export default {
   },
   methods: {
     openUser(id){
-      this.$root.$emit('toggleModal', {target: 'userProfile'})
-      this.$root.$emit('updateUserProfile', id)
+      console.log(id)
+      if(id !== this.profile.uid){
+        this.$root.$emit('toggleModal', {target: 'userProfile'})
+        this.$root.$emit('updateUserProfile', id)
+      }else {
+        this.$root.$emit('toggleModal', {target: 'personalData', tab: 'personal'})
+      }
+
     },
     async loadNews(params) {
       await this.$store.dispatch('app/setNews', params)

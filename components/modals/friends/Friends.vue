@@ -107,7 +107,7 @@
         </ul>
       </div>
       <div v-else class="waiting">
-        <img src="/theme/img/loader.svg" alt="">
+        <img src="~/assets/illustration/loader.svg" alt="">
       </div>
     </perfect-scrollbar>
   </div>
@@ -127,10 +127,9 @@ export default {
     query: null,
     loader: false,
     offset: 0,
-    waiting:false
+    waiting: true
   }),
   async created() {
-    this.waiting = true
     await this.$store.dispatch('friends/load', {offset: this.offset})
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_list) {

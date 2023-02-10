@@ -40,7 +40,7 @@
       </ul>
       </template>
       <div v-else class="waiting">
-        <img src="/theme/img/loader.svg" alt="">
+        <img src="~/assets/illustration/loader.svg" alt="">
       </div>
     </perfect-scrollbar>
   </div>
@@ -52,10 +52,9 @@ export default {
 	name: 'MessagesModal',
   data: () => ({
     query: null,
-    waiting: false,
+    waiting: true,
   }),
   async created() {
-    this.waiting = true
     await this.$store.dispatch('messages/chats')
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll) {

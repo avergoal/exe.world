@@ -101,30 +101,30 @@
         >
           <svg-icon name="ui/smile" />
         </button>
-        <div slot="emoji-picker" slot-scope="{ emojis, insert, display }">
+        <div slot="emoji-picker" slot-scope="{ emojis, insert }">
           <div class="emoji-picker">
             <perfect-scrollbar ref="emojiScroll" class="emoji_scroll">
-            <div class="emoji-picker__search">
-              <input type="text" v-model="search" v-focus>
-            </div>
-            <div>
-              <div v-for="(emojiGroup, category) in emojis" :key="category">
-                <h5>{{ category }}</h5>
-                <div class="emojis">
+              <div class="emoji-picker__search">
+                <input type="text" v-model="search">
+              </div>
+              <div>
+                <div v-for="(emojiGroup, category) in emojis" :key="category">
+                  <h5>{{ category }}</h5>
+                  <div class="emojis">
                 <span
                   v-for="(emoji, emojiName) in emojiGroup"
                   :key="emojiName"
                   @click="insert(emoji)"
                   :title="emojiName"
                 >{{ emoji }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
             </perfect-scrollbar>
           </div>
         </div>
       </emoji-picker>
-      <input v-model="message" v-on:keyup.enter="sendMessage()" type="text" name="" value="" placeholder="Write message">
+      <input v-model="message" v-on:keydown.enter.prevent="sendMessage()" type="text" name="" value="" placeholder="Write message">
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
   </div>
@@ -181,13 +181,6 @@ export default {
       this.loadMessages(false)
     })
   },
-  directives: {
-    focus: {
-      inserted(el) {
-        el.focus()
-      },
-    },
-  },
   methods: {
     append(emoji) {
       console.log(typeof emoji)
@@ -217,7 +210,7 @@ export default {
           uid: this.modal.user,
           text: this.message
         })
-        this.message = null
+        this.message = ''
         this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight)
         this.$refs.scroll.update()
 
