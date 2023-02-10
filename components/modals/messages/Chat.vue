@@ -183,7 +183,6 @@ export default {
   },
   methods: {
     append(emoji) {
-      console.log(typeof emoji)
       this.message += emoji
     },
     async loadMessages(start) {

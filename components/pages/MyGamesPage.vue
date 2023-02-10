@@ -42,11 +42,10 @@ export default {
   },
   async mounted() {
     console.log('pix')
-    await this.$store.dispatch('games/loadUserGames', {
+    this.observer = await this.$store.dispatch('games/loadUserGames', {
       uid: this.profile.uid,
       type: 'load'
     })
-    this.observer = true
   },
   methods: {
     async loadGames() {
