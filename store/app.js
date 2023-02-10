@@ -119,6 +119,11 @@ export const actions = {
     const { data } = await this.$axios.post('/appApi/article.about', {})
     return data.response.content
   },
+  // Privacy
+  async setPrivacy() {
+    const { data } = await this.$axios.post('/appApi/article.privacy', {})
+    return data.response.content
+  },
   // Another request
   async sendRequest({}, params) {
     const { data } = await this.$axios.post('/appApi/request', params)

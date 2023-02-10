@@ -14,7 +14,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    const data = await store.dispatch('app/setAbout')
+    const data = await store.dispatch('app/setPrivacy')
     return {data}
   },
   head() {
