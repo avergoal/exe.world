@@ -20,8 +20,8 @@
             <div class="box">
               <div class="img">
                 <img v-lazy="e.poster.default" :alt="e.title">
-                <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
-                <nuxt-link v-else-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+<!--                <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>-->
+                <button v-if="e.installed" @click="openGame(e.gid)"><svg-icon name="ui/play"/><span>play</span></button>
                 <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
               </div>
               <div class="info">
@@ -44,7 +44,13 @@ export default {
   methods:{
     async intersected() {
       await this.$store.dispatch('users/loadGames')
-    }
+    },
+    openGame(id) {
+      this.$root.$emit('toggleModal', {})
+      this.$router.push({
+        path: '/g/' + id
+      })
+    },
   },
   computed: {
     profile() {

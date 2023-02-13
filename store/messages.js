@@ -22,15 +22,21 @@ export const actions = {
     }
     commit('setState', {key: 'chats', value: chats})
   },
-  async load({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/messages', params)
+  async load({state,commit}, params) {
     let messages = {
       code: '',
       list: {},
-      total: 0
+      total: 0,
+      uid:params.uid
     }
-    if(data.response) {
+    if(state.messages.offset && params.uid===state.messages.uid){
+      params.offset = state.messages.offset
+      messages.list = JSON.parse(JSON.stringify(state.messages.list))
+    }
+    const { data } = await this.$axios.post('/appApi/messages', params)
+    if(data.response || state.messages.offset) {
       messages.total = data.response.messages.length
+      messages.offset = data.response.offset
       data.response.messages.sort((a, b) => {
         if(a.mid > b.mid) {
           return 1
@@ -41,13 +47,22 @@ export const actions = {
       })
       for(let i = 0; i < data.response.messages.length; i++) {
         let date = this.$moment.unix(data.response.messages[i].timestamp).format('DD.MMMM.YYYY')
-        messages.list[date] = (messages.list[date]) ? messages.list[date] : []
         data.response.messages[i].time = this.$moment.unix(data.response.messages[i].timestamp).format('HH:mm')
-        messages.list[date].push(data.response.messages[i])
+        messages.list[date] = (messages.list[date]) ? messages.list[date] : []
+        if(!state.messages.offset) {
+          messages.list[date].push(data.response.messages[i])
+        }else{
+          messages.list[date].unshift(data.response.messages[i])
+        }
       }
-      messages.code = data.response.chat.clear_code
+
+      const sortedMessages = Object.entries(messages.list)
+        .sort((a, b) => new Date(a[0].split('.').reverse().join('-')) - new Date(b[0].split('.').reverse().join('-')))
+        .reduce((acc, [date, message]) => ({ ...acc, [date]: message }), {})
+      messages.list = sortedMessages
     }
     commit('setState', {key: 'messages', value: messages})
+    return !!data.response.offset
   },
   async send({state, commit}, params) {
     const { data } = await this.$axios.post('/appApi/message.send', params)

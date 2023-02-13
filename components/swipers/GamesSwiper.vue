@@ -14,7 +14,7 @@
             <!-- <img src="/theme/img/loader.gif" alt="" class="lazyloader"> -->
             <img v-lazy="e?.poster?.default" :alt="e?.title">
             <!-- <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button> -->
-            <nuxt-link v-if="e?.installed" :to="'/g/' + e?.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+            <button v-if="e?.installed" @click="openGame(e?.gid)" ><svg-icon name="ui/play"/><span>play</span></button>
             <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e?.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
           </div>
           <div class="info">
@@ -43,6 +43,7 @@ export default {
     current: 0
   }),
   mounted() {
+    console.log('here')
     this.config = {
       slidesPerView: 'auto',
       navigation: {
@@ -64,6 +65,12 @@ export default {
     })
   },
   methods: {
+    openGame(id) {
+      this.$root.$emit('toggleModal', {})
+      this.$router.push({
+        path: '/g/' + id
+      })
+    },
     async loadSlides() {
       if(this.slides == 'categories') {
         /* await this.$store.dispatch('games/setAllGames') */

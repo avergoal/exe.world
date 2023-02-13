@@ -47,9 +47,10 @@
     </div>
     <perfect-scrollbar ref="scroll" class="chatscroll">
       <div v-if="messages.total" class="chatbox">
-        <div v-for="(e, i) in messages.list" :key="i" class="day">
+        <Observer @intersect="intersected"/>
+        <div v-for="(e, i) in messages.list" class="day">
           <div v-html="i.split('.').join(' ')" class="date"></div>
-          <div v-for="(e2, i2) in e" :key="i2" :class="(e2.user.uid == profile.uid) ? 'out' : 'in'" class="item">
+          <div v-for="(e2, i2) in e" :key="e2.mid" :class="(e2.user.uid == profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
             <div v-if="e2.user.uid != profile.uid" class="userphoto"><img :src="e2.user.avatar_urls.x100" alt=""></div>
             <div v-if="e2.user.uid != profile.uid" class="info">
@@ -85,13 +86,6 @@
       </div>
     </perfect-scrollbar>
     <form v-if="!user.blacklist_status" @submit.prevent class="send" action="">
-<!--      <button type="button" class="smile"><svg-icon name="ui/smile" /></button>-->
-<!--      <twemoji-picker-->
-<!--        :emojiData="emojiDataAll"-->
-<!--        :emojiGroups="emojiGroups"-->
-<!--        :skinsSelection="false"-->
-<!--        :searchEmojisFeat="false"-->
-<!--      ></twemoji-picker>-->
       <emoji-picker @emoji="append" :search="search">
         <button
           class="emoji-invoker smile"
@@ -133,14 +127,10 @@
 </template>
 
 <script>
-import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
-import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/ru/emoji-all-groups.json'
-import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json'
 import EmojiPicker from 'vue-emoji-picker'
 export default {
 	name: 'MessagesChatModal',
   components: {
-    'twemoji-picker': TwemojiPicker,
     EmojiPicker
   },
   data: () => ({
@@ -149,6 +139,7 @@ export default {
     openParams: false,
     show: false,
     search: '',
+    observer: false
   }),
   created() {
     document.addEventListener('click', (e) => {
@@ -182,6 +173,24 @@ export default {
     })
   },
   methods: {
+    intersected(){
+      if(this.observer){
+        this.loadMoreMessages()
+      }
+    },
+    async loadMoreMessages(){
+      this.observer = await this.$store.dispatch('messages/load', {uid: this.modal.user})
+      let interval = setInterval(() => {
+        if(this.$refs.scroll) {
+          clearInterval(interval)
+          this.$refs.scroll.$el.scrollBy(0, this.$refs.scroll.$el.firstChild.offsetHeight-this.$refs.scroll.$el.firstChild.offsetHeight+54)
+          this.$refs.scroll.update()
+          this.$store.dispatch('notifications/set', {
+            type: 'sidebar'
+          })
+        }
+      }, 100)
+    },
     append(emoji) {
       this.message += emoji
     },
@@ -200,6 +209,9 @@ export default {
           this.$store.dispatch('notifications/set', {
             type: 'sidebar'
           })
+          if(this.messages.total) {
+            this.observer = true
+          }
         }
       }, 100)
     },
@@ -234,12 +246,6 @@ export default {
     },
     messages() {
       return this.$store.getters['messages/messages']
-    },
-    emojiDataAll() {
-      return EmojiAllData
-    },
-    emojiGroups() {
-      return EmojiGroups
     },
     notifications() {
       return this.$store.getters['notifications/sidebar']

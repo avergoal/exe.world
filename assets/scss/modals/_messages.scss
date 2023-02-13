@@ -520,6 +520,9 @@
         }
       }
       .chatbox{
+        .observer{
+          visibility: hidden;
+        }
         padding: 24px 40px 0 40px;
         @media screen and (max-width: 920px) {
           padding: 16px 40px 0 24px;
