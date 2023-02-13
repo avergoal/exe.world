@@ -43,7 +43,6 @@ export default {
     current: 0
   }),
   mounted() {
-    console.log('here')
     this.config = {
       slidesPerView: 'auto',
       navigation: {

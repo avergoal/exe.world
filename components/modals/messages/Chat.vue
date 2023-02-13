@@ -168,9 +168,12 @@ export default {
         }, 100)
       }
     })
-    this.$root.$on('getNewMessage', () => {
-      this.loadMessages(false)
-    })
+    if (!this.listeners.getNewMessageFromChat) {
+      this.$store.commit('app/registerListener', {event: 'getNewMessageFromChat', handler: true});
+      this.$root.$on('getNewMessage', () => {
+        this.loadMessages(false)
+      })
+    }
   },
   methods: {
     intersected(){
@@ -179,7 +182,7 @@ export default {
       }
     },
     async loadMoreMessages(){
-      this.observer = await this.$store.dispatch('messages/load', {uid: this.modal.user})
+      this.observer = await this.$store.dispatch('messages/load', {uid: this.modal.user, observer: true})
       let interval = setInterval(() => {
         if(this.$refs.scroll) {
           clearInterval(interval)
@@ -252,6 +255,9 @@ export default {
     },
     theme() {
       return this.$store.getters['app/theme']
+    },
+    listeners() {
+      return this.$store.getters['app/listeners']
     }
   }
 }

@@ -102,7 +102,6 @@ export default {
   },
   methods: {
     openUser(id){
-      console.log(id)
       if(id !== this.profile.uid){
         this.$root.$emit('toggleModal', {target: 'userProfile'})
         this.$root.$emit('updateUserProfile', id)

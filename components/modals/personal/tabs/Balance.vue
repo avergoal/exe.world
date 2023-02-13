@@ -36,12 +36,10 @@ export default {
   created() {
     this.loadBalance()
     this.$root.$on('scrollUpdate', () => {
-      console.log('pix')
 
       if(this.$refs.scroll) {
         setTimeout(() => {
           this.$refs.scroll.update()
-          console.log('pix')
 
         }, 1000)
       }

@@ -29,12 +29,12 @@ export const actions = {
       total: 0,
       uid:params.uid
     }
-    if(state.messages.offset && params.uid===state.messages.uid){
+    if(params.observer && params.uid===state.messages.uid){
       params.offset = state.messages.offset
       messages.list = JSON.parse(JSON.stringify(state.messages.list))
     }
     const { data } = await this.$axios.post('/appApi/messages', params)
-    if(data.response || state.messages.offset) {
+    if(data.response || params.observer) {
       messages.total = data.response.messages.length
       messages.offset = data.response.offset
       data.response.messages.sort((a, b) => {
@@ -49,17 +49,16 @@ export const actions = {
         let date = this.$moment.unix(data.response.messages[i].timestamp).format('DD.MMMM.YYYY')
         data.response.messages[i].time = this.$moment.unix(data.response.messages[i].timestamp).format('HH:mm')
         messages.list[date] = (messages.list[date]) ? messages.list[date] : []
-        if(!state.messages.offset) {
+        if(!params.observer) {
           messages.list[date].push(data.response.messages[i])
         }else{
           messages.list[date].unshift(data.response.messages[i])
         }
       }
 
-      const sortedMessages = Object.entries(messages.list)
+      messages.list = Object.entries(messages.list)
         .sort((a, b) => new Date(a[0].split('.').reverse().join('-')) - new Date(b[0].split('.').reverse().join('-')))
-        .reduce((acc, [date, message]) => ({ ...acc, [date]: message }), {})
-      messages.list = sortedMessages
+        .reduce((acc, [date, message]) => ({...acc, [date]: message}), {})
     }
     commit('setState', {key: 'messages', value: messages})
     return !!data.response.offset

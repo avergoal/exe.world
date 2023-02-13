@@ -63,9 +63,12 @@ export default {
         }, 100)
       }
     })
-    this.$root.$on('getNewMessage', () => {
-      this.$store.dispatch('messages/chats')
-    })
+    if (!this.listeners.getNewMessageFromMessages) {
+      this.$store.commit('app/registerListener', {event: 'getNewMessageFromMessages', handler: true});
+      this.$root.$on('getNewMessage', () => {
+        this.$store.dispatch('messages/chats')
+      })
+    }
     this.waiting = false
   },
   methods: {
@@ -83,6 +86,9 @@ export default {
     },
     theme() {
       return this.$store.getters['app/theme']
+    },
+    listeners() {
+      return this.$store.getters['app/listeners']
     }
   }
 }
