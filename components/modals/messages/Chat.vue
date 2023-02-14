@@ -7,7 +7,7 @@
     <div v-if="profile" class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
       <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: user.user.uid})" class="userphoto" type="button">
-        <img :src="user.user.avatar_urls.x100" :alt="user.user.user_name">
+        <img :src="user.user.avatar_urls?.x100" :alt="user.user.user_name">
       </button>
       <div class="info">
         <div v-html="user.user.user_name" class="name"></div>
@@ -52,7 +52,7 @@
           <div v-html="i.split('.').join(' ')" class="date"></div>
           <div v-for="(e2, i2) in e" :key="e2.mid" :class="(e2.user.uid == profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
-            <div v-if="e2.user.uid != profile.uid" class="userphoto"><img :src="e2.user.avatar_urls.x100" alt=""></div>
+            <div v-if="e2.user.uid != profile.uid" class="userphoto"><img :src="e2.user.avatar_urls?.x100" alt=""></div>
             <div v-if="e2.user.uid != profile.uid" class="info">
               <div class="message">
                 <div v-html="e2.user.user_name" class="name"></div>
@@ -168,14 +168,15 @@ export default {
         }, 100)
       }
     })
-    if (!this.listeners.getNewMessageFromChat) {
-      this.$store.commit('app/registerListener', {event: 'getNewMessageFromChat', handler: true});
-      this.$root.$on('getNewMessage', () => {
-        this.loadMessages(false)
-      })
-    }
+    this.$root.$on('getNewMessage',this.setListener)
+  },
+  destroyed() {
+    this.$root.$off('getNewMessage',this.setListener)
   },
   methods: {
+    setListener(){
+      this.loadMessages(false)
+    },
     intersected(){
       if(this.observer){
         this.loadMoreMessages()
@@ -255,9 +256,6 @@ export default {
     },
     theme() {
       return this.$store.getters['app/theme']
-    },
-    listeners() {
-      return this.$store.getters['app/listeners']
     }
   }
 }

@@ -33,7 +33,8 @@ export const actions = {
       params.offset = state.messages.offset
       messages.list = JSON.parse(JSON.stringify(state.messages.list))
     }
-    const { data } = await this.$axios.post('/appApi/messages', params)
+    console.log(params)
+    const {data} = params.uid ? await this.$axios.post('/appApi/messages', params) : {data: {response:false}}
     if(data.response || params.observer) {
       messages.total = data.response.messages.length
       messages.offset = data.response.offset

@@ -40,7 +40,7 @@
       </ul>
       </template>
       <div v-else class="waiting">
-        <img src="~/assets/illustration/loader.svg" alt="">
+        <img src="~/assets/loader-svg.svg" alt="">
       </div>
     </perfect-scrollbar>
   </div>
@@ -63,15 +63,16 @@ export default {
         }, 100)
       }
     })
-    if (!this.listeners.getNewMessageFromMessages) {
-      this.$store.commit('app/registerListener', {event: 'getNewMessageFromMessages', handler: true});
-      this.$root.$on('getNewMessage', () => {
-        this.$store.dispatch('messages/chats')
-      })
-    }
+    this.$root.$on('getNewMessage', this.setListener)
     this.waiting = false
   },
+  destroyed() {
+    this.$root.$off('getNewMessage', this.setListener)
+  },
   methods: {
+    setListener() {
+      this.$store.dispatch('messages/chats')
+    },
     setSearchResults() {
       if(this.query) {
         this.$store.dispatch('messages/search', {query: this.query})
@@ -86,9 +87,6 @@ export default {
     },
     theme() {
       return this.$store.getters['app/theme']
-    },
-    listeners() {
-      return this.$store.getters['app/listeners']
     }
   }
 }

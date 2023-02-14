@@ -69,7 +69,7 @@
       </ul>
       </template>
       <div v-else class="waiting">
-        <img src="~/assets/illustration/loader.svg" alt="">
+        <img src="~/assets/loader-svg.svg" alt="">
       </div>
     </perfect-scrollbar>
   </div>
