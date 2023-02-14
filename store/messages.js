@@ -33,7 +33,6 @@ export const actions = {
       params.offset = state.messages.offset
       messages.list = JSON.parse(JSON.stringify(state.messages.list))
     }
-    console.log(params)
     const {data} = params.uid ? await this.$axios.post('/appApi/messages', params) : {data: {response:false}}
     if(data.response || params.observer) {
       messages.total = data.response.messages.length
@@ -62,7 +61,7 @@ export const actions = {
         .reduce((acc, [date, message]) => ({...acc, [date]: message}), {})
     }
     commit('setState', {key: 'messages', value: messages})
-    return !!data.response.offset
+    return !!data.response?.offset
   },
   async send({state, commit}, params) {
     const { data } = await this.$axios.post('/appApi/message.send', params)
