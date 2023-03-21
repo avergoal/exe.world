@@ -150,7 +150,7 @@ export default {
     },
     goGame() {
       if(localStorage.token) {
-        this.$router.push('/g/' + this.game.gid)
+        this.$router.push('/game/' + this.game.gid)
         this.$root.$emit('toggleModal', {})
       } else {
         this.$root.$emit('toggleModal', { target: 'logInTemp', game_id: this.game.gid })

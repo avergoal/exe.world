@@ -17,7 +17,7 @@
   </ul>
   <ul class="games">
     <li v-for="(e, i) in recent" :key="i">
-      <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><img :src="e.icon.default" :alt="e.title"></nuxt-link>
+      <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><img :src="e.icon.default" :alt="e.title"></nuxt-link>
       <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><img :src="e.icon.default" :alt="e.title"></button>
     </li>
   </ul>

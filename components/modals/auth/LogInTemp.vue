@@ -19,7 +19,7 @@ export default {
 			this.goGame()
 		},
 		goGame() {
-			this.$router.push('/g/' + this.modal.game_id)
+			this.$router.push('/game/' + this.modal.game_id)
 			this.$root.$emit('toggleModal', {})
 		}
 	}

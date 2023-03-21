@@ -60,15 +60,29 @@ export default {
     this.$nextTick(function () {
       const perf = () => {
         const duration = performance.getEntriesByType("navigation")[0].duration
-        if (!duration) setTimeout(perf, 0)
-        else console.log('%c Page load time ',
-          'color: white; background-color: #95B46A',
-          `${Math.trunc(duration) / 1000 } s`)
+        if (!duration){
+          setTimeout(perf, 0)
+        } else {
+          if(this.$route.path.includes('/user')){
+            setTimeout(()=>{
+              this.$router.push('/')
+              if(this.profile){
+                this.$root.$emit('toggleModal', {target: 'userProfile', user: this.slidePath(this.$route.path)})
+              }
+            },)
+          }
+          console.log('%c Page load time ',
+            'color: white; background-color: #95B46A',
+            `${Math.trunc(duration) / 1000} s`)
+        }
       }
       window.addEventListener('DOMContentLoaded', perf)
     })
   },
   methods: {
+    slidePath(str){
+      return str.substring(6)
+    },
     async loadUser() {
       if(localStorage.token) {
         await this.$store.dispatch('auth/auth', localStorage.token)
@@ -118,6 +132,7 @@ export default {
       if(this.$route.path != '/') {
         this.$router.push('/')
       }
+      this.$refs.scroll.$el.scrollTop = 0;
     },
     scrollUpdate() {
       this.$root.$emit('scrollUpdate')
@@ -129,7 +144,7 @@ export default {
       }
     },
     setGamePage() {
-      this.gamepage = (this.$route.name == 'g-id') ? true : false
+      this.gamepage = (this.$route.name == 'game-id') ? true : false
     }
   },
   computed: {

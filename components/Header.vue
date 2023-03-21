@@ -71,7 +71,7 @@
           </div>
           <ul v-if="notifications.total" class="notify">
             <li v-for="(e, i) in notifications.list" :key="i">
-              <nuxt-link v-if="e.game && e.game.installed" :to="'/g/' + e.game.gid" :class="{active: e.unread}">
+              <nuxt-link v-if="e.game && e.game.installed" :to="'/game/' + e.game.gid" :class="{active: e.unread}">
                 <div class="img"><img :src="e.icon.default" alt=""></div>
                 <div class="info"><span v-html="e.text"></span></div>
               </nuxt-link>

@@ -67,7 +67,7 @@ export default {
     openGame(id) {
       this.$root.$emit('toggleModal', {})
       this.$router.push({
-        path: '/g/' + id
+        path: '/game/' + id
       })
     },
     async loadSlides() {

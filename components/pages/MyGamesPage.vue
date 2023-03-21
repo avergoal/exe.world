@@ -7,7 +7,7 @@
         <div class="box">
           <div class="img">
             <img v-lazy="e.poster.default" :alt="e.title">
-            <nuxt-link v-if="e.installed" :to="'/g/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+            <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
           </div>
           <div class="info">
             <div v-html="e.title" class="title"></div>

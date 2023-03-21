@@ -22,7 +22,7 @@
           <button v-if="(e.type == 1 || e.type == 2 || e.type == 3) && e.users[0]" @click="openUser(e.users[0].uid)" type="button" class="userphoto">
             <img :src="e.users[0].avatar_urls.x100" :alt="e.users[0].user_name">
           </button>
-          <nuxt-link v-if="e.type == 4 && e.games[0] && e.games[0].installed" :to="'/g/' + e.games[0].gid" class="img">
+          <nuxt-link v-if="e.type == 4 && e.games[0] && e.games[0].installed" :to="'/game/' + e.games[0].gid" class="img">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </nuxt-link>
           <button v-else-if="e.type == 4 && e.games[0]" @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.games[0].gid})" type="button" class="img">
@@ -36,11 +36,11 @@
             </div>
             <div v-html="e.text" class="text"></div>
             <div v-if="(e.type == 3 || e.type == 4) && e.button && e.games[0]" class="btns">
-              <nuxt-link v-html="e.button" :to="'/g/' + e.games[0].gid" class="btn st2"></nuxt-link>
+              <nuxt-link v-html="e.button" :to="'/game/' + e.games[0].gid" class="btn st2"></nuxt-link>
             </div>
           </div>
           <!-- Ext Photos -->
-          <nuxt-link v-if="(e.type == 1 || e.type == 3) && e.games[0] && e.games[0].installed" :to="'/g/' + e.games[0].gid" class="img extended">
+          <nuxt-link v-if="(e.type == 1 || e.type == 3) && e.games[0] && e.games[0].installed" :to="'/game/' + e.games[0].gid" class="img extended">
             <img :src="e.games[0].icon.default" :alt="e.games[0].title">
           </nuxt-link>
           <button v-else-if="(e.type == 1 || e.type == 3) && e.games[0]" @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.games[0].gid})" type="button" class="img extended">
