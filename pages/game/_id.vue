@@ -44,10 +44,14 @@ export default {
       meta: [{hid: 'description', name: 'description', content: 'description category'}]
     }
   },
-  created() {
-    this.loadGame()
-  },
-  mounted() {
+  async mounted() {
+    if(!localStorage.token){
+      await this.$store.dispatch('auth/regGuest')
+    }
+    if(!this.profile){
+      await this.$store.dispatch('auth/auth', localStorage.token)
+    }
+    await this.loadGame()
     this.iframeListener()
   },
   methods: {
@@ -85,7 +89,6 @@ export default {
       this.$root.$emit('toggleModal', { target: 'gameBuy', item})
     },
     async runGame() {
-      console.log(this.game.installed)
       if(!this.game.installed) {
         await this.$store.dispatch('games/installGame', {
           gid: this.game.gid
@@ -110,11 +113,7 @@ export default {
   },
   computed: {
     profile() {
-      let profile = this.$store.getters['profile/data']
-      if(!profile) {
-        this.$router.push('/')
-      }
-      return profile
+      return this.$store.getters['profile/data']
     },
     isGuest() {
       return this.$store.getters['profile/isGuest']

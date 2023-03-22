@@ -52,6 +52,6 @@ export const actions = {
 export const getters = {
   data: state => state.data,
   balanceHistory: state => state.balanceHistory,
-  isGuest: state => state.data.is_guest,
+  isGuest: state => state?.data?.is_guest,
   paymentsMethods: state => state.paymentsMethods
 }

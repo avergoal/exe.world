@@ -173,14 +173,12 @@ export default {
         this.reloadProfile(e)
       })
       this.loadProfile()
-      setTimeout(() => {
-        window.history.pushState(null, null, `/user/${this.modal.user}`)
-      })
+
+
     }
     this.$root.$emit('toggleModal', {target: 'userProfile', updateUserProfileRegistered: true})
   },
   destroyed() {
-    console.log(this.$route)
     window.history.pushState(null, null, this.$route.path)
   },
   mounted() {

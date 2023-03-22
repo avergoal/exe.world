@@ -63,14 +63,6 @@ export default {
         if (!duration){
           setTimeout(perf, 0)
         } else {
-          if(this.$route.path.includes('/user')){
-            setTimeout(()=>{
-              this.$router.push('/')
-              if(this.profile){
-                this.$root.$emit('toggleModal', {target: 'userProfile', user: this.slidePath(this.$route.path)})
-              }
-            },)
-          }
           console.log('%c Page load time ',
             'color: white; background-color: #95B46A',
             `${Math.trunc(duration) / 1000} s`)
@@ -96,6 +88,18 @@ export default {
         connection.onmessage = (e) => {
           this.updateData(JSON.parse(e.data))
         }
+      }
+      if(this.$route.path.includes('/user')){
+        let userId = this.slidePath(this.$route.path)
+        setTimeout(()=>{
+          this.$router.push('/')
+          if(this.profile){
+            this.$root.$emit('toggleModal', {target: 'userProfile', user: userId})
+            setTimeout(()=>{
+              window.history.pushState(null, null, `/user/${userId}`)
+            })
+          }
+        },250)
       }
 
       this.loaded = true
