@@ -40,8 +40,9 @@ export default {
     error: null,
     timer: null
   }),
-  created() {
-    this.$store.dispatch('profile/getPaymentsMethods')
+  async created() {
+    await this.$store.dispatch('profile/getPaymentsMethods')
+    this.paysystem =this.paymentMethods[this.selected].pid
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_tab) {
         setTimeout(() => {

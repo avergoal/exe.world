@@ -61,6 +61,7 @@ export default {
     //   }
     // },
     cancelModal(){
+      window.ExeWorldApi.orderCancel()
       this.$root.$emit('toggleModal', {})
       this.$root.$emit('setLoader', true)
     },

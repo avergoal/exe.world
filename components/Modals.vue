@@ -143,6 +143,9 @@ export default {
       this.$store.dispatch('app/toggleModalTab', e)
     })
     document.addEventListener('click', (e) => {
+      if(this.modal.fromGame){
+        window.ExeWorldApi.orderCancel()
+      }
       if(e.target.closest('.modalbox') && !e.target.closest('.modalinfo')) {
         this.$store.dispatch('app/toggleModal', {})
         this.$root.$emit('setLoader', true)
