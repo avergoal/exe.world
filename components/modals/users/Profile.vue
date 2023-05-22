@@ -193,6 +193,7 @@ export default {
   },
   methods: {
     async loadProfile() {
+      window.history.pushState(null, null, `/user/${this.modal.user}`)
       await this.$store.dispatch('users/load', {uid: this.modal.user})
     },
     async reloadProfile(e) {

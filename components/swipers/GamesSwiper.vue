@@ -83,7 +83,7 @@ export default {
           this.changeCategory(e)
         })
       } else {
-        if (this[this.slides][0].gid) {
+        if (this[this.slides][0]?.gid) {
           this.data = this[this.slides]
         } else {
           this.data = []

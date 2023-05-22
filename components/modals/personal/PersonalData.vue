@@ -10,7 +10,7 @@
         <div class="userphoto"><img :src="profile.avatar_urls.x100" alt=""></div>
         <div class="data">
           <div v-html="profile.user_name" class="name"></div>
-          <div v-if="!isGuest" class="text">My profile</div>
+          <div v-if="!isGuest" class="text">ID: {{profile.uid}}</div>
         </div>
         <button v-if="!isGuest" @click="$root.$emit('toggleModal', {target: 'myPhoto'})" type="button" class="edit"><svg-icon name="ui/pencil" /></button>
       </div>

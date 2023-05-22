@@ -6,7 +6,7 @@
   <div v-if="show" class="modalcontent">
     <div v-if="profile" class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
-      <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: user.user.uid})" class="userphoto" type="button">
+      <button @click="openUser(user.user.uid)" class="userphoto" type="button">
         <img :src="user.user.avatar_urls?.x100" :alt="user.user.user_name">
       </button>
       <div class="info">
@@ -174,6 +174,10 @@ export default {
     this.$root.$off('getNewMessage',this.setListener)
   },
   methods: {
+    openUser(id){
+      this.$root.$emit('toggleModal', {target: 'userProfile', user: id})
+      this.$root.$emit('updateUserProfile', id)
+    },
     setListener(){
       this.loadMessages(false)
     },

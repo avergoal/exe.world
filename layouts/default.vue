@@ -32,6 +32,7 @@ export default {
   created() {
     this.setGamePage()
     this.$root.$on('scrollUpdate', () => {
+      this.$refs.scroll.$el.scrollBy(0, -280)
       if(this.$refs.scroll) {
         setTimeout(() => {
           this.$refs.scroll.update()
@@ -141,7 +142,8 @@ export default {
     scrollUpdate() {
       this.$root.$emit('scrollUpdate')
       if(this.$refs.scroll) {
-        this.$refs.scroll.$el.scrollBy(0, 0)
+        this.$refs.scroll.$el.scrollBy(0, -280)
+        console.log(this.$refs.scroll)
         setTimeout(() => {
           this.$refs.scroll.update()
         }, 100)
