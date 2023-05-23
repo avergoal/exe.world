@@ -5,7 +5,7 @@
 <!--    <div class="ps appscroll" :class="{clear: !profile}">-->
       <perfect-scrollbar ref="scroll" class=" appscroll" :class="{clear: !profile}">
 
-      <main class="content">
+      <main class="content" ref="content">
         <Nuxt />
         <Footer />
       </main>
@@ -41,6 +41,9 @@ export default {
     })
   },
   mounted() {
+    if(this.$route.name === 'game-id'){
+      this.$refs.content.style.position = 'fixed'
+    }
     (typeof window == 'undefined') || this.loadUser()
     this.$root.$on('changeTemplate', (e) => {
       this.changeTemplate(e)
@@ -172,6 +175,11 @@ export default {
   },
   watch: {
     $route(e) {
+      if(this.$route.name === 'game-id'){
+        this.$refs.content.style.position = 'fixed'
+      }else {
+        this.$refs.content.style.position = 'relative'
+      }
       this.scrollUpdate()
       this.$store.dispatch('search/toggleSearch', false)
       this.setGamePage()
