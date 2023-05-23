@@ -25,7 +25,7 @@
             <button @click="$root.$emit('toggleModal', {target: 'help'})" type="button">Help</button>
           </li>
           <li class="list-cell">
-            <nuxt-link to="/">For Developers</nuxt-link>
+            <a href="https://dev.exe.world" target="_blank">For Developers</a>
           </li>
         </ul>
       </div>
