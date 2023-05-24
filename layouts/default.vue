@@ -175,7 +175,7 @@ export default {
   },
   watch: {
     $route(e) {
-      if(this.$route.name === 'game-id'){
+      if(this.$route.name === 'game-id' && window.innerWidth<921){
         this.$refs.content.style.position = 'fixed'
       }else {
         this.$refs.content.style.position = 'relative'

@@ -1,6 +1,6 @@
 <template>
 <div v-if="profile && game" class="gamepagebox">
-  <div v-html="pageTitle" class="pagetitle"></div>
+<!--  <div v-html="pageTitle" class="pagetitle"></div>-->
   <GuestSave
     v-if="isGuest && !hideGuestSave"
     @closeGuestSave="hideGuestSave = true"
