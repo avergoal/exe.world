@@ -37,7 +37,7 @@
               <li>
                 <button @click="$root.$emit('toggleModal', {target: 'messagesRemove', code: messages.code, uid: user.user.uid})" type="button">
                   <div class="ico"><svg-icon name="ui/remove" /></div>
-                  <span>Delete History</span>
+                  <span>Delete Chat</span>
                 </button>
               </li>
             </ul>

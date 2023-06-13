@@ -77,11 +77,11 @@
           <ul v-if="profile.blacklist_status !== 2" class="more">
             <li>
               <div class="label">Age</div>
-              <div v-html="getAge().age + ' years old'" class="desc"></div>
+              <div v-if="profile.user.age.day !=='00' && profile.user.age.month !=='00' && profile.user.age.year !=='00'" v-html="getAge().age + ' years old'" class="desc"></div>
             </li>
             <li>
               <div class="label">Date of Birth</div>
-              <div v-html="getAge().birthday" class="desc"></div>
+              <div v-if="profile.user.age.day !=='00' && profile.user.age.month !=='00' && profile.user.age.year !=='00'" v-html="getAge().birthday" class="desc"></div>
             </li>
             <li>
               <div class="label">Location</div>

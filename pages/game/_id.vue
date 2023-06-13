@@ -1,5 +1,5 @@
 <template>
-<div v-if="profile && game" class="gamepagebox">
+<div v-if="profile && game && isExist" class="gamepagebox">
 <!--  <div v-html="pageTitle" class="pagetitle"></div>-->
   <GuestSave
     v-if="isGuest && !hideGuestSave"
@@ -20,6 +20,12 @@
     <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>
   </div>
 </div>
+<div v-else class="no-game">
+  <img src="~/assets/illustration/game_not_found.svg" />
+  <h2>Oops...game not found</h2>
+  <p>go to the games catalog or use the search bar</p>
+</div>
+
 </template>
 
 <script>
@@ -57,14 +63,17 @@ export default {
   methods: {
     async loadGame() {
       if(!this.gamesData[this.$route.params.id]) {
-        await this.$store.dispatch('games/setGamesData', {
+        const game = await this.$store.dispatch('games/setGamesData', {
           id: this.$route.params.id
         })
+        console.log('1')
       }
+      console.log('2')
       if(this.gamesData[this.$route.params.id]) {
         this.game = this.gamesData[this.$route.params.id]
         this.pageTitle = this.game.title
         this.runGame()
+        console.log('3')
       }
     },
     iframeListener() {
@@ -120,6 +129,9 @@ export default {
     },
     gamesData() {
       return this.$store.getters['games/gamesData']
+    },
+    isExist() {
+      return this.$store.getters['games/isExist']
     }
   }
 }

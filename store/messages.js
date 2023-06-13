@@ -37,6 +37,7 @@ export const actions = {
     if(data.response || params.observer) {
       messages.total = data.response.messages.length
       messages.offset = data.response.offset
+      messages.code =  data.response.chat.clear_code
       data.response.messages.sort((a, b) => {
         if(a.mid > b.mid) {
           return 1

@@ -17,7 +17,8 @@ export const state = () => ({
     list: []
   },
   categories: {},
-  gamesData: {}
+  gamesData: {},
+  isExist: true,
 })
 
 export const mutations = {
@@ -144,7 +145,18 @@ export const actions = {
         key: 'gamesData',
         value: gamesData
       })
+      commit('setState', {
+        key: 'isExist',
+        value: true
+      })
     }
+    if(data.error === 'game_not_found'){
+      commit('setState', {
+        key: 'isExist',
+        value: false
+      })
+    }
+
   },
   async installGame({}, params) {
     await this.$axios.post('/appApi/games.add', params)
@@ -169,5 +181,6 @@ export const getters = {
   newgames: state => state.newgames,
   recommended: state => state.recommended,
   categories: state => state.categories,
-  gamesData: state => state.gamesData
+  gamesData: state => state.gamesData,
+  isExist: state => state.isExist,
 }
