@@ -8,7 +8,7 @@
     <div class="info">
       <img class="img" :src="modal.item.photo_url" alt="">
       <div class="info">
-        <div class="text">You have successfully bought 200 gold. Keep playing!</div>
+        <div class="text">Successful purchase. Keep playing!</div>
         <button type="button" @click="$root.$emit('toggleModal', {})" class="btn st2">continue</button>
       </div>
     </div>
