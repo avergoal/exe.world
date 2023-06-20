@@ -87,7 +87,6 @@ export const actions = {
       type: 0,
       offset: 0
     })
-    // console.log(data)
   },
   async setCategories({state, commit}, params) {
     let categories = Object.assign({}, state.categories)

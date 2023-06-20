@@ -146,7 +146,6 @@ export default {
       this.$root.$emit('scrollUpdate')
       if(this.$refs.scroll) {
         this.$refs.scroll.$el.scrollBy(0, -280)
-        console.log(this.$refs.scroll)
         setTimeout(() => {
           this.$refs.scroll.update()
         }, 100)

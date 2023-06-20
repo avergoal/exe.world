@@ -14,13 +14,13 @@
     <form @submit.prevent action="">
       <div class="label">Balance Quantity</div>
       <ul class="radio">
-        <li v-for="n in 5">
-          <input v-model="balanceQuantity" type="radio" name="payment" :value="quantity+n*5-5">
-          <label @click="balanceQuantity = quantity+n*5-5" for="r1">${{quantity+n*5-5}}</label>
+        <li v-for="value in paymentMethods[selected]?.values">
+          <input v-model="balanceQuantity" type="radio" name="payment" :value="value">
+          <label @click="selectValue(value)" for="r1">${{value}}</label>
         </li>
       </ul>
       <fieldset>
-        <input v-model="otherQuantity" type="number" name="" value="" placeholder="Other quantity">
+        <input v-model="otherQuantity" @change="checkLimit" type="number" placeholder="Other quantity">
         <span v-if="error" v-html="error" class="error"></span>
       </fieldset>
       <button @click="submit()" type="button" class="btn st2">Continue</button>
@@ -63,9 +63,21 @@ export default {
         this.openWindow(response.response.url)
       }
     },
+    checkLimit(){
+      let [min,max] = this.paymentMethods[this.selected].limits
+      if(min > this.otherQuantity && this.otherQuantity !== null){
+        this.otherQuantity = min
+      }else if(this.otherQuantity > max && this.otherQuantity !== null){
+        this.otherQuantity = max
+      }
+    },
     selectPaySystem(pid,index){
       this.paysystem = pid
       this.selected = index
+      this.otherQuantity = null
+    },
+    selectValue(val){
+      this.balanceQuantity = val
       this.otherQuantity = null
     },
     async openWindow(url) {
@@ -95,11 +107,8 @@ export default {
   computed:{
     paymentMethods(){
       const methods = this.$store.getters['profile/paymentsMethods']
-      this.balanceQuantity = methods[this.selected]?.limits[0]
+      this.balanceQuantity = methods[this.selected]?.values[0]
       return methods
-    },
-    quantity(){
-      return this.paymentMethods[this.selected]?.limits[0]
     },
     modal() {
       return this.$store.getters['app/modal']
