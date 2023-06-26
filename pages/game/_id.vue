@@ -20,8 +20,8 @@
     <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>
   </div>
 </div>
-<div v-else class="no-game">
-  <img src="~/assets/illustration/game_not_found.svg" />
+<div v-else-if="!isExist" class="no-game">
+  <img src="~/assets/illustration/game_not_found.svg"  alt="game_not_found"/>
   <h2>Oops...game not found</h2>
   <p>go to the games catalog or use the search bar</p>
 </div>
@@ -72,7 +72,7 @@ export default {
       if(this.gamesData[this.$route.params.id]) {
         this.game = this.gamesData[this.$route.params.id]
         this.pageTitle = this.game.title
-        this.runGame()
+        await this.runGame()
 
       }
     },

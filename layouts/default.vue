@@ -41,7 +41,7 @@ export default {
     })
   },
   mounted() {
-    if(this.$route.name === 'game-id'){
+    if(this.$route.name === 'game-id' && window.innerWidth<921){
       this.$refs.content.style.position = 'fixed'
     }
     (typeof window == 'undefined') || this.loadUser()

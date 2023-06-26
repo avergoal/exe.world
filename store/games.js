@@ -136,6 +136,10 @@ export const actions = {
     return (data.response.games.length < state.limit) ? false : true
   },
   async setGamesData({state, commit}, params) {
+    commit('setState', {
+      key: 'isExist',
+      value: true
+    })
     let gamesData = Object.assign({}, state.gamesData)
     const { data } = await this.$axios.post('/appApi/games.info', params)
     if(data.response) {
@@ -143,10 +147,6 @@ export const actions = {
       commit('setState', {
         key: 'gamesData',
         value: gamesData
-      })
-      commit('setState', {
-        key: 'isExist',
-        value: true
       })
     }
     if(data.error === 'game_not_found'){
