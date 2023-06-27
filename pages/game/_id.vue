@@ -58,9 +58,29 @@ export default {
       await this.$store.dispatch('auth/auth', localStorage.token)
     }
     await this.loadGame()
+    setTimeout(()=>{
+      this.orientationCheck()
+      window.addEventListener("orientationchange",this.orientationCheck)
+    })
     this.iframeListener()
   },
+  beforeDestroy(){
+    window.removeEventListener("orientationchange",this.orientationCheck)
+  },
   methods: {
+    isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    },
+    orientationCheck(){
+      setTimeout(()=>{
+      if (this.isMobileDevice ) {
+        let box = document.getElementsByClassName('framebox')[0]
+
+        if(window.matchMedia("(orientation: portrait)"))
+          box.style.height = window.innerHeight + 'px'
+      }
+      },500)
+    },
     async loadGame() {
       if(!this.gamesData[this.$route.params.id]) {
         const game = await this.$store.dispatch('games/setGamesData', {
