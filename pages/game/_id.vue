@@ -61,11 +61,13 @@ export default {
     setTimeout(()=>{
       this.orientationCheck()
       window.addEventListener("orientationchange",this.orientationCheck)
+      window.addEventListener("resize",this.orientationCheck)
     })
     this.iframeListener()
   },
   beforeDestroy(){
     window.removeEventListener("orientationchange",this.orientationCheck)
+    window.removeEventListener("resize",this.orientationCheck)
   },
   methods: {
     isMobileDevice() {
@@ -73,11 +75,16 @@ export default {
     },
     orientationCheck(){
       setTimeout(()=>{
-      if (this.isMobileDevice ) {
+      if (this.isMobileDevice() ) {
         let box = document.getElementsByClassName('framebox')[0]
 
-        if(window.matchMedia("(orientation: portrait)"))
+        if(window.matchMedia("(orientation: portrait)") && window.innerWidth<921) {
           box.style.height = window.innerHeight + 'px'
+        }else if( window.innerWidth<921){
+          box.style.height ='100vh'
+        }else{
+          box.style.height ='unset'
+        }
       }
       },500)
     },
