@@ -93,7 +93,9 @@ export default {
   },
   proxy: {
     '/appApi': {
-      target: 'https://exe.world'
+      target: 'https://api.exe.world/',
+      pathRewrite: {'^/appApi/': '/'},
+      changeOrigin: true,
     }
   },
   pwa: {
@@ -115,7 +117,7 @@ export default {
         ['lodash', { id: 'lodash' }]
       ]
     },
-    extend (config, { isDev, isClient }) {
+    extend (config, { isDev }) {
       if (!isDev) {
         config.optimization.minimize = true
       }
