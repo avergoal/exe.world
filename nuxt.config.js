@@ -97,6 +97,10 @@ export default {
       target: 'https://api.exe.world/',
       pathRewrite: {'^/appApi/': '/'},
       changeOrigin: true,
+      headers: {
+        'X-Forwarded-For': (req) => req.headers['x-real-ip'] || req.connection.remoteAddress,
+        'User-Agent': (req) => req.headers['user-agent']
+      }
     }
   },
   pwa: {
