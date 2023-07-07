@@ -4,7 +4,8 @@ export const state = () => ({
   modal: {},
   news: [],
   subjects: {},
-  listeners: {}
+  listeners: {},
+  headers:{}
 })
 
 export const mutations = {
@@ -64,6 +65,10 @@ export const actions = {
     })
     this.dispatch('games/setInitData', games)
     this.dispatch('search/setPopular', search)
+  },
+  //Set headers
+  setHeader({commit},params) {
+    commit('setState', {key: 'headers', value: params})
   },
   // Modals
   toggleModal({state, commit}, params) {
@@ -170,5 +175,6 @@ export const getters = {
   modal: state => state.modal,
   news: state => state.news,
   subjects: state => state.subjects,
-  listeners: state => state.listeners
+  listeners: state => state.listeners,
+  headers: state => state.headers
 }

@@ -1,6 +1,29 @@
-export default function ({ $axios, store }) {
+export default function ({ $axios, store, req }) {
   $axios.onRequest(config => {
+    if(process.server){
+      const arr = req.rawHeaders
+      const result = {};
+
+      for (let i = 0; i < arr.length; i += 2) {
+        const key = arr[i];
+        result[key] = arr[i + 1];
+      }
+      console.log(result)
+      store.dispatch('app/setHeader',{
+        'X-Forwarded-For':result['X-Forwarded-For'],
+        // 'User-Agent':result['User-Agent'],
+      })
+    }
+    if(process.client){
+      const headers = store.getters['app/headers'];
+      config.headers['X-Forwarded-For'] = headers['X-Forwarded-For'];
+      // config.headers['User-Agent'] = headers['User-Agent'];
+    }
     if(config.data) {
+       // if (req !== undefined) {
+       //   config.headers.common['x-forwarded-for'] = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+       //   config.headers.common['User-Agent'] = window.navigator.userAgent
+       // }
       let FormData = require('form-data'),
           formData = new FormData(),
           token = store.getters['auth/token']
