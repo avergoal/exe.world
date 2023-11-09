@@ -51,6 +51,7 @@ export default {
     }
   },
   async mounted() {
+    document.getElementById('content').classList.add('game');
     if(!localStorage.token){
       await this.$store.dispatch('auth/regGuest')
     }
@@ -66,6 +67,7 @@ export default {
     this.iframeListener()
   },
   beforeDestroy(){
+    document.getElementById('content').classList.remove('game');
     window.removeEventListener("orientationchange",this.orientationCheck)
     window.removeEventListener("resize",this.orientationCheck)
   },

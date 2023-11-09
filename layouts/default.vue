@@ -5,7 +5,7 @@
 <!--    <div class="ps appscroll" :class="{clear: !profile}">-->
       <perfect-scrollbar ref="scroll" class=" appscroll" :class="{clear: !profile}">
 
-      <main class="content" ref="content">
+      <main class="content" id="content" ref="content">
         <Nuxt />
         <Footer />
       </main>

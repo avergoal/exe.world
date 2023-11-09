@@ -572,6 +572,12 @@ main.content{
   @media screen and (max-width: 1024px) {
     padding: 0;
   }
+  &.game{
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+  }
 }
 // Pagetitle
 .pagetitle{
