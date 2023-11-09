@@ -124,6 +124,7 @@ export default {
           this.$store.dispatch('notifications/set', {
             type: 'header'
           })
+          break
         case 'balance_changed':
           this.$store.dispatch('profile/getBalance', {
             type: 'header'
@@ -174,11 +175,11 @@ export default {
   },
   watch: {
     $route(e) {
-      if(this.$route.name === 'game-id' && window.innerWidth<921){
-        this.$refs.content.style.position = 'fixed'
-      }else {
-        this.$refs.content.style.position = 'relative'
-      }
+      // if(this.$route.name === 'game-id' && window.innerWidth<921){
+      //   this.$refs.content.style.position = 'fixed'
+      // }else {
+      //   this.$refs.content.style.position = 'relative'
+      // }
       this.scrollUpdate()
       this.$store.dispatch('search/toggleSearch', false)
       this.setGamePage()
