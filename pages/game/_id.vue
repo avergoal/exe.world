@@ -15,7 +15,7 @@
       <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">Delete from my games</button></li>
     </ul>
   </div>
-  <div class="mobilebtns">
+  <div class="mobilebtns" v-if="showButton">
     <button @click="$root.$emit('toggleModal', {target: 'gameMenu', game: game})" type="button"><svg-icon name="ui/menu" /></button>
     <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>
   </div>
@@ -42,7 +42,8 @@ export default {
       url: null
     },
     pageTitle: 'EXE.world',
-    hideGuestSave: false
+    hideGuestSave: false,
+    showButton: false,
   }),
   head() {
 		return {
@@ -65,6 +66,9 @@ export default {
       window.addEventListener("resize",this.orientationCheck)
     })
     this.iframeListener()
+    setTimeout(()=>{
+      this.showButton = true
+    },3000)
   },
   beforeDestroy(){
     document.getElementById('content').classList.remove('game');
