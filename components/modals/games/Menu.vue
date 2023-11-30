@@ -9,7 +9,7 @@
       <div v-html="modal.game.title" class="name"></div>
     </div>
     <ul class="menu">
-      <li><button type="button">Send game notifications</button></li>
+<!--      <li><button type="button">Send game notifications</button></li>-->
       <li><button type="button">Terms of use</button></li>
       <li><button type="button">About the developer</button></li>
       <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: modal.game.gid})" type="button">Delete from my games</button></li>
