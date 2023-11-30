@@ -33,12 +33,12 @@
           <div class="text">Don't have an account yet?</div>
           <button @click="$root.$emit('toggleModal', {target: 'signUp'})" type="button">sign up</button>
         </div>
-        <div class="social">
-          <div class="text">Login via services</div>
-          <ul>
-            <li><button @click="socialAuth('fb')" type="button"><svg-icon name="ui/facebook" /></button></li>
-          </ul>
-        </div>
+<!--        <div class="social">-->
+<!--          <div class="text">Login via services</div>-->
+<!--          <ul>-->
+<!--            <li><button @click="socialAuth('fb')" type="button"><svg-icon name="ui/facebook" /></button></li>-->
+<!--          </ul>-->
+<!--        </div>-->
       </form>
     </div>
   </div>

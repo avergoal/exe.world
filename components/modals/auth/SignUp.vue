@@ -41,16 +41,16 @@
           <div class="text">Already have an account?</div>
           <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button">log in</button>
         </div>
-        <div class="social">
-          <div class="text">Login via services</div>
-          <ul>
-            <li><button @click="socialAuth('fb')" type="button"><svg-icon name="ui/facebook" /></button></li>
-            <!--
-          <li><a href=""><svg-icon name="ui/twitter" /></a></li>
-          <li><a href=""><img src="~assets/google.svg" alt=""></a></li>
-          -->
-          </ul>
-        </div>
+<!--        <div class="social">-->
+<!--          <div class="text">Login via services</div>-->
+<!--          <ul>-->
+<!--            <li><button @click="socialAuth('fb')" type="button"><svg-icon name="ui/facebook" /></button></li>-->
+<!--            &lt;!&ndash;-->
+<!--          <li><a href=""><svg-icon name="ui/twitter" /></a></li>-->
+<!--          <li><a href=""><img src="~assets/google.svg" alt=""></a></li>-->
+<!--          &ndash;&gt;-->
+<!--          </ul>-->
+<!--        </div>-->
       </form>
     </div>
   </div>
