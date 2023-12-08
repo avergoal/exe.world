@@ -46,8 +46,8 @@ export default {
         this.decsription = 'New games'
         break
       case 'reccomends':
-        this.title = 'Reccomends games'
-        this.decsription = 'Reccomends games'
+        this.title = 'Recommended games'
+        this.decsription = 'Recommended games'
         break
       case 'categories':
         this.title = 'Categories games'

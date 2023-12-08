@@ -36,6 +36,7 @@
     <GameRemove v-if="modal.target == 'gameRemove'" />
     <GameMenu v-if="modal.target == 'gameMenu'" />
     <AddFundsToGame v-if="modal.target == 'addFunds'"/>
+    <Developer v-if="modal.target == 'developer'"/>
     <!-- News -->
     <News v-if="modal.target == 'news'" />
     <!-- Request -->
@@ -88,6 +89,7 @@ import GameBuySuccess from './modals/games/BuySuccess'
 import GameSignIn from './modals/games/SignIn'
 import GameRemove from './modals/games/Remove'
 import GameMenu from './modals/games/Menu'
+import Developer from "./modals/games/Developer.vue";
 // News
 import News from './modals/news/News'
 // Request
@@ -106,6 +108,7 @@ import AddFundsToGame from "~/components/modals/games/AddFundsToGame.vue";
 export default {
 	name: 'ModalsComponent',
   components: {
+    Developer,
     AddFundsToGame,
     // Auth
     SignIn, SignUp, LogOut, LogInTemp, RestorePassword, EmailSend,

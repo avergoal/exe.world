@@ -24,6 +24,19 @@ export default {
       this.$root.$emit('resize')
       return this.$store.getters['app/page']
     }
+  },
+  methods: {
+    getReferringSite() {
+      const referringSite = document.referrer;
+      console.log('Referring website:', referringSite);
+      // Use referringSite as needed in your code
+    }
+  },
+  mounted() {
+    setTimeout(()=>{
+      this.getReferringSite(); // Call the method when the component is mounted
+      console.log('pix')
+    },5000)
   }
 }
 </script>

@@ -13,8 +13,10 @@
               <button @click="goGame()" type="button" class="btn st2">launch game</button>
             </div>
             <div class="item">
-              <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">share</button>
-              <div :class="{open: shareOpen}" class="dropdown">
+              <button @click="copyPath" type="button" class="btn st3 toggleshare tooltip-btn">
+                <span class="tooltiptext">{{ copyText }}</span>
+                share</button>
+              <div v-if="shareOpen" :class="{open: shareOpen}" class="dropdown">
                 <ul class="menu">
                   <li><a href="">
                     <div class="ico">
@@ -76,7 +78,9 @@
           <button @click="goGame()" type="button" class="btn st2">launch game</button>
         </div>
         <div class="item">
-          <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">share</button>
+          <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">
+            <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+            share</button>
           <div :class="{open: shareOpen}" class="dropdown">
             <ul class="menu">
               <li>
@@ -122,6 +126,7 @@ export default {
   data: () => ({
     loaded: false,
     game: {},
+    copyText: 'Copy to clipboard',
     config: {
       slidesPerView: 'auto',
       spaceBetween: 24,
@@ -187,6 +192,23 @@ export default {
       } else {
         this.$root.$emit('toggleModal', {target: 'logInTemp', game_id: this.game.gid})
       }
+    },
+    copyPath(){
+     let pathToCopy = window.location.origin + this.$router.resolve({ path: '/game/' + this.game.gid }).href
+      navigator.clipboard.writeText(pathToCopy)
+        .then(() => {
+          this.copyText = 'Copied: '+pathToCopy
+          console.log('Path copied to clipboard:', pathToCopy);
+          // Optionally, show a success message to the user
+        })
+        .catch(err => {
+          this.copyText ='Unable to copy path:'
+          console.error('Unable to copy path: ', err);
+          // Optionally, show an error message to the user
+        });
+     setTimeout(()=>{
+       this.copyText = 'Copy to clipboard'
+     },5000)
     }
   },
   computed: {

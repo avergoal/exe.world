@@ -8,7 +8,11 @@ export default function ({ $axios, store, req }) {
         const key = arr[i];
         result[key] = arr[i + 1];
       }
-      console.log(result)
+      // console.log(req.headers)
+      store.dispatch('stat/setHeader', {
+        name: "req headers",
+        data: req.headers
+      })
       store.dispatch('app/setHeader',{
         'X-Forwarded-For':result['X-Forwarded-For'],
         // 'User-Agent':result['User-Agent'],

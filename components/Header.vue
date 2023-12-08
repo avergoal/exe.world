@@ -122,11 +122,11 @@
       </div>
       <div v-else class="item signin">
         <button @click="toggleModal('signIn', null)" type="button" class="btn st3">
-          <span>Sign in</span>
+          <span>Log in</span>
           <svg-icon name="ui/personal_data" />
         </button>
         <button @click="toggleModal('signUp', null)" type="button" class="btn st2">
-          <span>registration</span>
+          <span>Sign up</span>
           <svg-icon name="ui/access" />
         </button>
       </div>

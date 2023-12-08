@@ -17,6 +17,12 @@ export default {
     const data = await store.dispatch('app/setAbout')
     return {data}
   },
+  mounted() {
+    this.$store.dispatch('stat/sendStat',{
+      name:'about page',
+      data:'about page has opened'
+    })
+  },
   head() {
 		return {
       title: this.data.title,

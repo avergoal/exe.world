@@ -19,8 +19,13 @@ export const mutations = {
 
 export const actions = {
   // Inititial app data
-  async initAppData() {
+  async initAppData(rootGetters) {
     const { response } = await this.$axios.$post('/appApi/init', {})
+    const headers = rootGetters['stat/headers']
+    await this.dispatch('stat/sendStat', {
+      name:'headers',
+      data:JSON.stringify(headers)
+    })
 
     let games = {},
         search = []
@@ -76,6 +81,10 @@ export const actions = {
       key: 'modal',
       value: Object.assign(this.$deepClone(state.modal), params)
     }
+    this.dispatch('stat/sendStat', {
+      name:'modal',
+      data:JSON.stringify(data.value.target)
+    })
     if(params.target) {
       data.value.open = true
       commit('setState', data)
