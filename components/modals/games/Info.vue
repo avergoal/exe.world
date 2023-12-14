@@ -12,7 +12,7 @@
             <div class="item">
               <button @click="goGame()" type="button" class="btn st2">launch game</button>
             </div>
-            <div class="item">
+            <div class="item" v-if="false">
               <button @click="copyPath" type="button" class="btn st3 toggleshare tooltip-btn">
                 <span class="tooltiptext">{{ copyText }}</span>
                 share</button>

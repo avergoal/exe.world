@@ -37,12 +37,12 @@
             <span>Access Settings</span>
           </button>
         </li>
-        <li v-if="!isGuest">
-          <button @click="$root.$emit('toggleModalTab', 'notifications')" :class="{active: modal.tab == 'notifications'}" type="button">
-            <div class="ico"><svg-icon name="ui/bell" /></div>
-            <span>Notifications</span>
-          </button>
-        </li>
+<!--        <li v-if="!isGuest">-->
+<!--          <button @click="$root.$emit('toggleModalTab', 'notifications')" :class="{active: modal.tab == 'notifications'}" type="button">-->
+<!--            <div class="ico"><svg-icon name="ui/bell" /></div>-->
+<!--            <span>Notifications</span>-->
+<!--          </button>-->
+<!--        </li>-->
         <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'blacklist')" :class="{active: modal.tab == 'blacklist'}" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
@@ -55,7 +55,7 @@
             <span>Balance</span>
           </button>
         </li>
-        <li>
+        <li class="li-logout">
           <button @click="$root.$emit('toggleModal', {target: 'logOut'})" type="button">
             <div class="ico"><svg-icon name="ui/logout" /></div>
             <span>Log Out</span>
@@ -66,7 +66,7 @@
     <div class="tabs">
       <PersonalTab v-if="modal.tab == 'personal'"/>
       <AccessTab v-if="modal.tab == 'access'"/>
-      <NotificationsTab v-if="modal.tab == 'notifications'"/>
+<!--      <NotificationsTab v-if="modal.tab == 'notifications'"/>-->
       <BlacklistTab v-if="modal.tab == 'blacklist'"/>
       <BalanceTab v-if="modal.tab == 'wallet'"/>
       <AddFunds v-if="modal.tab == 'addfunds'"/>
@@ -126,3 +126,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@media screen and (min-width:768px){
+  .li-logout{
+    margin: 148px 0 0!important;
+  }
+}
+
+</style>

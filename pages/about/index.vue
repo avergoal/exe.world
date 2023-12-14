@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('stat/sendStat',{
-      name:'about page',
+      event_type:'about page',
       data:'about page has opened'
     })
   },

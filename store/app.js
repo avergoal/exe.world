@@ -23,7 +23,7 @@ export const actions = {
     const { response } = await this.$axios.$post('/appApi/init', {})
     const headers = rootGetters['stat/headers']
     await this.dispatch('stat/sendStat', {
-      name:'headers',
+      event_type:'headers',
       data:JSON.stringify(headers)
     })
 
@@ -81,10 +81,7 @@ export const actions = {
       key: 'modal',
       value: Object.assign(this.$deepClone(state.modal), params)
     }
-    this.dispatch('stat/sendStat', {
-      name:'modal',
-      data:JSON.stringify(data.value.target)
-    })
+
     if(params.target) {
       data.value.open = true
       commit('setState', data)
@@ -93,7 +90,15 @@ export const actions = {
         data.value.active = true
         commit('setState', data)
       }, 300)
+      this.dispatch('stat/sendStat', {
+        event_type:'modal_open',
+        data:JSON.stringify(data.value)
+      })
     } else {
+      this.dispatch('stat/sendStat', {
+        event_type:'modal_close',
+        data:JSON.stringify(data.value)
+      })
       data.value = this.$deepClone(state.modal)
       data.value.active = false
       commit('setState', data)
@@ -108,6 +113,10 @@ export const actions = {
     }
   },
   toggleModalTab({state, commit}, params) {
+    this.dispatch('stat/sendStat', {
+      event_type:'modal_tab_toggle',
+      data:JSON.stringify(params)
+    })
     let modal = Object.assign({}, state.modal)
     modal.tab = params
     commit('setState', {key: 'modal', value: modal})

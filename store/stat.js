@@ -12,9 +12,6 @@ export const mutations = {
 
 export const actions = {
   sendStat({state},params) {
-    let param = {
-
-    }
     try {
       this.$axios.post('/appApi/stat' , params)
     }catch (e) {

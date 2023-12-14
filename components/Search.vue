@@ -114,7 +114,7 @@ export default {
             limit: 24
           })
           this.$store.dispatch('stat/sendStat', {
-            name: "search",
+            event_type: "search",
             data: JSON.stringify(this.query)
           })
           this.loaded = true
