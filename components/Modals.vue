@@ -7,6 +7,7 @@
     <LogInTemp v-if="modal.target == 'logInTemp'" />
     <RestorePassword v-if="modal.target == 'restorePassword'" />
     <EmailSend v-if="modal.target == 'emailSend'" />
+    <RestoreSuccessful v-if="modal.target == 'restoreSuccessful'" />
     <!-- Messages -->
     <Messages v-if="modal.target == 'messages'" />
     <MessagesChat v-if="modal.target == 'messagesChat'" />
@@ -104,10 +105,12 @@ import PaymentSuccesfull from './modals/PaymentSuccesfull'
 // Refresh
 import RefreshPage from './modals/RefreshPage'
 import AddFundsToGame from "~/components/modals/games/AddFundsToGame.vue";
+import RestoreSuccessful from "@/components/modals/auth/RestoreSuccessful.vue";
 
 export default {
 	name: 'ModalsComponent',
   components: {
+    RestoreSuccessful,
     Developer,
     AddFundsToGame,
     // Auth

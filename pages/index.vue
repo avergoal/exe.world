@@ -33,9 +33,9 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('app/initAppData')
     setTimeout(()=>{
       this.getReferringSite(); // Call the method when the component is mounted
-      console.log('pix')
     },5000)
   }
 }

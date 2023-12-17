@@ -42,7 +42,7 @@ export default {
     query: ''
   }),
   mounted() {
-    this.pagetitle = this.results.peoples.length + ' peoples found'
+    this.pagetitle = this.results.peoples.length + ' people found'
     this.query = this.results.query
   },
   methods: {
@@ -55,7 +55,7 @@ export default {
             offset: 0,
             limit: 24
           })
-          this.pagetitle = this.results.peoples.length + ' peoples found'
+          this.pagetitle = this.results.peoples.length + ' people found'
         }, 350)
       }
     },

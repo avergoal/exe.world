@@ -35,7 +35,7 @@ export default {
       })
       if(error) {
         this.error.show = true
-      } else this.$root.$emit('toggleModal', {})
+      } else this.$root.$emit('toggleModal', {target:'restoreSuccessful'})
     },
     goHome() {
       this.$root.$emit('toggleModal', {})
