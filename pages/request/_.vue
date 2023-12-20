@@ -10,15 +10,17 @@ export default {
   },
   methods: {
     async loadData() {
-      const data = await this.$store.dispatch('app/sendRequest', {
-        code: this.$route.params.pathMatch.replace('/', '')
-      })
-      this.$router.push('/')
-      let message = (typeof data.error != 'undefined') ? data.error[0] : data.response.message
+      // const data = await this.$store.dispatch('app/sendRequest', {
+      //   code: this.$route.params.pathMatch.replace('/', '')
+      // })
+      await this.$router.push('/')
+      // let message = (typeof data.error != 'undefined') ? data.error[0] : data.response.message
       this.$root.$emit('toggleModal', {
-        target: 'request',
-        message: message,
-        status: (typeof data.error != 'undefined')
+        target: 'notification',
+        data: {
+          title: 'Updated',
+          text: 'Success. The data has been updated.'
+        }
       })
     }
   }

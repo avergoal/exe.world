@@ -77,7 +77,7 @@
         <div class="item">
           <button @click="goGame()" type="button" class="btn st2">launch game</button>
         </div>
-        <div class="item">
+        <div class="item" v-if="false">
           <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">
             <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
             share</button>

@@ -17,7 +17,7 @@
               <svg-icon name="ui/close" />
             </button>
           </li>
-          <li class="title-cell"><svg-icon name="logo" /><span>© 2020 EXE. WORLD All rights reserved</span></li>
+          <li class="title-cell"><svg-icon name="logo" /><span>© {{ getYear }} EXE. WORLD All rights reserved</span></li>
           <li class="list-cell">
             <nuxt-link to="/about">About</nuxt-link>
           </li>
@@ -216,6 +216,9 @@ export default {
     isGuest() {
       this.guestClass = this.$store.getters['profile/isGuest']
       return this.guestClass
+    },
+    getYear() {
+      return new Date().getFullYear();
     }
   },
   watch: {
