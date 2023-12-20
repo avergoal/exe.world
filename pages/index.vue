@@ -33,7 +33,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('app/initAppData')
     setTimeout(()=>{
       this.getReferringSite(); // Call the method when the component is mounted
     },5000)

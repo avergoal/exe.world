@@ -88,6 +88,18 @@ export default {
         },
       },
     ],
+    ['@nuxtjs/google-tag-manager', { id: 'G-TS880P51YL' }],
+    [
+      '@nuxtjs/yandex-metrika',
+      {
+        id: '95926948',
+        webvisor: true,
+        clickmap: true,
+        // useCDN: false,
+        trackLinks: true,
+        accurateTrackBounce: true,
+      }
+    ]
   ],
   axios: {
     proxy: true

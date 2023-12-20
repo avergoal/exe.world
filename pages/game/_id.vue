@@ -95,6 +95,7 @@ export default {
       },500)
     },
     async loadGame() {
+      console.log(this.gamesData)
       if(!this.gamesData[this.$route.params.id]) {
         const game = await this.$store.dispatch('games/setGamesData', {
           id: this.$route.params.id
@@ -131,6 +132,7 @@ export default {
       this.$root.$emit('toggleModal', { target: 'gameBuy', item})
     },
     async runGame() {
+      console.log(this.game)
       if(!this.game.installed) {
         await this.$store.dispatch('games/installGame', {
           gid: this.game.gid

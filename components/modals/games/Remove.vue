@@ -23,13 +23,20 @@ export default {
       await this.$store.dispatch('games/removeGame', {
         gid: this.modal.game
       })
+      await this.$store.dispatch('app/initAppData')
+      await this.$store.dispatch('games/loadUserGames',{
+        uid:this.profile.id
+      })
       this.$root.$emit('toggleModal', {})
     }
   },
   computed: {
     modal() {
       return this.$store.getters['app/modal']
-    }
+    },
+    profile() {
+      return this.$store.getters['profile/data']
+    },
   }
 }
 </script>

@@ -162,9 +162,14 @@ export const actions = {
     await this.dispatch('app/initAppData')
     return
   },
-  async removeGame({commit}, params) {
+  async removeGame({commit,state}, params) {
     await this.$axios.post('/appApi/games.remove', params)
-    await this.dispatch('app/initAppData')
+    let obj = state.gamesData
+    delete obj[params.gid]
+    commit('setState', {
+      key: 'gamesData',
+      value: obj
+    })
     return
   },
   async runGame({}, params) {
