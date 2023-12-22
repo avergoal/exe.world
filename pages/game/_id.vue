@@ -5,7 +5,7 @@
     v-if="isGuest && !hideGuestSave"
     @closeGuestSave="hideGuestSave = true"
   ></GuestSave>
-  <div class="framebox">
+  <div class="framebox" :style="`height:${viewportHeight}px` ">
     <iframe :src="frame.url" id="gameFrame" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
   </div>
   <div class="info">
@@ -41,6 +41,7 @@ export default {
       height: 0,
       url: null
     },
+    viewportHeight:0,
     pageTitle: 'EXE.world',
     hideGuestSave: false,
     showButton: false,
@@ -52,6 +53,8 @@ export default {
     }
   },
   async mounted() {
+    this.viewportHeight = this.getViewportHeight(); // Calculate initial viewport height
+    window.addEventListener('resize', this.handleResize);
     document.getElementById('content').classList.add('game');
     if(!localStorage.token){
       await this.$store.dispatch('auth/regGuest')
@@ -71,6 +74,7 @@ export default {
     },3000)
   },
   beforeDestroy(){
+    window.removeEventListener('resize', this.handleResize); // Remove resize event listener
     document.getElementById('content').classList.remove('game');
     window.removeEventListener("orientationchange",this.orientationCheck)
     window.removeEventListener("resize",this.orientationCheck)
@@ -153,6 +157,33 @@ export default {
       } else {
         alert(data.error)
       }
+    },
+    handleResize(){
+      this.viewportHeight = this.getViewportHeight();
+    },
+    getViewportHeight() {
+      const isMobile = window.matchMedia('(max-width: 767px)').matches; // Check if it's a mobile device
+
+      let height = window.innerHeight; // Get the initial height
+
+      if (isMobile) {
+        // For mobile devices, consider URL bar height (if it's present)
+        const isSafari = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome');
+
+        if (isSafari) {
+          // For Safari on iOS, consider additional space for the URL bar
+          height = document.documentElement.clientHeight;
+        } else {
+          // For other mobile browsers, attempt to determine the URL bar's presence
+          const maxPossibleHeight = screen.availHeight; // Maximum possible height without URL bar
+          height = Math.max(maxPossibleHeight, height); // Choose the maximum height
+        }
+      } else {
+        // For desktop or larger screens, use the window height directly
+        height = window.innerHeight;
+      }
+
+      return height;
     }
   },
   computed: {

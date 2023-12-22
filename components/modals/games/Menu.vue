@@ -11,6 +11,9 @@
       <ul class="menu">
         <!--      <li><button type="button">Send game notifications</button></li>-->
         <li>
+          <button type="button" @click="toggleFullscreen">{{ fullscreen?'Exit Fullscreen':'Fullscreen' }}</button>
+        </li>
+        <li>
           <button type="button" @click="closeGame">Close the application</button>
         </li>
         <li>
@@ -32,6 +35,9 @@
 <script>
 export default {
   name: 'GameMenuModalComponent',
+  data:() => ({
+    fullscreen:false
+  }),
   computed: {
     modal() {
       return this.$store.getters['app/modal']
@@ -47,6 +53,30 @@ export default {
     closeGame(){
       this.$router.push('/')
       this.$root.$emit('toggleModal',{})
+    },
+    toggleFullscreen() {
+      const elem = document.documentElement; // Get the root element (HTML)
+
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen(); // Standard
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen(); // Webkit browsers
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen(); // IE11
+        }
+        this.fullscreen = true
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen(); // Standard
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen(); // Webkit browsers
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen(); // IE11
+        }
+        this.fullscreen = false
+
+      }
     }
   }
 }

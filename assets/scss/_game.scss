@@ -169,13 +169,13 @@
   .framebox{
     position: relative;
     width: 100vw;
-    min-height: 100vh;
+    //min-height: 100vh;
     @media screen and (max-width: 920px) {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100Vh;
+      //height: 100Vh;
       background: $dWhite;
       z-index: 1200;
     }
