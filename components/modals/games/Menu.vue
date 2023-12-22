@@ -11,6 +11,9 @@
       <ul class="menu">
         <!--      <li><button type="button">Send game notifications</button></li>-->
         <li>
+          <button type="button" @click="closeGame">Close the application</button>
+        </li>
+        <li>
           <button type="button" @click="to(modal.game.tos_url)">Terms of use</button>
         </li>
         <li>
@@ -39,8 +42,11 @@ export default {
       if(!url){
         url = window.location.origin + this.$router.resolve({ path: '/privacy' }).href
       }
-      console.log(url)
       window.open(url, "_blank");
+    },
+    closeGame(){
+      this.$router.push('/')
+      this.$root.$emit('toggleModal',{})
     }
   }
 }

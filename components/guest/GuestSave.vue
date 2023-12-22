@@ -13,7 +13,7 @@
       <button @click="$root.$emit('toggleModal', {target: 'signUp'})" type="button" class="btn st2">
         <span>Sign up</span>
       </button>
-      <button @click="$root.$emit('toggleModal', {target: 'gameSignIn'})" type="button" class="btn st3">
+      <button @click="$root.$emit('toggleModal', {target: 'gameSignIn',game:poster})" type="button" class="btn st3">
         <span>Log in</span>
       </button>
     </div>
@@ -23,6 +23,9 @@
 
 <script>
 export default {
-  name: 'GuestSave'
+  name: 'GuestSave',
+  props:{
+    poster:{}
+  }
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
 <div v-if="profile && game && isExist" class="gamepagebox">
 <!--  <div v-html="pageTitle" class="pagetitle"></div>-->
-  <GuestSave
+  <GuestSave :poster="game.poster"
     v-if="isGuest && !hideGuestSave"
     @closeGuestSave="hideGuestSave = true"
   ></GuestSave>
   <div class="framebox">
-    <iframe :src="frame.url" id="gameFrame" frameborder="0"></iframe>
+    <iframe :src="frame.url" id="gameFrame" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
   </div>
   <div class="info">
     <ul>
@@ -17,7 +17,7 @@
   </div>
   <div class="mobilebtns" v-if="showButton">
     <button @click="$root.$emit('toggleModal', {target: 'gameMenu', game: game})" type="button"><svg-icon name="ui/menu" /></button>
-    <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>
+<!--    <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>-->
   </div>
 </div>
 <div v-else-if="!isExist" class="no-game">

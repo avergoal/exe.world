@@ -5,8 +5,8 @@
     </button>
     <div class="modalcontent">
       <div class="photo">
-        <div class="img"><img v-if="poster" :src="poster" alt=""></div>
-        <div class="bg"><img v-if="poster" :src="poster" alt=""></div>
+<!--        <div class="img"><img v-if="poster" :src="poster.hires??poster.default" alt=""></div>-->
+        <div class="bg"><img v-if="poster" :src="poster.hires??poster.default" alt=""></div>
         <div class="desc">Login or register so as not to lose your progress in the game</div>
       </div>
       <form @submit.prevent="signIn()" action="">
