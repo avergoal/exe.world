@@ -55,6 +55,7 @@ export default {
   async mounted() {
     this.viewportHeight = this.getViewportHeight(); // Calculate initial viewport height
     window.addEventListener('resize', this.handleResize);
+    window.addEventListener('orientationchange', this.handleResize);
     document.getElementById('content').classList.add('game');
     if(!localStorage.token){
       await this.$store.dispatch('auth/regGuest')
@@ -63,11 +64,11 @@ export default {
       await this.$store.dispatch('auth/auth', localStorage.token)
     }
     await this.loadGame()
-    setTimeout(()=>{
-      this.orientationCheck()
-      window.addEventListener("orientationchange",this.orientationCheck)
-      window.addEventListener("resize",this.orientationCheck)
-    })
+    // setTimeout(()=>{
+    //   this.orientationCheck()
+    //   window.addEventListener("orientationchange",this.orientationCheck)
+    //   window.addEventListener("resize",this.orientationCheck)
+    // })
     this.iframeListener()
     setTimeout(()=>{
       this.showButton = true
@@ -75,29 +76,30 @@ export default {
   },
   beforeDestroy(){
     window.removeEventListener('resize', this.handleResize); // Remove resize event listener
+    window.removeEventListener('orientationchange', this.handleResize); // Remove resize event listener
     document.getElementById('content').classList.remove('game');
-    window.removeEventListener("orientationchange",this.orientationCheck)
-    window.removeEventListener("resize",this.orientationCheck)
+    // window.removeEventListener("orientationchange",this.orientationCheck)
+    // window.removeEventListener("resize",this.orientationCheck)
   },
   methods: {
-    isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    },
-    orientationCheck(){
-      setTimeout(()=>{
-      if (this.isMobileDevice() ) {
-        let box = document.getElementsByClassName('framebox')[0]
-
-        if(window.matchMedia("(orientation: portrait)") && window.innerWidth<921) {
-          box.style.height = window.innerHeight + 'px'
-        }else if( window.innerWidth<921){
-          box.style.height ='100vh'
-        }else{
-          box.style.height ='unset'
-        }
-      }
-      },500)
-    },
+    // isMobileDevice() {
+    //   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // },
+    // orientationCheck(){
+    //   setTimeout(()=>{
+    //   if (this.isMobileDevice() ) {
+    //     let box = document.getElementsByClassName('framebox')[0]
+    //
+    //     if(window.matchMedia("(orientation: portrait)") && window.innerWidth<921) {
+    //       box.style.height = window.innerHeight + 'px'
+    //     }else if( window.innerWidth<921){
+    //       box.style.height ='100vh'
+    //     }else{
+    //       box.style.height ='unset'
+    //     }
+    //   }
+    //   },500)
+    // },
     async loadGame() {
       console.log(this.gamesData)
       if(!this.gamesData[this.$route.params.id]) {

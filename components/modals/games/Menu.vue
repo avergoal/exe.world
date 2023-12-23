@@ -10,7 +10,7 @@
       </div>
       <ul class="menu">
         <!--      <li><button type="button">Send game notifications</button></li>-->
-        <li>
+        <li v-if="!isIOS">
           <button type="button" @click="toggleFullscreen">{{ fullscreen?'Exit Fullscreen':'Fullscreen' }}</button>
         </li>
         <li>
@@ -38,10 +38,18 @@ export default {
   data:() => ({
     fullscreen:false
   }),
+  mounted() {
+    console.log('pix')
+    this.fullscreen = !document.fullscreenElement?false:true
+  },
   computed: {
     modal() {
       return this.$store.getters['app/modal']
-    }
+    },
+    isIOS() {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    },
   },
   methods: {
     to(url) {
@@ -53,6 +61,13 @@ export default {
     closeGame(){
       this.$router.push('/')
       this.$root.$emit('toggleModal',{})
+      if (document.exitFullscreen) {
+        document.exitFullscreen(); // Standard
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen(); // Webkit browsers
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen(); // IE11
+      }
     },
     toggleFullscreen() {
       const elem = document.documentElement; // Get the root element (HTML)
