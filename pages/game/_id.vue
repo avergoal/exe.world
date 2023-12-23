@@ -15,7 +15,7 @@
       <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">Delete from my games</button></li>
     </ul>
   </div>
-  <div class="mobilebtns" v-if="showButton">
+  <div class="mobilebtns" v-if="showButton" :class="{'left':game.position==='left','center':game.position==='center'}">
     <button @click="$root.$emit('toggleModal', {target: 'gameMenu', game: game})" type="button"><svg-icon name="ui/menu" /></button>
 <!--    <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>-->
   </div>
