@@ -11,21 +11,19 @@
       <ul class="menu">
         <!--      <li><button type="button">Send game notifications</button></li>-->
         <li v-if="!isIOS">
-          <button type="button" @click="toggleFullscreen">{{ fullscreen?'Exit Fullscreen':'Fullscreen' }}</button>
+          <button type="button" @click="toggleFullscreen"><svg-icon name="ui/fullscreen"/>{{ fullscreen?'Exit Fullscreen':'Fullscreen' }}</button>
         </li>
         <li>
-          <button type="button" @click="closeGame">Close the application</button>
+          <button type="button" @click="closeGame"><svg-icon name="ui/exit"/>Exit game</button>
+        </li>
+<!--        <li>-->
+<!--          <button type="button" @click="to(modal.game.tos_url)">Terms of use</button>-->
+<!--        </li>-->
+        <li>
+          <button type="button" @click="$root.$emit('toggleModal', {target: 'developer',developer:modal.game.developer})"><svg-icon name="ui/about-circle"/>About developer</button>
         </li>
         <li>
-          <button type="button" @click="to(modal.game.tos_url)">Terms of use</button>
-        </li>
-        <li>
-          <button type="button" @click="$root.$emit('toggleModal', {target: 'developer',developer:modal.game.developer})">About the developer</button>
-        </li>
-        <li>
-          <button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: modal.game.gid})" type="button">Delete
-            from my games
-          </button>
+          <button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: modal.game.gid})" type="button"><svg-icon name="ui/remove-game"/>Remove</button>
         </li>
       </ul>
     </div>

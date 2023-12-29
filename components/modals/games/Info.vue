@@ -10,7 +10,7 @@
           <div v-html="game.title" class="title"></div>
           <div class="btns">
             <div class="item">
-              <button @click="goGame()" type="button" class="btn st2">launch game</button>
+              <button @click="goGame()" type="button" class="btn st2"><svg-icon name="ui/play"/><span>play</span></button>
             </div>
             <div class="item" v-if="false">
               <button @click="copyPath" type="button" class="btn st3 toggleshare tooltip-btn">
@@ -75,7 +75,7 @@
       </perfect-scrollbar>
       <div class="bottom-btns">
         <div class="item">
-          <button @click="goGame()" type="button" class="btn st2">launch game</button>
+          <button @click="goGame()" type="button" class="btn st2"><svg-icon name="ui/play"/><span>play</span></button>
         </div>
         <div class="item" v-if="false">
           <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">

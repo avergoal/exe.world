@@ -256,14 +256,41 @@
     backdrop-filter: blur(36px);
     z-index: 1300;
     transition: z-index linear 0.2s;
-    &.left{
+    &.top-left{
       right: unset;
       left: 24px;
     }
-    &.center{
+    &.top-center{
       right: unset;
       left: 50%;
       transform: translateX(-50%);
+    }
+    &.bottom-left{
+      top:unset;
+      bottom:24px;
+      right: unset;
+      left: 24px;
+    }
+    &.bottom-right{
+      top:unset;
+      bottom:24px;
+    }
+    &.bottom-center{
+      top:unset;
+      bottom:24px;
+      right: unset;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &.left-center{
+      right: unset;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &.right-center{
+      top: 50%;
+      transform: translateY(-50%);
     }
     a,
     button{

@@ -34,6 +34,7 @@ export default {
       slidesPerView: 'auto',
       centeredSlides: true,
       loop: true,
+      loopedSlides: 4,
       navigation: {
         prevEl: '.main_prev',
         nextEl: '.main_next'
@@ -62,6 +63,8 @@ export default {
     }
   }),
   mounted() {
+    console.log( this.slides.length)
+    this.config.loopedSlides = this.slides.length
     this.swiper = this.$refs.swiper.$swiper
     this.swiper.on('slideChangeTransitionStart', (e) => {
       e.slides[e.previousIndex].firstChild.classList.add('previous')
