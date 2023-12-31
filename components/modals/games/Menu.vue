@@ -57,15 +57,17 @@ export default {
       window.open(url, "_blank");
     },
     closeGame(){
+      if(this.fullscreen){
+        if (document.exitFullscreen) {
+          document.exitFullscreen(); // Standard
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen(); // Webkit browsers
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen(); // IE11
+        }
+      }
       this.$router.push('/')
       this.$root.$emit('toggleModal',{})
-      if (document.exitFullscreen) {
-        document.exitFullscreen(); // Standard
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen(); // Webkit browsers
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen(); // IE11
-      }
     },
     toggleFullscreen() {
       const elem = document.documentElement; // Get the root element (HTML)

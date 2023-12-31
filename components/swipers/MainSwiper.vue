@@ -10,8 +10,9 @@
             <div v-html="e.description" class="desc"></div>
           </div>
           <!-- <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button> -->
-          <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-          <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+<!--          <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>-->
+<!--          <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>-->
+          <button class="action-to-game" :data-id="e.gid"  :data-installed="e.installed" type="button"><svg-icon name="ui/play"/><span>play</span></button>
         </div>
       </div>
     </swiper-slide>
@@ -34,7 +35,6 @@ export default {
       slidesPerView: 'auto',
       centeredSlides: true,
       loop: true,
-      loopedSlides: 4,
       navigation: {
         prevEl: '.main_prev',
         nextEl: '.main_next'
@@ -62,9 +62,16 @@ export default {
       }
     }
   }),
+  methods:{
+    actionToGame(id,installed){
+      if(!installed){
+        this.$root.$emit('toggleModal', {target: 'gameInfo', game: id})
+      }else {
+        this.$router.push('/game/' + id)
+      }
+    }
+  },
   mounted() {
-    console.log( this.slides.length)
-    this.config.loopedSlides = this.slides.length
     this.swiper = this.$refs.swiper.$swiper
     this.swiper.on('slideChangeTransitionStart', (e) => {
       e.slides[e.previousIndex].firstChild.classList.add('previous')
@@ -75,6 +82,15 @@ export default {
         })
         e.slides[e.activeIndex].firstChild.classList.add('current_slide')
       }, 1)
+    })
+    document.addEventListener('click', (event) => {
+      const clickedElement = event.target.closest('.action-to-game');
+
+      if (clickedElement) {
+        const installed = clickedElement.getAttribute('data-installed')
+        const id = clickedElement.getAttribute('data-id')
+        this.actionToGame(id,installed)
+      }
     })
   },
   computed: {
