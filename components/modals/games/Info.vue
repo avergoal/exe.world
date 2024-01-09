@@ -155,11 +155,11 @@ export default {
     }
   },
   mounted() {
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.dropdown') && !e.target.closest('.toggleshare')) {
-        this.shareOpen = false
-      }
-    })
+    // document.addEventListener('click', (e) => {
+    //   if (!e.target.closest('.dropdown') && !e.target.closest('.toggleshare')) {
+    //     this.shareOpen = false
+    //   }
+    // })
   },
   methods: {
     async loadGame() {

@@ -37,7 +37,6 @@ export default {
     fullscreen:false
   }),
   mounted() {
-    console.log('pix')
     this.fullscreen = !document.fullscreenElement?false:true
   },
   computed: {

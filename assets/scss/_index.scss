@@ -210,18 +210,27 @@
               line-height: 24px;
               color: $dWhite;
               letter-spacing: 0.001em;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 2; /* number of lines to show */
+              line-clamp: 2;
+              -webkit-box-orient: vertical;
               @media screen and (max-width: 768px) {
                 padding: 6px 0 0;
                 font-size: 14px;
                 line-height: 20px;
+                height: 46px;
               }
               @media screen and (max-width: 576px) {
                 font-size: 12px;
                 line-height: 16px;
+                height: 38px;
               }
               @media screen and (max-width: 480px) {
                 font-size: 10px;
                 line-height: 12px;
+                height: 30px;
               }
               br{
                 @media screen and (max-width: 576px) {

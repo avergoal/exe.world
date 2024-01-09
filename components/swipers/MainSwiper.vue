@@ -34,6 +34,7 @@ export default {
     config: {
       slidesPerView: 'auto',
       centeredSlides: true,
+      simulateTouch:false,
       loop: true,
       navigation: {
         prevEl: '.main_prev',
