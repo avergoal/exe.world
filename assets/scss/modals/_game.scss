@@ -77,9 +77,12 @@
           padding: 0 0 28px;
           &:last-child{
             padding: 0;
-            //button{
-            //  color: $dOrange;
-            //}
+            button{
+              color: $dOrange;
+              svg {
+                fill: $dOrange;
+              }
+            }
           }
           button{
             font-size: 16px;
@@ -672,10 +675,16 @@
             &:last-child{
               button{
                 color: $nOrange;
+                svg{
+                  fill: $nOrange;
+                }
               }
             }
             button{
               color: $nWhite;
+              svg{
+                fill: $white56;
+              }
             }
           }
         }

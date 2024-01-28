@@ -467,7 +467,7 @@ span.badge{
   touch-action: auto;
   -ms-touch-action: auto;
   @media screen and (max-width: 768px) {
-    overflow: auto;
+    //overflow: auto;
   }
   &.appscroll{
     position: relative;
