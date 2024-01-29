@@ -7,6 +7,9 @@ body{
   font-weight: 400;
   font-feature-settings: 'pnum' on, 'lnum' on;
   overflow: hidden;
+  &.no-scroll{
+    overflow: hidden;
+  }
 }
 *{
   box-sizing: border-box;
@@ -467,7 +470,7 @@ span.badge{
   touch-action: auto;
   -ms-touch-action: auto;
   @media screen and (max-width: 768px) {
-    //overflow: auto;
+    overflow: auto;
   }
   &.appscroll{
     position: relative;
