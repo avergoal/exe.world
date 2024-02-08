@@ -1,26 +1,20 @@
 <template>
 
   <div :class="{night: theme, gamepage: gamepage}" class="app" :page="page">
-    <Header/>
+    <Header />
     <!--    <div class="ps appscroll" :class="{clear: !profile}">-->
-    <perfect-scrollbar ref="scroll" class=" appscroll" :class="{clear: !profile}" v-if="!isMobile">
+    <perfect-scrollbar ref="scroll" class=" appscroll" :class="{clear: !profile}">
 
       <main class="content" id="content" ref="content">
-        <Nuxt/>
-        <Footer/>
+        <Nuxt />
+        <Footer />
       </main>
     </perfect-scrollbar>
-    <div v-else ref="scroll">
-      <main class="content" id="content" ref="content" >
-        <Nuxt/>
-        <Footer/>
-      </main>
-    </div>
 
     <!--    </div>-->
 
-    <Sidebar v-if="profile"/>
-    <Modals/>
+    <Sidebar v-if="profile" />
+    <Modals />
     <transition v-if="!loaded" name="loader">
       <LoaderAnimation :modal="modalLoader"/>
     </transition>
@@ -163,14 +157,6 @@ export default {
     }
   },
   computed: {
-    isMobile() {
-      if (process.client) {
-        // Check if it's a mobile device
-        return window?.matchMedia('(max-width: 576px)').matches;
-      } else {
-        return false;
-      }
-    },
     theme() {
       return this.$store.getters['app/theme']
     },

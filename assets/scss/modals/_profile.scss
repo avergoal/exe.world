@@ -281,6 +281,9 @@
         .ps{
           height: calc(100% - 120px);
           overflow: hidden;
+          @media screen and (max-width: 768px){
+            overflow: auto;
+          }
           form{
             position: relative;
             padding: 0 20px 0 0;
