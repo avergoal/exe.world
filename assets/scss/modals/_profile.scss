@@ -279,10 +279,10 @@
       }
       &.personal{
         .ps{
-          height: calc(100% - 120px);
+          height: calc(100% - 50px);
           overflow: hidden;
           @media screen and (max-width: 768px){
-            overflow: auto;
+            height: calc(100% - 120px);
           }
           form{
             position: relative;
@@ -624,6 +624,9 @@
         .ps{
           height: calc(100% - 50px);
           overflow: hidden;
+           @media screen and (max-width: 768px){
+            height: calc(100% - 120px);
+          }
           form{
             display: flex;
             flex-flow: row wrap;
@@ -714,6 +717,9 @@
       &.notifications{
         .ps{
           height: calc(100% - 50px);
+          @media screen and (max-width: 768px){
+            height: calc(100% - 120px);
+          }
           form{
             padding: 0 20px 0 0;
             .label{

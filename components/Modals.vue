@@ -175,14 +175,14 @@ export default {
       return this.$store.getters['app/modal']
     }
   },
-  watch:{
-  modal(newVal,oldVal){
-    if(newVal?.active){
-      document.body.classList.add('no-scroll')
-    }else {
-      document.body.classList.remove('no-scroll')
-    }
-  }
-  }
+  // watch:{
+  // modal(newVal,oldVal){
+  //   if(newVal?.active){
+  //     document.body.classList.add('no-scroll')
+  //   }else {
+  //     document.body.classList.remove('no-scroll')
+  //   }
+  // }
+  // }
 }
 </script>

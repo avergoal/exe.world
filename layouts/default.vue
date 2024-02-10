@@ -3,7 +3,7 @@
   <div :class="{night: theme, gamepage: gamepage}" class="app" :page="page">
     <Header />
     <!--    <div class="ps appscroll" :class="{clear: !profile}">-->
-    <perfect-scrollbar ref="scroll" class=" appscroll" :class="{clear: !profile}">
+    <perfect-scrollbar ref="scroll" class="appscroll" :class="{clear: !profile}">
 
       <main class="content" id="content" ref="content">
         <Nuxt />
