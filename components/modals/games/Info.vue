@@ -10,7 +10,7 @@
           <div v-html="game.title" class="title"></div>
           <div class="btns">
             <div class="item">
-              <button @click="goGame()" type="button" class="btn st2"><svg-icon name="ui/play"/><span>play</span></button>
+              <button @click="goGame()" type="button" class="btn st2"><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></button>
             </div>
             <div class="item" v-if="false">
               <button @click="copyPath" type="button" class="btn st3 toggleshare tooltip-btn">
@@ -37,7 +37,7 @@
               </div>
             </div>
             <div v-if="game.friends" class="friends">
-              <div class="label">Friends playing: <span v-html="game.friends.length"></span></div>
+              <div class="label">{{ $t('Game_install_modal_text_friends') }}: <span v-html="game.friends.length"></span></div>
               <ul>
                 <li v-for="(e, i) in game.friends" :key="i">
                   <button @click="$root.$emit('toggleModal', {target: 'userProfile', user: e.uid})" type="button">
@@ -51,7 +51,7 @@
       </div>
       <perfect-scrollbar ref="scroll" class="gameinfo">
         <div v-if="game.media.length" class="screens">
-          <div class="boxtitle">Screenshots</div>
+          <div class="boxtitle">{{ $t('Game_install_modal_text_screenshots') }}</div>
           <div class="swiperbox">
             <swiper :options="config" ref="screens">
               <swiper-slide v-for="(e, i) in screenshot" :key="i">
@@ -75,7 +75,7 @@
       </perfect-scrollbar>
       <div class="bottom-btns">
         <div class="item">
-          <button @click="goGame()" type="button" class="btn st2"><svg-icon name="ui/play"/><span>play</span></button>
+          <button @click="goGame()" type="button" class="btn st2"><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></button>
         </div>
         <div class="item" v-if="false">
           <button @click="shareOpen = !shareOpen" type="button" class="btn st3 toggleshare">

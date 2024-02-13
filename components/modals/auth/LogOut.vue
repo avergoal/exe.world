@@ -4,12 +4,12 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">Log Out</div>
+    <div class="top">{{$t('Modal_logout')}}</div>
     <div class="alert" v-if="errors.length" v-for="error in errors">{{error}}</div>
-    <div class="text">Are you sure you want to log out of your account?</div>
+    <div class="text">{{$t('Modal_logout_text')}}</div>
     <div class="btns">
-      <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">cancel</button>
-      <button @click="logOut()" type="button" class="btn st3">Yes, log out</button>
+      <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{$t('Button_cancel')}}</button>
+      <button @click="logOut()" type="button" class="btn st3">{{$t('Button_logout')}}</button>
     </div>
   </div>
 </div>

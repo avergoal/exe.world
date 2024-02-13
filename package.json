@@ -20,6 +20,7 @@
     "form-data": "^4.0.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.15.3",
+    "nuxt-i18n": "^6.28.1",
     "swiper": "6.7.5",
     "vue-avatar-cropper": "^3.0.6",
     "vue-awesome-swiper": "4.1.1",

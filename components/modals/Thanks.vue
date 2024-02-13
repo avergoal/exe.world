@@ -4,9 +4,9 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="title">Thank You</div>
-    <div class="desc">Your request has been sent, if necessary, we will contact you.</div>
-    <button type="button" class="btn btn_small st2">continue</button>
+    <div class="title">{{ $t('Modal_help_sent_confirm') }}</div>
+    <div class="desc">{{ $t('Modal_help_send_confirm_text') }}</div>
+    <button type="button" class="btn btn_small st2">{{ $t('Button_continue') }}</button>
   </div>
 </div>
 </template>

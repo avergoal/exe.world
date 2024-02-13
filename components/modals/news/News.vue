@@ -4,7 +4,7 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">News</div>
+    <div class="top">{{$t('News')}}</div>
     <perfect-scrollbar ref="scroll" class="filters">
       <ul>
         <li v-for="(e, i) in filters.list" :key="i">

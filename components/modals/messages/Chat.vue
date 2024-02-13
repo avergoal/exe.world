@@ -14,7 +14,7 @@
         <div v-if="user.blacklist_status === 1" class="online">blacklisted</div>
         <div v-else :class="{active: user.user.online}" class="online">
           <span></span>
-          {{ (user.user.online ? 'Online' : 'Offline') }}
+          {{ (user.user.online ? $t('Userpage_status') : 'Offline') }}
         </div>
       </div>
       <div class="nav">
@@ -31,13 +31,13 @@
               <li>
                 <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: user.user})" type="button">
                   <div class="ico"><svg-icon name="ui/blacklist" /></div>
-                  <span>Block User</span>
+                  <span>{{$t('Userpage_dropdown_menu_block')}}</span>
                 </button>
               </li>
               <li>
                 <button @click="$root.$emit('toggleModal', {target: 'messagesRemove', code: messages.code, uid: user.user.uid})" type="button">
                   <div class="ico"><svg-icon name="ui/remove" /></div>
-                  <span>Delete Chat</span>
+                  <span>{{$t('Messages_dialog_with_user_dropdown_menu_delete_chat')}}</span>
                 </button>
               </li>
             </ul>
@@ -118,7 +118,7 @@
           </div>
         </div>
       </emoji-picker>
-      <input v-model="message" v-on:keydown.enter.prevent="sendMessage()" type="text" name="" value="" placeholder="Write message">
+      <input v-model="message" v-on:keydown.enter.prevent="sendMessage()" type="text" name="" value="" :placeholder="$t('Messages_dialog_with_user_input')">
       <button @click="sendMessage()" type="button" class="submit"><svg-icon name="ui/send" /></button>
     </form>
   </div>

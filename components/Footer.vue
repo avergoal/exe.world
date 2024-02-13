@@ -1,10 +1,10 @@
 <template>
 <footer class="main">
-  <div class="copywrite">© {{ getYear }} EXE. WORLD | All rights reserved</div>
+  <div class="copywrite">© {{ getYear }} {{ $t('Footer_TEXT_copyright') }}</div>
   <ul>
-    <li><nuxt-link to="/about">About</nuxt-link></li>
-    <li><button @click="$root.$emit('toggleModal', {target: 'help'})" type="button">Help</button></li>
-    <li><a href="https://dev.exe.world" target="_blank">For Developers</a></li>
+    <li><nuxt-link to="/about">{{ $t('Footer_about') }}</nuxt-link></li>
+    <li><button @click="$root.$emit('toggleModal', {target: 'help'})" type="button">{{ $t('Footer_help') }}</button></li>
+    <li><a href="https://dev.exe.world" target="_blank">{{ $t('Footer_developers') }}</a></li>
   </ul>
 </footer>
 </template>

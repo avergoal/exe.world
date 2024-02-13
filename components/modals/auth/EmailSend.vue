@@ -4,9 +4,9 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">Email Sent</div>
+    <div class="top">{{$t('Modal_email_verification')}}</div>
     <div class="text">Email with a link to reset your password has been sent. <br>If there is no message for a long time, check the Spam folder</div>
-    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">continue</button>
+    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{$t('Button_continue')}}</button>
   </div>
 </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
 <div class="index_page">
-  <div class="pagetitle">My games</div>
+  <div class="pagetitle">{{ $t('MENU_mygames') }}</div>
   <div class="categoriesbox">
     <ul v-if="games.length" class="category">
       <li v-for="(e, i) in games" :key="i" class="gamecard f">
@@ -22,7 +22,7 @@
         <img v-if="theme" src="~/assets/illustration/pad_inverse.svg" />
         <img v-else src="~/assets/illustration/pad.svg" />
       </div>
-      <div class="desc">You don't have games yet. Use the search bar to find them.</div>
+      <div class="desc">{{ $t('Mygames_nogames_text') }}</div>
     </div>
   </div>
 </div>

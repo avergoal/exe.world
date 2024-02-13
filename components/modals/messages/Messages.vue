@@ -4,11 +4,11 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">Messages</div>
+    <div class="top">{{ $t('Dialogs') }}</div>
     <form action="">
       <fieldset>
         <svg-icon name="ui/search" />
-        <input v-model="query" @input="setSearchResults()" type="text" name="" value="" placeholder="Search contacts">
+        <input v-model="query" @input="setSearchResults()" type="text" name="" value="" :placeholder="$t('Messages_search_input')">
       </fieldset>
     </form>
     <perfect-scrollbar ref="scroll">

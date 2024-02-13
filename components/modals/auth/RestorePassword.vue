@@ -6,15 +6,15 @@
   <div class="modalcontent">
     <div class="top flex">
       <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/back" /></button>
-      <span>Restore password</span>
+      <span>{{$t('Modal_restore_password')}}</span>
     </div>
     <form @submit.prevent="restorePassword()" action="" class="st1">
-      <div class="desc">Enter the E-mail or phone number specified during registration for password recovery</div>
+      <div class="desc">{{ $t('FORMS_restore_password_TEXT') }}</div>
       <fieldset>
         <input v-model="emailorphone" :class="{error: error.show}" type="text" name="" value="" placeholder="E-mail or Phone">
         <span v-if="error.show" v-html="error.text" class="error"></span>
       </fieldset>
-      <div class="btns"><button type="submit" class="btn st2">restore password</button></div>
+      <div class="btns"><button type="submit" class="btn st2">{{ $t('Button_restore') }}</button></div>
     </form>
   </div>
 </div>

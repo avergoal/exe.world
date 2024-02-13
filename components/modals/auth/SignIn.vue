@@ -10,21 +10,21 @@
     <form @submit.prevent="signIn()" action="">
       <div class="alert" v-if="errors.user_not_found.show" v-html="errors.user_not_found.text"></div>
       <fieldset>
-        <input v-model="model.emailorphone" :class="{error: errors.no_required_fields.show || errors.user_not_found.show}" type="text" placeholder="E-mail or Phone">
+        <input v-model="model.emailorphone" :class="{error: errors.no_required_fields.show || errors.user_not_found.show}" type="text" :placeholder="$t('FORMS_login_input_email')">
         <span v-if="errors.no_required_fields.show" v-html="errors.no_required_fields.text" class="error"></span>
       </fieldset>
       <fieldset>
-        <input v-model="model.pass" :class="{error: errors.no_required_fields.show || errors.user_not_found.show}" :type="passwordType" placeholder="Password">
+        <input v-model="model.pass" :class="{error: errors.no_required_fields.show || errors.user_not_found.show}" :type="passwordType" :placeholder="$t('FORMS_login_input_password')">
         <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
         <span v-if="errors.no_required_fields.show" v-html="errors.no_required_fields.text" class="error"></span>
       </fieldset>
       <div class="btns">
-        <button type="submit" class="btn st2">Log in</button>
-        <button @click="$root.$emit('toggleModal', {target: 'restorePassword'})" type="button" class="link">forgot password?</button>
+        <button type="submit" class="btn st2">{{ $t('Button_login') }}</button>
+        <button @click="$root.$emit('toggleModal', {target: 'restorePassword'})" type="button" class="link">{{ $t('FORMS_login_forgotpassword') }}</button>
       </div>
       <div class="signup">
-        <div class="text">Don't have an account yet?</div>
-        <button @click="$root.$emit('toggleModal', {target: 'signUp'})" type="button">sign up</button>
+        <div class="text">{{ $t('FORMS_guest_ingame_login_text') }}</div>
+        <button @click="$root.$emit('toggleModal', {target: 'signUp'})" type="button">{{ $t('FORMS_login_signup') }}</button>
       </div>
 <!--      <div class="social">-->
 <!--        <div class="text">Login via services</div>-->

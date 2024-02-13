@@ -7,7 +7,7 @@
         <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games">
       </fieldset>
       <div class="btns">
-        <button @click="$root.$emit('changeTemplate', 'searchCategories')" type="button">games</button>
+        <button @click="$root.$emit('changeTemplate', 'searchCategories')" type="button">{{ $t('Button_news_games') }}</button>
         <button class="active" type="button">people</button>
       </div>
     </div>

@@ -4,8 +4,8 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent removedbox">
-    <div class="desc">Your message has been sent successfully</div>
-    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">continue</button>
+    <div class="desc">{{ $t('Modal_help_send_confirm_text') }}</div>
+    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
   </div>
 </div>
 </template>

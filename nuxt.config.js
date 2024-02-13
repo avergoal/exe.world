@@ -40,6 +40,7 @@ export default {
   plugins: [
     { src: '~/plugins/axios' },
     { src: '~/plugins/data', mode: 'server' },
+    { src: '~/plugins/i18n' },
     { src: '~/plugins/plugins' },
     { src: '~/plugins/services' },
     { src: '~/plugins/templates' },
@@ -77,6 +78,26 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
+    ['nuxt-i18n',
+     {
+  locales: [
+    {
+      code: 'en',
+      iso: 'en-US',
+      name: 'English',
+    },
+    // ...
+  ],
+    defaultLocale: 'en',
+    vueI18n: {
+    fallbackLocale: 'en',
+    // Remove the messages section here
+  },
+  interpolate: {
+    prefix: '{',
+    suffix: '}',
+  },
+},],
     [
       'nuxt-compress',
       {

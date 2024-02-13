@@ -1,6 +1,6 @@
 <template>
 <div class="aboutpagebox">
-  <div v-html="data.title" class="pagetitle">About <span class="exe">Exe.world</span></div>
+  <div v-html="data.title" class="pagetitle"></div>
   <div class="info">
     <div v-html="data.text" class="text"></div>
     <div class="img">

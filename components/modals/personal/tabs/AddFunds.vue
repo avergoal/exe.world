@@ -3,7 +3,7 @@
   <div class="title">
     <button v-if="modal.fromGame" @click="$root.$emit('toggleModal', {target:'gameBuy',fromGame:true})" type="button"><svg-icon name="ui/back" /></button>
     <button v-else @click="$root.$emit('toggleModalTab', 'wallet')" type="button"><svg-icon name="ui/back" /></button>
-    <span>Add Funds</span>
+    <span>{{ $t('Button_add_funds') }}</span>
   </div>
   <perfect-scrollbar ref="scroll_tab">
     <ul class="select">
@@ -12,7 +12,7 @@
         {{ method.pid }}</button></li>
     </ul>
     <form @submit.prevent action="">
-      <div class="label">Balance Quantity</div>
+      <div class="label">{{ $t('Profile_balance') }}</div>
       <ul class="radio">
         <li v-for="value in paymentMethods[selected]?.values">
           <input v-model="balanceQuantity" type="radio" name="payment" :value="value">
@@ -20,10 +20,10 @@
         </li>
       </ul>
       <fieldset>
-        <input v-model="otherQuantity" @change="checkLimit" type="number" placeholder="Other quantity">
+        <input v-model="otherQuantity" @change="checkLimit" type="number" :placeholder="$t('Profile_balance_addfunds_input')">
         <span v-if="error" v-html="error" class="error"></span>
       </fieldset>
-      <button @click="submit()" type="button" class="btn st2">Continue</button>
+      <button @click="submit()" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
     </form>
   </perfect-scrollbar>
 </div>

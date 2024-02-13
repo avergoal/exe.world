@@ -7,7 +7,7 @@
     <div class="title">Delete Game</div>
     <div class="desc">Are you sure you want to delete <strong v-html="modal.name"></strong> from your games?</div>
     <div class="btns">
-      <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">cancel</button>
+      <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{ $t('Button_cancel') }}</button>
       <button @click="removeGame()" type="button" class="btn st3">delete</button>
     </div>
   </div>

@@ -12,7 +12,7 @@
           <!-- <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button> -->
 <!--          <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>-->
 <!--          <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>-->
-          <button class="action-to-game" :data-id="e.gid"  :data-installed="e.installed" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+          <button class="action-to-game" :data-id="e.gid"  :data-installed="e.installed" type="button"><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></button>
         </div>
       </div>
     </swiper-slide>

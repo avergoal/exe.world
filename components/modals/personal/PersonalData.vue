@@ -17,7 +17,7 @@
       <div class="theme">
         <div class="label">
           <svg-icon name="ui/moon" />
-          <span>Dark Theme</span>
+          <span>{{ $t('Profile_dark') }}</span>
         </div>
         <div class="switcher">
           <input v-model="darkTheme" @change="switchTheme()" type="checkbox" name="" value="" id="switcher" :checked="theme">
@@ -28,13 +28,13 @@
         <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'personal')" :class="{active: modal.tab == 'personal'}" type="button">
             <div class="ico"><svg-icon name="ui/personal_data" /></div>
-            <span>Personal Data</span>
+            <span>{{ $t('Header_profile_dropdown_menu_data') }}</span>
           </button>
         </li>
         <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'access')" :class="{active: modal.tab == 'access'}" type="button">
             <div class="ico"><svg-icon name="ui/access" /></div>
-            <span>Access Settings</span>
+            <span>{{ $t('Header_profile_dropdown_menu_access') }}</span>
           </button>
         </li>
 <!--        <li v-if="!isGuest">-->
@@ -46,19 +46,19 @@
         <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'blacklist')" :class="{active: modal.tab == 'blacklist'}" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
-            <span>Blacklist</span>
+            <span>{{ $t('Header_profile_dropdown_menu_blacklist') }}</span>
           </button>
         </li>
         <li>
           <button @click="$root.$emit('toggleModalTab', 'wallet')" :class="{active: modal.tab == 'wallet' || modal.tab == 'addfunds'}" type="button">
             <div class="ico"><svg-icon name="ui/wallet" /></div>
-            <span>Balance</span>
+            <span>{{ $t('Header_profile_dropdown_menu_balance') }}</span>
           </button>
         </li>
         <li class="li-logout">
           <button @click="$root.$emit('toggleModal', {target: 'logOut'})" type="button">
             <div class="ico"><svg-icon name="ui/logout" /></div>
-            <span>Log Out</span>
+            <span>{{ $t('Header_profile_dropdown_menu_logout') }}</span>
           </button>
         </li>
       </ul>

@@ -60,7 +60,7 @@
                     <div class="ico">
                       <svg-icon name="ui/user_remove"/>
                     </div>
-                    <span>Remove from friends</span>
+                    <span>{{$t('Friends_user_dropdown_menu_remove')}}</span>
                   </button>
                 </li>
                 <li>
@@ -76,7 +76,7 @@
           </div>
           <ul v-if="profile.blacklist_status !== 2" class="more">
             <li>
-              <div class="label">Age</div>
+              <div class="label">{{ $t('Userpage_text_age') }}</div>
               <div v-if="profile.user.age.day !=='00' && profile.user.age.month !=='00' && profile.user.age.year !=='00'" v-html="getAge().age + ' years old'" class="desc"></div>
             </li>
             <li>
@@ -108,7 +108,7 @@
                     <div class="ico">
                       <svg-icon name="ui/blacklist"/>
                     </div>
-                    <span>Block User</span>
+                    <span>{{ $t('Userpage_dropdown_menu_block') }}</span>
                   </button>
                 </li>
                 <li>
@@ -116,7 +116,7 @@
                     <div class="ico">
                       <svg-icon name="ui/report"/>
                     </div>
-                    <span>Report</span>
+                    <span>{{ $t('Userpage_dropdown_menu_report') }}</span>
                   </button>
                 </li>
               </ul>
@@ -140,7 +140,7 @@
                 <img v-if="theme" src="~/assets/illustration/signin_inverse.svg"/>
                 <img v-else src="~/assets/illustration/signin.svg"/>
               </div>
-              <div class="desc">You don't have friends and games yet. Use the search bar to find them.</div>
+              <div class="desc">{{ $t('Mygames_nogames_text') }}</div>
             </div>
           </perfect-scrollbar>
           <div v-else class="blocked">

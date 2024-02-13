@@ -5,13 +5,12 @@
     </button>
     <div class="modalcontent">
       <div class="top">
-       Restore password
+        {{$t('Modal_restore_password')}}
       </div>
       <div class="desc">
-
-          Instructions for changing the password has been sent
+        {{$t('Modal_restore_password_text')}}
       </div>
-      <button @click="toggleModal" type="button" class="btn st2">continue</button>
+      <button @click="toggleModal" type="button" class="btn st2">{{$t('Button_continue')}}</button>
     </div>
   </div>
 </template>

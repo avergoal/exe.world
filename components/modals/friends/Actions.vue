@@ -2,7 +2,7 @@
 <div class="nav">
   <div class="item">
     <button @click="$root.$emit('toggleModal', {target: 'messagesChat', user: user.uid})" type="button" class="btn st3 mobile">
-      <span>write</span>
+      <span>{{ $t('Button_write') }}</span>
       <svg-icon name="ui/pencil" class="mobile"/>
     </button>
   </div>
@@ -19,19 +19,19 @@
         <li>
           <button @click="$root.$emit('toggleModal', {target: 'friendsRemove', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/user_remove" /></div>
-            <span>Remove From Friends</span>
+            <span>{{ $t('Friends_user_dropdown_menu_remove') }}</span>
           </button>
         </li>
         <li>
           <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
-            <span>Block User</span>
+            <span>{{ $t('Friends_user_dropdown_menu_block') }}</span>
           </button>
         </li>
         <li>
           <button @click="$root.$emit('toggleModal', {target: 'userReport', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/report" /></div>
-            <span>Report</span>
+            <span>{{ $t('Friends_user_dropdown_menu_report') }}</span>
           </button>
         </li>
       </ul>

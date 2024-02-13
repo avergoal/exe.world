@@ -2,7 +2,7 @@
 <div class="tab notifications">
   <div class="title">
     <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
-    Notifications
+    {{ $t('Header_notifications') }}
   </div>
   <perfect-scrollbar ref="scroll_tab">
     <form @submit.prevent action="">
@@ -44,7 +44,7 @@
           </label>
         </li>
       </ul>
-      <button @click="saveData()" type="button" class="btn st2">Save changes</button>
+      <button @click="saveData()" type="button" class="btn st2">{{ $t('Button_save') }}</button>
     </form>
   </perfect-scrollbar>
 </div>

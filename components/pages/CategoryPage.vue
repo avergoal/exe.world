@@ -10,7 +10,7 @@
             <img v-lazy="e.poster.default" :alt="e.title">
             <!-- <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button> -->
             <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
-            <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></button>
           </div>
           <div class="info">
             <div v-html="e.title" class="title"></div>

@@ -4,7 +4,7 @@
       <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button">
         <svg-icon name="ui/back" />
       </button>
-      Personal data
+      {{$t('Header_profile_dropdown_menu_data')}}
     </div>
     <perfect-scrollbar ref="scroll_tab">
       <form action="">
@@ -12,14 +12,14 @@
           <div class="item">
             <input v-model="model.firstname" :class="{error: errors.first_name_too_short.open}" type="text" name=""
               value="" id="firstname">
-            <label for="firstname">First Name</label>
+            <label for="firstname">{{ $t('Profile_data_input_name') }}</label>
             <span v-if="errors.first_name_too_short.open" v-html="errors.first_name_too_short.text"
               class="error"></span>
           </div>
           <div class="item">
             <input v-model="model.lastname" :class="{error: errors.last_name_too_short.open}" type="text" name=""
               value="" id="lastname">
-            <label for="lastname">Last Name</label>
+            <label for="lastname">{{ $t('Profile_data_input_surname') }}</label>
             <span v-if="errors.last_name_too_short.open" v-html="errors.last_name_too_short.text" class="error"></span>
           </div>
         </fieldset>
@@ -94,7 +94,7 @@
             </perfect-scrollbar>
           </div>
         </fieldset>
-        <button v-if="loaded" @click="saveData()" type="button" class="btn st2">Save changes</button>
+        <button v-if="loaded" @click="saveData()" type="button" class="btn st2">{{ $t('Button_save') }}</button>
         <!-- <div :class="{loaded: !loader || !loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div> -->
       </form>
     </perfect-scrollbar>

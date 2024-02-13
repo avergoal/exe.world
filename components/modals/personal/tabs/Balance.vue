@@ -2,7 +2,7 @@
 <div class="tab balance">
   <div class="title">
     <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
-    Balance
+    {{ $t('Header_balance') }}
   </div>
   <perfect-scrollbar ref="scroll">
     <div class="inform">
@@ -10,7 +10,7 @@
         <div v-html="(balance) ? balance : '0'" class="balance"></div>
         <button @click="$root.$emit('toggleModalTab', 'addfunds')" type="button" class="btn">
           <svg-icon name="ui/plus" />
-          <span>Add funds</span>
+          <span> {{ $t('Profile_balance_addfunds') }}</span>
         </button>
       </div>
       <div class="desc">Dollars ‒Universal currency of the game portal EXE.WORLD. <br>With it, you can pay for additional features in games and applications.</div>
