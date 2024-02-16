@@ -12,7 +12,7 @@
       <form @submit.prevent action="">
         <fieldset>
           <svg-icon class="search" name="ui/search"/>
-          <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games and users">
+          <input v-model="query" @input="goSearch()" type="text" name="" value="" :placeholder="$t('Search_input_text')">
           <button @click="resetSearch()" type="button">
             <svg-icon class="close" name="ui/close"/>
           </button>
@@ -40,8 +40,8 @@
               <img v-else src="~/assets/illustration/notfound.svg"/>
             </div>
             <div class="text">
-              <b>We did not find any games for your request</b>
-              <p>Try changing your search text</p>
+              <b>{{ $t('Search_noresult_text_1') }}</b>
+              <p>{{ $t('Search_noresult_text_2') }}</p>
             </div>
           </div>
           <UsersSwiper v-if="query !== null && loaded && results.peoples.length" :key="JSON.stringify(results.peoples)"
@@ -53,8 +53,8 @@
               <img v-else src="~/assets/illustration/notfound.svg"/>
             </div>
             <div class="text">
-              <b>We did not find people for your request</b>
-              <p>Try changing your search text</p>
+              <b>{{ $t('Search_noresult_text_1') }}</b>
+              <p>{{ $t('Search_noresult_text_2') }}</p>
             </div>
           </div>
           <div v-if="query !== null && loaded && !results.peoples.length && !results.games.length"
@@ -64,8 +64,8 @@
               <img v-else src="~/assets/illustration/notfound.svg"/>
             </div>
             <div class="text">
-              <b>We did not find anything for your request</b>
-              <p>Try changing your search text</p>
+              <b>{{ $t('Search_noresult_text_1') }}</b>
+              <p>{{ $t('Search_noresult_text_2') }}</p>
             </div>
           </div>
         </div>

@@ -22,9 +22,9 @@
       </div>
     </client-only>
     <div v-if="errors.active" class="errors">
-      <p v-if="errors.sizes">The image size cannot be less than 220x220 pixels</p>
-      <p v-if="errors.mimes">Only allowed to download (*.jpg, *.jpeg or *.png) files</p>
-      <p v-if="errors.submit">You have not selected an image</p>
+      <p v-if="errors.sizes">{{ $t('Modal_photo_error_size') }}</p>
+      <p v-if="errors.mimes">{{ $t('Modal_photo_error_extensions') }}</p>
+      <p v-if="errors.submit">{{$t('Modal_photo_error_download')}}</p>
     </div>
     <div class="btns">
       <button @click="$root.$emit('toggleModal', {target: 'personalData'})" type="button" class="btn st3">{{$t('Button_cancel')}}</button>

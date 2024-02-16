@@ -23,7 +23,7 @@
             <span v-if="errors.last_name_too_short.open" v-html="errors.last_name_too_short.text" class="error"></span>
           </div>
         </fieldset>
-        <div v-if="loaded" class="label">Birth Date</div>
+        <div v-if="loaded" class="label">{{$t('Userpage_text_dateofbirth')}}</div>
         <fieldset v-if="loaded" class="date">
           <div class="selectbox">
             <button @click="toggleSelectbox(0)" v-html="(model.birthdate.d) ? Number(model.birthdate.d) : ''"
@@ -59,15 +59,15 @@
             </perfect-scrollbar>
           </div>
         </fieldset>
-        <div v-if="loaded" class="label">Gender</div>
+        <div v-if="loaded" class="label">{{ $t('Profile_data_gender_text') }}</div>
         <fieldset v-if="loaded" class="radio">
           <div class="item">
             <input v-model="model.sex" type="radio" name="gender" value="0" id="man" :checked="model.sex === 0">
-            <label for="man">Man</label>
+            <label for="man">{{ $t('Profile_data_gender_radiobutton_1') }}</label>
           </div>
           <div class="item">
             <input v-model="model.sex" type="radio" name="gender" value="1" id="woman" :checked="model.sex === 1">
-            <label for="woman">Woman</label>
+            <label for="woman">{{ $t('Profile_data_gender_radiobutton_2') }}</label>
           </div>
         </fieldset>
         <fieldset v-if="loaded" class="location">

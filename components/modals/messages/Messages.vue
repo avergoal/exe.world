@@ -33,8 +33,8 @@
             <img v-else src="~/assets/illustration/messages.svg" />
           </div>
           <div class="text">
-            <b>There are no messages here yet</b>
-            <p>Write something</p>
+            <b>{{ $t('Messages_nodialogs_text_1') }}</b>
+            <p>{{ $t('Messages_nodialogs_text_2') }}</p>
           </div>
         </li>
       </ul>

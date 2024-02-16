@@ -11,7 +11,7 @@
     <form @submit.prevent="restorePassword()" action="" class="st1">
       <div class="desc">{{ $t('FORMS_restore_password_TEXT') }}</div>
       <fieldset>
-        <input v-model="emailorphone" :class="{error: error.show}" type="text" name="" value="" placeholder="E-mail or Phone">
+        <input v-model="emailorphone" :class="{error: error.show}" type="text" name="" value="" :placeholder="$t('FORMS_restore_input_password')">
         <span v-if="error.show" v-html="error.text" class="error"></span>
       </fieldset>
       <div class="btns"><button type="submit" class="btn st2">{{ $t('Button_restore') }}</button></div>

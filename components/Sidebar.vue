@@ -27,13 +27,7 @@
 export default {
 	name: 'SidebarComponent',
   data: () => ({
-    menu: [
-      {title: this.$t('MENU_allgames'), target: 'index', link: '/', ico: 'sidebar/all_games', type: 'link'},
-      {title: this.$t('MENU_mygames'), target: 'myGames', link: '/', ico: 'sidebar/my_games', type: 'link'},
-      {title: this.$t('MENU_messages'), target: 'messages', ico: 'sidebar/messages', type: 'button'},
-      {title: this.$t('MENU_friends'), target: 'friends', ico: 'sidebar/friends', type: 'button'},
-      {title: this.$t('MENU_news'), target: 'news', ico: 'sidebar/news', type: 'button'}
-    ]
+
   }),
   methods: {
     setRoute(target) {
@@ -51,6 +45,15 @@ export default {
     }
   },
   computed: {
+    menu(){
+      return [
+        {title: this.$i18n.t('MENU_allgames'), target: 'index', link: '/', ico: 'sidebar/all_games', type: 'link'},
+        {title: this.$t('MENU_mygames'), target: 'myGames', link: '/', ico: 'sidebar/my_games', type: 'link'},
+        {title: this.$t('MENU_messages'), target: 'messages', ico: 'sidebar/messages', type: 'button'},
+        {title: this.$t('MENU_friends'), target: 'friends', ico: 'sidebar/friends', type: 'button'},
+        {title: this.$t('MENU_news'), target: 'news', ico: 'sidebar/news', type: 'button'}
+      ]
+    },
     page() {
       return this.$store.getters['app/page']
     },

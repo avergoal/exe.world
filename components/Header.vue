@@ -17,7 +17,7 @@
               <svg-icon name="ui/close" />
             </button>
           </li>
-          <li class="title-cell"><svg-icon name="logo" /><span>© {{ getYear }} EXE. WORLD All rights reserved</span></li>
+          <li class="title-cell"><svg-icon name="logo" /><span>© {{ getYear }} {{ $t('Footer_TEXT_copyright') }}</span></li>
           <li class="list-cell">
             <nuxt-link to="/about">{{ $t('Footer_about') }}</nuxt-link>
           </li>

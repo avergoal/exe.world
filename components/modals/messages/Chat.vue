@@ -11,10 +11,10 @@
       </button>
       <div class="info">
         <div v-html="user.user.user_name" class="name"></div>
-        <div v-if="user.blacklist_status === 1" class="online">blacklisted</div>
+        <div v-if="user.blacklist_status === 1" class="online">{{ $t('Userpage_status_3') }}</div>
         <div v-else :class="{active: user.user.online}" class="online">
           <span></span>
-          {{ (user.user.online ? $t('Userpage_status') : 'Offline') }}
+          {{ (user.user.online ? $t('Userpage_status') : $t('Userpage_status_2')) }}
         </div>
       </div>
       <div class="nav">
@@ -79,8 +79,8 @@
             <img v-else src="~/assets/illustration/messages.svg" />
           </div>
           <div class="text">
-            <b>There are no messages here yet</b>
-            <p>Write something</p>
+            <b>{{ $t('Messages_nodialogs_text_1') }}</b>
+            <p>{{ $t('Messages_nodialogs_text_2') }}</p>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent removedbox">
-    <div class="desc">User <strong v-html="modal.user.name"></strong> has been blocked</div>
+    <div class="desc" v-html="$t('Modal_friends_block_text_3',modal.user.name)"></div>
     <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
   </div>
 </div>

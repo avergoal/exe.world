@@ -35,10 +35,10 @@
         </fieldset>
         <div class="btns">
           <button type="submit" class="btn st2">{{ $t('FORMS_login_signup') }}</button>
-          <a @click="privacy" class="btns__privacy">privacy policy</a>
+          <a @click="privacy" class="btns__privacy">{{$t('FORMS_signup_privacy')}}</a>
         </div>
         <div class="signup">
-          <div class="text">Already have an account?</div>
+          <div class="text">{{ $t('FORMS_signup_TEXT') }}</div>
           <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button">{{ $t('Button_login') }}</button>
         </div>
 <!--        <div class="social">-->

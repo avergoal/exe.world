@@ -49,8 +49,8 @@
               <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
-              <b>You don't have friends yet</b>
-              <p>Use the search bar to find them</p>
+              <b>{{ $t('Friends_nofriends_allfriends_text_1') }}</b>
+              <p>{{ $t('Friends_nofriends_allfriends_text_2') }}</p>
             </div>
           </li>
         </ul>
@@ -75,8 +75,8 @@
               <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
-              <b>You don't have friend requests yet</b>
-              <p>Use the search bar to find them</p>
+              <b>{{ $t('Friends_nofriends_friendsrequest_text_1') }}</b>
+              <p>{{ $t('Friends_nofriends_friendsrequest_text_2') }}</p>
             </div>
           </li>
         </ul>
@@ -100,8 +100,8 @@
               <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
-              <b>You don't have friends yet</b>
-              <p>Use the search bar to find them</p>
+              <b>{{ $t('Friends_nofriends_myrequest_text_1') }}</b>
+              <p>{{ $t('Friends_nofriends_myrequest_text_2') }}</p>
             </div>
           </li>
         </ul>

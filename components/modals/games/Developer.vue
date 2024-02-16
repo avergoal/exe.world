@@ -5,7 +5,7 @@
     </button>
     <div class="modalcontent menu">
       <div class="topinfo">
-        <div class="name">Developer</div>
+        <div class="name">{{ $t('Game_modal_developer') }}</div>
       </div>
       <div class="desc" v-html="modal.developer"></div>
     </div>

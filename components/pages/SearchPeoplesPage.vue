@@ -27,8 +27,8 @@
       <img v-else src="~/assets/illustration/notfound.svg" />
     </div>
     <div class="text">
-      <b>We did not find anything for your request</b>
-      <p>Try changing your search text</p>
+      <b>{{ $t('Search_noresult_text_1') }}</b>
+      <p>{{ $t('Search_noresult_text_2') }}</p>
     </div>
   </div>
 </div>

@@ -62,8 +62,8 @@
             <img v-else src="~/assets/illustration/notfound.svg" />
           </div>
           <div class="text">
-            <b>You have no news yet</b>
-            <p>Play games, make friends, and something interesting will appear here</p>
+            <b>{{ $t('News_no_news_allnews_text_1') }}</b>
+            <p>{{ $t('News_no_news_allnews_text_2') }}</p>
           </div>
         </li>
       </ul>

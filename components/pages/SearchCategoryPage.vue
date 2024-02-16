@@ -18,7 +18,7 @@
           <div class="img">
             <img v-lazy="e.poster.default" :alt="e.title">
 <!--            <button v-if="!user" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button>-->
-            <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><svg-icon name="ui/play"/><span>play</span></nuxt-link>
+            <nuxt-link v-if="e.installed" :to="'/game/' + e.gid"><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></nuxt-link>
             <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e.gid})" type="button"><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></button>
           </div>
           <div class="info">
@@ -35,8 +35,8 @@
       <img v-else src="~/assets/illustration/notfound.svg" />
     </div>
     <div class="text">
-      <b>We did not find anything for your request</b>
-      <p>Try changing your search text</p>
+      <b>{{ $t('Search_noresult_text_1') }}</b>
+      <p>{{ $t('Search_noresult_text_2') }}</p>
     </div>
   </div>
 </div>

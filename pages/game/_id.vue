@@ -31,8 +31,8 @@
 </div>
 <div v-else-if="!isExist" class="no-game">
   <img src="~/assets/illustration/game_not_found.svg"  alt="game_not_found"/>
-  <h2>Oops...game not found</h2>
-  <p>go to the games catalog or use the search bar</p>
+  <h2>{{ $t('Gamepage_nogame_text_1') }}</h2>
+  <p>{{ $t('Gamepage_nogame_text_2') }}</p>
 </div>
 
 </template>

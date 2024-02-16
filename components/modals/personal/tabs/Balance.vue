@@ -13,9 +13,9 @@
           <span> {{ $t('Profile_balance_addfunds') }}</span>
         </button>
       </div>
-      <div class="desc">Dollars ‒Universal currency of the game portal EXE.WORLD. <br>With it, you can pay for additional features in games and applications.</div>
+      <div class="desc" v-html="$t('Profile_balance_text')"></div>
     </div>
-    <div class="label">History</div>
+    <div class="label">{{ $t('Profile_balance_history') }}</div>
     <ul class="list">
       <li v-for="(e, i) in history" :key="i">
         <div v-html="e.date" class="date"></div>

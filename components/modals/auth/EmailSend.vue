@@ -5,7 +5,7 @@
   </button>
   <div class="modalcontent">
     <div class="top">{{$t('Modal_email_verification')}}</div>
-    <div class="text">Email with a link to reset your password has been sent. <br>If there is no message for a long time, check the Spam folder</div>
+    <div class="text" v-html="$t('Modal_email_verification_text')"></div>
     <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{$t('Button_continue')}}</button>
   </div>
 </div>
