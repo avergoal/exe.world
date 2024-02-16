@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="friends">
-      <div class="titlelist">Friends <strong v-html="'• '+profile.friends_count"></strong></div>
+      <div class="titlelist">{{ $t('Userpage_friends') }} <strong v-html="'• '+profile.friends_count"></strong></div>
       <perfect-scrollbar ref="scroll">
         <ul class="list">
           <li v-for="(e, i) in profile.friends.users" :key="i">

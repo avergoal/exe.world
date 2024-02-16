@@ -4,9 +4,9 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent reportbox">
-    <div class="title">Report</div>
+    <div class="title">{{ $t('Friends_user_dropdown_menu_report') }}</div>
     <perfect-scrollbar vref="scroll">
-      <div class="desc">State the reason for the report:</div>
+      <div class="desc">{{ $t('Modal_report_block_text') }}</div>
       <form @submit.prevent action="">
         <ul v-if="subjects" class="radio">
           <li v-for="(e, i) in subjects" :key="i">
@@ -14,10 +14,10 @@
             <label v-html="e.title" :for="'subject_' + e.id"></label>
           </li>
         </ul>
-        <textarea v-model="model.comment" name="" placeholder="Describe the problem"></textarea>
+        <textarea v-model="model.comment" name="" :placeholder="$t('Modal_report_block_input')"></textarea>
         <div class="btns">
-          <button @click="$root.$emit('toggleModal', {target: 'friends'})" type="button" class="btn st3">cancel</button>
-          <button @click="submit()" type="button" class="btn st2">send report</button>
+          <button @click="$root.$emit('toggleModal', {target: 'friends'})" type="button" class="btn st3">{{ $t('Button_cancel') }}</button>
+          <button @click="submit()" type="button" class="btn st2">{{ $t('Button_send_report') }}</button>
         </div>
       </form>
     </perfect-scrollbar>

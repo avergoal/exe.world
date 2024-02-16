@@ -4,8 +4,8 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent removedbox">
-    <div class="desc">You report has been submited</div>
-    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">continue</button>
+    <div class="desc">{{ $t('Modal_report_submit') }}</div>
+    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
   </div>
 </div>
 </template>

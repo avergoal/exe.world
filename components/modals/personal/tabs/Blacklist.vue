@@ -2,12 +2,12 @@
 <div class="tab blacklist">
   <div class="title">
     <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
-    Blacklist
+    {{ $t('Header_profile_dropdown_menu_blacklist') }}
   </div>
   <form @submit.prevent action="">
     <fieldset>
       <svg-icon name="ui/search" />
-      <input v-model="search" type="text" name="" value="" placeholder="Search friends">
+      <input v-model="search" type="text" name="" value="" :placeholder="$t('Friends_search_input')">
     </fieldset>
   </form>
   <perfect-scrollbar ref="scroll">
@@ -15,7 +15,7 @@
       <li v-for="(e, i) in blacklist" :key="i" :class="{hidden: searchValues(e.user_name)}">
         <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
         <div v-html="e.user_name" class="name"></div>
-        <button @click="removeUser(e.uid)" type="button" class="btn st3">Remove from blacklist</button>
+        <button @click="removeUser(e.uid)" type="button" class="btn st3">{{ $t('Button_remove_blacklist') }}</button>
       </li>
     </ul>
   </perfect-scrollbar>

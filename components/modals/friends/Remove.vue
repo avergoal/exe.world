@@ -4,11 +4,11 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent removebox">
-    <div class="title">Remove From Friends</div>
-    <div class="desc">Are you sure you want to remove <strong v-html="modal.user.name"></strong> as a friend?</div>
+    <div class="title">{{ $t('Friends_user_dropdown_menu_remove') }}</div>
+    <div class="desc">{{ $t('Friends_user_dropdown_menu_remove') }} {{modal.user.name}}</div>
     <div class="btns">
-      <button @click="$root.$emit('toggleModal', {target: 'friends', user: modal.user})" type="button" class="btn st2">cancel</button>
-      <button @click="remove()" type="button" class="btn st3">Yes, remove</button>
+      <button @click="$root.$emit('toggleModal', {target: 'friends', user: modal.user})" type="button" class="btn st2">{{ $t('Button_cancel') }}</button>
+      <button @click="remove()" type="button" class="btn st3">{{ $t('Button_remove') }}</button>
     </div>
   </div>
 </div>

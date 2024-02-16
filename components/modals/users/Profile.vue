@@ -19,20 +19,20 @@
           <div v-if="profile.blacklist_status !== 2" class="total">
             <div class="item">
               <svg-icon name="sidebar/all_games"/>
-              <span><i v-html="profile.games_count"></i> games</span>
+              <span>{{ $t('Userpage_text_games',profile.games_count) }}</span>
             </div>
             <div class="item">
               <svg-icon name="sidebar/friends"/>
-              <span><i v-html="profile.friends_count"></i> friends</span>
+              <span>{{ $t('Userpage_text_friends',profile.friends_count) }}</span>
             </div>
           </div>
           <div v-if="profile.blacklist_status !== 2" class="btns">
             <div class="btnbox">
               <button v-if="profile.friendship_status === 0 && !request" @click="addFriends(profile.user.uid)"
-                      class="toggleparams2 btn st2" type="button">add to friends
+                      class="toggleparams2 btn st2" type="button">{{ $t('Button_add_friend') }}
               </button>
               <button v-else-if="request || profile.friendship_status === 1 || profile.friendship_status === 2"
-                      class="toggleparams2 btn st3" type="button">request...
+                      class="toggleparams2 btn st3" type="button">{{ $t('Button_request_friend') }}
               </button>
               <button v-else @click="toggleParams('openParams2')" class="toggleparams2 btn st3" type="button">your
                 friend
@@ -60,7 +60,7 @@
                     <div class="ico">
                       <svg-icon name="ui/user_remove"/>
                     </div>
-                    <span>Remove from friends</span>
+                    <span>{{$t('Friends_user_dropdown_menu_remove')}}</span>
                   </button>
                 </li>
                 <li>
@@ -68,7 +68,7 @@
                     <div class="ico">
                       <svg-icon name="ui/news_hide"/>
                     </div>
-                    <span>Hide news</span>
+                    <span>{{$t('Button_hidenews_dropdown')}}</span>
                   </button>
                 </li>
               </ul>
@@ -76,15 +76,15 @@
           </div>
           <ul v-if="profile.blacklist_status !== 2" class="more">
             <li>
-              <div class="label">Age</div>
+              <div class="label">{{ $t('Userpage_text_age') }}</div>
               <div v-if="profile.user.age.day !=='00' && profile.user.age.month !=='00' && profile.user.age.year !=='00'" v-html="getAge().age + ' years old'" class="desc"></div>
             </li>
             <li>
-              <div class="label">Date of Birth</div>
+              <div class="label">{{ $t('Userpage_text_dateofbirth') }}</div>
               <div v-if="profile.user.age.day !=='00' && profile.user.age.month !=='00' && profile.user.age.year !=='00'" v-html="getAge().birthday" class="desc"></div>
             </li>
             <li>
-              <div class="label">Location</div>
+              <div class="label">{{ $t('Userpage_text_location') }}</div>
               <div class="desc">
                 {{ profile.user.location.country }}
                 {{ (profile.user.location.city) ? (', ' + profile.user.location.city) : '' }}
@@ -108,7 +108,7 @@
                     <div class="ico">
                       <svg-icon name="ui/blacklist"/>
                     </div>
-                    <span>Block User</span>
+                    <span>{{ $t('Userpage_dropdown_menu_block') }}</span>
                   </button>
                 </li>
                 <li>
@@ -116,7 +116,7 @@
                     <div class="ico">
                       <svg-icon name="ui/report"/>
                     </div>
-                    <span>Report</span>
+                    <span>{{ $t('Userpage_dropdown_menu_report') }}</span>
                   </button>
                 </li>
               </ul>
@@ -140,11 +140,11 @@
                 <img v-if="theme" src="~/assets/illustration/signin_inverse.svg"/>
                 <img v-else src="~/assets/illustration/signin.svg"/>
               </div>
-              <div class="desc">You don't have friends and games yet. Use the search bar to find them.</div>
+              <div class="desc">{{ $t('Mygames_nogames_text') }}</div>
             </div>
           </perfect-scrollbar>
           <div v-else class="blocked">
-            Пользователь добавил Вас в черный список
+            {{ $t('Userpage_blacklisted_text') }}
           </div>
         </div>
       </perfect-scrollbar>

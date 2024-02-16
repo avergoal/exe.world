@@ -8,17 +8,17 @@
           <svg-icon name="logo" />
         </a></div>
       <form @submit.prevent="signUp()" action="">
-        <fieldset><input v-model="model.name" type="text" placeholder="Your name"></fieldset>
+        <fieldset><input v-model="model.name" type="text" :placeholder="$t('FORMS_signup_input_name')"></fieldset>
         <fieldset>
           <input v-model="model.emailorphone" :class="{error: errors.email_exists.show || errors.email_not_valid.show}"
-            type="text" placeholder="E-mail or Phone">
+            type="text" :placeholder="$t('FORMS_login_input_email')">
           <span v-if="errors.email_exists.show || errors.email_not_valid.show"
             v-html="(errors.email_exists.show) ? errors.email_exists.text : errors.email_not_valid.text"
             class="error"></span>
         </fieldset>
         <fieldset>
           <input v-model="model.pass" :class="{error: errors.pass_too_short.show}" :type="passwordType"
-            placeholder="Password">
+            :placeholder="$t('FORMS_login_input_password')">
           <button @click="togglePasswordType()" type="button">
             <svg-icon name="ui/eye" />
           </button>
@@ -26,7 +26,7 @@
         </fieldset>
         <fieldset>
           <input v-model="model.pass_check" :class="{error: errors.passwords_does_not_match.show}" :type="passwordType"
-            placeholder="Repeat password">
+            :placeholder="$t('FORMS_signup_input_repeatpassword')">
           <button @click="togglePasswordType()" type="button">
             <svg-icon name="ui/eye" />
           </button>
@@ -34,12 +34,12 @@
             class="error"></span>
         </fieldset>
         <div class="btns">
-          <button type="submit" class="btn st2">sign up</button>
-          <a @click="privacy" class="btns__privacy">privacy policy</a>
+          <button type="submit" class="btn st2">{{ $t('FORMS_login_signup') }}</button>
+          <a @click="privacy" class="btns__privacy">{{$t('FORMS_signup_privacy')}}</a>
         </div>
         <div class="signup">
-          <div class="text">Already have an account?</div>
-          <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button">log in</button>
+          <div class="text">{{ $t('FORMS_signup_TEXT') }}</div>
+          <button @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button">{{ $t('Button_login') }}</button>
         </div>
 <!--        <div class="social">-->
 <!--          <div class="text">Login via services</div>-->

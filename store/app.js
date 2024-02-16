@@ -184,6 +184,9 @@ export const actions = {
       return false
     }
     return data.error
+  },
+  async getTranslation(){
+    return await this.$axios.$post('/appApi/util.lang', {})
   }
 }
 

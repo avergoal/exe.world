@@ -14,16 +14,19 @@
             <div class="desc">${{modal.item.price}}</div>
           </div>
           <div class="item">
-            <div class="label">Balance</div>
+            <div class="label">{{ $t('Header_balance') }}</div>
             <div class="desc">${{balance}}</div>
           </div>
           <div class="description">
-            <p v-if="!modal.item.insufficient_funds" class="dark">You have enough funds on your balance to pay</p>
-            <p v-else class="red">You don't have enough funds on your balance to pay</p>
+            <p v-if="!modal.item.insufficient_funds" class="dark">{{ $t('Modal_ingame_purchase_enough_text') }}</p>
+            <p v-else class="red">{{ $t('Modal_ingame_purchase_notenough_text') }}</p>
             <label for="testPay" class="checkbox">
               <input type="checkbox" id="testPay" v-model="test">
               <span></span>
-              Test purchase
+              {{ $t('Modal_ingame_purchase_test_test') }}
+
+
+
 
             </label>
 
@@ -31,9 +34,9 @@
           </div>
         </div>
         <div class="btns">
-          <button @click="cancelModal" type="button" class="btn st3">cancel</button>
-          <button v-if="modal.item.price<=balance || test" @click="buyItems" type="button" class="btn st2">buy</button>
-          <button v-else @click="toggleModal('addFunds')" type="button" class="btn st2">add funds</button>
+          <button @click="cancelModal" type="button" class="btn st3">{{ $t('Button_cancel') }}</button>
+          <button v-if="modal.item.price<=balance || test" @click="buyItems" type="button" class="btn st2">{{ $t('Button_buy') }}</button>
+          <button v-else @click="toggleModal('addFunds')" type="button" class="btn st2">{{ $t('Profile_balance_addfunds') }}</button>
         </div>
       </div>
     </div>

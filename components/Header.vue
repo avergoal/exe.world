@@ -17,15 +17,15 @@
               <svg-icon name="ui/close" />
             </button>
           </li>
-          <li class="title-cell"><svg-icon name="logo" /><span>© {{ getYear }} EXE. WORLD All rights reserved</span></li>
+          <li class="title-cell"><svg-icon name="logo" /><span>© {{ getYear }} {{ $t('Footer_TEXT_copyright') }}</span></li>
           <li class="list-cell">
-            <nuxt-link to="/about">About</nuxt-link>
+            <nuxt-link to="/about">{{ $t('Footer_about') }}</nuxt-link>
           </li>
           <li class="list-cell">
-            <button @click="$root.$emit('toggleModal', {target: 'help'})" type="button">Help</button>
+            <button @click="$root.$emit('toggleModal', {target: 'help'})" type="button">{{ $t('Footer_help') }}</button>
           </li>
           <li class="list-cell">
-            <a href="https://dev.exe.world" target="_blank">For Developers</a>
+            <a href="https://dev.exe.world" target="_blank">{{ $t('Footer_developers') }}</a>
           </li>
         </ul>
       </div>

@@ -4,8 +4,8 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent removedbox">
-    <div class="desc"><strong v-html="modal.user.name"></strong> is removed from your friends list</div>
-    <button @click="$root.$emit('toggleModal', {target: 'friends'})" type="button" class="btn st2">continue</button>
+    <div class="desc" v-html="$t('Modal_friends_remove_confirm',{username:modal.user.name})"></div>
+    <button @click="$root.$emit('toggleModal', {target: 'friends'})" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
   </div>
 </div>
 </template>

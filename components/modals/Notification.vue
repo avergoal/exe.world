@@ -6,7 +6,7 @@
   <div class="modalcontent">
     <div v-html="data.title" class="top"></div>
     <div v-html="data.text" class="text"></div>
-    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">continue</button>
+    <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
   </div>
 </div>
 </template>

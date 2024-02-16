@@ -5,14 +5,14 @@
   </button>
   <div class="modalcontent">
     <div class="top">
-      <span>Friends</span>
+      <span>{{ $t('Userpage_friends') }}</span>
       <button @click="openSearch = (activeSearch) ? !openSearch : false" :class="{disabled: !activeSearch}" type="button"><svg-icon name="ui/search" /></button>
     </div>
     <div :class="{open: openSearch, hidden: !activeSearch}" class="searchchat">
       <form @submit.prevent class="search" action="">
         <fieldset>
           <svg-icon name="ui/search" />
-          <input v-model="query" @input="search()" :disabled="!activeSearch" type="text" name="" value="" placeholder="Search friends">
+          <input v-model="query" @input="search()" :disabled="!activeSearch" type="text" name="" value="" :placeholder="$t('Friends_search_input')">
         </fieldset>
         <button @click="openSearch = false" type="button"><svg-icon name="ui/close" /></button>
       </form>
@@ -49,8 +49,8 @@
               <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
-              <b>You don't have friends yet</b>
-              <p>Use the search bar to find them</p>
+              <b>{{ $t('Friends_nofriends_allfriends_text_1') }}</b>
+              <p>{{ $t('Friends_nofriends_allfriends_text_2') }}</p>
             </div>
           </li>
         </ul>
@@ -61,8 +61,8 @@
             </button>
             <div v-html="e.user_name" class="name"></div>
             <div class="nav">
-              <div class="item btn"><button @click="add(e.uid)" type="button" class="btn st2">accept</button></div>
-              <div class="item btn"><button @click="remove(e.uid)" type="button" class="btn st3">Reject</button></div>
+              <div class="item btn"><button @click="add(e.uid)" type="button" class="btn st2">{{ $t('Button_accept') }}</button></div>
+              <div class="item btn"><button @click="remove(e.uid)" type="button" class="btn st3">{{ $t('Button_reject') }}</button></div>
             </div>
           </li>
           <Observer @intersect="intersected"/>
@@ -75,8 +75,8 @@
               <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
-              <b>You don't have friend requests yet</b>
-              <p>Use the search bar to find them</p>
+              <b>{{ $t('Friends_nofriends_friendsrequest_text_1') }}</b>
+              <p>{{ $t('Friends_nofriends_friendsrequest_text_2') }}</p>
             </div>
           </li>
         </ul>
@@ -87,7 +87,7 @@
             </button>
             <div v-html="e.user_name" class="name"></div>
             <div class="nav">
-              <div class="item"><button @click="remove(e.uid)" type="button" class="btn st3">cancel request</button></div>
+              <div class="item"><button @click="remove(e.uid)" type="button" class="btn st3">{{ $t('Button_cancel_request') }}</button></div>
             </div>
           </li>
           <Observer @intersect="intersected"/>
@@ -100,8 +100,8 @@
               <img v-else src="~/assets/illustration/friends.svg" />
             </div>
             <div class="text">
-              <b>You don't have friends yet</b>
-              <p>Use the search bar to find them</p>
+              <b>{{ $t('Friends_nofriends_myrequest_text_1') }}</b>
+              <p>{{ $t('Friends_nofriends_myrequest_text_2') }}</p>
             </div>
           </li>
         </ul>

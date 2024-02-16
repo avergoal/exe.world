@@ -4,7 +4,7 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="title">Help</div>
+    <div class="title">{{ $t('Footer_help') }}</div>
     <form @submit.prevent action="">
       <fieldset>
         <div class="selectbox">
@@ -16,13 +16,13 @@
           </ul>
         </div>
       </fieldset>
-      <fieldset><input v-model="model.email" type="text" name="" value="" placeholder="Your e-mail"></fieldset>
-      <fieldset><input v-model="model.name" type="text" name="" value="" placeholder="Your name"></fieldset>
-      <fieldset><textarea v-model="model.message" name="" placeholder="Your message"></textarea></fieldset>
+      <fieldset><input v-model="model.email" type="text" name="" value="" :placeholder="$t('FORMS_help_input_email')"></fieldset>
+      <fieldset><input v-model="model.name" type="text" name="" value="" :placeholder="$t('FORMS_help_input_name')"></fieldset>
+      <fieldset><textarea v-model="model.message" name="" :placeholder="$t('FORMS_help_input_message')"></textarea></fieldset>
       <fieldset v-if="errors" v-html="errors"></fieldset>
       <div class="btns">
-        <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st3">cancel</button>
-        <button @click="submit()" type="button" class="btn st2">send</button>
+        <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st3">{{ $t('Button_cancel') }}</button>
+        <button @click="submit()" type="button" class="btn st2">{{ $t('Button_send') }}</button>
       </div>
     </form>
   </div>

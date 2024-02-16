@@ -4,7 +4,7 @@
       <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button">
         <svg-icon name="ui/back" />
       </button>
-      Personal data
+      {{$t('Header_profile_dropdown_menu_data')}}
     </div>
     <perfect-scrollbar ref="scroll_tab">
       <form action="">
@@ -12,18 +12,18 @@
           <div class="item">
             <input v-model="model.firstname" :class="{error: errors.first_name_too_short.open}" type="text" name=""
               value="" id="firstname">
-            <label for="firstname">First Name</label>
+            <label for="firstname">{{ $t('Profile_data_input_name') }}</label>
             <span v-if="errors.first_name_too_short.open" v-html="errors.first_name_too_short.text"
               class="error"></span>
           </div>
           <div class="item">
             <input v-model="model.lastname" :class="{error: errors.last_name_too_short.open}" type="text" name=""
               value="" id="lastname">
-            <label for="lastname">Last Name</label>
+            <label for="lastname">{{ $t('Profile_data_input_surname') }}</label>
             <span v-if="errors.last_name_too_short.open" v-html="errors.last_name_too_short.text" class="error"></span>
           </div>
         </fieldset>
-        <div v-if="loaded" class="label">Birth Date</div>
+        <div v-if="loaded" class="label">{{$t('Userpage_text_dateofbirth')}}</div>
         <fieldset v-if="loaded" class="date">
           <div class="selectbox">
             <button @click="toggleSelectbox(0)" v-html="(model.birthdate.d) ? Number(model.birthdate.d) : ''"
@@ -59,15 +59,15 @@
             </perfect-scrollbar>
           </div>
         </fieldset>
-        <div v-if="loaded" class="label">Gender</div>
+        <div v-if="loaded" class="label">{{ $t('Profile_data_gender_text') }}</div>
         <fieldset v-if="loaded" class="radio">
           <div class="item">
             <input v-model="model.sex" type="radio" name="gender" value="0" id="man" :checked="model.sex === 0">
-            <label for="man">Man</label>
+            <label for="man">{{ $t('Profile_data_gender_radiobutton_1') }}</label>
           </div>
           <div class="item">
             <input v-model="model.sex" type="radio" name="gender" value="1" id="woman" :checked="model.sex === 1">
-            <label for="woman">Woman</label>
+            <label for="woman">{{ $t('Profile_data_gender_radiobutton_2') }}</label>
           </div>
         </fieldset>
         <fieldset v-if="loaded" class="location">
@@ -94,7 +94,7 @@
             </perfect-scrollbar>
           </div>
         </fieldset>
-        <button v-if="loaded" @click="saveData()" type="button" class="btn st2">Save changes</button>
+        <button v-if="loaded" @click="saveData()" type="button" class="btn st2">{{ $t('Button_save') }}</button>
         <!-- <div :class="{loaded: !loader || !loaded}" class="loader"><img src="/theme/img/loader.gif" alt=""></div> -->
       </form>
     </perfect-scrollbar>

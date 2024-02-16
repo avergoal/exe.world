@@ -4,10 +4,10 @@
     <div class="searchform">
       <fieldset>
         <svg-icon class="search" name="ui/search" />
-        <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games">
+        <input v-model="query" @input="goSearch()" type="text" name="" value="" :placeholder="$t('Search_placeholder_text')">
       </fieldset>
       <div class="btns">
-        <button @click="$root.$emit('changeTemplate', 'searchCategories')" type="button">games</button>
+        <button @click="$root.$emit('changeTemplate', 'searchCategories')" type="button">{{ $t('Button_news_games') }}</button>
         <button class="active" type="button">people</button>
       </div>
     </div>
@@ -27,8 +27,8 @@
       <img v-else src="~/assets/illustration/notfound.svg" />
     </div>
     <div class="text">
-      <b>We did not find anything for your request</b>
-      <p>Try changing your search text</p>
+      <b>{{ $t('Search_noresult_text_1') }}</b>
+      <p>{{ $t('Search_noresult_text_2') }}</p>
     </div>
   </div>
 </div>

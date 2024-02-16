@@ -12,7 +12,7 @@
       <form @submit.prevent action="">
         <fieldset>
           <svg-icon class="search" name="ui/search"/>
-          <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games and users">
+          <input v-model="query" @input="goSearch()" type="text" name="" value="" :placeholder="$t('Search_input_text')">
           <button @click="resetSearch()" type="button">
             <svg-icon class="close" name="ui/close"/>
           </button>
@@ -21,7 +21,7 @@
           <button @click="closeSearch()" type="button" class="btn st1">
             <svg-icon name="ui/close"/>
           </button>
-          <span class="mobile">Search</span>
+          <span class="mobile">{{ $t('Header_search') }}</span>
         </div>
       </form>
     </div>
@@ -34,27 +34,27 @@
                        slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s"
                        navClass="s"/>
           <div v-else-if="query !== null && loaded && results.peoples.length" class="empty">
-            <div class="boxtitle"><span>Games</span></div>
+            <div class="boxtitle"><span>{{ $t('Button_news_games') }}</span></div>
             <div class="img">
               <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg"/>
               <img v-else src="~/assets/illustration/notfound.svg"/>
             </div>
             <div class="text">
-              <b>We did not find any games for your request</b>
-              <p>Try changing your search text</p>
+              <b>{{ $t('Search_noresult_text_1') }}</b>
+              <p>{{ $t('Search_noresult_text_2') }}</p>
             </div>
           </div>
           <UsersSwiper v-if="query !== null && loaded && results.peoples.length" :key="JSON.stringify(results.peoples)"
                        slides="search_peoples" between="8" title="People" target="searchPeoples"/>
           <div v-else-if="query !== null && loaded && results.games.length" class="empty">
-            <div class="boxtitle"><span>People</span></div>
+            <div class="boxtitle"><span>{{ $t('Search_result') }}</span></div>
             <div class="img">
               <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg"/>
               <img v-else src="~/assets/illustration/notfound.svg"/>
             </div>
             <div class="text">
-              <b>We did not find people for your request</b>
-              <p>Try changing your search text</p>
+              <b>{{ $t('Search_noresult_text_1') }}</b>
+              <p>{{ $t('Search_noresult_text_2') }}</p>
             </div>
           </div>
           <div v-if="query !== null && loaded && !results.peoples.length && !results.games.length"
@@ -64,8 +64,8 @@
               <img v-else src="~/assets/illustration/notfound.svg"/>
             </div>
             <div class="text">
-              <b>We did not find anything for your request</b>
-              <p>Try changing your search text</p>
+              <b>{{ $t('Search_noresult_text_1') }}</b>
+              <p>{{ $t('Search_noresult_text_2') }}</p>
             </div>
           </div>
         </div>

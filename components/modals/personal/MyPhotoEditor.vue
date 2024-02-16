@@ -4,7 +4,7 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="title">Profile Photo</div>
+    <div class="title">{{ $t('Modal_photo_addphoto_text') }}</div>
     <client-only>
       <div class="editor">
         <div class="photo">
@@ -17,18 +17,18 @@
         </div>
         <div class="btn">
           <input @change="onFileInputChange" :accept="cleanedMimes" :capture="capture" ref="input" type="file" />
-          <span>Choose file</span>
+          <span>{{ $t('Modal_photo_addphoto_choose_text') }}</span>
         </div>
       </div>
     </client-only>
     <div v-if="errors.active" class="errors">
-      <p v-if="errors.sizes">The image size cannot be less than 220x220 pixels</p>
-      <p v-if="errors.mimes">Only allowed to download (*.jpg, *.jpeg or *.png) files</p>
-      <p v-if="errors.submit">You have not selected an image</p>
+      <p v-if="errors.sizes">{{ $t('Modal_photo_error_size') }}</p>
+      <p v-if="errors.mimes">{{ $t('Modal_photo_error_extensions') }}</p>
+      <p v-if="errors.submit">{{$t('Modal_photo_error_download')}}</p>
     </div>
     <div class="btns">
-      <button @click="$root.$emit('toggleModal', {target: 'personalData'})" type="button" class="btn st3">cancel</button>
-      <button @click="submit()" type="button" class="btn st2">save changes</button>
+      <button @click="$root.$emit('toggleModal', {target: 'personalData'})" type="button" class="btn st3">{{$t('Button_cancel')}}</button>
+      <button @click="submit()" type="button" class="btn st2">{{$t('Button_save')}}</button>
     </div>
   </div>
 </div>

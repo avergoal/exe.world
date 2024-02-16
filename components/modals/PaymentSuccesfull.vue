@@ -5,9 +5,9 @@
     </button>
     <div class="modalcontent">
       <div class="desc">
-        <div class="title">Payment {{ !modal.success?'successfull': 'cancelled' }}</div>
+        <div class="title">{{ !modal.success?$t('Modal_payment_succesful'): $t('Modal_payment_cancelled') }}</div>
       </div>
-      <button @click="toggleModal" type="button" class="btn st2">continue</button>
+      <button @click="toggleModal" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
     </div>
   </div>
 </template>

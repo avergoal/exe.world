@@ -11,8 +11,10 @@
   <div class="info">
     <ul>
       <li><button type="button">Terms of use</button></li>
-      <li><button type="button">About the developer</button></li>
-      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">Delete from my games</button></li>
+      <li><button type="button">{{ $t('Game_modal_developer') }}</button></li>
+      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">{{
+          $t('Game_modal_remove')
+        }}</button></li>
     </ul>
   </div>
   <div class="mobilebtns" v-if="showButton" :class="{
@@ -31,8 +33,8 @@
 </div>
 <div v-else-if="!isExist" class="no-game">
   <img src="~/assets/illustration/game_not_found.svg"  alt="game_not_found"/>
-  <h2>Oops...game not found</h2>
-  <p>go to the games catalog or use the search bar</p>
+  <h2>{{ $t('Gamepage_nogame_text_1') }}</h2>
+  <p>{{ $t('Gamepage_nogame_text_2') }}</p>
 </div>
 
 </template>

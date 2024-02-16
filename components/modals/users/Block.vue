@@ -4,14 +4,14 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent blockbox">
-    <div class="title">Block User</div>
+    <div class="title">{{ $t('Messages_dialog_with_user_dropdown_menu_block') }}</div>
     <div class="desc">
-      <p>After being blocked, this user will no longer be able to send you messages and share news.</p>
-      <p>Are you sure you want to block <strong v-html="modal.user.name"></strong>?</p>
+      <p>{{ $t('Modal_dialog_with_user_block_text_1') }}</p>
+      <p v-html="$t('Modal_dialog_with_user_block_text_2',{username:modal.user.name})"></p>
     </div>
     <div class="btns">
-      <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">cancel</button>
-      <button @click="blockUser()" type="button" class="btn st3">Yes, block</button>
+      <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{$t('Button_cancel')}}</button>
+      <button @click="blockUser()" type="button" class="btn st3">{{$t('Button_block')}}</button>
     </div>
   </div>
 </div>

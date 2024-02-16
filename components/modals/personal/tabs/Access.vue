@@ -2,37 +2,37 @@
 <div class="tab access">
   <div class="title">
     <button @click="$root.$emit('toggleModalTab', 'mobile')" class="back" type="button"><svg-icon name="ui/back" /></button>
-    Access Settings
+    {{ $t('Header_profile_dropdown_menu_access') }}
   </div>
   <perfect-scrollbar ref="scroll_tab">
     <form @submit.prevent action="">
       <div class="item">
-        <div class="desc">Change E-mail</div>
-        <div class="subdesc">After changing the e-mail, a confirmation link will be sent to the new address</div>
+        <div class="desc">{{ $t('Profile_acces_2') }}</div>
+        <div class="subdesc">{{$t('Profile_acces_text_email')}}</div>
         <fieldset>
           <input v-model="model.email" :placeholder="model.emailPlaceholder" :readonly="readonly" @mouseover="readonly = false" type="email" name="" value="" id="currentemail">
-          <label for="currentemail">Current e-mail</label>
+          <label for="currentemail">{{ $t('Profile_acces_email_input') }}</label>
         </fieldset>
-        <fieldset><input v-model="model.newEmail" type="email" name="" value="" placeholder="New e-mail"></fieldset>
-        <fieldset><input v-model="model.repeatMewEmail" type="email" name="" value="" placeholder="Repeat new e-mail"></fieldset>
+        <fieldset><input v-model="model.newEmail" type="email" name="" value="" :placeholder="$t('Profile_acces_new_email_input')"></fieldset>
+        <fieldset><input v-model="model.repeatMewEmail" type="email" name="" value="" :placeholder="$t('Profile_acces_new_email_repeat_input')"></fieldset>
       </div>
       <div class="item">
-        <div class="desc">Change Password</div>
-        <div class="subdesc">To change your password, you need to enter your current password to confirm</div>
+        <div class="desc">{{ $t('Profile_acces_3') }}</div>
+        <div class="subdesc">{{$t('Profile_acces_text_password')}}</div>
         <fieldset>
-          <input v-model="model.currentPassword" :type="passwordType" name="" value="" placeholder="Current password">
+          <input v-model="model.currentPassword" :type="passwordType" name="" value="" :placeholder="$t('Profile_acces_password_input')">
           <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
         </fieldset>
         <fieldset>
-          <input v-model="model.newPassword" :type="passwordType" name="" value="" placeholder="New password">
+          <input v-model="model.newPassword" :type="passwordType" name="" value="" :placeholder="$t('Profile_acces_new_password')">
           <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
         </fieldset>
         <fieldset>
-          <input v-model="model.repeatMewPassword" :type="passwordType" name="" value="" placeholder="Repeat new password">
+          <input v-model="model.repeatMewPassword" :type="passwordType" name="" value="" :placeholder="$t('Profile_acces_new_password_input')">
           <button @click="togglePasswordType()" type="button"><svg-icon name="ui/eye" /></button>
         </fieldset>
       </div>
-      <button @click="saveData()" type="button" class="btn st2">Save changes</button>
+      <button @click="saveData()" type="button" class="btn st2">{{ $t('Button_save') }}</button>
     </form>
   </perfect-scrollbar>
 </div>
