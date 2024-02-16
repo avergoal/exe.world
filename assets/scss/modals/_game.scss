@@ -672,14 +672,14 @@
         }
         ul.menu{
           li{
-            &:last-child{
-              button{
-                color: $nOrange;
-                svg{
-                  fill: $nOrange;
-                }
-              }
-            }
+            //&:last-child{
+            //  button{
+            //    color: $nOrange;
+            //    svg{
+            //      fill: $nOrange;
+            //    }
+            //  }
+            //}
             button{
               color: $nWhite;
               svg{
