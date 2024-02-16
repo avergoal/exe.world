@@ -65,7 +65,6 @@ export default {
     this.viewportHeight = this.getViewportHeight(); // Calculate initial viewport height
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('orientationchange', this.handleResize);
-    document.getElementById('content').classList.add('game');
     if(!localStorage.token){
       await this.$store.dispatch('auth/regGuest')
     }
@@ -164,6 +163,7 @@ export default {
           height: data.response.game_height,
           url: data.response.game_url
         }
+        document.getElementById('content').classList.add('game');
         this.$root.$emit('resize')
       } else {
         alert(data.error)

@@ -1,0 +1,19 @@
+.error-page-not-found{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  img {
+    max-width: 856px;
+    max-height: 484px;
+    margin-bottom: 60px;
+  }
+  h2{
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0.0025em;
+    margin-bottom: 11px;
+    margin-top: 0;
+  }
+}

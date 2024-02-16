@@ -467,7 +467,7 @@ span.badge{
   touch-action: auto;
   -ms-touch-action: auto;
   @media screen and (max-width: 768px) {
-    overflow: auto;
+    //overflow: auto;
   }
   &.appscroll{
     position: relative;
@@ -1028,7 +1028,7 @@ svg.icon{
         height: 100%;
         border-radius: 0;
         padding: 24px!important;
-        overflow: scroll;
+        //overflow: scroll;
       }
       @media screen and (max-width: 480px) {
         padding: 16px!important;
