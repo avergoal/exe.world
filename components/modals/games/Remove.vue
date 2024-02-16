@@ -5,7 +5,7 @@
   </button>
   <div class="modalcontent">
     <div class="title">Delete Game</div>
-    <div class="desc" v-html="$t('Modal_delete_game',modal.name)"></div>
+    <div class="desc" v-html="$t('Modal_delete_game',{ gamename: modal.name })"></div>
     <div class="btns">
       <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{ $t('Button_cancel') }}</button>
       <button @click="removeGame()" type="button" class="btn st3">delete</button>

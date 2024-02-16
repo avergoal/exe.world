@@ -7,17 +7,17 @@
   <perfect-scrollbar ref="scroll_tab">
     <form @submit.prevent action="">
       <div class="item">
-        <div class="desc">Change E-mail</div>
+        <div class="desc">{{ $t('Profile_acces_2') }}</div>
         <div class="subdesc">{{$t('Profile_acces_text_email')}}</div>
         <fieldset>
           <input v-model="model.email" :placeholder="model.emailPlaceholder" :readonly="readonly" @mouseover="readonly = false" type="email" name="" value="" id="currentemail">
-          <label for="currentemail">Current e-mail</label>
+          <label for="currentemail">{{ $t('Profile_acces_email_input') }}</label>
         </fieldset>
         <fieldset><input v-model="model.newEmail" type="email" name="" value="" :placeholder="$t('Profile_acces_new_email_input')"></fieldset>
         <fieldset><input v-model="model.repeatMewEmail" type="email" name="" value="" :placeholder="$t('Profile_acces_new_email_repeat_input')"></fieldset>
       </div>
       <div class="item">
-        <div class="desc">Change Password</div>
+        <div class="desc">{{ $t('Profile_acces_3') }}</div>
         <div class="subdesc">{{$t('Profile_acces_text_password')}}</div>
         <fieldset>
           <input v-model="model.currentPassword" :type="passwordType" name="" value="" :placeholder="$t('Profile_acces_password_input')">

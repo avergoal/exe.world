@@ -12,7 +12,9 @@
     <ul>
       <li><button type="button">Terms of use</button></li>
       <li><button type="button">{{ $t('Game_modal_developer') }}</button></li>
-      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">Delete from my games</button></li>
+      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">{{
+          $t('Game_modal_remove')
+        }}</button></li>
     </ul>
   </div>
   <div class="mobilebtns" v-if="showButton" :class="{

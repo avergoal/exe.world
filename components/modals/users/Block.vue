@@ -7,7 +7,7 @@
     <div class="title">{{ $t('Messages_dialog_with_user_dropdown_menu_block') }}</div>
     <div class="desc">
       <p>{{ $t('Modal_dialog_with_user_block_text_1') }}</p>
-      <p v-html="$t($t('Modal_dialog_with_user_block_text_2',modal.user.name))"></p>
+      <p v-html="$t('Modal_dialog_with_user_block_text_2',{username:modal.user.name})"></p>
     </div>
     <div class="btns">
       <button @click="$root.$emit('toggleModal', {})" type="button" class="btn st2">{{$t('Button_cancel')}}</button>

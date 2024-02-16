@@ -4,7 +4,7 @@
     <div class="searchform">
       <fieldset>
         <svg-icon class="search" name="ui/search" />
-        <input v-model="query" @input="goSearch()" type="text" name="" value="" placeholder="Search games">
+        <input v-model="query" @input="goSearch()" type="text" name="" value="" :placeholder="$t('Search_placeholder_text')">
       </fieldset>
       <div class="btns">
         <button @click="$root.$emit('changeTemplate', 'searchCategories')" type="button">{{ $t('Button_news_games') }}</button>

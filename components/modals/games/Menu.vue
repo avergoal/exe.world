@@ -20,10 +20,11 @@
 <!--          <button type="button" @click="to(modal.game.tos_url)">Terms of use</button>-->
 <!--        </li>-->
         <li>
-          <button type="button" @click="$root.$emit('toggleModal', {target: 'developer',developer:modal.game.developer})"><svg-icon name="ui/about-circle"/>About developer</button>
+          <button type="button" @click="$root.$emit('toggleModal', {target: 'developer',developer:modal.game.developer})"><svg-icon name="ui/about-circle"/>
+            {{ $t('Game_modal_developer') }}</button>
         </li>
         <li>
-          <button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: modal.game.gid})" type="button"><svg-icon name="ui/remove-game"/>
+          <button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: modal.game.gid,name:modal.game.title})" type="button"><svg-icon name="ui/remove-game"/>
             {{ $t('Game_modal_remove') }}</button>
         </li>
       </ul>

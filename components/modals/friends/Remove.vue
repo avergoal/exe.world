@@ -5,7 +5,7 @@
   </button>
   <div class="modalcontent removebox">
     <div class="title">{{ $t('Friends_user_dropdown_menu_remove') }}</div>
-    <div class="desc" v-html="$t('Friends_user_dropdown_menu_remove',modal.user.name)"></div>
+    <div class="desc">{{ $t('Friends_user_dropdown_menu_remove') }} {{modal.user.name}}</div>
     <div class="btns">
       <button @click="$root.$emit('toggleModal', {target: 'friends', user: modal.user})" type="button" class="btn st2">{{ $t('Button_cancel') }}</button>
       <button @click="remove()" type="button" class="btn st3">{{ $t('Button_remove') }}</button>
