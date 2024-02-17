@@ -248,8 +248,8 @@ export default {
         this.$root.$emit('toggleModal', {
           target: 'notification',
           data: {
-            title: 'Updated',
-            text: 'Success. The data has been updated.'
+            title: this.$t('Modal_profile_change_data'),
+            text:  this.$t('Modal_profile_change_data_text')
           }
         })
       }

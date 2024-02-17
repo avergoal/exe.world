@@ -4,22 +4,22 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="title">Buying {{modal.item.title}}</div>
+    <div class="title" v-html="$t('Modal_ingame_purchase',{product:modal.item.title})"></div>
     <div class="info">
       <img class="img" :src="modal.item.photo_url" alt="">
       <div class="content">
         <div class="top">
           <div class="item">
-            <div class="label">Price</div>
-            <div class="desc">${{modal.item.price}}</div>
+            <div class="label">{{ $t('Modal_ingame_purchase_text_1') }}</div>
+            <div class="desc">${{$t('modal.item.price')}}</div>
           </div>
           <div class="item">
-            <div class="label">{{ $t('Header_balance') }}</div>
+            <div class="label">{{ $t('Modal_ingame_purchase_text_2') }}</div>
             <div class="desc">${{balance}}</div>
           </div>
           <div class="description">
             <p v-if="!modal.item.insufficient_funds" class="dark">{{ $t('Modal_ingame_purchase_enough_text') }}</p>
-            <p v-else class="red">{{ $t('Modal_ingame_purchase_notenough_text') }}</p>
+            <p v-else class="red">{{$t('Modal_ingame_purchase_notenough_text')}}</p>
             <label for="testPay" class="checkbox">
               <input type="checkbox" id="testPay" v-model="test">
               <span></span>

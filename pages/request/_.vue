@@ -10,16 +10,16 @@ export default {
   },
   methods: {
     async loadData() {
-      // const data = await this.$store.dispatch('app/sendRequest', {
-      //   code: this.$route.params.pathMatch.replace('/', '')
-      // })
+      await this.$store.dispatch('app/sendRequest', {
+        code: this.$route.params.pathMatch.replace('/', '')
+      })
       await this.$router.push('/')
       // let message = (typeof data.error != 'undefined') ? data.error[0] : data.response.message
       this.$root.$emit('toggleModal', {
         target: 'notification',
         data: {
-          title: this.$t('Modal_profile_change_data'),
-          text: this.$t('Modal_profile_change_data_text')
+          title: this.$t('Modal_restore_password'),
+          text: this.$t('Modal_restore_password_text')
         }
       })
     }
