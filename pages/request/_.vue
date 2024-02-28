@@ -18,8 +18,8 @@ export default {
       this.$root.$emit('toggleModal', {
         target: 'notification',
         data: {
-          title: this.$t('Modal_restore_password'),
-          text: this.$t('Modal_restore_password_text')
+          title: this.$route.path.endsWith("r/")?this.$t('Modal_restore_password'):this.$t('Modal_profile_change_data'),
+          text: this.$route.path.endsWith("r/")?this.$t('Modal_restore_password_text'):this.$t('Modal_profile_change_data_text')
         }
       })
     }

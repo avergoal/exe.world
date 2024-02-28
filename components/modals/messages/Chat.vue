@@ -48,26 +48,49 @@
     <perfect-scrollbar ref="scroll" class="chatscroll">
       <div v-if="messages.total" class="chatbox">
         <Observer @intersect="intersected"/>
-        <div v-for="(e, i) in messages.list" class="day">
-          <div v-html="i.split('.').join(' ')" class="date"></div>
-          <div v-for="(e2, i2) in e" :key="e2.mid" :class="(e2.user.uid == profile.uid) ? 'out' : 'in'" class="item">
+<!--        <div v-for="(e, i) in messages.list" class="day">-->
+<!--          <div v-html="i.split('.').join(' ')" class="date"></div>-->
+<!--          <div v-for="(e2, i2) in e" :key="e2.mid" :class="(e2.user.uid == profile.uid) ? 'out' : 'in'" class="item">-->
+<!--            &lt;!&ndash; In &ndash;&gt;-->
+<!--            <div v-if="e2.user.uid != profile.uid" class="userphoto"><img :src="e2.user.avatar_urls?.x100" alt=""></div>-->
+<!--            <div v-if="e2.user.uid != profile.uid" class="info">-->
+<!--              <div class="message">-->
+<!--                <div v-html="e2.user.user_name" class="name"></div>-->
+<!--                <div v-html="e2.text" class="text"></div>-->
+<!--              </div>-->
+<!--              <div v-html="e2.time" class="time"></div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Out &ndash;&gt;-->
+<!--            <div v-if="e2.user.uid == profile.uid" v-html="e2.text" class="message"></div>-->
+<!--            <div v-if="e2.user.uid == profile.uid" class="info">-->
+<!--              <div class="check">-->
+<!--                <svg-icon v-if="e2.unread" name="ui/unreceived" />-->
+<!--                <svg-icon v-else name="ui/received" />-->
+<!--              </div>-->
+<!--              <div v-html="e2.time" class="time"></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div v-for="(dial,index) in dialog" class="day">
+          <div v-html="dial.date.split('.').join(' ')" v-if="index == 0 || dial.date !== dialog[index-1].date" class="date"></div>
+          <div  :key="dial.mid" :class="(dial.user.uid == profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
-            <div v-if="e2.user.uid != profile.uid" class="userphoto"><img :src="e2.user.avatar_urls?.x100" alt=""></div>
-            <div v-if="e2.user.uid != profile.uid" class="info">
+            <div v-if="dial.user.uid != profile.uid" class="userphoto"><img :src="dial.user.avatar_urls?.x100" alt=""></div>
+            <div v-if="dial.user.uid != profile.uid" class="info">
               <div class="message">
-                <div v-html="e2.user.user_name" class="name"></div>
-                <div v-html="e2.text" class="text"></div>
+                <div v-html="dial.user.user_name" class="name"></div>
+                <div v-html="dial.text" class="text"></div>
               </div>
-              <div v-html="e2.time" class="time"></div>
+              <div v-html="dial.time" class="time"></div>
             </div>
             <!-- Out -->
-            <div v-if="e2.user.uid == profile.uid" v-html="e2.text" class="message"></div>
-            <div v-if="e2.user.uid == profile.uid" class="info">
+            <div v-if="dial.user.uid == profile.uid" v-html="dial.text" class="message"></div>
+            <div v-if="dial.user.uid == profile.uid" class="info">
               <div class="check">
-                <svg-icon v-if="e2.unread" name="ui/unreceived" />
+                <svg-icon v-if="dial.unread" name="ui/unreceived" />
                 <svg-icon v-else name="ui/received" />
               </div>
-              <div v-html="e2.time" class="time"></div>
+              <div v-html="dial.time" class="time"></div>
             </div>
           </div>
         </div>
@@ -254,6 +277,9 @@ export default {
     },
     messages() {
       return this.$store.getters['messages/messages']
+    },
+    dialog() {
+      return this.$store.getters['messages/dialog']
     },
     notifications() {
       return this.$store.getters['notifications/sidebar']

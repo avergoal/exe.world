@@ -1,6 +1,7 @@
 export const state = () => ({
   messages: {},
-  chats: []
+  chats: [],
+  dialog:[]
 })
 
 export const mutations = {
@@ -29,6 +30,7 @@ export const actions = {
       total: 0,
       uid:params.uid
     }
+    let dialog = [...state.dialog]
     if(params.observer && params.uid===state.messages.uid){
       params.offset = state.messages.offset
       messages.list = JSON.parse(JSON.stringify(state.messages.list))
@@ -46,22 +48,37 @@ export const actions = {
         }
         return 0
       })
+
       for(let i = 0; i < data.response.messages.length; i++) {
         let date = this.$moment.unix(data.response.messages[i].timestamp).format('DD.MMMM.YYYY')
         data.response.messages[i].time = this.$moment.unix(data.response.messages[i].timestamp).format('HH:mm')
+        data.response.messages[i].date = date
         messages.list[date] = (messages.list[date]) ? messages.list[date] : []
+        dialog.push(data.response.messages[i])
         if(!params.observer) {
           messages.list[date].push(data.response.messages[i])
         }else{
           messages.list[date].unshift(data.response.messages[i])
         }
       }
-
-      messages.list = Object.entries(messages.list)
-        .sort((a, b) => new Date(a[0].split('.').reverse().join('-')) - new Date(b[0].split('.').reverse().join('-')))
-        .reduce((acc, [date, message]) => ({...acc, [date]: message}), {})
+      dialog=dialog.sort((a, b) => {
+        if(a.mid > b.mid) {
+          return 1
+        } else if (a.mid < b.mid) {
+          return -1
+        }
+        return 0
+      })
+      messages.list = Object.keys(messages.list)
+        .map(key => ({ key, date: new Date(key) }))
+        .sort((a, b) => a.date - b.date)
+        .reduce((result, entry) => {
+          result[entry.key] = messages.list[entry.key];
+          return result;
+        }, {});
     }
     commit('setState', {key: 'messages', value: messages})
+    commit('setState', {key: 'dialog', value: dialog})
     return !!data.response?.offset
   },
   async send({state, commit}, params) {
@@ -86,4 +103,5 @@ export const actions = {
 export const getters = {
   messages: state => state.messages,
   chats: state => state.chats,
+  dialog: state => state.dialog,
 }
