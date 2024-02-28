@@ -90,10 +90,12 @@ export const actions = {
         data.value.active = true
         commit('setState', data)
       }, 300)
-      this.dispatch('stat/sendStat', {
-        event_type:'modal_open',
-        data:JSON.stringify(data.value)
-      })
+      if(params.target !== 'refreshPage') {
+        this.dispatch('stat/sendStat', {
+          event_type: 'modal_open',
+          data: JSON.stringify(data.value)
+        })
+      }
     } else {
       this.dispatch('stat/sendStat', {
         event_type:'modal_close',
