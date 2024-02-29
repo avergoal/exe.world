@@ -22,7 +22,7 @@
         <img v-if="theme" src="~/assets/illustration/pad_inverse.svg" />
         <img v-else src="~/assets/illustration/pad.svg" />
       </div>
-      <div class="desc">{{ $t('Mygames_nogames_text') }}</div>
+      <div class="desc">{{ $t('Userpage_empty_text') }}</div>
     </div>
   </div>
 </div>

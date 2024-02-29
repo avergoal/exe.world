@@ -140,7 +140,7 @@
                 <img v-if="theme" src="~/assets/illustration/signin_inverse.svg"/>
                 <img v-else src="~/assets/illustration/signin.svg"/>
               </div>
-              <div class="desc">{{ $t('Mygames_nogames_text') }}</div>
+              <div class="desc">{{ $t('Userpage_empty_text') }}</div>
             </div>
           </perfect-scrollbar>
           <div v-else class="blocked">
