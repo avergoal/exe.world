@@ -30,9 +30,10 @@ export const actions = {
       total: 0,
       uid:params.uid
     }
-    let dialog = [...state.dialog]
+    let dialog = []
     if(params.observer && params.uid===state.messages.uid){
       params.offset = state.messages.offset
+      dialog = [...state.dialog]
       messages.list = JSON.parse(JSON.stringify(state.messages.list))
     }
     const {data} = params.uid ? await this.$axios.post('/appApi/messages', params) : {data: {response:false}}
@@ -40,26 +41,26 @@ export const actions = {
       messages.total = data.response.messages.length
       messages.offset = data.response.offset
       messages.code =  data.response.chat.clear_code
-      data.response.messages.sort((a, b) => {
-        if(a.mid > b.mid) {
-          return 1
-        } else if (a.mid < b.mid) {
-          return -1
-        }
-        return 0
-      })
+      // data.response.messages.sort((a, b) => {
+      //   if(a.mid > b.mid) {
+      //     return 1
+      //   } else if (a.mid < b.mid) {
+      //     return -1
+      //   }
+      //   return 0
+      // })
 
       for(let i = 0; i < data.response.messages.length; i++) {
         let date = this.$moment.unix(data.response.messages[i].timestamp).format('DD.MMMM.YYYY')
         data.response.messages[i].time = this.$moment.unix(data.response.messages[i].timestamp).format('HH:mm')
         data.response.messages[i].date = date
-        messages.list[date] = (messages.list[date]) ? messages.list[date] : []
+        // messages.list[date] = (messages.list[date]) ? messages.list[date] : []
         dialog.push(data.response.messages[i])
-        if(!params.observer) {
-          messages.list[date].push(data.response.messages[i])
-        }else{
-          messages.list[date].unshift(data.response.messages[i])
-        }
+        // if(!params.observer) {
+        //   messages.list[date].push(data.response.messages[i])
+        // }else{
+        //   messages.list[date].unshift(data.response.messages[i])
+        // }
       }
       dialog=dialog.sort((a, b) => {
         if(a.mid > b.mid) {
@@ -69,13 +70,13 @@ export const actions = {
         }
         return 0
       })
-      messages.list = Object.keys(messages.list)
-        .map(key => ({ key, date: new Date(key) }))
-        .sort((a, b) => a.date - b.date)
-        .reduce((result, entry) => {
-          result[entry.key] = messages.list[entry.key];
-          return result;
-        }, {});
+      // messages.list = Object.keys(messages.list)
+      //   .map(key => ({ key, date: new Date(key) }))
+      //   .sort((a, b) => a.date - b.date)
+      //   .reduce((result, entry) => {
+      //     result[entry.key] = messages.list[entry.key];
+      //     return result;
+      //   }, {});
     }
     commit('setState', {key: 'messages', value: messages})
     commit('setState', {key: 'dialog', value: dialog})
@@ -83,13 +84,19 @@ export const actions = {
   },
   async send({state, commit}, params) {
     const { data } = await this.$axios.post('/appApi/message.send', params)
-    let messages = this.$deepClone(state.messages),
-        date = this.$moment.unix(data.response.result.message.timestamp).format('DD.MMMM.YYYY')
-    messages.list[date] = (messages.list[date]) ? messages.list[date] : {}
-    messages.list[date] = Object.values(messages.list[date])
+    // let messages = this.$deepClone(state.messages),
+    //     date = this.$moment.unix(data.response.result.message.timestamp).format('DD.MMMM.YYYY')
+    // messages.list[date] = (messages.list[date]) ? messages.list[date] : {}
+    // messages.list[date] = Object.values(messages.list[date])
     data.response.result.message.time = this.$moment.unix(data.response.result.message.timestamp).format('HH:mm')
-    messages.list[date].push(data.response.result.message)
-    commit('setState', {key: 'messages', value: messages})
+    // messages.list[date].push(data.response.result.message)
+
+    let dialog = [...state.dialog]
+    if(data?.response?.result?.success) {
+      dialog.push(data.response.result.message)
+    }
+    // commit('setState', {key: 'messages', value: messages})
+    commit('setState', {key: 'dialog', value: dialog})
   },
   async clear({}, params) {
     await this.$axios.post('/appApi/chat.clear', params)

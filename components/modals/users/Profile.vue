@@ -19,11 +19,11 @@
           <div v-if="profile.blacklist_status !== 2" class="total">
             <div class="item">
               <svg-icon name="sidebar/all_games"/>
-              <span>{{ $t('Userpage_text_games',profile.games_count) }}</span>
+              <span>{{ $tc('Userpage_text_games', profile.games_count) }}</span>
             </div>
             <div class="item">
               <svg-icon name="sidebar/friends"/>
-              <span>{{ $t('Userpage_text_friends',profile.friends_count) }}</span>
+              <span>{{ $tc('Userpage_text_friends',profile.friends_count) }}</span>
             </div>
           </div>
           <div v-if="profile.blacklist_status !== 2" class="btns">
@@ -55,7 +55,7 @@
                   </button>
                 </li>
                 <li>
-                  <button @click="$root.$emit('toggleModal', {target: 'friendsRemove', user: profile.user})"
+                  <button @click="$root.$emit('toggleModal', {target: 'friendsRemove', user:{uid: profile.user.uid, name: profile.user.user_name}})"
                           type="button">
                     <div class="ico">
                       <svg-icon name="ui/user_remove"/>
@@ -104,7 +104,7 @@
                   </button>
                 </li>
                 <li>
-                  <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: profile.user})" type="button">
+                  <button @click="$root.$emit('toggleModal', {target: 'userBlock', user:{uid: profile.user.uid, name: profile.user.user_name}})" type="button">
                     <div class="ico">
                       <svg-icon name="ui/blacklist"/>
                     </div>

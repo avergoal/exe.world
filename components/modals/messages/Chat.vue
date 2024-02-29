@@ -14,7 +14,7 @@
         <div v-if="user.blacklist_status === 1" class="online">{{ $t('Userpage_status_3') }}</div>
         <div v-else :class="{active: user.user.online}" class="online">
           <span></span>
-          {{ (user.user.online ? $t('Userpage_status') : $t('Userpage_status_2')) }}
+          {{ (user.user.online ? $t('Userpage_status_1') : $t('Userpage_status_2')) }}
         </div>
       </div>
       <div class="nav">
@@ -29,7 +29,7 @@
                 </button>
               </li>
               <li>
-                <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: user.user})" type="button">
+                <button @click="$root.$emit('toggleModal', {target: 'userBlock', user:{uid: user.user.uid, name: user.user.user_name} })" type="button">
                   <div class="ico"><svg-icon name="ui/blacklist" /></div>
                   <span>{{$t('Userpage_dropdown_menu_block')}}</span>
                 </button>
@@ -72,7 +72,7 @@
 <!--          </div>-->
 <!--        </div>-->
         <div v-for="(dial,index) in dialog" class="day">
-          <div v-html="dial.date.split('.').join(' ')" v-if="index == 0 || dial.date !== dialog[index-1].date" class="date"></div>
+          <div v-html="dial?.date?.split('.').join(' ')" v-if="index == 0 || dial.date !== dialog[index-1].date" class="date"></div>
           <div  :key="dial.mid" :class="(dial.user.uid == profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
             <div v-if="dial.user.uid != profile.uid" class="userphoto"><img :src="dial.user.avatar_urls?.x100" alt=""></div>
