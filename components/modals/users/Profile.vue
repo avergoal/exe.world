@@ -179,7 +179,11 @@ export default {
     this.$root.$emit('toggleModal', {target: 'userProfile', updateUserProfileRegistered: true})
   },
   destroyed() {
-    window.history.pushState(null, null, this.$route.path)
+    if(this.$route.path.includes('/user')){
+      window.history.pushState(null, null, '/')
+    }else {
+      window.history.pushState(null, null, this.$route.path)
+    }
   },
   mounted() {
     document.addEventListener('click', (e) => {

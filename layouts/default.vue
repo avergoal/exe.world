@@ -93,18 +93,6 @@ export default {
           this.updateData(JSON.parse(e.data))
         }
       }
-      if (this.$route.path.includes('/user')) {
-        let userId = this.slidePath(this.$route.path)
-        setTimeout(() => {
-          this.$router.push('/')
-          if (this.profile) {
-            this.$root.$emit('toggleModal', {target: 'userProfile', user: userId})
-            setTimeout(() => {
-              window.history.pushState(null, null, `/user/${userId}`)
-            })
-          }
-        }, 250)
-      }
 
       this.loaded = true
     },
