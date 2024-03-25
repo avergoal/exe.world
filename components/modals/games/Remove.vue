@@ -25,7 +25,8 @@ export default {
       })
       await this.$store.dispatch('app/initAppData')
       await this.$store.dispatch('games/loadUserGames',{
-        uid:this.profile.id
+        uid:this.profile.id,
+        type:'load'
       })
       this.$root.$emit('toggleModal', {})
     }

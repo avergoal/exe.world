@@ -65,7 +65,7 @@ export default {
   }),
   methods:{
     actionToGame(id,installed){
-      if(!installed){
+      if(!installed && this.profile && !this.profile?.is_guest){
         this.$root.$emit('toggleModal', {target: 'gameInfo', game: id})
       }else {
         this.$router.push('/game/' + id)

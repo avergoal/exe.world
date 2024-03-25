@@ -729,6 +729,73 @@
               line-height: 20px;
               letter-spacing: 0.0015em;
             }
+            fieldset {
+              display: flex;
+              display: block;
+              padding: 0 0 40px;
+              @media screen and (max-width: 576px) {
+                padding: 0 0 32px;
+              }
+
+              &.radio {
+                @media screen and (max-width: 576px) {
+
+                  padding: 16px 0 40px;
+                }
+
+                .item {
+                  padding: 6px 100px 6px 0;
+
+
+
+                  input {
+                    display: none;
+                  }
+                  &:last-child {
+                    padding: 0;
+                  }
+
+                  label {
+                    display: flex;
+                    align-items: center;
+
+                    &:before {
+                      width: 16px;
+                      height: 16px;
+                      margin: 0 18px 0 0;
+                      border: 2px solid $dGray;
+                      border-radius: 50%;
+                      transition: border-color .15s ease;
+                    }
+
+                    &:before,
+                    &:after {
+                      display: block;
+                      content: "";
+                    }
+
+                    &:after {
+                      position: absolute;
+                      top: 8px;
+                      left: 4px;
+                      width: 12px;
+                      height: 12px;
+                      border-radius: 50%;
+                      background: transparent;
+                      transition: background .15s ease;
+                    }
+                  }
+
+                  input:checked + label:before {
+                    border-color: $dViolet;
+                  }
+
+                  input:checked + label:after {
+                    background: $dViolet;
+                  }
+                }
+              }
+            }
             ul{
               padding: 0 0 50px;
               li{

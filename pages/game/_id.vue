@@ -1,23 +1,14 @@
 <template>
-<div v-if="profile && game && isExist" class="gamepagebox">
-<!--  <div v-html="pageTitle" class="pagetitle"></div>-->
-  <GuestSave :poster="game.poster"
-    v-if="isGuest && !hideGuestSave"
-    @closeGuestSave="hideGuestSave = true"
-  ></GuestSave>
-  <div class="framebox" :style="`height:${viewportHeight}px` ">
-    <iframe :src="frame.url" id="gameFrame" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
-  </div>
-  <div class="info">
-    <ul>
-      <li><button type="button">Terms of use</button></li>
-      <li><button type="button">{{ $t('Game_modal_developer') }}</button></li>
-      <li><button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: game.gid})" type="button">{{
-          $t('Game_modal_remove')
-        }}</button></li>
-    </ul>
-  </div>
-  <div class="mobilebtns" v-if="showButton" :class="{
+  <div v-if="profile && game && isExist" class="gamepagebox">
+    <!--  <div v-html="pageTitle" class="pagetitle"></div>-->
+    <GuestSave :poster="game.poster"
+               v-if="isGuest && !hideGuestSave "
+               @closeGuestSave="hideGuestSave = true"
+    ></GuestSave>
+    <div class="framebox" :style="`height:${viewportHeight}px` ">
+      <iframe :src="frame.url" id="gameFrame" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+    </div>
+    <div class="mobilebtns" v-if="showButton" :class="{
     'top-left':game.position==='top-left',
     'top-right':game.position==='top-right',
     'top-center':game.position==='top-center',
@@ -27,20 +18,51 @@
     'left-center':game.position==='left-center',
     'right-center':game.position==='right-center',
   }">
-    <button @click="$root.$emit('toggleModal', {target: 'gameMenu', game: game})" type="button"><svg-icon name="ui/menu" /></button>
-<!--    <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>-->
+      <button class="dropdown-button" @click="openMenu" type="button">
+        <svg-icon name="ui/menu"/>
+      </button>
+      <!--    <nuxt-link to="/"><svg-icon name="ui/close" /></nuxt-link>-->
+      <div class="game-dropdown-menu" v-if="menuOpen">
+        <div class="dropdown-info">
+          <div class="img"><img :src="game.icon.hires?game.icon.hires:game.icon.default" alt=""></div>
+          <div v-html="game.title" class="name"></div>
+        </div>
+        <ul class="menu">
+          <li v-if="!isIOS">
+            <button type="button" @click="toggleFullscreen">
+              <svg-icon name="ui/fullscreen" v-if="!fullscreen"/>
+              <svg-icon name="ui/exit-fullscreen" v-else/>
+              {{ fullscreen ? $t('Game_modal_exit_fullscreen') : $t('Game_modal_fullscreen') }}
+            </button>
+          </li>
+          <li>
+            <button type="button" @click="closeGame">
+              <svg-icon name="ui/exit"/>
+              {{ $t('Game_modal_exit') }}
+            </button>
+          </li>
+          <li>
+            <button type="button" @click="$root.$emit('toggleModal', {target: 'developer',developer:game.developer})">
+              <svg-icon name="ui/about-circle"/>
+              {{ $t('Game_modal_developer') }}
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="menu-layout"  v-if="menuOpen"></div>
+    </div>
   </div>
-</div>
-<div v-else-if="!isExist" class="no-game">
-  <img src="~/assets/illustration/game_not_found.svg"  alt="game_not_found"/>
-  <h2>{{ $t('Gamepage_nogame_text_1') }}</h2>
-  <p>{{ $t('Gamepage_nogame_text_2') }}</p>
-</div>
+  <div v-else-if="!isExist" class="no-game">
+    <img src="~/assets/illustration/game_not_found.svg" alt="game_not_found"/>
+    <h2>{{ $t('Gamepage_nogame_text_1') }}</h2>
+    <p>{{ $t('Gamepage_nogame_text_2') }}</p>
+  </div>
 
 </template>
 
 <script>
 import GuestSave from '~/components/guest/GuestSave'
+
 export default {
   name: 'GamePage',
   components: {
@@ -52,74 +74,116 @@ export default {
       height: 0,
       url: null
     },
-    viewportHeight:0,
+    viewportHeight: 0,
     pageTitle: 'EXE.world',
-    hideGuestSave: false,
+    hideGuestSave: true,
     showButton: false,
+    mouseOut: false,
+    fullscreen: false,
+    menuOpen: false
   }),
   head() {
-		return {
+    return {
       title: this.pageTitle,
       meta: [{hid: 'description', name: 'description', content: 'description category'}]
     }
   },
   async mounted() {
-    this.viewportHeight = this.getViewportHeight(); // Calculate initial viewport height
+    setTimeout(() => {
+      this.hideGuestSave = false
+    }, 300000)
+    this.viewportHeight = this.getViewportHeight();
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('orientationchange', this.handleResize);
-    if(!localStorage.token){
+    if (!localStorage.token) {
       await this.$store.dispatch('auth/regGuest')
     }
-    if(!this.profile){
+    if (!this.profile) {
       await this.$store.dispatch('auth/auth', localStorage.token)
     }
     await this.loadGame()
-    // setTimeout(()=>{
-    //   this.orientationCheck()
-    //   window.addEventListener("orientationchange",this.orientationCheck)
-    //   window.addEventListener("resize",this.orientationCheck)
-    // })
     this.iframeListener()
-    setTimeout(()=>{
+    setTimeout(() => {
       this.showButton = true
-    },3000)
+      window.addEventListener('mouseout', this.handleMouseOut)
+    }, 3000)
   },
-  beforeDestroy(){
-    window.removeEventListener('resize', this.handleResize); // Remove resize event listener
-    window.removeEventListener('orientationchange', this.handleResize); // Remove resize event listener
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('orientationchange', this.handleResize);
+    window.removeEventListener('mouseout', this.handleMouseOut);
+    window.removeEventListener('click', this.closeMenu)
     document.getElementById('content').classList.remove('game');
-    // window.removeEventListener("orientationchange",this.orientationCheck)
-    // window.removeEventListener("resize",this.orientationCheck)
   },
   methods: {
-    // isMobileDevice() {
-    //   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    // },
-    // orientationCheck(){
-    //   setTimeout(()=>{
-    //   if (this.isMobileDevice() ) {
-    //     let box = document.getElementsByClassName('framebox')[0]
-    //
-    //     if(window.matchMedia("(orientation: portrait)") && window.innerWidth<921) {
-    //       box.style.height = window.innerHeight + 'px'
-    //     }else if( window.innerWidth<921){
-    //       box.style.height ='100vh'
-    //     }else{
-    //       box.style.height ='unset'
-    //     }
-    //   }
-    //   },500)
-    // },
+    openMenu() {
+      if (window.innerWidth < 577) {
+        this.$root.$emit('toggleModal', {target: 'gameMenu', game: this.game})
+      } else {
+        if(!this.menuOpen) {
+          this.menuOpen = true
+          setTimeout(() => {
+            window.addEventListener('click', this.closeMenu)
+          })
+        }
+      }
+    },
+    closeMenu() {
+        this.menuOpen = false
+        window.removeEventListener('click', this.closeMenu)
+    },
+    closeGame() {
+      if (this.fullscreen) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen(); // Standard
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen(); // Webkit browsers
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen(); // IE11
+        }
+      }
+      this.$router.push('/')
+    },
+    toggleFullscreen() {
+      const elem = document.documentElement; // Get the root element (HTML)
+
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen(); // Standard
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen(); // Webkit browsers
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen(); // IE11
+        }
+        this.fullscreen = true
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen(); // Standard
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen(); // Webkit browsers
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen(); // IE11
+        }
+        this.fullscreen = false
+
+      }
+    },
+    handleMouseOut() {
+      if (!this.mouseOut) {
+        this.mouseOut = true
+        this.hideGuestSave = false
+      }
+    },
     async loadGame() {
       console.log(this.gamesData)
-      if(!this.gamesData[this.$route.params.id]) {
+      if (!this.gamesData[this.$route.params.id]) {
         const game = await this.$store.dispatch('games/setGamesData', {
           id: this.$route.params.id
         })
 
       }
 
-      if(this.gamesData[this.$route.params.id]) {
+      if (this.gamesData[this.$route.params.id]) {
         this.game = this.gamesData[this.$route.params.id]
         this.pageTitle = this.game.title
         await this.runGame()
@@ -140,16 +204,16 @@ export default {
       })
     },
     orderBoxResult(item) {
-      if(item.success){
-        this.$root.$emit('toggleModal', { target: 'gameBuySuccess'})
+      if (item.success) {
+        this.$root.$emit('toggleModal', {target: 'gameBuySuccess'})
       }
     },
     orderBoxShow(item) {
-      this.$root.$emit('toggleModal', { target: 'gameBuy', item})
+      this.$root.$emit('toggleModal', {target: 'gameBuy', item})
     },
     async runGame() {
       console.log(this.game)
-      if(!this.game.installed) {
+      if (!this.game.installed) {
         await this.$store.dispatch('games/installGame', {
           gid: this.game.gid
         })
@@ -160,7 +224,7 @@ export default {
       let data = await this.$store.dispatch('games/runGame', {
         gid: this.game.gid
       })
-      if(data.response) {
+      if (data.response) {
         this.frame = {
           height: data.response.game_height,
           url: data.response.game_url
@@ -171,7 +235,7 @@ export default {
         alert(data.error)
       }
     },
-    handleResize(){
+    handleResize() {
       this.viewportHeight = this.getViewportHeight();
     },
     getViewportHeight() {
@@ -211,7 +275,11 @@ export default {
     },
     isExist() {
       return this.$store.getters['games/isExist']
-    }
+    },
+    isIOS() {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    },
   }
 }
 </script>

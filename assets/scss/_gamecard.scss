@@ -20,6 +20,17 @@
     .img{
       position: relative;
       overflow: hidden;
+      .close-icon{
+        position: absolute;
+        top: 13px;
+        right: 19px;
+        cursor: pointer;
+        width: 13px;
+        height: 13px;
+        fill: $dWhite;
+        z-index: 1;
+        display: none;
+      }
       &:after{
         position: absolute;
         top: 0;
@@ -136,6 +147,9 @@
         &:after{
           visibility: visible;
           opacity: 1;
+        }
+        .close-icon{
+          display: block;
         }
         a,
         button{

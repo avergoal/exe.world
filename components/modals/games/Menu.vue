@@ -9,23 +9,15 @@
         <div v-html="modal.game.title" class="name"></div>
       </div>
       <ul class="menu">
-        <!--      <li><button type="button">Send game notifications</button></li>-->
         <li v-if="!isIOS">
-          <button type="button" @click="toggleFullscreen"><svg-icon name="ui/fullscreen"/>{{ fullscreen? $t('Game_modal_exit_fullscreen'):$t('Game_modal_fullscreen') }}</button>
+          <button type="button" @click="toggleFullscreen"><svg-icon name="ui/fullscreen" v-if="!fullscreen"/><svg-icon name="ui/exit-fullscreen" v-else/>{{ fullscreen? $t('Game_modal_exit_fullscreen'):$t('Game_modal_fullscreen') }}</button>
         </li>
         <li>
           <button type="button" @click="closeGame"><svg-icon name="ui/exit"/>{{ $t('Game_modal_exit') }}</button>
         </li>
-<!--        <li>-->
-<!--          <button type="button" @click="to(modal.game.tos_url)">Terms of use</button>-->
-<!--        </li>-->
         <li>
           <button type="button" @click="$root.$emit('toggleModal', {target: 'developer',developer:modal.game.developer})"><svg-icon name="ui/about-circle"/>
             {{ $t('Game_modal_developer') }}</button>
-        </li>
-        <li>
-          <button @click="$root.$emit('toggleModal', {target: 'gameRemove', game: modal.game.gid,name:modal.game.title})" type="button"><svg-icon name="ui/remove-game"/>
-            {{ $t('Game_modal_remove') }}</button>
         </li>
       </ul>
     </div>

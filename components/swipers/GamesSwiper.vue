@@ -14,8 +14,8 @@
             <!-- <img src="/theme/img/loader.gif" alt="" class="lazyloader"> -->
             <img v-lazy="e?.poster?.default" :alt="e?.title">
             <!-- <button v-if="!profile" @click="$root.$emit('toggleModal', {target: 'signIn'})" type="button"><svg-icon name="ui/play"/><span>play</span></button> -->
-            <button v-if="e?.installed" @click="openGame(e?.gid)" ><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></button>
-            <button v-else @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e?.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-if="!e?.installed && profile && !profile?.is_guest" @click="$root.$emit('toggleModal', {target: 'gameInfo', game: e?.gid})" type="button"><svg-icon name="ui/play"/><span>play</span></button>
+            <button v-else @click="openGame(e?.gid)" ><svg-icon name="ui/play"/><span>{{ $t('Button_play') }}</span></button>
           </div>
           <div class="info">
             <div v-html="e?.title" class="title"></div>

@@ -37,12 +37,12 @@
             <span>{{ $t('Header_profile_dropdown_menu_access') }}</span>
           </button>
         </li>
-<!--        <li v-if="!isGuest">-->
-<!--          <button @click="$root.$emit('toggleModalTab', 'notifications')" :class="{active: modal.tab == 'notifications'}" type="button">-->
-<!--            <div class="ico"><svg-icon name="ui/bell" /></div>-->
-<!--            <span>Notifications</span>-->
-<!--          </button>-->
-<!--        </li>-->
+        <li v-if="!isGuest">
+          <button @click="$root.$emit('toggleModalTab', 'notifications')" :class="{active: modal.tab == 'notifications'}" type="button">
+            <div class="ico"><svg-icon name="ui/bell" /></div>
+            <span>Notifications</span>
+          </button>
+        </li>
         <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'blacklist')" :class="{active: modal.tab == 'blacklist'}" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
@@ -66,7 +66,7 @@
     <div class="tabs">
       <PersonalTab v-if="modal.tab == 'personal'"/>
       <AccessTab v-if="modal.tab == 'access'"/>
-<!--      <NotificationsTab v-if="modal.tab == 'notifications'"/>-->
+      <NotificationsTab v-if="modal.tab == 'notifications'"/>
       <BlacklistTab v-if="modal.tab == 'blacklist'"/>
       <BalanceTab v-if="modal.tab == 'wallet'"/>
       <AddFunds v-if="modal.tab == 'addfunds'"/>
