@@ -5,7 +5,7 @@
   </button>
   <div class="modalcontent">
     <div class="top">
-      <a @click.prevent="goHome()" href="/" class="logo"><svg-icon name="logo" /></a>
+      <a @click.prevent="goHome()" modalinfo gamemodalsignin bighref="/" class="logo"><svg-icon name="logo" /></a>
     </div>
     <form @submit.prevent="signIn()" action="">
       <div class="alert" v-if="errors.user_not_found.show" v-html="errors.user_not_found.text"></div>
@@ -61,7 +61,12 @@ export default {
       })
       if(error) {
         this.errors[error].show = true
-      } else this.$root.$emit('toggleModal', {})
+      } else {
+        this.$root.$emit('toggleModal', {})
+        if(this.$route.path.includes('/game/')){
+          window.location.reload()
+        }
+      }
     },
     async socialAuth(e) {
       const url = await this.$store.dispatch('auth/authSocilas', e)

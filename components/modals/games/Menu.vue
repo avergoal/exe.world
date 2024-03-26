@@ -39,7 +39,7 @@ export default {
     },
     isIOS() {
       const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test(userAgent);
+      return /iphone|ipod/.test(userAgent);
     },
   },
   methods: {

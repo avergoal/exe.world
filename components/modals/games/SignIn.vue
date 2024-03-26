@@ -68,7 +68,12 @@ export default {
       })
       if(error) {
         this.errors[error].show = true
-      } else this.$root.$emit('toggleModal', {})
+      } else {
+        this.$root.$emit('toggleModal', {})
+        if(this.$route.path.includes('/game/')){
+          window.location.reload()
+        }
+      }
     },
     async socialAuth(e) {
       const url = await this.$store.dispatch('auth/authSocilas', e)
