@@ -28,8 +28,7 @@
         width: 13px;
         height: 13px;
         fill: $dWhite;
-        z-index: 1;
-        display: none;
+        z-index: 10;
       }
       &:after{
         position: absolute;

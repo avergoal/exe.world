@@ -13,7 +13,10 @@
       <button @click="$root.$emit('toggleModal', {target: 'signUp'})" type="button" class="btn st2">
         <span>{{ $t('Button_signup') }}</span>
       </button>
-      <button @click="$root.$emit('toggleModal', {target: 'gameSignIn',game:poster})" type="button" class="btn st3">
+<!--      <button @click="$root.$emit('toggleModal', {target: 'gameSignIn',game:poster})" type="button" class="btn st3">-->
+<!--        <span>{{ $t('Button_login') }}</span>-->
+<!--      </button>-->
+      <button @click="$root.$emit('toggleModal', {target: 'signIn',game:poster})" type="button" class="btn st3">
         <span>{{ $t('Button_login') }}</span>
       </button>
     </div>

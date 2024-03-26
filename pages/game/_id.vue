@@ -278,7 +278,7 @@ export default {
     },
     isIOS() {
       const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipod/.test(userAgent);
+      return /iphone|ipad|ipod/.test(userAgent);
     },
   }
 }
