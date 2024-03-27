@@ -84,7 +84,9 @@ export default {
       })
       if(error) {
         this.errors[error].show = true
-      } else this.$root.$emit('toggleModal', {})
+      } else {
+        this.$root.$emit('toggleModal', {target: 'registerEmailSend'})
+      }
     },
     async socialAuth(e) {
       const url = await this.$store.dispatch('auth/authSocilas', e)

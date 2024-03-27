@@ -64,7 +64,9 @@ export default {
       } else {
         this.$root.$emit('toggleModal', {})
         if(this.$route.path.includes('/game/')){
-          window.location.reload()
+          setTimeout(()=>{
+            window.location.reload()
+          },200)
         }
       }
     },

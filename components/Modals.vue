@@ -7,6 +7,7 @@
     <LogInTemp v-if="modal.target == 'logInTemp'" />
     <RestorePassword v-if="modal.target == 'restorePassword'" />
     <EmailSend v-if="modal.target == 'emailSend'" />
+    <RegisterEmailSend v-if="modal.target == 'registerEmailSend'" />
     <RestoreSuccessful v-if="modal.target == 'restoreSuccessful'" />
     <!-- Messages -->
     <Messages v-if="modal.target == 'messages'" />
@@ -62,6 +63,7 @@ import LogOut from './modals/auth/LogOut'
 import LogInTemp from './modals/auth/LogInTemp'
 import RestorePassword from './modals/auth/RestorePassword'
 import EmailSend from './modals/auth/EmailSend'
+import RegisterEmailSend from "@/components/modals/auth/RegisterEmailSend.vue";
 // Messages
 import Messages from './modals/messages/Messages'
 import MessagesChat from './modals/messages/Chat'
@@ -114,7 +116,7 @@ export default {
     Developer,
     AddFundsToGame,
     // Auth
-    SignIn, SignUp, LogOut, LogInTemp, RestorePassword, EmailSend,
+    SignIn, SignUp, LogOut, LogInTemp, RestorePassword, EmailSend,RegisterEmailSend,
     // Messages
     Messages, MessagesChat, MessagesRemove,
     // Friends

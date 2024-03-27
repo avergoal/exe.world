@@ -278,7 +278,7 @@ export default {
     },
     isIOS() {
       const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test(userAgent);
+      return /iphone|ipad|ipod/.test(userAgent) || window.navigator.userAgent.match(/Mac/) && window.navigator.maxTouchPoints && window.navigator.maxTouchPoints > 2;
     },
   }
 }
