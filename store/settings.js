@@ -73,7 +73,7 @@ export const actions = {
     this.dispatch('profile/set', profile)
   },
   async uploadPhoto({}, file) {
-    const { data } = await this.$axios.post('https://api.exe.world/settings.avatar.upload', {file: file})
+    const { data } = await this.$axios.post('/appApi/settings.avatar.upload', {file: file})
     let profile = Object.assign({}, this.getters['profile/data'])
     profile.avatar_urls = data.response.result.avatar
     this.dispatch('profile/set', profile)
