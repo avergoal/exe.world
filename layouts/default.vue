@@ -18,6 +18,7 @@
     <transition v-if="!loaded" name="loader">
       <LoaderAnimation :modal="modalLoader"/>
     </transition>
+    <noscript><div><img src="https://mc.yandex.ru/watch/95926948" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   </div>
 </template>
 

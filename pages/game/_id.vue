@@ -80,7 +80,8 @@ export default {
     showButton: false,
     mouseOut: false,
     fullscreen: false,
-    menuOpen: false
+    menuOpen: false,
+    timer:null
   }),
   head() {
     return {
@@ -107,6 +108,9 @@ export default {
       this.showButton = true
       window.addEventListener('mouseout', this.handleMouseOut)
     }, 3000)
+this.timer = setTimeout(() => {
+  window.ym(95926948,'reachGoal',`10min/game/${this.$route.params.id}`)
+},600000)
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.handleResize);
@@ -114,6 +118,7 @@ export default {
     window.removeEventListener('mouseout', this.handleMouseOut);
     window.removeEventListener('click', this.closeMenu)
     document.getElementById('content').classList.remove('game');
+    clearTimeout(this.timer);
   },
   methods: {
     openMenu() {
