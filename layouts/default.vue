@@ -18,7 +18,6 @@
     <transition v-if="!loaded" name="loader">
       <LoaderAnimation :modal="modalLoader"/>
     </transition>
-    <noscript><div><img src="https://mc.yandex.ru/watch/95926948" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   </div>
 </template>
 
@@ -75,6 +74,24 @@ export default {
       }
       window.addEventListener('DOMContentLoaded', perf)
     })
+
+    const noscript = document.createElement('noscript');
+    const div = document.createElement('div');
+    const img = document.createElement('img');
+
+    // Set attributes for the img element
+    img.setAttribute('src', 'https://mc.yandex.ru/watch/95926948');
+    img.setAttribute('style', 'position:absolute; left:-9999px;');
+    img.setAttribute('alt', '');
+
+    // Append the img element to the div
+    div.appendChild(img);
+
+    // Append the div to the noscript element
+    noscript.appendChild(div);
+
+    // Append the noscript element to the document body
+    document.body.appendChild(noscript);
   },
   methods: {
     slidePath(str) {
