@@ -1784,7 +1784,7 @@
                   }
                 }
               }
-              &.location{
+              &.location,&.radio{
                 .selectbox{
                   button{
                     background: $white10;

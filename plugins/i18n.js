@@ -19,7 +19,6 @@ export default async ({ app, store },inject) => {
   const response = await store.dispatch('app/getTranslation');
   const translations = response.response;
   const locales = store.getters['app/locales'];
-  console.log(locales)
   app.i18n.locales = locales.map(locale =>locale.code)
   app.i18n.localeCodes = locales.map(locale =>locale.code)
   app.i18n.defaultLocale = 'en'
