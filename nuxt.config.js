@@ -173,6 +173,6 @@ export default {
   },
   telemetry: false,
   server: {
-    port: 8001
+    port: 3000
   }
 }
