@@ -11,7 +11,7 @@
         <div class="top">
           <div class="item">
             <div class="label">{{ $t('Modal_ingame_purchase_text_1') }}</div>
-            <div class="desc">${{$t('modal.item.price')}}</div>
+            <div class="desc">${{modal.item.price}}</div>
           </div>
           <div class="item">
             <div class="label">{{ $t('Modal_ingame_purchase_text_2') }}</div>

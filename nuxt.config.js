@@ -119,6 +119,7 @@ export default {
         // useCDN: false,
         trackLinks: true,
         accurateTrackBounce: true,
+        ecommerce: "dataLayer"
       }
     ]
   ],

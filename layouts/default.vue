@@ -100,6 +100,13 @@ export default {
     async loadUser() {
       if (localStorage.token) {
         await this.$store.dispatch('auth/auth', localStorage.token)
+        if(this.$i18n.locale != this.settings.locale) {
+          const response = await this.$store.dispatch('app/getTranslation',{lang:this.settings.locale});
+          const translations = response.response;
+          this.$i18n.setLocaleMessage(this.settings.locale,translations)
+          this.$i18n.setLocale(this.settings.locale)
+        }
+
         let connection = new WebSocket('wss://ws.exe.world')
         connection.onopen = () => {
           connection.send(JSON.stringify({
@@ -165,6 +172,9 @@ export default {
   computed: {
     theme() {
       return this.$store.getters['app/theme']
+    },
+    settings() {
+      return this.$store.getters['settings/main']
     },
     page() {
       if (this.$refs.scroll) {

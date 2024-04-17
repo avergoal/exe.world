@@ -1,3 +1,5 @@
+import logInTemp from "@/components/modals/auth/LogInTemp.vue";
+
 export const state = () => ({
   theme: 0,
   page: 'index',
@@ -5,7 +7,8 @@ export const state = () => ({
   news: [],
   subjects: {},
   listeners: {},
-  headers:{}
+  headers:{},
+  locales:[],
 })
 
 export const mutations = {
@@ -45,6 +48,13 @@ export const actions = {
           break
         case 'games_all':
           games[keys[0]] = e[keys[0]]
+          break
+        case 'locales':
+          let data = {
+            key: 'locales',
+            value: e[keys[0]]
+          }
+          rootGetters.commit('setState', data)
           break
         case 'categories':
           let categories = {}
@@ -159,7 +169,6 @@ export const actions = {
     let intersect = params.intersect
     delete params.intersect
     const { data } = await this.$axios.post('/appApi/news.my', params)
-    console.log(data.response)
     let results = data.response.news
     if(intersect) {
       results = state.news.concat(results)
@@ -187,8 +196,8 @@ export const actions = {
     }
     return data.error
   },
-  async getTranslation(){
-    return await this.$axios.$post('/appApi/util.lang', {})
+  async getTranslation(_,params={}){
+    return await this.$axios.$post('/appApi/util.lang', params)
   }
 }
 
@@ -199,5 +208,6 @@ export const getters = {
   news: state => state.news,
   subjects: state => state.subjects,
   listeners: state => state.listeners,
-  headers: state => state.headers
+  headers: state => state.headers,
+  locales: state => state.locales,
 }

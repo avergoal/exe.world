@@ -210,6 +210,7 @@ this.timer = setTimeout(() => {
     },
     orderBoxResult(item) {
       if (item.success) {
+        window.ym(95926948,'reachGoal','exeworld_purchase')
         this.$root.$emit('toggleModal', {target: 'gameBuySuccess'})
       }
     },

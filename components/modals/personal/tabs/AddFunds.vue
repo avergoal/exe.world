@@ -94,6 +94,7 @@ export default {
           if (!fromGame) {
             const newValue = await this.$store.dispatch('profile/getBalance')
             if (oldValue === newValue) {
+              window.ym(95926948,'reachGoal','exeworld_payment')
               this.$root.$emit('toggleModal', {target: 'paymentSuccesfull', success: true})
             }
           }
