@@ -7,11 +7,11 @@
         <input v-model="query" @input="goSearch()" type="text" name="" value="" :placeholder="$t('Search_placeholder_text')">
       </fieldset>
       <div class="btns">
-        <button @click="$root.$emit('changeTemplate', 'searchCategories')" type="button">{{ $t('Button_news_games') }}</button>
-        <button class="active" type="button">people</button>
+        <button @click="$root.$emit('changeTemplate', 'searchCategories')" type="button">{{ $t('Search_games') }}</button>
+        <button class="active" type="button">{{$t('Search_result')}}</button>
       </div>
     </div>
-    <div v-html="pagetitle" class="pagetitle small"></div>
+    <div v-html="results.peoples.length && results.peoples.length>1?results.peoples.length + ' ' + $t('Search_result_users_many'):results.peoples.length + ' ' + $t('Search_result_users_once')" class="pagetitle small"></div>
     <ul v-if="results.peoples.length" class="peoples_list">
       <li v-for="(e, i) in results.peoples" :key="i">
         <button @click="openUser(e.uid)" type="button">
@@ -38,11 +38,9 @@
 export default {
   name: 'SearchPeoplesPageComponent',
   data: () => ({
-    pagetitle: '',
     query: ''
   }),
   mounted() {
-    this.pagetitle = this.results.peoples.length + ' people found'
     this.query = this.results.query
   },
   methods: {
@@ -55,7 +53,6 @@ export default {
             offset: 0,
             limit: 24
           })
-          this.pagetitle = this.results.peoples.length + ' people found'
         }, 350)
       }
     },

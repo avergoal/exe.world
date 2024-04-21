@@ -114,7 +114,7 @@
                 <div class="ico">
                   <svg-icon :name="e.ico" />
                 </div>
-                <span v-html="e.title"></span>
+                <span v-html="$t(e.title)"></span>
               </button>
             </li>
           </ul>
@@ -144,12 +144,12 @@ export default {
       profile: false
     },
     userMenu: [
-      {title: 'Personal Data', tab: 'personal', ico: 'ui/personal_data'},
-      {title: 'Access Settings', tab: 'access', ico: 'ui/access'},
-      // {title: 'Notifications', tab: 'notifications', ico: 'ui/bell'},
-      {title: 'Blacklist', tab: 'blacklist', ico: 'ui/blacklist'},
-      {title: 'Balance', tab: 'wallet', ico: 'ui/wallet'},
-      {title: 'Log Out', tab: 'logOut', ico: 'ui/logout'}
+      {title: 'Header_profile_dropdown_menu_data', tab: 'personal', ico: 'ui/personal_data'},
+      {title: 'Header_profile_dropdown_menu_access', tab: 'access', ico: 'ui/access'},
+      {title: 'Header_profile_dropdown_menu_notification', tab: 'notifications', ico: 'ui/bell'},
+      {title: 'Header_profile_dropdown_menu_blacklist', tab: 'blacklist', ico: 'ui/blacklist'},
+      {title: 'Header_profile_dropdown_menu_balance', tab: 'wallet', ico: 'ui/wallet'},
+      {title: 'Header_profile_dropdown_menu_logout', tab: 'logOut', ico: 'ui/logout'}
     ],
     guestClass: false
   }),

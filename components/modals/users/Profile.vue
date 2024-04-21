@@ -35,7 +35,7 @@
                       class="toggleparams2 btn st3" type="button">{{ $t('Button_request_friend') }}
               </button>
               <button v-else @click="toggleParams('openParams2')" class="toggleparams2 btn st3" type="button">your
-                friend
+                {{$t('Button_friend')}}
               </button>
               <button v-if="!profile.blacklist_status"
                       @click="$root.$emit('toggleModal', {target: 'messagesChat', user: profile.user.uid})"
@@ -129,11 +129,11 @@
               v-if="profile && (profile.games.games.length || profile.friends.users.length || profile.mutual_friends.users.length)"
               class="swipers">
               <GamesSwiper v-if="profile && profile.games.games.length" slides="user_profile_games" between="16"
-                           title="Games" tab="userProfileGames" slideClass="m"/>
+                           :title="$t('Userpage_games')" tab="userProfileGames" slideClass="m"/>
               <UsersSwiper v-if="profile && profile.friends.users" slides="user_profile_friends" between="8"
-                           title="Friends" tab="userProfileFriends"/>
+                           :title="$t('Userpage_friends')" tab="userProfileFriends"/>
               <UsersSwiper v-if="profile && profile.mutual_friends.users.length" slides="user_profile_mutual_friends"
-                           between="8" title="Mutual friends" tab="userProfileMutualFriends"/>
+                           between="8" :title="$t('Userpage_mutual_friends')" tab="userProfileMutualFriends"/>
             </div>
             <div v-else class="notdata">
               <div class="img">

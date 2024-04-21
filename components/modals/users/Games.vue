@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="games">
-      <div class="titlelist">{{ $t('Userpage_games') }} <strong v-html="'• '+profile.games_count"></strong></div>
+      <div class="titlelist">{{ $t('Userpage_games_inside') }} <strong v-html="'• '+profile.games_count"></strong></div>
       <perfect-scrollbar ref="scroll">
         <ul class="list">
           <li v-for="(e, i) in profile.games.games" :key="i" class="gamecard s">

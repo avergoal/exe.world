@@ -6,15 +6,15 @@
   </div>
   <perfect-scrollbar ref="scroll_tab">
     <form @submit.prevent action="">
-      <div class="label">Newsletter by e-mail</div>
+      <div class="label">{{$t('Newsletter_by_email')}}</div>
       <fieldset class="radio">
         <div class="item">
-          <input v-model="model.news" type="radio" name="gender" value="true" id="man" :checked="model.sex === 0">
-          <label for="man">Subscribe to newsletter by email</label>
+          <input v-model="model.news" type="radio" name="gender" value="true" id="man" :checked="model.news === 0">
+          <label for="man">{{$t('Subscribe_to_newsletter')}}</label>
         </div>
         <div class="item">
-          <input v-model="model.news" type="radio" name="gender" value="false" id="woman" :checked="model.sex === 1">
-          <label for="woman">Unsubscribe from email newsletter</label>
+          <input v-model="model.news" type="radio" name="gender" value="false" id="woman" :checked="model.news === 1">
+          <label for="woman">{{$t('Unsubscribe_to_newsletter')}}</label>
         </div>
       </fieldset>
 <!--      <ul>-->
@@ -83,10 +83,6 @@ export default {
       await this.$store.dispatch('settings/updateNotifications', this.model)
       this.$root.$emit('toggleModal', {
         target: 'notification',
-        data: {
-          title: this.$t('Modal_profile_change_data'),
-          text:  this.$t('Modal_profile_change_data_text')
-        }
       })
     }
   },

@@ -98,10 +98,6 @@ export default {
       if(!error) {
         this.$root.$emit('toggleModal', {
           target: 'notification',
-          data: {
-            title: this.$t('Modal_profile_change_data'),
-            text:  this.$t('Modal_profile_change_data_text')
-          }
         })
       }
     },

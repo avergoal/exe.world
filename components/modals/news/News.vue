@@ -9,7 +9,7 @@
       <ul>
         <li v-for="(e, i) in filters.list" :key="i">
           <button @click="setFilter(i)" :class="{active: filters.current == i}" type="button">
-            <span v-html="e"></span>
+            <span v-html="$t(e)"></span>
           </button>
         </li>
       </ul>
@@ -82,7 +82,7 @@ export default {
   data: () => ({
     filters: {
       current: 0,
-      list: ['All News', 'Friends', 'Games']
+      list: ['Button_news_all', 'Button_news_friends', 'Button_news_games']
     },
     offset: 0,
     waiting: true,

@@ -153,7 +153,7 @@ export default {
     document.addEventListener('click', (e) => {
 
       if(e.target.closest('.modalbox') && !e.target.closest('.modalinfo')) {
-        if(this.modal.fromGame){
+        if(this.modal.fromGame || this.modal.target === 'gameBuy'){
           window.ExeWorldApi.orderCancel()
         }
         this.$store.dispatch('app/toggleModal', {})

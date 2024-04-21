@@ -4,7 +4,7 @@
     <svg-icon name="ui/close" />
   </button>
   <div class="modalcontent">
-    <div class="top">{{ $t('Dialogs') }}</div>
+    <div class="top">{{ $t('MENU_messages') }}</div>
     <form action="">
       <fieldset>
         <svg-icon name="ui/search" />

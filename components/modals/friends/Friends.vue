@@ -21,7 +21,7 @@
       <ul>
         <li v-for="(e, i) in filters" :key="i">
           <button @click="setFilter(i)" :class="{active: currentFilter == i}" type="button">
-            <span v-html="e"></span>
+            <span v-html="$t(e)"></span>
             <span v-if="i == 0 && friendsTotal" v-html="friendsTotal" class="badge"></span>
             <span v-if="i == 1 && requests.total.subscribers" v-html="requests.total.subscribers" class="badge"></span>
             <span v-if="i == 2 && requests.total.subscriptions" v-html="requests.total.subscriptions" class="badge"></span>

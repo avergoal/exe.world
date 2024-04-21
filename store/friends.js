@@ -11,10 +11,10 @@ export const state = () => ({
       subscriptions: []
     }
   },
-  filters: ['All Friends', 'Friend Requests', 'My Requests']
+  filters: ['Button_friends_all', 'Button_friends_request', 'Button_friends_user_request']
 })
 
-export const mutations = {  
+export const mutations = {
   setState(state, data) {
     state[data.key] = data.value
   }

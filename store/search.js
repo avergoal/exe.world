@@ -33,8 +33,8 @@ export const actions = {
       key: 'results',
       value: {
         query: params.query,
-        games: data.response.games,
-        peoples: data.response.users
+        games: Object.values(data.response.games),
+        peoples: Object.values(data.response.users)
       }
     })
     return true

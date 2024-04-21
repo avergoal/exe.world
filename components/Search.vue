@@ -28,13 +28,13 @@
     <client-only>
       <perfect-scrollbar class="searchscroll" ref="scrollSearch">
         <div class="results">
-          <GamesSwiper v-if="query === null" slides="search_popular" between="24" title="Popular Searches"
+          <GamesSwiper v-if="query === null" slides="search_popular" between="24" :title="$t('Search_popular_text')"
                        boxClass="popular_search"/>
           <GamesSwiper v-if="query !== null && loaded && results.games.length" :key="JSON.stringify(results.games)"
-                       slides="search_games" between="16" title="Games" target="searchCategories" slideClass="s"
+                       slides="search_games" between="16" :title="results.games.length && results.games.length>1?results.games.length + ' ' + $t('Search_result_game_inside_many'):results.games.length + ' ' + $t('Search_result_game_inside_once')" target="searchCategories" slideClass="s"
                        navClass="s"/>
           <div v-else-if="query !== null && loaded && results.peoples.length" class="empty">
-            <div class="boxtitle"><span>{{ $t('Button_news_games') }}</span></div>
+            <div class="boxtitle"><span>{{ $t('Search_games') }}</span></div>
             <div class="img">
               <img v-if="theme" src="~/assets/illustration/notfound_inverse.svg"/>
               <img v-else src="~/assets/illustration/notfound.svg"/>
@@ -45,7 +45,7 @@
             </div>
           </div>
           <UsersSwiper v-if="query !== null && loaded && results.peoples.length" :key="JSON.stringify(results.peoples)"
-                       slides="search_peoples" between="8" title="People" target="searchPeoples"/>
+                       slides="search_peoples" between="8" :title="results.peoples.length && results.peoples.length>1?results.peoples.length + ' ' + $t('Search_result_users_many'):results.peoples.length + ' ' + $t('Search_result_users_once')" target="searchPeoples"/>
           <div v-else-if="query !== null && loaded && results.games.length" class="empty">
             <div class="boxtitle"><span>{{ $t('Search_result') }}</span></div>
             <div class="img">

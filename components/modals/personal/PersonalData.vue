@@ -40,7 +40,7 @@
         <li v-if="!isGuest">
           <button @click="$root.$emit('toggleModalTab', 'notifications')" :class="{active: modal.tab == 'notifications'}" type="button">
             <div class="ico"><svg-icon name="ui/bell" /></div>
-            <span>Notifications</span>
+            <span>{{ $t('Header_profile_dropdown_menu_notification') }}</span>
           </button>
         </li>
         <li v-if="!isGuest">

@@ -37,12 +37,12 @@
             </perfect-scrollbar>
           </div>
           <div class="selectbox">
-            <button @click="toggleSelectbox(1)" v-html="months.byIdx[model.birthdate.m]" type="button"
+            <button @click="toggleSelectbox(1)" v-html="$t(months.byIdx[model.birthdate.m])" type="button"
                     data-before="Month" class="toggleselect"></button>
             <perfect-scrollbar :class="{open: selectbox[1]}">
               <ul>
                 <li v-for="(e, i) in months.byName" :key="i">
-                  <button @click="setBirthday('m', e)" v-html="i" type="button"></button>
+                  <button @click="setBirthday('m', e)" v-html="$t(i)" type="button"></button>
                 </li>
               </ul>
             </perfect-scrollbar>
@@ -120,32 +120,32 @@ export default {
     days: [],
     months: {
       byName: {
-        January: '01',
-        February: '02',
-        March: '03',
-        April: '04',
-        May: '05',
-        June: '06',
-        July: '07',
-        August: '08',
-        September: '09',
-        October: '10',
-        November: '11',
-        December: '12'
+        'Text_january': '01',
+        'Text_february': '02',
+        'Text_march': '03',
+        'Text_april': '04',
+        'Text_may': '05',
+        'Text_june': '06',
+        'Text_july': '07',
+        'Text_august': '08',
+        'Text_september': '09',
+        'Text_october': '10',
+        'Text_november': '11',
+        'Text_december': '12'
       },
       byIdx: {
-        '01': 'January',
-        '02': 'February',
-        '03': 'March',
-        '04': 'April',
-        '05': 'May',
-        '06': 'June',
-        '07': 'July',
-        '08': 'August',
-        '09': 'September',
-        '10': 'October',
-        '11': 'November',
-        '12': 'December'
+        '01': 'Text_january',
+        '02': 'Text_february',
+        '03': 'Text_march',
+        '04': 'Text_april',
+        '05': 'Text_may',
+        '06': 'Text_june',
+        '07': 'Text_july',
+        '08': 'Text_august',
+        '09': 'Text_september',
+        '10': 'Text_october',
+        '11': 'Text_november',
+        '12': 'Text_december'
       }
     },
     years: [],
@@ -260,16 +260,8 @@ export default {
         this.errors[error].open = true
       }
       if (!error) {
-        const response = await this.$store.dispatch('app/getTranslation',{lang:this.model.locale});
-        const translations = response.response;
-        this.$i18n.setLocaleMessage(this.model.locale,translations)
-        this.$i18n.setLocale(this.model.locale)
         this.$root.$emit('toggleModal', {
           target: 'notification',
-          data: {
-            title: this.$t('Modal_profile_change_data'),
-            text: this.$t('Modal_profile_change_data_text')
-          }
         })
       }
     },
