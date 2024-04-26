@@ -19,7 +19,7 @@
     <ul class="list">
       <li v-for="(e, i) in history" :key="i">
         <div v-html="e.date" class="date"></div>
-        <div v-html="e.title" class="desc"></div>
+        <div v-html="$t(e.title.replaceAll('-','_').replaceAll(' ','_'))" class="desc"></div>
         <div v-html="((e.type == 1) ? '+ $' : '- $') + e.value" :class="(e.type == 1) ? 'plus' : 'minus'" class="balance"></div>
       </li>
     </ul>

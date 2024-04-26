@@ -1,9 +1,9 @@
 <template>
 <div class="index_page">
   <MainSwiper :slides="carousel.list"/>
-  <GamesSwiper slides="newgames" between="24" title="New Games" target="new"/>
-  <GamesSwiper slides="recommended" between="24" title="Recommended <i>games</i>" target="reccomends"/>
-  <GamesSwiper slides="categories" filters="allCategoriesFilters" between="24" title="Categories" target="categories"/>
+  <GamesSwiper slides="newgames" between="24" :title="$t('MAIN_new')" target="new"/>
+  <GamesSwiper slides="recommended" between="24" :title="$t('MAIN_recommended')" target="reccomends"/>
+  <GamesSwiper slides="categories" filters="allCategoriesFilters" between="24" :title="$t('MAIN_categories')" target="categories"/>
 </div>
 </template>
 

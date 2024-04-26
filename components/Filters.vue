@@ -3,7 +3,7 @@
 <ul>
   <li v-for="(e, i) in filters.list" :key="i">
     <button @click="setFilter(e.cid)" :class="{active: current == e.cid, hidden: !e.total}" type="button">
-      <span v-html="e.title"></span>
+      <span v-html="$t('Categories_'+e.title)"></span>
       <span v-if="e.total" v-html="e.total" class="badge"></span>
     </button>
   </li>

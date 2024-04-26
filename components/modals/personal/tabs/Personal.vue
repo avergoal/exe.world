@@ -27,7 +27,7 @@
         <fieldset v-if="loaded" class="date">
           <div class="selectbox">
             <button @click="toggleSelectbox(0)" v-html="(model.birthdate.d) ? Number(model.birthdate.d) : ''"
-                    type="button" data-before="Day" class="toggleselect"></button>
+                    type="button" :data-before="$t('Profile_data_input_day')" class="toggleselect"></button>
             <perfect-scrollbar :class="{open: selectbox[0]}">
               <ul>
                 <li v-for="(e, i) in days" :key="i">
@@ -38,7 +38,7 @@
           </div>
           <div class="selectbox">
             <button @click="toggleSelectbox(1)" v-html="$t(months.byIdx[model.birthdate.m])" type="button"
-                    data-before="Month" class="toggleselect"></button>
+                    :data-before="$t('Profile_data_input_month')" class="toggleselect"></button>
             <perfect-scrollbar :class="{open: selectbox[1]}">
               <ul>
                 <li v-for="(e, i) in months.byName" :key="i">
@@ -49,7 +49,7 @@
           </div>
           <div class="selectbox">
             <button @click="toggleSelectbox(2)" v-html="(model.birthdate.y) ? Number(model.birthdate.y) : ''"
-                    type="button" data-before="Year" class="toggleselect"></button>
+                    type="button" :data-before="$t('Profile_data_input_year')" class="toggleselect"></button>
             <perfect-scrollbar :class="{open: selectbox[2]}">
               <ul>
                 <li v-for="(e, i) in years" :key="i">
@@ -71,7 +71,7 @@
           </div>
           <div class="selectbox">
             <button @click="toggleSelectbox(5)" type="button"
-                    data-before="locale"
+                    :data-before="$t('Profile_data_input_locale')"
                     class="toggleselect">{{showLocale}}</button>
             <perfect-scrollbar :class="{open: selectbox[5]}">
               <ul>
@@ -84,7 +84,7 @@
         </fieldset>
         <fieldset v-if="loaded" class="location">
           <div class="selectbox">
-            <button @click="toggleSelectbox(3)" v-html="model.country" type="button" data-before="Country"
+            <button @click="toggleSelectbox(3)" v-html="model.country" type="button" :data-before="$t('Profile_data_input_country')"
                     class="toggleselect"></button>
             <perfect-scrollbar :class="{open: selectbox[3]}">
               <ul>
@@ -95,7 +95,7 @@
             </perfect-scrollbar>
           </div>
           <div class="selectbox">
-            <button @click="toggleSelectbox(4)" v-html="model.city" type="button" data-before="City"
+            <button @click="toggleSelectbox(4)" v-html="model.city" type="button" :data-before="$t('Profile_data_input_city')"
                     class="toggleselect"></button>
             <perfect-scrollbar :class="{open: selectbox[4]}">
               <ul>

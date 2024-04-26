@@ -42,16 +42,16 @@ export default {
   created() {
     switch(this.page) {
       case 'new':
-        this.title = 'New games'
-        this.decsription = 'New games'
+        this.title = this.$t('MAIN_new')
+        this.decsription = this.$t('MAIN_new')
         break
       case 'reccomends':
-        this.title = 'Recommended games'
-        this.decsription = 'Recommended games'
+        this.title = this.$t('MAIN_recommended')
+        this.decsription = this.$t('MAIN_recommended')
         break
       case 'categories':
-        this.title = 'Categories games'
-        this.decsription = 'Categories games'
+        this.title = this.$t('MAIN_categories')
+        this.decsription = this.$t('MAIN_categories')
         break
     }
   },

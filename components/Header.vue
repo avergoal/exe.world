@@ -64,7 +64,7 @@
         </button>
         <div :class="{open: dropdown.notify}" class="dropdown">
           <div class="subtitle">
-            <span>Notifications</span>
+            <span>{{ $t('Header_notifications') }}</span>
             <button v-if="notifications.total" @click="clearNotifications()" type="button">
               <svg-icon name="ui/list" />
             </button>
@@ -91,7 +91,7 @@
               <img v-if="theme" src="~/assets/illustration/notifications_inverse.svg" alt="" class="illustration">
               <img v-else src="~/assets/illustration/notifications.svg" alt="" class="illustration">
             </div>
-            <div class="text">There are no notifications here yet</div>
+            <div class="text">{{ $t('Header_notifications_text') }}</div>
           </div>
         </div>
       </div>
