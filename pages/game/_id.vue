@@ -210,6 +210,22 @@ this.timer = setTimeout(() => {
     },
     orderBoxResult(item) {
       if (item.success) {
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({
+          "ecommerce": {
+            "purchase": {
+              "actionField": {
+                "id" : 'game-id'+ Date.now()
+              },
+              "products": [
+                {
+                  "name": "Пополнение баланса",
+                  "data": JSON.stringify(item)
+                }
+              ]
+            }
+          }
+        });
         window.ym(95926948,'reachGoal','exeworld_purchase')
         this.$root.$emit('toggleModal', {target: 'gameBuySuccess'})
       }
