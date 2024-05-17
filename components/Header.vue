@@ -60,7 +60,7 @@
           <div class="ico">
             <svg-icon name="ui/bell" />
           </div>
-          <span v-if="notifications.total" v-html="notifications.total" class="badge"></span>
+          <span v-if="unreadNotifications.notifications" v-html="unreadNotifications.notifications" class="badge"></span>
         </button>
         <div :class="{open: dropdown.notify}" class="dropdown">
           <div class="subtitle">
@@ -209,6 +209,9 @@ export default {
     },
     notifications() {
       return this.$store.getters['notifications/header']
+    },
+    unreadNotifications() {
+      return this.$store.getters['notifications/sidebar']
     },
     theme() {
       return this.$store.getters['app/theme']
