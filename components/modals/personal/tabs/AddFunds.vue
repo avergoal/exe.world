@@ -21,7 +21,7 @@
       </ul>
       <fieldset>
         <input v-model="otherQuantity" @change="checkLimit" type="number" :placeholder="$t('Profile_balance_addfunds_input')">
-        <span v-if="error" v-html="error" class="error-span"></span>
+        <span v-if="error" v-html="$t('Balance_replenishment_payment_type_error')" class="error-span"></span>
       </fieldset>
       <button  @click="submit()" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
     </form>
