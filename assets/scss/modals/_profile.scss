@@ -711,6 +711,14 @@
         }
       }
       &.access{
+        .error-span{
+          display: block;
+          padding: 4px 10px 0;
+          font-size: 12px;
+          line-height: 12px;
+          color: $dOrange;
+          position: absolute;
+        }
         .ps{
           height: calc(100% - 50px);
           overflow: hidden;
@@ -1171,6 +1179,14 @@
         }
       }
       &.addfunds{
+        .error-span{
+          display: block;
+          padding: 4px 10px 0;
+          font-size: 12px;
+          line-height: 12px;
+          color: $dOrange;
+          position: absolute;
+        }
         @media screen and (max-width: 576px) {
           padding: 18px 18px 20px;
         }

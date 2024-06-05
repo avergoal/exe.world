@@ -24,3 +24,7 @@
 @import 'modals/alerts';
 @import "error";
 @import '@/node_modules/swiper/swiper-bundle';
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}

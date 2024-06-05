@@ -6,15 +6,15 @@
   <div v-if="show" class="modalcontent">
     <div v-if="profile" class="usermodaltop">
       <button @click="$root.$emit('toggleModal', {target: 'messages'})" type="button"><svg-icon name="ui/back" /></button>
-      <button @click="openUser(user.user.uid)" class="userphoto" type="button">
-        <img :src="user.user.avatar_urls?.x100" :alt="user.user.user_name">
+      <button @click="openUser(user?.user?.uid)" class="userphoto" type="button">
+        <img :src="user?.user?.avatar_urls?.x100" :alt="user?.user?.user_name">
       </button>
       <div class="info">
-        <div v-html="user.user.user_name" class="name"></div>
-        <div v-if="user.blacklist_status === 1" class="online">{{ $t('Userpage_status_3') }}</div>
-        <div v-else :class="{active: user.user.online}" class="online">
+        <div v-html="user?.user?.user_name" class="name"></div>
+        <div v-if="user?.blacklist_status === 1" class="online">{{ $t('Userpage_status_3') }}</div>
+        <div v-else :class="{active: user?.user?.online}" class="online">
           <span></span>
-          {{ (user.user.online ? $t('Userpage_status_1') : $t('Userpage_status_2')) }}
+          {{ (user?.user?.online ? $t('Userpage_status_1') : $t('Userpage_status_2')) }}
         </div>
       </div>
       <div class="nav">
@@ -23,19 +23,23 @@
           <div :class="{open: openParams}" class="dropdown">
             <ul class="menu">
               <li class="title">
-                <span v-html="user.user.user_name"></span>
+                <span v-html="user?.user?.user_name"></span>
                 <button @click="openParams = false" class="close" area-label="close">
                   <svg-icon name="ui/close" />
                 </button>
               </li>
               <li>
-                <button @click="$root.$emit('toggleModal', {target: 'userBlock', user:{uid: user.user.uid, name: user.user.user_name} })" type="button">
+                <button v-if="!user?.blacklist_status" @click="$root.$emit('toggleModal', {target: 'userBlock', user:{uid: user?.user?.uid, name: user?.user?.user_name} })" type="button">
                   <div class="ico"><svg-icon name="ui/blacklist" /></div>
                   <span>{{$t('Userpage_dropdown_menu_block')}}</span>
                 </button>
+                <button v-else @click="removeUser(user?.user?.uid)" type="button">
+                  <div class="ico"><svg-icon name="ui/blacklist" /></div>
+                  <span>{{ $t('Button_remove_blacklist') }}</span>
+                </button>
               </li>
               <li>
-                <button @click="$root.$emit('toggleModal', {target: 'messagesRemove', code: messages.code, uid: user.user.uid})" type="button">
+                <button @click="$root.$emit('toggleModal', {target: 'messagesRemove', code: messages.code, uid: user?.user?.uid})" type="button">
                   <div class="ico"><svg-icon name="ui/remove" /></div>
                   <span>{{$t('Messages_dialog_with_user_dropdown_menu_delete_chat')}}</span>
                 </button>
@@ -73,19 +77,19 @@
 <!--        </div>-->
         <div v-for="(dial,index) in dialog" class="day">
           <div v-html="dial?.date?.split('.').join(' ')" v-if="index == 0 || dial.date !== dialog[index-1].date" class="date"></div>
-          <div  :key="dial.mid" :class="(dial.user.uid == profile.uid) ? 'out' : 'in'" class="item">
+          <div  :key="dial.mid" :class="(dial.user?.uid == profile.uid) ? 'out' : 'in'" class="item">
             <!-- In -->
-            <div v-if="dial.user.uid != profile.uid" class="userphoto"><img :src="dial.user.avatar_urls?.x100" alt=""></div>
-            <div v-if="dial.user.uid != profile.uid" class="info">
+            <div v-if="dial.user?.uid != profile.uid" class="userphoto"><img :src="dial.user?.avatar_urls?.x100" alt=""></div>
+            <div v-if="dial.user?.uid != profile.uid" class="info">
               <div class="message">
-                <div v-html="dial.user.user_name" class="name"></div>
+                <div v-html="dial.user?.user_name" class="name"></div>
                 <div v-html="dial.text" class="text"></div>
               </div>
               <div v-html="dial.time" class="time"></div>
             </div>
             <!-- Out -->
-            <div v-if="dial.user.uid == profile.uid" v-html="dial.text" class="message"></div>
-            <div v-if="dial.user.uid == profile.uid" class="info">
+            <div v-if="dial.user?.uid == profile.uid" v-html="dial.text" class="message"></div>
+            <div v-if="dial.user?.uid == profile.uid" class="info">
               <div class="check">
                 <svg-icon v-if="dial.unread" name="ui/unreceived" />
                 <svg-icon v-else name="ui/received" />
@@ -108,7 +112,7 @@
         </div>
       </div>
     </perfect-scrollbar>
-    <form v-if="!user.blacklist_status" @submit.prevent class="send" action="">
+    <form v-if="!user?.blacklist_status" @submit.prevent class="send" action="">
       <emoji-picker @emoji="append" :search="search">
         <button
           class="emoji-invoker smile"
@@ -200,6 +204,12 @@ export default {
     openUser(id){
       this.$root.$emit('toggleModal', {target: 'userProfile', user: id})
       this.$root.$emit('updateUserProfile', id)
+    },
+    async removeUser(e) {
+      await this.$store.dispatch('blacklist/remove', {
+        uid: e
+      })
+      await this.$store.dispatch('users/load', {uid: this.modal.user})
     },
     setListener(){
       this.loadMessages(false)

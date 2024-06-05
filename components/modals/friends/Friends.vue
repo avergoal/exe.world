@@ -130,6 +130,7 @@ export default {
     waiting: true
   }),
   async created() {
+    await this.$store.dispatch('blacklist/load')
     await this.$store.dispatch('friends/load', {offset: this.offset})
     this.$root.$on('scrollUpdate', () => {
       if(this.$refs.scroll_list) {

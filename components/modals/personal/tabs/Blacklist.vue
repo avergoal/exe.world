@@ -7,12 +7,12 @@
   <form @submit.prevent action="">
     <fieldset>
       <svg-icon name="ui/search" />
-      <input v-model="search" type="text" name="" value="" :placeholder="$t('Friends_search_input')">
+      <input v-model="search"  type="text" name="" value="" :placeholder="$t('Friends_search_input')">
     </fieldset>
   </form>
   <perfect-scrollbar ref="scroll">
     <ul class="list">
-      <li v-for="(e, i) in blacklist" :key="i" :class="{hidden: searchValues(e.user_name)}">
+      <li v-for="(e, i) in blacklist" :key="e.uid">
         <div class="userphoto"><img :src="e.avatar_urls.x100" :alt="e.user_name"></div>
         <div v-html="e.user_name" class="name"></div>
         <button @click="removeUser(e.uid)" type="button" class="btn st3">{{ $t('Button_remove_blacklist') }}</button>
@@ -61,7 +61,9 @@ export default {
   },
   computed: {
     blacklist() {
-      return this.$store.getters['blacklist/list']
+      return this.$store.getters['blacklist/list'].map(item =>{
+        return item.user_name.toLowerCase().includes(this.search.toLowerCase())
+      })
     }
   }
 }

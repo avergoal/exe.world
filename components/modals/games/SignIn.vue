@@ -14,7 +14,7 @@
           <input v-model="model.emailorphone"
             :class="{error: errors.no_required_fields.show || errors.user_not_found.show}" type="text"
             :placeholder="$t('FORMS_guest_ingame_login_input_email')">
-          <span v-if="errors.no_required_fields.show" v-html="errors.no_required_fields.text" class="error"></span>
+          <span v-if="errors.no_required_fields.show" v-html="$t(errors.no_required_fields.text)" class="error"></span>
         </fieldset>
         <fieldset>
           <input v-model="model.pass" :class="{error: errors.no_required_fields.show || errors.user_not_found.show}"
@@ -22,7 +22,7 @@
           <button @click="togglePasswordType()" type="button">
             <svg-icon name="ui/eye" />
           </button>
-          <span v-if="errors.no_required_fields.show" v-html="errors.no_required_fields.text" class="error"></span>
+          <span v-if="errors.no_required_fields.show" v-html="$t(errors.no_required_fields.text)" class="error"></span>
         </fieldset>
         <div class="btns">
           <button type="submit" class="btn st2">Log in</button>
@@ -51,8 +51,8 @@ export default {
     poster: null,
     model: {},
     errors: {
-      no_required_fields: {text: 'Заполните все поля', show: false},
-      user_not_found: {text: 'Пользователь не найден', show: false}
+      no_required_fields: {text: 'Alert_no_required_fields', show: false},
+      user_not_found: {text: 'Alert_user_not_found', show: false}
     },
     passwordType: 'password'
   }),

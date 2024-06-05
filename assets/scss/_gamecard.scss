@@ -211,6 +211,9 @@
           font-weight: 800;
           line-height: 28px;
           letter-spacing: 0.0015em;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
           @media screen and (max-width: 920px) {
             padding: 12px 0 0;
             font-weight: 700;

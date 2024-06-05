@@ -21,9 +21,9 @@
       </ul>
       <fieldset>
         <input v-model="otherQuantity" @change="checkLimit" type="number" :placeholder="$t('Profile_balance_addfunds_input')">
-        <span v-if="error" v-html="error" class="error"></span>
+        <span v-if="error" v-html="error" class="error-span"></span>
       </fieldset>
-      <button @click="submit()" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
+      <button  @click="submit()" type="button" class="btn st2">{{ $t('Button_continue') }}</button>
     </form>
   </perfect-scrollbar>
 </div>
@@ -53,14 +53,16 @@ export default {
   },
   methods: {
     async submit() {
-      let response = await this.$store.dispatch('profile/paymentsPrepare', {
-        type: this.paysystem,
-        sum: (this.otherQuantity) ? this.otherQuantity : this.balanceQuantity
-      })
-      if(response.error) {
-        this.error = response.error
-      } else {
-        this.openWindow(response.response.url)
+      if(this.paymentMethods.length){
+        let response = await this.$store.dispatch('profile/paymentsPrepare', {
+          type: this.paysystem,
+          sum: (this.otherQuantity) ? this.otherQuantity : this.balanceQuantity
+        })
+        if(response.error) {
+          this.error = response.error
+        } else {
+          this.openWindow(response.response.url)
+        }
       }
     },
     checkLimit(){

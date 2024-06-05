@@ -435,6 +435,9 @@ header.main{
       }
       .dropdown{
         ul{
+          @media only screen and (max-width:576px){
+background: $blackLight;
+          }
           li{
             color: $nWhite;
             a,

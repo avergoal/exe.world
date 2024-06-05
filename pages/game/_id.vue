@@ -89,6 +89,9 @@ export default {
       meta: [{hid: 'description', name: 'description', content: 'description category'}]
     }
   },
+  created() {
+    this.$i18n.setLocale(this.settings.locale)
+  },
   async mounted() {
     setTimeout(() => {
       this.hideGuestSave = false
@@ -180,7 +183,6 @@ this.timer = setTimeout(() => {
       }
     },
     async loadGame() {
-      console.log(this.gamesData)
       if (!this.gamesData[this.$route.params.id]) {
         const game = await this.$store.dispatch('games/setGamesData', {
           id: this.$route.params.id
@@ -234,7 +236,6 @@ this.timer = setTimeout(() => {
       this.$root.$emit('toggleModal', {target: 'gameBuy', item})
     },
     async runGame() {
-      console.log(this.game)
       if (!this.game.installed) {
         await this.$store.dispatch('games/installGame', {
           gid: this.game.gid
@@ -286,6 +287,9 @@ this.timer = setTimeout(() => {
     }
   },
   computed: {
+    settings() {
+      return this.$store.getters['settings/main']
+    },
     profile() {
       return this.$store.getters['profile/data']
     },

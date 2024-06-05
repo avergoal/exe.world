@@ -13,7 +13,9 @@
             <input v-model="model.firstname" :class="{error: errors.first_name_too_short.open}" type="text" name=""
                    value="" id="firstname">
             <label for="firstname">{{ $t('Profile_data_input_name') }}</label>
-            <span v-if="errors.first_name_too_short.open" v-html="errors.first_name_too_short.text"
+            <span v-if="errors.first_name_too_short.open " v-html="errors.first_name_too_short.text"
+                  class="error"></span>
+            <span v-if="errors.first_name_too_long.open " v-html="errors.first_name_too_long.text"
                   class="error"></span>
           </div>
           <div class="item">
@@ -21,6 +23,7 @@
                    value="" id="lastname">
             <label for="lastname">{{ $t('Profile_data_input_surname') }}</label>
             <span v-if="errors.last_name_too_short.open" v-html="errors.last_name_too_short.text" class="error"></span>
+            <span v-if="errors.last_name_too_long.open" v-html="errors.last_name_too_long.text" class="error"></span>
           </div>
         </fieldset>
         <div v-if="loaded" class="label">{{ $t('Userpage_text_dateofbirth') }}</div>
@@ -164,11 +167,19 @@ export default {
     errors: {
       first_name_too_short: {
         open: false,
-        text: 'First name error'
+        text: 'Alert_first_name_too_short'
+      },
+      first_name_too_long: {
+        open: false,
+        text: 'Alert_first_name_too_long'
       },
       last_name_too_short: {
         open: false,
-        text: 'Last name error'
+        text: 'Alert_last_name_too_short'
+      },
+      last_name_too_long: {
+        open: false,
+        text: 'Alert_last_name_too_long'
       }
     },
     loaded: false,
@@ -176,7 +187,7 @@ export default {
   }),
   created() {
     let year = Number(this.$moment().format('Y')) - 6
-    for (let i = (year - 100); i <= year; ++i) {
+    for (let i = (year - 83); i <= year; ++i) {
       this.years.push(i)
     }
     for (let i = 1; i <= 31; ++i) {

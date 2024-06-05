@@ -23,9 +23,13 @@
           </button>
         </li>
         <li>
-          <button @click="$root.$emit('toggleModal', {target: 'userBlock', user: user})" type="button">
+          <button v-if="!blacklist?.[user?.uid]" @click="$root.$emit('toggleModal', {target: 'userBlock', user: user})" type="button">
             <div class="ico"><svg-icon name="ui/blacklist" /></div>
             <span>{{ $t('Friends_user_dropdown_menu_block') }}</span>
+          </button>
+          <button v-else @click="removeUser(user?.uid)" type="button">
+            <div class="ico"><svg-icon name="ui/blacklist" /></div>
+            <span>{{ $t('Button_remove_blacklist') }}</span>
           </button>
         </li>
         <li>
@@ -62,6 +66,12 @@ export default{
     })
   },
   methods: {
+    async removeUser(e) {
+      await this.$store.dispatch('blacklist/remove', {
+        uid: e
+      })
+      await this.$store.dispatch('blacklist/load')
+    },
     toggleParams(e) {
       e = e.target
       if(!e.classList.contains('toggleparams')) {
@@ -76,6 +86,11 @@ export default{
         this.$root.$emit('closeDropdown', this._uid)
       }
     }
+  },
+  computed: {
+    blacklist() {
+      return this.$store.getters['blacklist/list']
+    },
   }
 }
 </script>

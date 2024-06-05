@@ -5,7 +5,7 @@
   </button>
   <div class="modalcontent">
     <div class="top">{{ $t('MENU_messages') }}</div>
-    <form action="">
+    <form action="" @submit.prevent="setSearchResults()">
       <fieldset>
         <svg-icon name="ui/search" />
         <input v-model="query" @input="setSearchResults()" type="text" name="" value="" :placeholder="$t('Messages_search_input')">
@@ -74,7 +74,7 @@ export default {
       this.$store.dispatch('messages/chats')
     },
     setSearchResults() {
-      if(this.query) {
+      if(this.query && this.query.length > 1) {
         this.$store.dispatch('messages/search', {query: this.query})
       } else {
         this.$store.dispatch('messages/chats')

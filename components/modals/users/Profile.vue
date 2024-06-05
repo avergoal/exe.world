@@ -104,11 +104,15 @@
                   </button>
                 </li>
                 <li>
-                  <button @click="$root.$emit('toggleModal', {target: 'userBlock', user:{uid: profile.user.uid, name: profile.user.user_name}})" type="button">
+                  <button v-if="!blacklist?.[profile.user.uid]" @click="$root.$emit('toggleModal', {target: 'userBlock', user:{uid: profile.user.uid, name: profile.user.user_name}})" type="button">
                     <div class="ico">
                       <svg-icon name="ui/blacklist"/>
                     </div>
                     <span>{{ $t('Userpage_dropdown_menu_block') }}</span>
+                  </button>
+                  <button v-else @click="removeUser(profile.user.uid)" type="button">
+                    <div class="ico"><svg-icon name="ui/blacklist" /></div>
+                    <span>{{ $t('Button_remove_blacklist') }}</span>
                   </button>
                 </li>
                 <li>
@@ -185,7 +189,8 @@ export default {
       window.history.pushState(null, null, this.$route.path)
     }
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch('blacklist/load')
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.params1') && !e.target.closest('.toggleparams1')) {
         this.openParams1 = false
@@ -196,6 +201,12 @@ export default {
     })
   },
   methods: {
+    async removeUser(e) {
+      await this.$store.dispatch('blacklist/remove', {
+        uid: e
+      })
+      await this.$store.dispatch('blacklist/load')
+    },
     async loadProfile() {
       window.history.pushState(null, null, `/user/${this.modal.user}`)
       await this.$store.dispatch('users/load', {uid: this.modal.user})
@@ -227,6 +238,9 @@ export default {
     }
   },
   computed: {
+    blacklist() {
+      return this.$store.getters['blacklist/list']
+    },
     modal() {
       return this.$store.getters['app/modal']
     },

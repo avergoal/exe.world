@@ -193,6 +193,9 @@ export default {
       this.$store.dispatch('notifications/clear')
     },
     closeDropDown() {
+      if(this.dropdown.notify){
+        this.clearNotifications()
+      }
       this.dropdown = {
         info: false,
         notify: false,
