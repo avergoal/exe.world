@@ -58,9 +58,6 @@ export default {
     window.addEventListener('resize', () => {
       this.scrollUpdate()
     }, true)
-    /* this.$Lazyload.$on('loaded', () => {
-      this.$refs.scroll.update()
-    }) */
     this.$nextTick(function () {
       const perf = () => {
         const duration = performance.getEntriesByType("navigation")[0].duration
@@ -166,7 +163,9 @@ export default {
       if(this.$i18n.locale != this.settings.locale) {
         const response = await this.$store.dispatch('app/getTranslation',{lang:this.settings.locale});
         const translations = response.response;
-        this.$i18n.setLocaleMessage(this.settings.locale,translations)
+        Object.keys(this.$i18n.messages).forEach(key => {
+          this.$i18n.mergeLocaleMessage(key,translations)
+        })
         this.$i18n.setLocale(this.settings.locale)
       }
     }

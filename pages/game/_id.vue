@@ -89,9 +89,6 @@ export default {
       meta: [{hid: 'description', name: 'description', content: 'description category'}]
     }
   },
-  created() {
-    this.$i18n.setLocale(this.settings.locale)
-  },
   async mounted() {
     setTimeout(() => {
       this.hideGuestSave = false

@@ -13,17 +13,17 @@
             <input v-model="model.firstname" :class="{error: errors.first_name_too_short.open}" type="text" name=""
                    value="" id="firstname">
             <label for="firstname">{{ $t('Profile_data_input_name') }}</label>
-            <span v-if="errors.first_name_too_short.open " v-html="errors.first_name_too_short.text"
+            <span v-if="errors.first_name_too_short.open " v-html="$t(errors.first_name_too_short.text)"
                   class="error"></span>
-            <span v-if="errors.first_name_too_long.open " v-html="errors.first_name_too_long.text"
+            <span v-if="errors.first_name_too_long.open " v-html="$t(errors.first_name_too_long.text)"
                   class="error"></span>
           </div>
           <div class="item">
             <input v-model="model.lastname" :class="{error: errors.last_name_too_short.open}" type="text" name=""
                    value="" id="lastname">
             <label for="lastname">{{ $t('Profile_data_input_surname') }}</label>
-            <span v-if="errors.last_name_too_short.open" v-html="errors.last_name_too_short.text" class="error"></span>
-            <span v-if="errors.last_name_too_long.open" v-html="errors.last_name_too_long.text" class="error"></span>
+            <span v-if="errors.last_name_too_short.open" v-html="$t(errors.last_name_too_short.text)" class="error"></span>
+            <span v-if="errors.last_name_too_long.open" v-html="$t(errors.last_name_too_long.text)" class="error"></span>
           </div>
         </fieldset>
         <div v-if="loaded" class="label">{{ $t('Userpage_text_dateofbirth') }}</div>

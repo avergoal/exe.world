@@ -25,6 +25,10 @@
 @import "error";
 @import '@/node_modules/swiper/swiper-bundle';
 
-button {
+input,
+textarea,
+button,
+select,
+a {
   -webkit-tap-highlight-color: transparent;
 }

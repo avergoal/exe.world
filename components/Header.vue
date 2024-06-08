@@ -170,6 +170,9 @@ export default {
       } else {
         this.closeDropDown()
         this.dropdown[e] = true
+        if(e === 'notify'){
+          this.$store.dispatch('notifications/set', {type:'header'})
+        }
       }
     },
     goHome() {
@@ -189,12 +192,13 @@ export default {
         game: tab
       })
     },
-    clearNotifications() {
-      this.$store.dispatch('notifications/clear')
+    async clearNotifications() {
+      await this.$store.dispatch('notifications/clear')
     },
-    closeDropDown() {
-      if(this.dropdown.notify){
-        this.clearNotifications()
+    async closeDropDown() {
+      if(this.dropdown.notify && this.unreadNotifications.notifications){
+        await this.clearNotifications()
+        await this.$store.dispatch('notifications/set', {type:'sidebar'})
       }
       this.dropdown = {
         info: false,

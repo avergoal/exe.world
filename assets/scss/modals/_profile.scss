@@ -858,7 +858,7 @@
                     align-items: center;
 
                     &:before {
-                      width: 16px;
+                      min-width: 16px;
                       height: 16px;
                       margin: 0 18px 0 0;
                       border: 2px solid $dGray;
@@ -874,7 +874,8 @@
 
                     &:after {
                       position: absolute;
-                      top: 8px;
+                      top: 50%;
+                      transform: translateY(-50%);
                       left: 4px;
                       width: 12px;
                       height: 12px;
