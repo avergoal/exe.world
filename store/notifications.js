@@ -15,7 +15,6 @@ export const mutations = {
 export const actions = {
   async set({ commit }, data) {
     if(data.type == 'sidebar') {
-      console.log(data.notifications)
       if(!data.notifications) {
         data.notifications = await this.$axios.post('/appApi/user.notifications', {})
         data.notifications = data.notifications.data.response.notifications

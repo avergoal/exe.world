@@ -65,9 +65,9 @@
         <div :class="{open: dropdown.notify}" class="dropdown">
           <div class="subtitle">
             <span>{{ $t('Header_notifications') }}</span>
-            <button v-if="notifications.total" @click="clearNotifications()" type="button">
-              <svg-icon name="ui/list" />
-            </button>
+<!--            <button v-if="notifications.total" @click="clearNotifications()" type="button">-->
+<!--              <svg-icon name="ui/list" />-->
+<!--            </button>-->
           </div>
           <ul v-if="notifications.total" class="notify">
             <li v-for="(e, i) in notifications.list" :key="i">

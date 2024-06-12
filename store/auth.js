@@ -27,9 +27,9 @@ export const actions = {
         type: 'sidebar',
         notifications: data.response.notifications
       })
-      // this.dispatch('notifications/set', {
-      //   type: 'header'
-      // })
+      this.dispatch('notifications/set', {
+        type: 'header'
+      })
       this.dispatch('games/setGames', {
         category: 'userRecent',
         data: data.response.recent_games
