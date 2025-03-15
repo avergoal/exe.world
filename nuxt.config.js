@@ -44,6 +44,7 @@ export default {
     { src: '~/plugins/plugins' },
     { src: '~/plugins/services' },
     { src: '~/plugins/templates' },
+    { src: '~/plugins/gtm' },
   ],
   components: true,
   buildModules: [
@@ -109,7 +110,6 @@ export default {
         },
       },
     ],
-    ['@nuxtjs/google-tag-manager', { id: 'G-TS880P51YL' }],
     [
       '@nuxtjs/yandex-metrika',
       {

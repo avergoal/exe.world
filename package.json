@@ -11,7 +11,6 @@
   "dependencies": {
     "@kevinfaguiar/vue-twemoji-picker": "^5.7.4",
     "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/google-tag-manager": "^2.3.2",
     "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/yandex-metrika": "^1.4.0",
