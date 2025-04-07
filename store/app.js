@@ -1,4 +1,4 @@
-import logInTemp from "@/components/modals/auth/LogInTemp.vue";
+// import logInTemp from "@/components/modals/auth/LogInTemp.vue";
 
 export const state = () => ({
   theme: 0,
@@ -23,7 +23,7 @@ export const mutations = {
 export const actions = {
   // Inititial app data
   async initAppData(rootGetters) {
-    const { response } = await this.$axios.$post('/appApi/init', {})
+    const { response } = await this.$axios.$post('init', {})
     const headers = rootGetters['stat/headers']
     await this.dispatch('stat/sendStat', {
       event_type:'headers',
@@ -32,7 +32,7 @@ export const actions = {
 
     let games = {},
         search = []
-    response.map(e => {
+    response?.map(e => {
       let keys = Object.keys(e)
       switch(keys[0]) {
         case 'guest_token':
@@ -144,31 +144,31 @@ export const actions = {
       value: Number(params.theme)
     })
     if(params.update) {
-      this.$axios.post('/appApi/settings.theme.switch', {
+      this.$axios.post('settings.theme.switch', {
         theme: params.theme
       })
     }
   },
   // About
   async setAbout() {
-    const { data } = await this.$axios.post('/appApi/article.about', {})
+    const { data } = await this.$axios.post('article.about', {})
     return data.response.content
   },
   // Privacy
   async setPrivacy() {
-    const { data } = await this.$axios.post('/appApi/article.privacy', {})
+    const { data } = await this.$axios.post('article.privacy', {})
     return data.response.content
   },
   // Another request
   async sendRequest({}, params) {
-    const { data } = await this.$axios.post('/appApi/request', params)
+    const { data } = await this.$axios.post('request', params)
     return data
   },
   // News
   async setNews({state, commit}, params) {
     let intersect = params.intersect
     delete params.intersect
-    const { data } = await this.$axios.post('/appApi/news.my', params)
+    const { data } = await this.$axios.post('news.my', params)
     let results = data.response.news
     if(intersect) {
       results = state.news.concat(results)
@@ -177,27 +177,27 @@ export const actions = {
   },
   // Subjects
   async setSupportSubjects({state, commit}) {
-    const { data } = await this.$axios.post('/appApi/support.subjects', {})
+    const { data } = await this.$axios.post('support.subjects', {})
     let subjects = this.$deepClone(state.subjects)
     subjects.support = data.response.subjects
     commit('setState', {key: 'subjects', value: subjects})
   },
   async setReportSubjects({state, commit}) {
-    const { data } = await this.$axios.post('/appApi/user.report.subjects', {})
+    const { data } = await this.$axios.post('user.report.subjects', {})
     let subjects = this.$deepClone(state.subjects)
     subjects.report = data.response.result
     commit('setState', {key: 'subjects', value: subjects})
   },
   // Support
   async sendSupport({}, params) {
-    const { data } = await this.$axios.post('/appApi/support.send', params)
+    const { data } = await this.$axios.post('support.send', params)
     if(!data.error) {
       return false
     }
     return data.error
   },
   async getTranslation(_,params={}){
-    return await this.$axios.$post('/appApi/util.lang', params)
+    return await this.$axios.$post('util.lang', params)
   }
 }
 

@@ -124,14 +124,22 @@ export default {
     ]
   ],
   axios: {
-    proxy: true
+    baseUrl:'https://api.exe.world/',
+    proxy: false,
   },
-  proxy: {
-    '/appApi': {
-      target: 'https://api.exe.world/',
-      pathRewrite: {'^/appApi/': '/'},
-    }
-  },
+  // axios: {
+  //   proxy: true,
+  //   timeout: 2000,
+  // },
+  // proxy: {
+  //   '/appApi': {
+  //     target: 'https://api.exe.world/',
+  //     pathRewrite: {'^/appApi/': '/'},
+  //     changeOrigin: true,
+  //     secure: false,
+  //     logLevel: 'debug',
+  //   }
+  // },
   pwa: {
     manifest: {
       lang: 'ru'

@@ -11,11 +11,11 @@ export const mutations = {
 export const actions = {
   async load({commit}, params) {
     commit('setState', {key: 'profile', value: null})
-    const { data } = await this.$axios.post('/appApi/user.info', params)
+    const { data } = await this.$axios.post('user.info', params)
     commit('setState', {key: 'profile', value: data.response})
   },
   async report({}, params) {
-    await this.$axios.post('/appApi/user.report', params)
+    await this.$axios.post('user.report', params)
     return true
   },
   async loadGames({commit,state}){
@@ -25,7 +25,7 @@ export const actions = {
         uid:profile.user.uid,
         offset:profile.games.offset
       }
-      const { data } = await this.$axios.post('/appApi/user.games', params)
+      const { data } = await this.$axios.post('user.games', params)
       profile.games.games.push(...data.response.games)
       profile.games.offset = data.response.offset
 
@@ -40,7 +40,7 @@ export const actions = {
         offset:profile.friends.offset
       }
 
-      const { data } = await this.$axios.post('/appApi/friends.get', params)
+      const { data } = await this.$axios.post('friends.get', params)
       profile.friends.users.push(...data.response.users)
       profile.friends.offset = data.response.offset
 

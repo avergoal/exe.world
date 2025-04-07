@@ -10,7 +10,7 @@ export const mutations = {
 
 export const actions = {
   async auth({commit}, token) {
-    const { data } = await this.$axios.post('/appApi/auth', {
+    const { data } = await this.$axios.post('auth', {
       api_token: token
     })
     if(data.error) {
@@ -52,7 +52,7 @@ export const actions = {
   },
   async regGuest({}) {
     let guestToken = this.getters['auth/token']
-    const { data } = await this.$axios.post('/appApi/guest', {
+    const { data } = await this.$axios.post('guest', {
       api_token: guestToken
     })
 
@@ -63,11 +63,11 @@ export const actions = {
     return data.error
   },
   async authSocilas({}, params) {
-    const { data } = await this.$axios.post('/appApi/social.' + params)
+    const { data } = await this.$axios.post('social.' + params)
     return (data.response) ? data.response.url : false
   },
   async signIn({}, params) {
-    const { data } = await this.$axios.post('/appApi/signin', params)
+    const { data } = await this.$axios.post('signin', params)
     if(!data.error) {
       this.dispatch('auth/auth', data.response.api_token)
       return false
@@ -75,7 +75,7 @@ export const actions = {
     return data.error
   },
   async signUp({}, params) {
-    const { data } = await this.$axios.post('/appApi/signup', params)
+    const { data } = await this.$axios.post('signup', params)
     if(!data.error) {
       this.dispatch('auth/auth', data.response.api_token)
       return false
@@ -83,7 +83,7 @@ export const actions = {
     return data.error
   },
   async restorePassword({}, params) {
-    const { data } = await this.$axios.post('/appApi/user.restore', params)
+    const { data } = await this.$axios.post('user.restore', params)
     if(!data.error) {
       this.dispatch('app/toggleModal', {target: 'emailSend'})
       return false
@@ -91,7 +91,7 @@ export const actions = {
     return data.error
   },
   async logout({state}){
-    const { data } = await this.$axios.post('/appApi/signout', {api_token:state.token})
+    const { data } = await this.$axios.post('signout', {api_token:state.token})
     if(!data.error) {
       localStorage.removeItem('token')
       window.location.reload()

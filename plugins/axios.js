@@ -1,5 +1,7 @@
 export default function ({ $axios, store, req }) {
   $axios.onRequest(config => {
+    // config.metadata = { startTime: new Date() };
+    // console.log(`[${config.url}] 🔄 Начат запрос`);
     if(process.server){
       const arr = req.rawHeaders
       const result = {};
@@ -37,19 +39,33 @@ export default function ({ $axios, store, req }) {
       if(config.data.api_token) {
         delete config.data.api_token
       }
-      Object.keys(config.data).map(k => {
-        formData.append(k, config.data[k])
-      })
+      Object.keys(config.data).forEach(k => {
+        const value = config.data[k];
+        if (value !== undefined && value !== null) {
+          formData.append(k, value);
+        } else {
+          // console.warn(`⚠️ Пропущено поле "${k}" с пустым значением`, value);
+        }
+      });
       config.data = formData
     }
     return config
   })
+  $axios.onResponse((response) => {
+    // const duration = new Date().getTime() - response.config.metadata.startTime.getTime();
+    // console.log(`[${response.config.url}] ✅ Ответ за ${duration} мс`);
+  });
   $axios.onRequestError(error => {
     console.log(error, 'requestError')
   })
   $axios.onResponseError(
     async function(error) {
-      if(error.response.data.error === 'token_expired') {
+      // const duration = error.config?.metadata
+      //   ? new Date().getTime() - error.config.metadata.startTime.getTime()
+      //   : 'неизвестно';
+      //
+      // console.error(`[${error.config?.url}] ❌ Ошибка через ${duration} мс`, error);
+      if(error?.response?.data?.error === 'token_expired') {
         await store.dispatch('app/toggleModal', { target: 'refreshPage' })
         return Promise.reject(error.response)
       } else {

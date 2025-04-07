@@ -73,8 +73,8 @@ export default {
     }
   },
   mounted() {
-    this.swiper = this.$refs.swiper.$swiper
-    this.swiper.on('slideChangeTransitionStart', (e) => {
+    this.swiper = this.$refs.swiper?.$swiper
+    this.swiper?.on('slideChangeTransitionStart', (e) => {
       e.slides[e.previousIndex].firstChild.classList.add('previous')
       setTimeout(() => {
         e.slides.map(slide => {

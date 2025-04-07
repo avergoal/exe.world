@@ -13,7 +13,7 @@ export const mutations = {
 export const actions = {
   sendStat({state},params) {
     try {
-      this.$axios.post('/appApi/stat' , params)
+      this.$axios.post('stat' , params)
     }catch (e) {
       console.log(e)
     }

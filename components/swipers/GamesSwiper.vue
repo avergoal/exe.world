@@ -76,7 +76,7 @@ export default {
         if (this.slides === 'user_profile_games') {
           this.data = this[this.slides]
         } else {
-          this.data = this[this.slides][this.filter.current].list
+          this.data = this[this.slides][this.filter.current]?.list
         }
         this.$root.$on('changeCategory', (e) => {
           this.current = e

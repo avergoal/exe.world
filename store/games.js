@@ -40,7 +40,7 @@ export const actions = {
       list: []
     } : Object.assign({}, state.userAll)
     params.offset = games.offset
-    const {data} = await this.$axios.post('/appApi/user.games', params)
+    const {data} = await this.$axios.post('user.games', params)
     games.list = games.list.concat(data.response.games)
     games.total = data.response.total_games
     games.offset = data.response.offset
@@ -83,7 +83,7 @@ export const actions = {
     })
   },
   async setAllGames() {
-    const { data } = await this.$axios.post('/appApi/games', {
+    const { data } = await this.$axios.post('games', {
       type: 0,
       offset: 0
     })
@@ -96,7 +96,7 @@ export const actions = {
       params.offset = categories[params.type].offset
     }
 
-    const {data} = await this.$axios.post('/appApi/games', params)
+    const {data} = await this.$axios.post('games', params)
     categories[params.type].list = uniqBy(categories[params.type].list.concat(data.response.games), function (e) {
       return e.gid
     })
@@ -115,7 +115,7 @@ export const actions = {
     let games = Object.assign([], state.newgames)
     games.offset += state.limit
     params.offset = games.offset
-    const { data } = await this.$axios.post('/appApi/games.new', params)
+    const { data } = await this.$axios.post('games.new', params)
     games.list = games.list.concat(data.response.games)
     commit('setState', {
       key: 'newgames',
@@ -127,7 +127,7 @@ export const actions = {
     let games = Object.assign([], state.recommended)
     games.offset += state.limit
     params.offset = games.offset
-    const { data } = await this.$axios.post('/appApi/games.recommended', params)
+    const { data } = await this.$axios.post('games.recommended', params)
     games.list = games.list.concat(data.response.games)
     commit('setState', {
       key: 'recommended',
@@ -141,7 +141,7 @@ export const actions = {
       value: true
     })
     let gamesData = Object.assign({}, state.gamesData)
-    const { data } = await this.$axios.post('/appApi/games.info', params)
+    const { data } = await this.$axios.post('games.info', params)
     if(data.response) {
       gamesData[data.response.game.gid] = data.response.game
       commit('setState', {
@@ -158,12 +158,12 @@ export const actions = {
 
   },
   async installGame({}, params) {
-    await this.$axios.post('/appApi/games.add', params)
+    await this.$axios.post('games.add', params)
     await this.dispatch('app/initAppData')
     return
   },
   async removeGame({commit,state}, params) {
-    await this.$axios.post('/appApi/games.remove', params)
+    await this.$axios.post('games.remove', params)
     let obj = state.gamesData
     delete obj[params.gid]
     commit('setState', {
@@ -173,7 +173,7 @@ export const actions = {
     return
   },
   async runGame({}, params) {
-    const { data } = await this.$axios.post('/appApi/games.run', params)
+    const { data } = await this.$axios.post('games.run', params)
     return data
   }
 }

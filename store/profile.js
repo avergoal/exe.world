@@ -18,7 +18,7 @@ export const actions = {
     })
   },
   async getBalance({state, commit}) {
-    const { data } = await this.$axios.post('/appApi/user.balance', {})
+    const { data } = await this.$axios.post('user.balance', {})
     let profile = Object.assign({}, state.data)
     profile.balance = data.response.balance
     commit('setState', {
@@ -36,11 +36,11 @@ export const actions = {
     return data.response.balance
   },
   async paymentsPrepare({}, params) {
-    const { data } = await this.$axios.post('/appApi/payments.prepare', params)
+    const { data } = await this.$axios.post('payments.prepare', params)
     return data
   },
   async getPaymentsMethods({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/payments.methods', params)
+    const { data } = await this.$axios.post('payments.methods', params)
 
     commit('setState', {
       key: 'paymentsMethods',

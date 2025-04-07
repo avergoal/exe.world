@@ -16,7 +16,7 @@ export const actions = {
   async set({ commit }, data) {
     if(data.type == 'sidebar') {
       if(!data.notifications) {
-        data.notifications = await this.$axios.post('/appApi/user.notifications', {})
+        data.notifications = await this.$axios.post('user.notifications', {})
         data.notifications = data.notifications.data.response.notifications
       }
       commit('setState', {
@@ -24,7 +24,7 @@ export const actions = {
         value: data.notifications
       })
     } else {
-      const { data } = await this.$axios.post('/appApi/notifications', {})
+      const { data } = await this.$axios.post('notifications', {})
       commit('setState', {
         key: 'header',
         value: {
@@ -35,7 +35,7 @@ export const actions = {
     }
   },
   async clear({ commit }) {
-    await this.$axios.post('/appApi/notifications.clear', {})
+    await this.$axios.post('notifications.clear', {})
     commit('setState', {
       key: 'header',
       value: {

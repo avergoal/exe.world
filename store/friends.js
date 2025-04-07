@@ -22,22 +22,22 @@ export const mutations = {
 
 export const actions = {
   async load({commit, state}, params) {
-    const { data } = await this.$axios.post('/appApi/friends.get', params)
+    const { data } = await this.$axios.post('friends.get', params)
     if(params.offset === 0) commit('setState', {key: 'list', value: []})
     commit('setState', {key: 'list', value: state.list.concat(data.response.users)})
     commit('setState', {key: 'total', value: data.response.total_friends})
     this.dispatch('friends/requests', {offset: params.offset})
   },
   async search({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/user.search', params)
+    const { data } = await this.$axios.post('user.search', params)
     commit('setState', {key: 'list', value: data.response.users})
   },
   async add({}, params) {
-    await this.$axios.post('/appApi/friends.add', params)
+    await this.$axios.post('friends.add', params)
     return true
   },
   async remove({}, params) {
-    await this.$axios.post('/appApi/friends.del', params)
+    await this.$axios.post('friends.del', params)
     return true
   },
   async update({}, params) {
@@ -47,11 +47,11 @@ export const actions = {
     return true
   },
   async report({}, params) {
-    await this.$axios.post('/appApi/user.report', params)
+    await this.$axios.post('user.report', params)
     return true
   },
   async requests({state, commit}, params) {
-    const { data } = await this.$axios.post('/appApi/friends.requests', params)
+    const { data } = await this.$axios.post('friends.requests', params)
     let requests = this.$deepClone(state.requests)
     if(typeof params.type != 'undefined') {
       let key = (params.type) ? 'subscriptions' : 'subscribers'

@@ -12,12 +12,12 @@ export const mutations = {
 
 export const actions = {
   async chats({commit}) {
-    let { data } = await this.$axios.post('/appApi/chats', {}),
+    let { data } = await this.$axios.post('chats', {}),
       offset = data.response.offset,
       chats = data.response.chats
 
     for (; offset != 0;) {
-      let { data } = await this.$axios.post('/appApi/chats', {'offset': offset})
+      let { data } = await this.$axios.post('chats', {'offset': offset})
       chats = [...chats, ...data.response.chats]
       offset = data.response.offset
     }
@@ -36,7 +36,7 @@ export const actions = {
       dialog = [...state.dialog]
       messages.list = JSON.parse(JSON.stringify(state.messages.list))
     }
-    const {data} = params.uid ? await this.$axios.post('/appApi/messages', params) : {data: {response:false}}
+    const {data} = params.uid ? await this.$axios.post('messages', params) : {data: {response:false}}
     if(data.response || params.observer) {
       messages.total = data.response.messages.length
       messages.offset = data.response.offset
@@ -83,7 +83,7 @@ export const actions = {
     return !!data.response?.offset
   },
   async send({state, commit}, params) {
-    const { data } = await this.$axios.post('/appApi/message.send', params)
+    const { data } = await this.$axios.post('message.send', params)
     // let messages = this.$deepClone(state.messages),
     //     date = this.$moment.unix(data.response.result.message.timestamp).format('DD.MMMM.YYYY')
     // messages.list[date] = (messages.list[date]) ? messages.list[date] : {}
@@ -99,10 +99,10 @@ export const actions = {
     commit('setState', {key: 'dialog', value: dialog})
   },
   async clear({}, params) {
-    await this.$axios.post('/appApi/chat.clear', params)
+    await this.$axios.post('chat.clear', params)
   },
   async search({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/chat.search', params)
+    const { data } = await this.$axios.post('chat.search', params)
     commit('setState', {key: 'chats', value: data.response.chats})
   }
 }

@@ -22,7 +22,7 @@ export const actions = {
     })
   },
   async getLocations({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/util.' + params.key, params.data)
+    const { data } = await this.$axios.post('util.' + params?.key, params?.data)
     let list = {}
     data.response[params.key].map(e => {
       list[e.id] = e.title
@@ -33,7 +33,7 @@ export const actions = {
     })
   },
   async updateMain({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/settings.main.save', params)
+    const { data } = await this.$axios.post('settings.main.save', params)
     if(!data.error) {
       let profile = Object.assign({}, this.getters['profile/data'])
       profile.first_name = params.first_name
@@ -49,7 +49,7 @@ export const actions = {
     return data.error
   },
   async updateAccess({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/settings.access.save', params)
+    const { data } = await this.$axios.post('settings.access.save', params)
     if(!data.error) {
       commit('setState', {
         key: 'access',
@@ -60,20 +60,20 @@ export const actions = {
     return data.error
   },
   async updateNotifications({commit}, params) {
-    await this.$axios.post('/appApi/settings.notifications.save', params)
+    await this.$axios.post('settings.notifications.save', params)
     commit('setState', {
       key: 'notifications',
       value: params
     })
   },
   async removePhoto({}) {
-    const { data } = await this.$axios.post('/appApi/settings.avatar.delete', {})
+    const { data } = await this.$axios.post('settings.avatar.delete', {})
     let profile = Object.assign({}, this.getters['profile/data'])
     profile.avatar_urls = data.response.avatar_urls
     this.dispatch('profile/set', profile)
   },
   async uploadPhoto({}, file) {
-    const { data } = await this.$axios.post('/appApi/settings.avatar.upload', {file: file})
+    const { data } = await this.$axios.post('settings.avatar.upload', {file: file})
     let profile = Object.assign({}, this.getters['profile/data'])
     profile.avatar_urls = data.response.result.avatar
     this.dispatch('profile/set', profile)

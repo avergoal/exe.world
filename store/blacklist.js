@@ -10,7 +10,7 @@ export const mutations = {
 
 export const actions = {
   async load({commit}) {
-    const { data } = await this.$axios.post('/appApi/blacklist.get', {})
+    const { data } = await this.$axios.post('blacklist.get', {})
     let list = {}
     for(let i = 0; i < data.response.blacklist.length; i++) {
       list[data.response.blacklist[i].uid] = data.response.blacklist[i]
@@ -18,10 +18,10 @@ export const actions = {
     commit('setState', {key: 'list', value: list})
   },
   async add({}, params) {
-    await this.$axios.post('/appApi/blacklist.add', params)
+    await this.$axios.post('blacklist.add', params)
   },
   async remove({commit, state}, params) {
-    await this.$axios.post('/appApi/blacklist.remove', params)
+    await this.$axios.post('blacklist.remove', params)
     let list = this.$deepClone(state.list)
     delete list[params.uid]
     commit('setState', {key: 'list', value: list})

@@ -28,7 +28,7 @@ export const actions = {
     })
   },
   async goSearch({commit}, params) {
-    const { data } = await this.$axios.post('/appApi/search', params)
+    const { data } = await this.$axios.post('search', params)
     commit('setState', {
       key: 'results',
       value: {
