@@ -11,7 +11,7 @@ export default function ({ store }, inject) {
     };
 
     if (token) {
-      options.headers['Authorization'] = `Bearer ${token}`;
+      // options.headers['Authorization'] = `Bearer ${token}`;
     }
 
     // Пример кастомного логирования
