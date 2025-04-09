@@ -23,7 +23,7 @@ export const mutations = {
 export const actions = {
   // Inititial app data
   async initAppData(rootGetters) {
-    const { response } = await this.$axios.post('init', {})
+    const { data } = await this.$axios.post('init', {})
     const headers = rootGetters['stat/headers']
     await this.dispatch('stat/sendStat', {
       event_type:'headers',
@@ -32,7 +32,7 @@ export const actions = {
 
     let games = {},
         search = []
-    response?.map(e => {
+    data?.response?.map(e => {
       let keys = Object.keys(e)
       switch(keys[0]) {
         case 'guest_token':

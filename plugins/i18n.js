@@ -1,6 +1,7 @@
 export default async ({app, store}) => {
-  const response = await store.dispatch('app/getTranslation');
-  const translations = response?.response;
+  const {data} = await store.dispatch('app/getTranslation');
+  const translations = data?.response;
+
   const locales = store.getters['app/locales'];
   app.i18n.locales = [
     { code: 'en', iso: 'en-US', file: 'en.js' },

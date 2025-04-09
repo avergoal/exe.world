@@ -28,11 +28,19 @@ export default function ({ store }, inject) {
       if (response.status === 401) {
         console.warn('⚠️ Unauthorized — возможно, токен истёк');
       }
-      throw errorData;
+      return  {
+        data: errorData,     // 👈 поведение как в axios
+        status: response.status,
+        ok: response.ok,
+      };
     }
 
     const data = await response.json();
-    return data;
+    return {
+      data: data,     // 👈 поведение как в axios
+      status: response.status,
+      ok: response.ok,
+    };
   };
 
   // ========== Основной универсальный fetch ==========
