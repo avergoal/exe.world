@@ -13,35 +13,36 @@ export const actions = {
     const { data } = await this.$axios.post('auth', {
       api_token: token
     })
+    console.log(data)
     if(data.error) {
         localStorage.removeItem('token')
     } else {
       this.dispatch('app/setTheme', {
-        theme: data.response.theme
+        theme: data.response?.theme
       })
       this.dispatch('profile/set', Object.assign({
-        wssid: data.response.wssid,
-        balance: data.response.balance
-      }, data.response.profile))
+        wssid: data.response?.wssid,
+        balance: data.response?.balance
+      }, data.response?.profile))
       this.dispatch('notifications/set', {
         type: 'sidebar',
-        notifications: data.response.notifications
+        notifications: data.response?.notifications
       })
       this.dispatch('notifications/set', {
         type: 'header'
       })
       this.dispatch('games/setGames', {
         category: 'userRecent',
-        data: data.response.recent_games
+        data: data.response?.recent_games
       })
       this.dispatch('games/setGames', {
         category: 'userAll',
         data: {
           offset: 0,
-          list: data.response.user_games.splice(0, 20)
+          list: data.response?.user_games.splice(0, 20)
         }
       })
-      this.dispatch('settings/set', data.response.settings)
+      this.dispatch('settings/set', data.response?.settings)
       commit('setState', {
         key: 'token',
         value: token
