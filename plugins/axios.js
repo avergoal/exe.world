@@ -1,7 +1,8 @@
 export default function ({ store }, inject) {
   const baseURL = 'https://api.exe.world/';
 
-  const applyRequestInterceptors = (url, options, method, params) => {
+  // ========== REQUEST INTERCEPTOR ==========
+  const applyRequestInterceptors = ( options, method, params) => {
     const token = store.getters['auth/token'];
 
     options.headers = {
@@ -14,44 +15,50 @@ export default function ({ store }, inject) {
       params.api_token = token;
     }
 
-    return { url, options, params };
+    return { options, params };
   };
 
+  // ========== RESPONSE INTERCEPTOR ==========
   const applyResponseInterceptors = async (response) => {
-    const json = await response.json().catch(() => ({}));
-
     if (!response.ok) {
+      const errorData = await response.json();
+      // Можно глобально отловить 401, 500 и т.д.
       if (response.status === 401) {
         console.warn('⚠️ Unauthorized — возможно, токен истёк');
       }
+      return  {
+        data: errorData,     // 👈 поведение как в axios
+        status: response.status,
+        ok: response.ok,
+      };
     }
 
+    const data = await response.json();
     return {
-      data: json,
+      data: data,     // 👈 поведение как в axios
       status: response.status,
       ok: response.ok,
     };
   };
 
+  // ========== Основной универсальный fetch ==========
   const request = async (method, url, params = {}) => {
     let fullURL = url.startsWith('http') ? url : `${baseURL}${url}`;
     const options = { method };
 
-    const {
-      url: finalURL,
-      options: finalOptions,
-      params: finalParams,
-    } = applyRequestInterceptors(fullURL, options, method, params);
+    const { options: finalOptions,params: finalParams, } = applyRequestInterceptors(options,method,params);
+
 
     if (method === 'POST' || method === 'PUT') {
-      finalOptions.body = new URLSearchParams(finalParams).toString();
+      options.body = new URLSearchParams(finalParams).toString();
     } else if (method === 'GET' && Object.keys(finalParams).length > 0) {
       const query = new URLSearchParams(finalParams).toString();
       fullURL += `?${query}`;
     }
 
+
     try {
-      const response = await fetch(finalURL, finalOptions);
+      const response = await fetch(fullURL, finalOptions);
       return await applyResponseInterceptors(response);
     } catch (error) {
       console.error('❌ Ошибка при запросе:', error);
@@ -59,6 +66,7 @@ export default function ({ store }, inject) {
     }
   };
 
+  // ========== Обёртки для методов ==========
   const api = {
     get: (url, params) => request('GET', url, params),
     post: (url, params) => request('POST', url, params),
@@ -66,5 +74,6 @@ export default function ({ store }, inject) {
     delete: (url, params) => request('DELETE', url, params),
   };
 
+  // Инжектим как $api
   inject('axios', api);
 }
