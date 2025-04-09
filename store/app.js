@@ -23,7 +23,7 @@ export const mutations = {
 export const actions = {
   // Inititial app data
   async initAppData(rootGetters) {
-    const { response } = await this.$axios.$post('init', {})
+    const { response } = await this.$axios.post('init', {})
     const headers = rootGetters['stat/headers']
     await this.dispatch('stat/sendStat', {
       event_type:'headers',
@@ -197,7 +197,7 @@ export const actions = {
     return data.error
   },
   async getTranslation(_,params={}){
-    return await this.$axios.$post('util.lang', params)
+    return await this.$axios.post('util.lang', params)
   }
 }
 

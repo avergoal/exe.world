@@ -76,8 +76,8 @@ export default {
     preconnect: true
   },
   modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/proxy',
+    // '@nuxtjs/axios',
+    // '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     ['nuxt-i18n',
      {
@@ -123,10 +123,10 @@ export default {
       }
     ]
   ],
-  axios: {
-    baseUrl:'https://api.exe.world/',
-    proxy: false,
-  },
+  // axios: {
+  //   baseUrl:'https://api.exe.world/',
+  //   proxy: false,
+  // },
   // axios: {
   //   proxy: true,
   //   timeout: 2000,
