@@ -3,7 +3,11 @@ export default function ({ store }, inject) {
 
   // ========== REQUEST INTERCEPTOR ==========
   const applyRequestInterceptors = ( options, method, params) => {
-    const token = store.getters['auth/token'];
+    let token = store.getters['auth/token'];
+
+    if(process.client){
+      token = localStorage.getItem('token')
+    }
 
     options.headers = {
       ...options.headers,

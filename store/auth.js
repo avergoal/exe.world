@@ -13,10 +13,11 @@ export const actions = {
     const { data } = await this.$axios.post('auth', {
       api_token: token
     })
-    console.log(data)
     if(data.error) {
         localStorage.removeItem('token')
     } else {
+      localStorage.setItem('token', token)
+      await this.dispatch('app/initAppData')
       this.dispatch('app/setTheme', {
         theme: data.response?.theme
       })
@@ -47,8 +48,7 @@ export const actions = {
         key: 'token',
         value: token
       })
-      localStorage.setItem('token', token)
-      await this.dispatch('app/initAppData')
+
     }
   },
   async regGuest({}) {
