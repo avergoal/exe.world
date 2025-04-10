@@ -17,7 +17,7 @@ export const actions = {
     if(data.type == 'sidebar') {
       if(!data.notifications) {
         data.notifications = await this.$axios.post('user.notifications', {})
-        data.notifications = data.notifications.data.response.notifications
+        data.notifications = data?.notifications?.data?.response?.notifications??{}
       }
       commit('setState', {
         key: 'sidebar',
@@ -28,8 +28,8 @@ export const actions = {
       commit('setState', {
         key: 'header',
         value: {
-          total: data.response.notifications.length,
-          list: data.response.notifications
+          total: data?.response?.notifications?.length,
+          list: data.response?.notifications
         }
       })
     }

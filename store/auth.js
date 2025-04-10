@@ -69,6 +69,7 @@ export const actions = {
   },
   async signIn({}, params) {
     const {data} = await this.$axios.post('signin', params)
+    console.log(data)
     if(!data?.error) {
       this.dispatch('auth/auth', data.response.api_token)
       return false

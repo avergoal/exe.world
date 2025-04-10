@@ -14,7 +14,7 @@ export const mutations = {
 
 export const actions = {
   set({ commit }, data) {
-    Object.keys(data).map(e => {
+    Object.keys(data??{})?.map(e => {
       commit('setState', {
         key: e,
         value: data[e]
