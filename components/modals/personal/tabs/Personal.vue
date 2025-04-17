@@ -310,7 +310,6 @@ export default {
       return this.$store.getters['settings/cities']
     },
     user() {
-      console.log(this.$store.getters['profile/data'])
       return this.$store.getters['profile/data']
     },
     showLocale() {

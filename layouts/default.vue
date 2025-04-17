@@ -161,8 +161,8 @@ export default {
     },
     async setLange(){
       if(this.$i18n.locale != this.settings.locale) {
-        const response = await this.$store.dispatch('app/getTranslation',{lang:this.settings.locale});
-        const translations = response.response;
+        const { data } = await this.$store.dispatch('app/getTranslation',{lang:this.settings.locale});
+        const translations = data?.response;
         Object.keys(this.$i18n.messages).forEach(key => {
           this.$i18n.mergeLocaleMessage(key,translations)
         })
